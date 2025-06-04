@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Médico</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: #d9d9d9;">
+
+  <header>
+    <div class="header2">
+      <a href="adiministracao.html"><img src="img/Arrow 1.png" alt="voltar" class="voltar"></a>
+    </div>
+  </header>
+
+  <div class="container-cadastro">
+    <div class="cabecalho-cadastro">Cadastrar Médico</div>
+
+    <div class="formulario-cadastro">
+      <form id="formCadastroMedico">
+
+        <label for="crm">CRM</label>
+        <input type="text" id="crm" name="crm" placeholder="Número do CRM" required>
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+
+        <label for="email">E-mail</label>
+        <input type="text" id="email" name="email" placeholder="ex: medico@gmail.com" required>
+
+        <label for="senha">Senha</label>
+        <input type="text" id="senha" name="senha" placeholder="Senha de acesso" required>
+
+        <label for="uf_crm">Unidade Federativa do CRM</label>
+        <select id="uf_crm" name="uf_crm" required>
+          <option value="MG">MG</option>
+          <option value="SP">SP</option>
+          <option value="RJ">RJ</option>
+          <option value="BA">BA</option>
+          <option value="RS">RS</option>
+          <!-- Pode adicionar mais estados -->
+        </select>
+
+        <label for="especificacao">Especialização</label>
+        <input type="text" id="especificacao" name="especificacao" placeholder="Especialização médica" required>
+
+        <button type="submit" class="botao-cadastro">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- ✅ Script de cadastro -->
+<script src="js/cadastrate_medico.js"></script>
+</body>
+</html>

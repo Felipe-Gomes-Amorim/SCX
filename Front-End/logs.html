@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Logs do Sistema</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color: #d9d9d9;">
+
+  <header>
+    <div class="header2">
+      <a href="index.html"><img src="img/Arrow 1.png" alt="voltar" class="voltar"></a>
+    </div>
+  </header>
+
+  <div class="container-cadastro">
+    <div class="cabecalho-cadastro">Logs do Sistema</div>
+
+    <div class="formulario-cadastro">
+      <table class="tabela-exames">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuário</th>
+            <th>Ação</th>
+            <th>Detalhes</th>
+            <th>Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaLogs">
+          <!-- Os logs serão inseridos aqui dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/statusUsuario.js"></script>
+  <script src="js/logs.js"></script>
+</body>
+</html>

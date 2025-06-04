@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Usuário</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: #d9d9d9;">
+
+  <header>
+    <div class="header2">
+      <a href="index.html"><img src="img/Arrow 1.png" alt="voltar" class="voltar"></a>
+    </div>
+  </header>
+
+  <div class="container-cadastro">
+    <div class="cabecalho-cadastro">Perfil do Usuário</div>
+
+    <div class="formulario-cadastro">
+
+        <p><strong>Nome:</strong> <span id="nome"></span></p>
+        <p><strong>CPF:</strong> <span id="cpf"></span></p>
+        <p><strong>Instituição:</strong> <span id="instituicao_vinc"></span></p>
+        <p><strong>E-mail:</strong> <span id="email"></span></p>
+
+        
+        <div class="separarPerfil">
+            <p>Laudos disponíveis</p>
+            <table class="tabela-exames">
+              <tbody id="lista-exames">
+                  <!-- Exames serão adicionados dinamicamente -->
+              </tbody>
+            </table>
+
+        </div>
+        
+        <button id="btnLogout" class="botao-cadastro">Sair</button>
+        <a href="editar_perfil.html" class="botao-cadastro" style="text-align: center;">Editar Perfil</a>
+         <button class="botao-vermelho" id="btnExcluirPerfil">Excluir Perfil</button>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/perfil_paciente.js"></script>
+<script src="js/excluate_perfil.js"></script>
+<script src="js/logout.js"></script>
+</body>
+</html>

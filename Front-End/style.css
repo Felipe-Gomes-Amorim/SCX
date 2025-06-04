@@ -1,0 +1,356 @@
+/* INDEX */
+:root {
+    --verde: #48A456;
+    --verde-escuro: #23632f;
+    --branco: #ffffff;
+    --preto: #000000;
+    --fonte-principal: 'Inter';
+    --cinza: #A7A7A7;
+    --vermelho: #a44848;
+    --vermelho-escuro:#632323;
+}
+
+
+body{  
+    font-family: var(--fonte-principal);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+/*HEADER PADRAO*/
+.container1{
+    display: flex;
+    background-color: var(--verde);
+    justify-content: center;
+    
+}
+.container2{
+    display: flex;
+    background-color: var(--branco);
+}
+/*HEADER DE ONDE FICA A SETA*/
+.header2{
+    display: block;
+    background-color: var(--verde);
+    justify-content: center;
+    
+}
+
+.textHeader1{
+    color: var(--branco);
+    padding: 63px 20px 63px 20px;
+    font-size: 14px;
+    font-weight:300;
+    letter-spacing: 0.5px;
+    
+}
+
+.textHeader2{
+    color: var(--preto);
+    padding: 63px 25px 63px 25px;
+    font-size: 24px;
+    font-weight:300;
+    letter-spacing: 0.5px;
+}
+
+.centro{
+    margin: 0px 120px 0px 120px;
+    
+}
+
+.logo{
+    font-weight: 700;
+    font-size: 36px;
+    margin-right: 130px;
+}
+
+.placeholder{
+    font-style: italic;
+}
+
+.dir{
+    position: absolute;
+    display: flex;
+    right:50px;
+   
+}
+
+.bold{
+    font-weight: bold;
+}
+
+/* CADASTRO */
+
+.container-cadastro {
+    width: 100%;
+    max-width: 600px;
+    background: var(--branco);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+  
+.cabecalho-cadastro {
+    background: #ffffff;
+    padding: 1rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 4px solid #d9d9d9;
+}
+  
+.formulario-cadastro {
+    padding: 1.5rem 4rem; /* define o "respiro" lateral */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* estica elementos filhos */
+    text-align: left; /* mantém texto alinhado à esquerda */
+}
+
+
+
+.formulario-cadastro label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    font-weight: 500;
+}
+  
+.formulario-cadastro input[type="text"],
+.formulario-cadastro input[type="email"],
+.formulario-cadastro input[type="password"],
+.formulario-cadastro select {
+    width: 95%; 
+    padding: 0.75rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+  
+.formulario-cadastro input[type="password"]:focus {
+    border-color: var(--verde);
+    outline: none;
+}
+  
+.botao-cadastro {
+    width: 200px;
+    padding: 0.75rem;
+    background-color: var(--verde);
+    box-shadow: 0cm 0.1cm var(--verde-escuro);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-out allow-discrete;
+    text-decoration: none;
+    display: block;       /* para permitir margin funcionar */
+    margin: 1rem auto;    /* centraliza horizontalmente */
+
+}
+  
+.botao-cadastro:hover {
+    box-shadow: 0cm 0.2cm var(--verde-escuro);
+    transform: translate(0, -8%);
+}
+  
+.voltar{
+    padding: 63px 30px 63px 30px;
+    
+}
+
+/*VER EXAMES PACIENTE*/
+
+.tabela-exames {
+    width: 100%;
+    max-width: 800px;
+    margin: 0px auto auto auto;
+    border-collapse: separate;
+    border-spacing: 0 1rem; /* espaço entre as caixas */
+}
+
+.linha-exame {
+    background: var(--branco);
+    border-radius: 8px;
+    border: 2px solid var(--cinza);
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch; /* permite que o botão alinhe à parte inferior */
+}
+
+.info-exame {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.titulo-exame {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.descricao-exame {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.botao-exame {
+    background-color: var(--branco);
+    color: var(--verde);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem 3rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    font-size: 0.9rem;
+    align-self: flex-end; /* vai pra parte inferior da caixa */
+    margin-left: 1rem; /* separação do texto */
+}
+
+
+
+
+.botao-exame:hover {
+    background-color: #f9f9f9; /* leve destaque ao passar o mouse */
+}
+
+
+.formulario-cadastro select {
+    width: 55%;
+    padding: 0.75rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: var(--branco);
+    font-family: var(--fonte-principal);
+    font-size: 1rem;
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23000' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 10px 6px;
+    cursor: pointer;
+}
+
+.formulario-cadastro select:focus {
+    border-color: var(--verde);
+    outline: none;
+}
+
+.formulario-cadastro label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    font-weight: 500;
+    max-width: 80%; /* impede que o texto passe demais */
+    word-wrap: break-word; /* permite quebra de linha */
+    font-size: 0.9rem; /* opcional: reduzir um pouco a fonte */
+}
+
+.descricao{
+    margin: 0 0 20px 0;
+    font-weight: 300;
+}
+
+.separarPerfil{
+    margin-top: 20px;
+}
+
+.botao-vermelho {
+    width: 200px;
+    padding: 0.75rem;
+    background-color: var(--vermelho);
+    box-shadow: 0cm 0.1cm var(--vermelho-escuro);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-out allow-discrete;
+    text-decoration: none;
+    display: block;       /* para permitir margin funcionar */
+    margin: 1rem auto;    /* centraliza horizontalmente */
+
+}
+  
+.botao-vermelho:hover {
+    box-shadow: 0cm 0.2cm var(--vermelho-escuro);
+    transform: translate(0, -8%);
+}
+.tabela-logs {
+  width: 100%;
+  max-width: 1000px;
+  margin: 10px auto;
+  border-collapse: separate;
+  border-spacing: 0px;
+  background: var(--branco);
+  border-radius: 8px;
+  overflow: hidden;
+
+  border: 4px solid var(--verde); /* ✅ borda verde */
+}
+
+    .tabela-logs th, .tabela-logs td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tabela-logs th {
+      background-color: var(--verde);
+      color: var(--branco);
+      font-weight: bold;
+    }
+
+    .tabela-logs tr:hover {
+      background-color: #f1f1f1;
+    }
+.status-usuario {
+  font-family: 'Inter', sans-serif;
+  color: var(--preto);
+  margin-top: 3.95rem;
+  text-align: center;
+  
+}
+.status-secretaria {
+  font-family: 'Inter', sans-serif;
+  color: var(--preto);
+  margin-top: 3.95rem;
+  text-align: center;
+}
+.status-medico {
+  font-family: 'Inter', sans-serif;
+  color: var(--preto);
+  margin-top: 3.95rem;
+  text-align: center;
+}
+
+.status-adm {
+  font-family: 'Inter', sans-serif;
+  color: var(--preto);
+  margin-top: 3.95rem;
+  text-align: center;
+}
+.status-laboratorio {
+  font-family: 'Inter', sans-serif;
+  color: var(--preto);
+  margin-top: 3.95rem;
+  text-align: center;
+}
+
+.texto-automatico{
+    margin-bottom: 20px;
+}
