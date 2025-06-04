@@ -1,31 +1,31 @@
-````markdown
-# 🏥 Sistema de Comunicação Paciente-Médico-Laboratório
 
-Uma aplicação voltada para hospitais públicos que facilita a comunicação entre pacientes, médicos e laboratórios. Através de uma conta individual, o paciente pode visualizar seus exames devolvidos pela secretaria e acompanhar sua jornada clínica de forma digital e acessível.
+# SAMMG
 
----
+um Sitema de Auxílio Médico de Minas Gerais
 
-## 🚀 Funcionalidades
 
-- Cadastro e login de pacientes
-- Consulta de exames liberados
-- Comunicação direta entre paciente e unidade
-- Visualização de histórico de exames
+## Descrição do Projeto
+
+O SAMMG visa atender a crescente necessidade de um sistema integrado entre diversos laboratórios médicos, também incluindo a comunicação entre profissionais e pacientes por meio da fácil criação, gestão, vizualização e integração de exames.
+
+
+##  Funcionalidades
+
+- Cadastro e login de pacientes, médicos, laboratórios e secretariados
+- Consulta de exames liberados por parte do paciente e do laboratório
 - Interface simples e responsiva
-- Integração com sistemas laboratoriais e administrativos
 
----
 
-## 🧭 Rotas Principais
+##  Rotas Principais
 
-### 📌 Autenticação
+###  Autenticação
 
 | Método | Rota           | Descrição               |
 |--------|----------------|-------------------------|
 | POST   | `/login`       | Login de usuário        |
 | POST   | `/register`    | Cadastro de paciente    |
 
-### 🧪 Exames
+###  Exames
 
 | Método | Rota                     | Descrição                          |
 |--------|--------------------------|------------------------------------|
@@ -42,7 +42,7 @@ Uma aplicação voltada para hospitais públicos que facilita a comunicação en
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠 Tecnologias Utilizadas
 
 - **Frontend:** React.js / Next.js / TailwindCSS
 - **Backend:** Node.js / Express / PostgreSQL
@@ -51,7 +51,7 @@ Uma aplicação voltada para hospitais públicos que facilita a comunicação en
 
 ---
 
-## 📦 Instalação e Uso Local
+##  Instalação e Uso Local
 
 ```bash
 # Clone o repositório
@@ -69,9 +69,9 @@ npm run dev
 
 ---
 
-## 🧪 Exemplos de Uso (JSON)
+##Exemplos de Uso (JSON)
 
-**🔐 Login**
+**Login**
 
 ```json
 POST /login
@@ -81,7 +81,7 @@ POST /login
 }
 ```
 
-**📄 Upload de exame**
+**Upload de exame**
 
 ```json
 POST /exams/upload
@@ -94,10 +94,10 @@ POST /exams/upload
 
 ---
 
-## 📁 Estrutura do Projeto (Sugestão)
+##Estrutura do Projeto (Sugestão)
 
 ```
-📦 raiz-do-projeto
+raiz-do-projeto
 ├── backend/
 │   ├── controllers/
 │   ├── routes/
@@ -113,23 +113,13 @@ POST /exams/upload
 
 ---
 
-## 🤝 Contribuindo
-
-1. Fork este repositório
-2. Crie sua branch: `git checkout -b minha-feature`
-3. Commit suas alterações: `git commit -m 'feat: nova funcionalidade'`
-4. Push para sua branch: `git push origin minha-feature`
-5. Abra um Pull Request
-
----
-
-## 📄 Licença
+##Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ---
 
-## 📬 Contato
+##Contato
 
 Entre em contato para sugestões ou dúvidas:
 
@@ -138,12 +128,3 @@ Entre em contato para sugestões ou dúvidas:
 * LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-usuario)
 
 ---
-
-> 💡 Este sistema visa democratizar o acesso à informação clínica e contribuir para a humanização da saúde pública. Juntos, podemos transformar o atendimento!
-
-```
-
----
-
-Se quiser, posso adaptar esse template para um projeto específico (com nome e stack real) ou gerar automaticamente badges, imagens e GIFs demonstrativos. Deseja isso também?
-```
