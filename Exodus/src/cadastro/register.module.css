@@ -1,0 +1,184 @@
+/* Página */
+.login_page {
+  background: #e0e0e0;
+  min-height: 105vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+.login_header {
+  width: 100%;
+  padding: 20px 40px;
+  background: linear-gradient(to right, #007bff, #0046b3);
+  font-style: italic;
+}
+
+.hyperText{
+  text-decoration: none;
+}
+
+.login_header h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  text-decoration: none;
+     
+}
+
+/* Card de login */
+.login_card {
+  display: flex;
+  background: white;
+  margin-top: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 700px;
+  min-height: 350px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Coluna esquerda */
+.login_left {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.login_left h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.login_left .subtitle {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #6c757d; /* slightly grey */
+  font-style: italic;
+}
+
+.login_left input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  
+}
+
+
+.login_left input::placeholder {
+  color: rgb(182, 182, 182);
+  opacity: 1; 
+}
+
+.login_left input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 1px rgb(0, 123, 255); /* thicker blue outline */
+}
+
+.login_left .btn {
+  padding: 10px 6.1vh;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 15px;
+ -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+
+.login_left .btn:hover {
+  background: #007bff;
+  color: white;
+
+  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+/* Coluna direita */
+.login_right {
+  flex: 1;
+  background: linear-gradient(to right, #007bff, #003b99);
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0 10px 10px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.login_right h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.login_right p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Seta central */
+.login_arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centraliza em X e Y */
+  z-index: 5;
+  background: #005cbe;
+  color: white;
+  font-size: 24px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.select {
+  width: 73%;
+  padding: 12px;
+  border: 1px solid #ccc;   /* igual ao input */
+  border-radius: 8px;
+  background: white;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease-in;
+  appearance: none; /* remove seta padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path fill='%23007bff' d='M5.25 7.5L10 12.25 14.75 7.5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 1px rgb(0, 123, 255); /* mesmo highlight do input */
+  outline: none;
+}

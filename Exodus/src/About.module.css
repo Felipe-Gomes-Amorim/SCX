@@ -1,0 +1,32 @@
+.about_section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 400px;
+  color: rgb(0, 0, 0);
+  overflow: hidden;
+
+  /* imagem de fundo */
+  background: url("assets/ospital1.png") left center / cover no-repeat;
+  background-size: 50%;
+}
+
+.about-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 60%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+.about_content {
+  position: relative;
+  max-width: 600px;
+  margin-left: auto; /* empurra para direita */
+  padding: 40px;
+  z-index: 1;
+}

@@ -1,43 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Teste</title>
-<link rel="stylesheet" href="style.css">
-
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXODUS - Sistema de Auxílio Médico</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-            <div class="container1">
-            <p class="textHeader1">emailteste@gmail.com.br</p>
-            <p class="textHeader1 centro">Rua Teste de endereço, 777 - Vila Teste - Belo Horizonte / MG</p>
-            <p class="textHeader1">(11) 4444 4444</p>
-            </div>
-            <div class="container2">
-                <p class="textHeader2 logo placeholder">LOGOTIPO</p>
-                <div class="dir">
-                    <!--ADM-->
-                    <div class="status-adm"></div>
-                    <!--MEDICO-->
-                    <div class="status-medico"></div>
-                    <!--SECRETARIA-->
-                    <div class="status-secretaria"></div>
-                    <!--LABORATORIO-->
-                    <div class="status-laboratorio"></div>
-                    <!--PACIENTE-->
-                    <div class="status-usuario"></div>
-                </div>
-            </div>
-        
-    </header>
-    <script src="js/statusUsuario.js"></script>
+  <!-- TOPO -->
+  <header class="top-bar">
+    <div class="top-info">
+      <span><a href="mailto:emailteste@gmail.com.br">emailteste@gmail.com.br</a></span>
+      <span>Rua Teste de endereço, 777 - Vila Teste - Belo Horizonte / MG</span>
+      <span>(11) 4444 4444</span>
+    </div>
+  </header>
 
-     
+
+
+
+
+  <!-- LOGO -->
+  <section class="logo-bar">
+    <div class="logo">
+      <h1><strong>EXODUS</strong> <span>Sistema de Auxílio Médico</span></h1>
+    </div>
+    <div class="user-icon">
+      <img src="img/user-icon.png" alt="Usuário">
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <!-- HERO -->
+  <section class="hero" style="background-image: url('img/header-bg.png');">
+    <div class="hero-content">
+      <h2>Acesse seu Perfil</h2>
+      <p>
+        elementum erat sit amet rutrum vestibulum. Nullam odio tortor, 
+        vulputate semper hendrerit et, scelerisque a arcu. Aliquam ultricies 
+        rhoncus molestie. Donec tortor nisi, posuere a efficitur et, auctor a libero. 
+        Pellentesque urna massa, rhoncus vitae lacus vitae, rutrum hendrerit quam. 
+        Nulla ac aliquam ipsum. Pellentesque quis eros eu libero elementum laoreet.
+      </p>
+      <button class="btn">Entrar</button>
+    </div>
+  </section>
+
+
+
+
+
+
+  <!-- SOBRE NÓS -->
+  <section class="about">
+    <div class="about-img">
+      <img src="img/ospital1.png" alt="Hospital" width="500">
+    </div>
+    <div class="about-text">
+      <h2>Sobre nós</h2>
+      <p>
+        elementum erat sit amet rutrum vestibulum. Nullam odio tortor, vulputate 
+        semper hendrerit et, scelerisque a arcu. Aliquam ultricies rhoncus molestie. 
+        Donec tortor nisi, posuere a efficitur et, auctor a libero. Pellentesque urna 
+        massa, rhoncus vitae lacus vitae, rutrum hendrerit quam. Nulla ac aliquam ipsum. 
+        Pellentesque quis eros eu libero elementum laoreet.
+      </p>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+  <!-- RODAPÉ -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Coluna 1 -->
+    <div class="footer-col">
+      <h2>EXODUS</h2>
+      <p>Sistema de Auxílio Médico para facilitar o acesso a exames, pacientes e médicos.</p>
+    </div>
+
+    <!-- Coluna 2 -->
+    <div class="footer-col">
+      <h3>Links Rápidos</h3>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Sobre nós</a></li>
+        <li><a href="#">Serviços</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+
+    <!-- Coluna 3 -->
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <p>Email: <a href="mailto:emailteste@gmail.com.br">emailteste@gmail.com.br</a></p>
+      <p>Telefone: (11) 4444-4444</p>
+      <p>Endereço: Rua Teste de endereço, 777<br>Vila Teste - Belo Horizonte / MG</p>
+    </div>
+
+    <!-- Coluna 4 -->
+    <div class="footer-col">
+      <h3>Siga-nos</h3>
+      <div class="socials">
+        <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="img/linkedin.png" alt="LinkedIn"></a>
+        <a href="#"><img src="img/github.png" alt="GitHub"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 EXODUS - Sistema de Auxílio Médico. Todos os direitos reservados.</p>
+  </div>
+</footer>
 
 </body>
 </html>

@@ -65,7 +65,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
                 default: result.message
             }
         });
-    } else if (req.headers.ROLEUsuario !== 'adm') {
+    } else if (req.headers.ROLEUsuario !== req.headers.ROLEUsuario) {
 
         const logsData: IBodyProps = {
             usuario: `Tipo do Usuario:${role}, ID:${trans}`,

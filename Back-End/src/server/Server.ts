@@ -7,7 +7,7 @@ import cors from 'cors';
 const server = express();
 
 server.use(cors({
-    origin: process.env.ENABLED_CORS?.split(';') || []
+    origin: 'http://localhost:5173'
 }));
 
 server.use(express.json());

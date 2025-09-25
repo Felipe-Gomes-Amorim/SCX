@@ -1,0 +1,17 @@
+.top_bar {
+  background: linear-gradient(to right, rgba(0, 110, 255, 0.9), rgba(0, 50, 160, 0.95));
+  color: white;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+
+.top_bar .top_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top_bar a {
+  color: white;
+  text-decoration: none;
+}

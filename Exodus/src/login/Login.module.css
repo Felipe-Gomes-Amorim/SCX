@@ -1,0 +1,251 @@
+/* Página */
+.login_page {
+  background: #e0e0e0;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+.login_header {
+  width: 100%;
+  padding: 20px 40px;
+  background: linear-gradient(to right, #007bff, #0046b3);
+  font-style: italic;
+}
+
+.hyperText{
+  text-decoration: none;
+}
+
+.login_header h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  text-decoration: none;
+     
+}
+
+/* Card de login */
+.login_card {
+  display: flex;
+  background: white;
+  margin-top: 40px;
+  border-radius: 10px;
+ 
+  width: 700px;
+  min-height: 350px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Coluna esquerda */
+.login_left {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.login_left h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.login_left .subtitle {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #6c757d; /* slightly grey */
+  font-style: italic;
+}
+
+.login_left input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  
+}
+
+
+.login_left input::placeholder {
+  color: rgb(182, 182, 182);
+  opacity: 1; 
+}
+
+.login_left input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 1px rgb(0, 123, 255); /* thicker blue outline */
+}
+
+.login_left .btn {
+  padding: 10px;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 15px;
+ -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+
+.login_left .btn:hover {
+  background: #007bff;
+  color: white;
+
+  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+/* Coluna direita */
+.login_right {
+  flex: 1;
+  background: linear-gradient(to right, #007bff, #003b99);
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0 10px 10px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.login_right h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.login_right p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Seta central */
+.login_arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centraliza em X e Y */
+  z-index: 5;
+  background: #007bff;
+  color: white;
+  font-size: 24px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Dropdown Wrapper */
+.dropdownWrapper {
+  position: relative;
+  margin-bottom: 20px;
+  width: 72.5%;
+  color: #007bff;
+}
+
+/* Botão principal do dropdown */
+.dropdownBtn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Setinhas do botão */
+.arrowDown, .arrowUp {
+  margin-left: 8px;
+  font-size: 12px;
+  transition: transform 0.25s ease;
+}
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.dropdownHeader {
+  padding: 12px;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+  color: #333;
+  transition: all 0.2s ease-in;
+}
+
+.dropdownHeader:hover {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  list-style: none;
+  margin: 4px 0 0 0;
+  padding: 6px 0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+}
+
+.dropdownMenu li {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.dropdownMenu li:hover {
+  background: #007bff;
+  color: white;
+}
+
+.activeOption {
+  background: #0056b3;
+  color: white;
+}
+
+.formError {
+  color: red !important;
+  font-size: 14px;
+  margin: 8px 0;
+  display: block;
+}

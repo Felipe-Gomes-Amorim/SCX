@@ -13,14 +13,14 @@ const pacienteData = {
   cpf: parseInt(form.cpf.value),
 };
 
-  // Recupera o token do localStorage (ou outro método que você usa):
+  
   const token = localStorage.getItem('token');
 
-  // Chama a função para cadastrar:
+ 
   await cadastrarPaciente(pacienteData, token);
 });
 
-// Função assíncrona para fazer a requisição com Axios:
+
 async function cadastrarPaciente(pacienteData, token) {
   try {
     const response = await axios.post('http://localhost:3333/paciente', pacienteData, {
@@ -36,7 +36,7 @@ async function cadastrarPaciente(pacienteData, token) {
     window.location.href = '/index.html';
 
   } catch (error) {
-    // Se der erro, exibe:
+ 
     console.error('Erro ao cadastrar paciente:', error.response?.data || error.message);
     alert('Erro ao cadastrar paciente: ' + (error.response?.data?.message || error.message));
   }
