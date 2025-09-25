@@ -1,55 +1,22 @@
 
-# SAMMG
+# SCX  
 
-um Sitema de Auxílio Médico de Minas Gerais
+Sistema de Controle de Exames 
 
 
 ## Descrição do Projeto
 
-O SAMMG visa atender a crescente necessidade de um sistema integrado entre diversos laboratórios médicos, também incluindo a comunicação entre profissionais e pacientes por meio da fácil criação, gestão, vizualização e integração de exames.
+O SCX visa atender a crescente necessidade de um sistema integrado entre laboratório, médicos e também incluindo pacientes por meio da fácil criação, gestão, vizualização e integração de exames.
 
 
 ##  Funcionalidades
 
-- Cadastro e login de pacientes, médicos, laboratórios e secretariados
-- Consulta de exames liberados por parte do paciente e do laboratório
+- Cadastro e login de pacientes, médicos, laboratório e secretariados
+- Consulta de exames liberados por parte do paciente, do laboratório e do médico
 - Interface simples e responsiva
 
 
-##  Rotas Principais
 
-###  Autenticação
-
-| Método | Rota           | Descrição               |
-|--------|----------------|-------------------------|
-| POST   | `/login`       | Login de usuário        |
-| POST   | `/register`    | Cadastro de paciente    |
-
-###  Exames
-
-| Método | Rota                     | Descrição                          |
-|--------|--------------------------|------------------------------------|
-| GET    | `/exams`                 | Lista todos os exames do paciente |
-| GET    | `/exams/:id`             | Detalhes de um exame específico   |
-| POST   | `/exams/upload`          | Envia novo exame (secretaria)     |
-
-### 👤 Paciente
-
-| Método | Rota            | Descrição                        |
-|--------|-----------------|----------------------------------|
-| GET    | `/profile`      | Dados do perfil do paciente      |
-| PUT    | `/profile/edit` | Atualização dos dados do paciente|
-
----
-
-## 🛠 Tecnologias Utilizadas
-
-- **Frontend:** React.js / Next.js / TailwindCSS
-- **Backend:** Node.js / Express / PostgreSQL
-- **Autenticação:** JWT
-- **Hospedagem:** Vercel / Render / Railway
-
----
 
 ##  Instalação e Uso Local
 
@@ -67,64 +34,14 @@ npm install
 npm run dev
 ````
 
----
+## Integração com Banco de Dados SQLite no Node.js
 
-##Exemplos de Uso (JSON)
-
-**Login**
-
-```json
-POST /login
-{
-  "email": "usuario@exemplo.com",
-  "senha": "123456"
-}
-```
-
-**Upload de exame**
-
-```json
-POST /exams/upload
-{
-  "pacienteId": "abc123",
-  "arquivo": "exame_resultado.pdf",
-  "tipo": "Hemograma Completo"
-}
-```
+Este guia descreve como realizar a integração de um banco de dados **SQLite** em um projeto Node.js com Yarn.  
+O SQLite é um banco de dados relacional leve, baseado em arquivos, que não requer servidor, sendo ideal para aplicações locais, protótipos e sistemas de pequeno a médio porte.
 
 ---
+Instalação:
 
-##Estrutura do Projeto (Sugestão)
-
-```
-raiz-do-projeto
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   └── index.js
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   └── App.jsx
-├── .env
-└── README.md
-```
-
----
-
-##Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
----
-
-##Contato
-
-Entre em contato para sugestões ou dúvidas:
-
-* Nome: **Seu Nome**
-* Email: [seuemail@exemplo.com](mailto:seuemail@exemplo.com)
-* LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-usuario)
-
+```bash
+yarn add sqlite3
 ---
