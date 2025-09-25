@@ -45,5 +45,6 @@ O SQLite é um banco de dados relacional leve, baseado em arquivos, que não req
 Instalação:
 
 ```bash
+---
 yarn add sqlite3
 ---
