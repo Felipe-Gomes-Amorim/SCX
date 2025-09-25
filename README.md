@@ -25,12 +25,10 @@ O SCX visa atender a crescente necessidade de um sistema integrado entre laborat
 git clone https://github.com/Felipe-Gomes-Amorim/SAMMG.git
 
 # Entre na pasta do projeto
-cd SAMMG
+cd ./Back-End
 
 # Instale as dependências
-npm install
-
-npm install --global yarn
+yarn install
 
 # Inicie o servidor de desenvolvimento
 yarn dev
