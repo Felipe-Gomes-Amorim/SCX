@@ -22,16 +22,18 @@ O SCX visa atender a crescente necessidade de um sistema integrado entre laborat
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/seu-repo.git
+git clone https://github.com/Felipe-Gomes-Amorim/SAMMG.git
 
 # Entre na pasta do projeto
-cd seu-repo
+cd SAMMG
 
 # Instale as dependências
 npm install
 
+npm install --global yarn
+
 # Inicie o servidor de desenvolvimento
-npm run dev
+yarn dev
 ````
 
 ## Integração com Banco de Dados SQLite no Node.js
