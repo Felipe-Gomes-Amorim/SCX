@@ -18,7 +18,7 @@ function Top() {
     <section className={Style.logo_bar}>
       <div className={Style.logo}>
         <h1>
-          <strong>EXODUS</strong>{" "}
+          <strong>SCX</strong>{" "}
           <span>{new Date().getFullYear()}</span>
         </h1>
       </div>

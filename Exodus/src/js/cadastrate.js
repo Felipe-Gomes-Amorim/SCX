@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function cadastrarPaciente(pacienteData, token) {
   try {
-    const response = await axios.post("http://localhost:3333/paciente", pacienteData, {
+    const response = await axios.post("http://localhost:8080/patient/register", pacienteData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

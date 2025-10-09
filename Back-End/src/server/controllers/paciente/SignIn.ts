@@ -70,6 +70,7 @@ export const signIn = async (req:Request<{}, {}, IBodyProps>, res:Response) => {
 
 
         const accessToken = JWTService.sign({uid: paciente.id, role: paciente.role, nome: paciente.nome, cpf: paciente.cpf});
+        
         if(accessToken === 'JWT_SECRET_NOT_FOUND'){
 
             const logsData: IBodyProps = {

@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarAdm } from "../js/cadastrate_adm.js"; // depois você pode ter um cadastrarAdm separado
+import { cadastrarAdm } from "../js/cadastrate_adm.js"; 
 
 export default function RegisterAdm() {
-  const [nome, setNome] = useState("");
+  const [name, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telephone, setTelefone] = useState("");
+  const [password_key, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,17 +19,20 @@ export default function RegisterAdm() {
     setLoading(true);
     setErrorMessage("");
 
-    const admData = { nome, email, senha };
+    const admData = { name, email, cpf, telephone, password_key};
 
-    const token = localStorage.getItem("token"); // se o cadastro de ADM exigir token
+    //const token = localStorage.getItem("token"); 
 
-    const result = await cadastrarAdm(admData, token); 
-    // 👉 depois vale a pena criar um cadastrarAdm(admData, token) no lugar de cadastrarPaciente
+    const result = await cadastrarAdm(admData); 
+  
 
     setLoading(false);
 
     if (!result.success) {
       setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+    }
+    else{
+      alert("Administrador cadastrado com sucesso!");
     }
   };
 
@@ -72,7 +77,7 @@ export default function RegisterAdm() {
               <input
                 type="text"
                 placeholder="Nome completo"
-                value={nome}
+                value={name}
                 onChange={(e) => setNome(e.target.value)}
                 required
               />
@@ -84,9 +89,24 @@ export default function RegisterAdm() {
                 required
               />
               <input
+                type="text"
+                placeholder="CPF"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Telefone"
+                value={telephone}
+                onChange={(e) => setTelefone(e.target.value)}
+                required
+              />
+              <input
                 type="password"
                 placeholder="Senha"
-                value={senha}
+                value={password_key}
                 onChange={(e) => setSenha(e.target.value)}
                 required
               />
@@ -98,9 +118,11 @@ export default function RegisterAdm() {
               <button
                 className={Style.btn}
                 disabled={
-                  nome.trim() === "" ||
+                  name.trim() === "" ||
                   email.trim() === "" ||
-                  senha.trim() === "" ||
+                  cpf.trim() === "" ||
+                  telephone.trim() === "" ||
+                  password_key.trim() === "" ||
                   loading
                 }
               >

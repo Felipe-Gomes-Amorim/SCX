@@ -7,10 +7,13 @@ import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarPaciente } from "../js/cadastrate.js";
 
 export default function Register() {
-  const [nome, setNome] = useState("");
+  const [name, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setEndereco] = useState("");
+  const [telephone, setTelefone] = useState("");
+  const [date_birth, setNascimento] = useState("");
   const [cpf, setCpf] = useState("");
-  const [senha, setSenha] = useState("");
+  //const [password_key, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -22,9 +25,11 @@ export default function Register() {
     setErrorMessage("");
 
     const pacienteData = {
-      nome,
+      name,
       email,
-      senha,
+      address,
+      date_birth,
+      telephone,
       cpf: parseInt(cpf),
     };
 
@@ -81,7 +86,7 @@ export default function Register() {
               <input
                 type="text"
                 placeholder="Nome completo"
-                value={nome}
+                value={name}
                 onChange={(e) => setNome(e.target.value)}
                 required
               />
@@ -94,27 +99,44 @@ export default function Register() {
               />
               <input
                 type="text"
+                placeholder="Endereço"
+                value={address}
+                onChange={(e) => setEndereco(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Telefone"
+                value={telephone}
+                onChange={(e) => setTelefone(e.target.value)}
+                required
+              />
+              <input
+                type="date"
+                placeholder="Nascimento"
+                value={date_birth}
+                onChange={(e) => setNascimento(e.target.value)}
+                required
+              />
+              <input
+                type="text"
                 placeholder="Número de CPF"
                 value={cpf}
                 onChange={(e) => setCpf(e.target.value)}
                 required
               />
-              <input
-                type="password"
-                placeholder="Senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                required
-              />
-
-              <select className={Style.select} name="role" required>
+              
+            {
+            /* 
+             <select className={Style.select} name="role" required>
                 <option value="">Selecione uma função</option>
                 <option value="paciente">Paciente</option>
                 <option value="medico">Médico</option>
                 <option value="secretaria">Secretaria</option>
                 <option value="laboratorio">Laboratório</option>
               </select>
-
+              */
+            }
               {errorMessage && (
                 <p style={{ color: "red", marginTop: "10px" }}>
                   {errorMessage}
@@ -124,10 +146,13 @@ export default function Register() {
               <button
                 className={Style.btn}
                 disabled={
-                  nome.trim() === "" ||
+                  name.trim() === "" ||
                   email.trim() === "" ||
                   cpf.trim() === "" ||
-                  senha.trim() === "" ||
+                 
+                  date_birth.trim() === "" ||
+                  telephone.trim() === "" ||
+                  address.trim() === "" ||
                   loading
                 }
               >

@@ -4,34 +4,16 @@ export async function loginUsuario(loginData, role) {
   try {
     let endpoint = "";
 
-    switch (role) {
-      case "paciente":
-        endpoint = "entrarPaciente";
-        break;
-      case "medico":
-        endpoint = "entrarMedico";
-        break;
-      case "adm":
-        endpoint = "entrarAdm";
-        break;
-      case "secretaria":
-        endpoint = "entrarSecretaria";
-        break;
-      case "laboratorio":
-        endpoint = "entrarLaboratorio";
-        break;
-      default:
-        throw new Error("Role inválida!");
-    }
+
 
     const response = await axios.post(
-      `http://127.0.0.1:3333/${endpoint}`,
+      `http://127.0.0.1:8080/auth/login`,
       loginData
     );
 
-    const { accessToken, nome, role: userRole, id, email } = response.data;
+    const { Token, nome, role: userRole, id, email } = response.data;
 
-    localStorage.setItem("token", accessToken);
+    localStorage.setItem("token", Token);
     localStorage.setItem("nome", nome);
     localStorage.setItem("role", userRole || role);
     localStorage.setItem("id", id);

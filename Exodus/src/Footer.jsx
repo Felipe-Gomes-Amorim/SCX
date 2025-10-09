@@ -5,8 +5,8 @@ return (
   <div className={Style.footer_container}>
 
     <div className={Style.footer_col}>
-      <h2>EXODUS</h2>
-      <p>Sistema de Auxílio Médico para facilitar o acesso a exames, pacientes e médicos.</p>
+      <h2>SCX</h2>
+      <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
     </div>
 
     <div className={Style.footer_col}>
@@ -37,7 +37,7 @@ return (
   </div>
 
   <div className={Style.footer_bottom}>
-    <p>© 2025 EXODUS - Sistema de Auxílio Médico. Todos os direitos reservados.</p>
+    <p>© 2025 SCX - Sistema de Controle de Exames. Todos os direitos reservados.</p>
   </div>
     </footer>
 );

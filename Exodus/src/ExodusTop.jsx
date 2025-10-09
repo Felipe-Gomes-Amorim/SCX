@@ -4,7 +4,7 @@ function ExodusTop(){
     return (
       
       <header className={Style.login_header}>
-        <Link to={"/"} className={Style.hyperText}><h1><strong>EXODUS</strong></h1></Link>
+        <Link to={"/"} className={Style.hyperText}><h1><strong>SCX</strong></h1></Link>
       </header>
 
     );

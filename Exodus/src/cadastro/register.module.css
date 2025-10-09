@@ -30,6 +30,7 @@
 /* Card de login */
 .login_card {
   display: flex;
+  margin-bottom: 2rem;
   background: white;
   margin-top: 40px;
   border-radius: 10px;
