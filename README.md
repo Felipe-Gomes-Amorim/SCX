@@ -1,12 +1,10 @@
-
-# SCX  
-
-Sistema de Controle de Exames 
+![banner do projeto](https://github.com/Felipe-Gomes-Amorim/SCX/tree/main/Exodus/src/assets/bannereditado.png?raw=true)
+# SCX  ##Sistema de Controle de Exames 
 
 
 ## Descrição do Projeto
 
-O SCX visa atender a crescente necessidade de um sistema integrado entre laboratório, médicos e também incluindo pacientes por meio da fácil criação, gestão, vizualização e integração de exames.
+O Objetivo do Projeto SCX é ser uma ferramenta que unifica as requisições e devoluções de exames, tornando o processo prático, simples e transparente. Por meio de um só sistema integrado os pacientes tem acesso à exames cadastrados em seu nome, que são requisitados pelos profissionais da saúde e devolvidos pelos laboratórios. A meta é ajudar não somente o paciente, mas ser um sistema usado também em clínicas pelos próprios profissionais, assim unificando e facilitando os processos que envolvem os exames.
 
 
 ##  Funcionalidades
@@ -25,7 +23,7 @@ O SCX visa atender a crescente necessidade de um sistema integrado entre laborat
 git clone https://github.com/Felipe-Gomes-Amorim/SAMMG.git
 
 # Entre na pasta do projeto
-cd ./Back-End
+cd ./Exodus
 
 # Instale as dependências
 yarn install
