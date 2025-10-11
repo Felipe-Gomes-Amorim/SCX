@@ -1,6 +1,7 @@
 import Style from './Hero.module.css'
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import GenericButton from './assents_link/GenericButton.jsx';
 
 function Hero(){
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Hero(){
         Pellentesque urna massa, rhoncus vitae lacus vitae, rutrum hendrerit quam. 
         Nulla ac aliquam ipsum. Pellentesque quis eros eu libero elementum laoreet.
       </p>
-      <button className={Style.btn} onClick={() => navigate("/login")}>Entrar</button>
+      <GenericButton text="Entrar" place={"/login"}/>
        
     </motion.div>
   </section>

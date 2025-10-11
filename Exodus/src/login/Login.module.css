@@ -7,12 +7,21 @@
   align-items: center;
 }
 
+.user_icon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
 /* Logo */
 .login_header {
   width: 100%;
   padding: 20px 40px;
   background: linear-gradient(to right, #007bff, #0046b3);
   font-style: italic;
+  display: flex;
+  justify-content: space-between; /* separa logo e ícone */
+  align-items: center; /* alinha verticalmente */
 }
 
 .hyperText{
