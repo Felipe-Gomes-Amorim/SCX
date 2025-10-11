@@ -4,6 +4,7 @@ import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarAdm } from "../js/cadastrate_adm.js"; 
+import ActionButton from "../assents_link/ActionButton.jsx";
 
 export default function RegisterAdm() {
   const [name, setNome] = useState("");
@@ -115,19 +116,17 @@ export default function RegisterAdm() {
                 <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
               )}
 
-              <button
-                className={Style.btn}
-                disabled={
+              <ActionButton
+                  text="Cadastrar"
+                  loading={loading}
+                  disabled={
                   name.trim() === "" ||
                   email.trim() === "" ||
                   cpf.trim() === "" ||
                   telephone.trim() === "" ||
-                  password_key.trim() === "" ||
-                  loading
+                  password_key.trim() === ""
                 }
-              >
-                {loading ? "Cadastrando..." : "Cadastrar"}
-              </button>
+              />
             </form>
           </motion.div>
         </div>

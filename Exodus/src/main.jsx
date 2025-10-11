@@ -7,7 +7,7 @@ import Register from './cadastro/register.jsx'
 import RegisterADM from './cadastro/registerADM.jsx'
 import Perfil from './perfil/Perfil.jsx'
 import RegisterExam from './cadastro/registerExam.jsx'
-
+import ResetSenha from './login/ResetSenha.jsx'
 
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 //ROTAS!!!!!!!!!!!!!!!!!
@@ -17,7 +17,8 @@ const router = createBrowserRouter([
   {path: "/register", element: <Register />},
   {path: "/registeradm", element: <RegisterADM />},
   {path: "/perfil", element: <Perfil/>},
-  {path: "/registerExam", element: <RegisterExam/>}
+  {path: "/registerExam", element: <RegisterExam/>},
+  {path: "/resetSenha", element: <ResetSenha/>}
 ]);
 
 createRoot(document.getElementById("root")).render(

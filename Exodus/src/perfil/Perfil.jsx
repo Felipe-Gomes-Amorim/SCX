@@ -4,8 +4,8 @@ import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import Avatar from "../assets/avatar.png";
 import axios from "axios";
-import { excluirUsuario } from "../js/excluirUsuario.js";
-
+import { logoutUsuario } from "../js/logout.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -21,7 +21,7 @@ export default function Perfil() {
   const [exames, setExames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     const nome = localStorage.getItem("nome") || "Usuário";
@@ -38,13 +38,13 @@ export default function Perfil() {
       return;
     }
 
-    // Carrega perfil e exames
+    //Função pra carregar o perfil
     const carregarPerfil = async () => {
       try {
         const perfilResponse = await axios.get(`http://127.0.0.1:3333/paciente/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
+        
         const paciente = perfilResponse.data;
 
         setUserData({
@@ -80,20 +80,20 @@ export default function Perfil() {
     carregarPerfil();
   }, []);
 
-  const handleExcluirPerfil = async () => {
-    const confirmar = window.confirm(
-      "Tem certeza que deseja excluir sua conta? Esta ação é irreversível."
-    );
-    if (!confirmar) return;
-
-    const result = await excluirUsuario();
+  //Função de LOGOUT
+  const handleLogout = async () => {
+    
+                        //chama a função logoutUsuario que tá em logout.js
+    const result = await logoutUsuario();
     if (result.success) {
-      alert(result.message);
-      window.location.href = "/";
+      // redireciona pra tela inicial
+      navigate("/"); 
     } else {
-      alert("Erro: " + result.message);
+      alert("Erro ao fazer logout: " + result.message);
     }
   };
+
+  
 
   if (loading) {
     return (
@@ -126,20 +126,12 @@ export default function Perfil() {
             <button
               className={Style.edit_btn}
               style={{ marginTop: "8px" }}
-              onClick={() => {
-                localStorage.clear();
-                window.location.href = "/";
-              }}
+              onClick={handleLogout}
+            
             >
               Logout
             </button>
-            <button
-              id="btnExcluirPerfil"
-              className={Style.edit_btn}
-              onClick={handleExcluirPerfil}
-            >
-              Excluir Perfil
-            </button>
+            
           </aside>
 
           {/* Conteúdo principal */}

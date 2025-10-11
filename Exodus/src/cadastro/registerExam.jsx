@@ -4,6 +4,7 @@ import Style from "./registerExam.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarExame } from "../js/cadastrar_exame.js";
+import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function RegisterExam() {
   const [exam_type, setExamType] = useState("");
@@ -47,6 +48,12 @@ export default function RegisterExam() {
     }
   };
 
+  const fields = [
+    { name: "exam_type", label: "Tipo de Exame", type: "text", placeholder: "Ex: Hemograma", required: true },
+    { name: "sample_type", label: "Tipo de Amostra", type: "text", placeholder: "Ex: Sangue, Urina...", required: true },
+    { name: "complement", label: "Complemento", type: "textarea", placeholder: "Observações adicionais..." },
+  ];
+
   return (
     <>
       <div className={Style.page}>
@@ -61,52 +68,15 @@ export default function RegisterExam() {
           >
             <h2>Cadastro de Exame</h2>
             <p>Preencha as informações do exame</p>
-
-            <form onSubmit={handleSubmit}>
-              <label>Tipo de Exame</label>
-              <input
-                type="text"
-                placeholder="Ex: Hemograma"
-                value={exam_type}
-                onChange={(e) => setExamType(e.target.value)}
-                required
+             <DynamicForm
+                fields={fields}
+                onSubmit={handleSubmit}
+                buttonText="Enviar Exame"
+                loadingText="Enviando..."
+                loading={loading}
+                errorMessage={errorMessage}
               />
-
-              <label>Tipo de Amostra</label>
-              <input
-                type="text"
-                placeholder="Ex: Sangue, Urina..."
-                value={sample_type}
-                onChange={(e) => setSampleType(e.target.value)}
-                required
-              />
-
-              <label>Complemento</label>
-              <textarea
-                placeholder="Observações adicionais..."
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
-              />
-
-              
-
-              {errorMessage && (
-                <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
-              )}
-
-              <button
-                className={Style.btn}
-                disabled={
-                  !exam_type ||
-                  !sample_type ||
-                  !requestDate ||
-                  !status ||
-                  loading
-                }
-              >
-                {loading ? "Enviando..." : "Enviar Exame"}
-              </button>
-            </form>
+            
           </motion.div>
         </div>
       </div>

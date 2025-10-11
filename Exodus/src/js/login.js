@@ -1,5 +1,5 @@
 import axios from "axios";
-
+//metodo principal ( data vai vir do Login.jsx / token tá armazenado no localStorage )
 export async function loginUsuario(loginData, role) {
   try {
     let endpoint = "";
@@ -7,19 +7,31 @@ export async function loginUsuario(loginData, role) {
 
 
     const response = await axios.post(
+      //ver rotas do médico no AuthController (Back-End)
       `http://127.0.0.1:8080/auth/login`,
       loginData
     );
 
     const { Token, nome, role: userRole, id, email } = response.data;
 
-    localStorage.setItem("token", Token);
+    //Passar token pra manter a persistência do tipo do usuário até o logout
+    localStorage.setItem("token",Token);
+    console.log(Token)
+    //ESSES DADOS AQUI SÃO TEMPORÁRIOS BIXO, DEPOIS TEM QUE FAZER UM GET PRA PEGAR OS DADOS DO USUÁRIO LOGADO
     localStorage.setItem("nome", nome);
     localStorage.setItem("role", userRole || role);
     localStorage.setItem("id", id);
     localStorage.setItem("email", email);
 
-    return { success: true };
+
+    //quiser adicionar qlqr coisa no processo é aqui
+
+
+    return { 
+      //ele vai retornar os dados do paciente
+      success: true
+
+    };
   } catch (error) {
     return {
       success: false,

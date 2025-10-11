@@ -1,3 +1,5 @@
+//SCRIPT INCOMPLETO FAVOR NAO USAR ATE FINALIZAR
+
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   const idUsuario = localStorage.getItem('idUsuario');

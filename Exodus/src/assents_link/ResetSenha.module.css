@@ -1,0 +1,12 @@
+.text{
+    font-size: 14px;
+  color: #006eff;
+  line-height: 1.6;
+  text-decoration: none;
+
+}
+
+.text:hover {
+  color: #004bb5;
+  text-decoration: underline;
+}

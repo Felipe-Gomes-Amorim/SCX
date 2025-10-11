@@ -5,32 +5,34 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { loginUsuario } from "../js/login.js";
 import { useNavigate } from "react-router-dom";
+import ResetSenha from "../assents_link/ResetSenha.jsx";
+import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function Login() {
   const [usernameKey, setUserKey] = useState("");
   const [password_key, setSenha] = useState("");
-  const [role, setRole] = useState("paciente");
+  const [role, setRole] = useState("ADMIN");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false); 
 
-
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = async (formValues) => {
+  setLoading(true);
+  const { usernameKey, password_key } = formValues;
 
-    const loginData = { usernameKey, password_key };
+  const result = await loginUsuario({ usernameKey, password_key }, role);
+  setLoading(false);
 
-    const result = await loginUsuario(loginData, role);
+  if (result.success) navigate("/perfil");
+  else alert("Erro no login: " + result.message);
+};
 
-    setLoading(false);
 
-    if (result.success) {
-      navigate("/perfil");
-    } else {
-      alert("Erro no login: " + result.message);
-    }
-  };
+
+  const fields = [
+    { name: "usernameKey", type: "text", placeholder: "Digite seu documento", required: true },
+    { name: "password_key", type: "password", placeholder: "Senha", required: true },
+  ];
 
   return (
     <>
@@ -46,34 +48,16 @@ export default function Login() {
           >
             <h2>Fazer Login</h2>
             <p className={Style.subtitle}>Digite seu documento e senha</p>
+            <DynamicForm
+                          fields={fields}
+                          onSubmit={handleSubmit}
+                          buttonText="Entrar"
+                          loading={loading}
 
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Digite seu documento"
-                value={usernameKey}
-                onChange={(e) => setUserKey(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Digite sua senha"
-                value={password_key}
-                onChange={(e) => setSenha(e.target.value)}
-                required
-              />
-
-
-
-              <button
-                className={Style.btn}
-                disabled={
-                  usernameKey.trim() === "" || password_key.trim() === "" || loading
-                }
-              >
-                {loading ? "Carregando..." : "Entrar"}
-              </button>
-            </form>
+            />
+            
+              <ResetSenha />
+            
           </motion.div>
 
 
