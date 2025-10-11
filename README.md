@@ -1,7 +1,7 @@
 <img width="3192" height="1239" alt="bannereditado2" src="https://github.com/user-attachments/assets/96ebc79a-be40-42ba-808d-02ee80efa913" />
 
 
-# SCX  ##Sistema de Controle de Exames 
+# SCX - Sistema de Controle de Exame
 
 
 ## Descrição do Projeto
