@@ -1,32 +1,21 @@
 //SCRIPT INCOMPLETO FAVOR NAO USAR ATE FINALIZAR
+import axios from 'axios';
+export async function carregarPerfil(token) {
+  if (!token) throw new Error("Token não fornecido");
 
-document.addEventListener('DOMContentLoaded', async () => {
-    //Pega o token e o nome
-  const token = localStorage.getItem('token');
-  const nome = localStorage.getItem('nome');
+  const response = await axios.get('http://127.0.0.1:8080/auth/perfil', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
 
-  const id2 = localStorage.getItem('id');
-  console.log('Token:', token);
-  console.log('Nome:', nome);
-
-  //carregando o perfil
-  try {
-    const response = await axios.get('http://127.0.0.1:3333/paciente/' + id2, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    const paciente = response.data;
+  return response.data;
+}
 
     //altera os campos do html
-    document.querySelector('#nome').textContent = paciente.nome;
-    document.querySelector('#cpf').textContent = paciente.cpf;
-    document.querySelector('#instituicao_vinc').textContent = paciente.instituicao_vinc;
-    document.querySelector('#email').textContent = paciente.email;
+
 
    //EXAMES
-    try {
+   /*
+   try {
       const examesResponse = await axios.get(`http://127.0.0.1:3333/examesPac/` + paciente.cpf, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -56,10 +45,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
       console.error('Erro ao carregar exames:', error.response?.data || error.message);
       alert('Erro ao carregar exames.');
-    }
+    
 
   } catch (error) {
     console.error('Erro ao carregar perfil:', error.response?.data || error.message);
     alert('Erro ao carregar o perfil.');
   }
-});
+}
+*/

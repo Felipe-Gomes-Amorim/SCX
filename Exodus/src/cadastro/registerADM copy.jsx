@@ -20,7 +20,7 @@ export default function RegisterAdm() {
     setLoading(true);
     setErrorMessage("");
 
-    const admData = { name, email, cpf, telephone, password_key};
+    const admData = {email};
 
     //const token = localStorage.getItem("token"); 
 
@@ -45,9 +45,7 @@ export default function RegisterAdm() {
         <div className={Style.login_card}>
           
 
-          <div className={Style.login_arrow}>
-            <span>→</span>
-          </div>
+          
 
           <motion.div className={Style.login_right}>
             <motion.h2

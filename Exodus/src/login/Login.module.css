@@ -8,8 +8,8 @@
 }
 
 .user_icon img {
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
 }
 
@@ -30,7 +30,7 @@
 
 .login_header h1 {
   color: white;
-  font-size: 32px;
+  font-size: 5rem;
   font-weight: bold;
   text-decoration: none;
      
@@ -258,3 +258,92 @@
   margin: 8px 0;
   display: block;
 }
+
+/* Container que agrupa o botão + e o ícone do usuário */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+/* Botão "+" */
+.addButton {
+  background-color: #fff;
+  color: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.addButton:hover {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* Wrapper do botão + (para posicionar o menu) */
+.addButtonWrapper {
+  position: relative;
+}
+
+/* Menu suspenso */
+.addMenu {
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  background: white;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  box-shadow: 0 -.4rem #007bff;
+  
+  z-index: 999;
+  min-width: 180px;
+  padding: 10px 0;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Itens do menu */
+.addMenu p {
+  text-decoration: underline;
+  margin: 0;
+  padding: 10px 15px;
+  font-size: 15px;
+  color: #007bff;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.addMenu p:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.addMenu p.logout{
+  color: #007bff;
+}
+
+.addMenu p.logout:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+/* Animação de aparição */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

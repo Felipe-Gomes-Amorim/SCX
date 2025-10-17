@@ -1,0 +1,23 @@
+.btn {
+ position: relative;
+  padding: 1rem 5rem;
+  border-radius: 7px;
+  border: 2px solid rgb(255, 255, 255);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+  color: #007DFA;
+  background: rgb(252, 252, 252);
+
+}

@@ -6,79 +6,53 @@ import Avatar from "../assets/avatar.png";
 import axios from "axios";
 import { logoutUsuario } from "../js/logout.js";
 import { useNavigate } from "react-router-dom";
+import { carregarPerfil } from "../js/perfil.js"; 
+import Redirect from "../assents_link/Redirect.jsx";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
     nome: "",
-    role: "",
+    roles: "",
     cpf: "",
     id: "",
     foto: "",
     instituicao_vinc: "",
     email: "",
   });
-
+  const token = localStorage.getItem("token");
   const [exames, setExames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+ 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const nome = localStorage.getItem("nome") || "Usuário";
-    const role = localStorage.getItem("role") || "paciente";
-    const cpf = localStorage.getItem("cpf") || "";
-    const id = localStorage.getItem("id") || "";
-    const foto = localStorage.getItem("foto") || Avatar;
-
-    setUserData((prev) => ({ ...prev, nome, role, cpf, id, foto }));
-
-    if (!token || !id) {
-      setErrorMsg("Usuário não autenticado. Faça login novamente.");
-      setLoading(false);
+  const foto = Avatar;
+  const fetchPerfil = async () => {
+    
+    if (!token) {
+      navigate("/login"); // não está logado
       return;
     }
 
-    //Função pra carregar o perfil
-    const carregarPerfil = async () => {
-      try {
-        const perfilResponse = await axios.get(`http://127.0.0.1:3333/paciente/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        
-        const paciente = perfilResponse.data;
+    try {
+      const data = await carregarPerfil(token); // aguarda o retorno
+      setUserData({
+        ...data,
+        roles: data.roles || []
+      });
+      console.log(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setErrorMsg("Erro ao carregar perfil.");
+      setLoading(false);
+    }
+  };
+  
 
-        setUserData({
-          nome: paciente.nome,
-          cpf: paciente.cpf,
-          id: id,
-          foto,
-          role,
-          instituicao_vinc: paciente.instituicao_vinc,
-          email: paciente.email,
-        });
+  fetchPerfil();
+}, [token]);
 
-        // Buscar exames
-        try {
-          const examesResponse = await axios.get(
-            `http://127.0.0.1:3333/examesPac/${paciente.cpf}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-
-          setExames(examesResponse.data);
-        } catch (err) {
-          console.error("Erro ao carregar exames:", err.response?.data || err.message);
-          setErrorMsg("Erro ao carregar exames.");
-        }
-      } catch (error) {
-        console.error("Erro ao carregar perfil:", error.response?.data || error.message);
-        setErrorMsg("Erro ao carregar perfil.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    carregarPerfil();
-  }, []);
 
   //Função de LOGOUT
   const handleLogout = async () => {
@@ -92,6 +66,11 @@ export default function Perfil() {
       alert("Erro ao fazer logout: " + result.message);
     }
   };
+
+
+
+
+
 
   
 
@@ -116,7 +95,7 @@ export default function Perfil() {
           {/* Coluna lateral esquerda */}
           <aside className={Style.sidebar}>
             <img
-              src={userData.foto}
+              src={userData.foto || Avatar}
               alt="Foto de perfil"
               className={Style.avatar}
             />
@@ -124,7 +103,7 @@ export default function Perfil() {
             <p>{userData.email}</p>
             <button className={Style.edit_btn}>Editar Perfil</button>
             <button
-              className={Style.edit_btn}
+              className={Style.logout_btn}
               style={{ marginTop: "8px" }}
               onClick={handleLogout}
             
@@ -140,9 +119,24 @@ export default function Perfil() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <>
+                {userData.roles?.some(role => role.name === "Admin") && (
+                <section className={Style.section}>
+                  <h2>Área do {userData.roles[0]?.name}</h2>
+                  <p>
+                    <strong>Instituição:</strong> {userData.instituicao_vinc || "—"}
+                  </p>
+                  <div className={Style.buttons}>
+                  <Redirect text="Cadastrar Laboratório" place="/registerLaboratory" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
+
+                  <Redirect text="Cadastrar Médico" place="/registerMedico" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
+                  </div>
+                  
+                </section>
+                )}
+
                 {/* Área do usuário */}
                 <section className={Style.section}>
-                  <h2>Área do {userData.role}</h2>
+                  <h2>Área do Usuário</h2>
                   <p>
                     <strong>Instituição:</strong> {userData.instituicao_vinc || "—"}
                   </p>
@@ -166,6 +160,11 @@ export default function Perfil() {
                     </div>
                   )}
                 </section>
+
+
+
+
+
 
                 {/* Histórico de atividades */}
                 <section className={Style.section}>

@@ -2,23 +2,39 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+
 import Login from './login/Login.jsx'
+
 import Register from './cadastro/register.jsx'
-import RegisterADM from './cadastro/registerADM.jsx'
-import Perfil from './perfil/Perfil.jsx'
+import RegisterADM from './cadastro/registerFirstADM.jsx'
 import RegisterExam from './cadastro/registerExam.jsx'
+import RegisterClinic from './cadastro/registerClinic.jsx'
+import RegisterLaboratory from './cadastro/registerLab.jsx'
+import RegisterDoctor from './cadastro/registerDoctor.jsx'
+
+import Perfil from './perfil/Perfil.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
+import FirstLogin from './login/FirstLogin.jsx'
+
+
+
 
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 //ROTAS!!!!!!!!!!!!!!!!!
 const router = createBrowserRouter([
   {path: "/", element: <App />},
   {path: "/login", element: <Login />},
+
   {path: "/register", element: <Register />},
   {path: "/registeradm", element: <RegisterADM />},
-  {path: "/perfil", element: <Perfil/>},
   {path: "/registerExam", element: <RegisterExam/>},
-  {path: "/resetSenha", element: <ResetSenha/>}
+  {path: "/registerClinica", element: <RegisterClinic/>},
+  {path: "/registerLaboratory", element: <RegisterLaboratory/>},
+  {path: "/registerMedico", element: <RegisterDoctor/>},
+  {path: "/perfil", element: <Perfil/>},
+  {path: "/resetSenha", element: <ResetSenha/>},
+  {path: "/firstLogin/:token?", element: <FirstLogin/>},
+  
 ]);
 
 createRoot(document.getElementById("root")).render(

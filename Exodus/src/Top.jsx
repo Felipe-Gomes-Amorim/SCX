@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Top.module.css";
-
+import GenericButton from './assents_link/GenericButton.jsx';
 
 function Top() {
   const [isLogged, setIsLogged] = useState(false);
@@ -15,13 +15,10 @@ function Top() {
 
   return (
     <section className={Style.logo_bar}>
-      <div className={Style.logo}>
-        <h1>
-          <strong>SCX</strong>{" "}
-          <span>{new Date().getFullYear()}</span>
-        </h1>
-      </div>
-
+      
+        <GenericButton text="Portal do Médico" place={"/login"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
+        <GenericButton text="Portal do Laboratório" place={"/register"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
+        <GenericButton text="Portal da Secretaria" place={"/register"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
       
     </section>
   );

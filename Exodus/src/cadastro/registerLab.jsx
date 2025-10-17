@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarPaciente } from "../js/cadastrate.js";
+import { cadastrarLaboratorio } from "../js/cadastrar_laboratorio.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function Register() {
@@ -14,9 +14,10 @@ export default function Register() {
 
   // Campos que o formulário vai renderizar dinamicamente
   const fields = [
-    { name: "name", type: "text", placeholder: "Nome completo", required: true },
-    { name: "cpf", type: "text", placeholder: "CPF", required: true },
-    { name: "email", type: "email", placeholder: "E-mail", required: true },
+    { name: "name", type: "text", placeholder: "Nome", required: true },
+    { name: "cnpj", type: "text", placeholder: "CNPJ", required: true },
+    { name: "address", type: "text", placeholder: "Endereço", required: true },
+    { name: "telephone", type: "text", placeholder: "Telefone", required: true },
   ];
 
   // Recebe o objeto com todos os valores do form
@@ -25,16 +26,17 @@ export default function Register() {
     setErrorMessage("");
 
     try {
-      const pacienteData = {
+      const labData = {
         name: formValues.name,
-        cpf: formValues.cpf,
-        email: formValues.email,
+        cnpj: formValues.cnpj,
+        address: formValues.telephone,
+        telephone: formValues.telephone,
       };
       const token = localStorage.getItem("token"); 
-      const result = await cadastrarPaciente(pacienteData, token);
+      const result = await cadastrarLaboratorio(labData, token);
 
       if (result.success) {
-        alert("Paciente cadastrado com sucesso!");
+        alert("Laboratório cadastrado com sucesso!");
         navigate("/"); // Redireciona para login
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
@@ -69,7 +71,7 @@ export default function Register() {
           >
             <motion.h2>Bem-vindo!</motion.h2>
             <motion.p>
-              Crie sua conta de paciente para acessar o sistema
+              Registre o Laboratório no sistema
             </motion.p>
           </motion.div>
 
@@ -80,8 +82,8 @@ export default function Register() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
           >
-            <h2>Cadastro de Paciente</h2>
-            <p className={Style.subtitle}>Preencha seus dados</p>
+            <h2>Cadastro de Laboratório</h2>
+            <p className={Style.subtitle}>Preencha com os dados</p>
 
             <DynamicForm
               fields={fields}

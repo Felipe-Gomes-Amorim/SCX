@@ -18,7 +18,7 @@
 }
 
 .reset_card h2 {
-  color: #007bff;
+  color: #000000;
   margin-bottom: 10px;
   font-size: 26px;
 }
@@ -86,3 +86,4 @@
 .back_btn:hover {
   color: #0046b3;
 }
+

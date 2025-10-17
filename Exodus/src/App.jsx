@@ -13,7 +13,7 @@ function App() {
 
   return (
    <>
-   <ExodusTop></ExodusTop>
+   <Header></Header>  
    <Top></Top>
    <Hero></Hero>
    <About></About>

@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Style from "./GenericButton.module.css"; 
-let perfilWindow = null; 
+import Style from "./Redirect.module.css"; 
 
-export default function ActionButton({
+export default function Redirect({
   text,
+  place,
   color = "#fff",       // cor padrão do texto e borda
   background = "transparent", // cor de fundo padrão
   hoverColor = "#007DFA",     // cor do texto no hover
@@ -13,22 +13,6 @@ export default function ActionButton({
   //padding = "10px 215px"       permite ajustar o tamanho também
 }) {
   const navigate = useNavigate();
-
-  const handleEntrar = () => {
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    // verifica se a aba ainda existe e não foi fechada
-    if (!perfilWindow || perfilWindow.closed) {
-      perfilWindow = window.open("/perfil", "perfil");
-    } else {
-      perfilWindow.focus();
-    }
-  } else {
-    navigate("/login");
-  }
-};
-
 
   const buttonStyle = {
     color: color,
@@ -42,7 +26,7 @@ export default function ActionButton({
       className={Style.btn}
       style={buttonStyle}
       type="button"
-      onClick={() => handleEntrar()}
+      onClick={() => navigate(place)}
       onMouseEnter={(e) => {
         e.target.style.color = hoverColor;
         e.target.style.background = hoverBackground;

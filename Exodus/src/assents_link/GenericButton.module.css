@@ -1,6 +1,6 @@
 .btn {
  position: relative;
-  padding: 10px 215px;
+  padding: 1rem 5rem;
   border-radius: 7px;
   border: 1px solid rgb(255, 255, 255);
   font-size: 14px;
@@ -70,4 +70,35 @@
   -webkit-transition: box-shadow 0.2s ease-in;
   -moz-transition: box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in;
+}
+
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  color: #000;
+  min-width: 160px;
+  border-radius: 7px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dropdownItem {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.dropdownItem:hover {
+  background-color: #f1f1f1;
 }

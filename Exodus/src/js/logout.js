@@ -4,12 +4,7 @@ export async function logoutUsuario() {
     let endpoint = "";
 
     //remove os dados do localStorage
-    localStorage.removeItem("token");
-    localStorage.removeItem("nome");
-    localStorage.removeItem("role");
-    localStorage.removeItem("cpf");
-    localStorage.removeItem("id");
-    localStorage.removeItem("foto");
+    localStorage.clear();
     
     return { 
       //ele vai retornar o resultado
