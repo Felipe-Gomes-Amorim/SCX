@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import ActionButton from "./ActionButton.jsx";
 
 export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
-  const [formData, setFormData] = useState({});
+  // Inicializa o formData com os valores padrão (field.value)
+  const [formData, setFormData] = useState(
+    fields.reduce((acc, field) => {
+      acc[field.name] = field.value || "";
+      return acc;
+    }, {})
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +29,7 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
           name={field.name}
           placeholder={field.placeholder}
           required={field.required}
+          value={formData[field.name] || field.defaultValue || "" } // mostra o valor inicial, mas permite edição
           onChange={handleChange}
         />
       ))}

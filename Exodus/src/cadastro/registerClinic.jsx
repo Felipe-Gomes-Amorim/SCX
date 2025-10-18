@@ -14,10 +14,11 @@ export default function RegisterClinic() {
 
   // Campos que o formulário vai renderizar dinamicamente
   const fields = [
-    { name: "name", type: "text", placeholder: "Nome completo", required: true },
+    { name: "name", type: "text", placeholder: "Nome da Clínica", required: true },
     { name: "cnpj", type: "text", placeholder: "CNPJ", required: true },
     { name: "address", type: "text", placeholder: "Endereço", required: true },
     { name: "telephone", type: "text", placeholder: "Telefone", required: true },
+    
   ];
 
   // Recebe o objeto com todos os valores do form
@@ -37,7 +38,7 @@ export default function RegisterClinic() {
 
       if (result.success) {
         alert("Clínica cadastrada com sucesso!");
-        navigate("/"); // Redireciona para login
+        navigate("/perfil"); // Redireciona para login
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
@@ -71,7 +72,7 @@ export default function RegisterClinic() {
           >
             <motion.h2>Bem-vindo!</motion.h2>
             <motion.p>
-              Crie a clínica
+              Preencha com as informações da clínica para o cadastro.
             </motion.p>
           </motion.div>
 

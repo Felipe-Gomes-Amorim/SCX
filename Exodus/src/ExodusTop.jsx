@@ -1,61 +1,67 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
-import profilePic from "./assets/user-icon.png"; // ícone padrão
-import Avatar from "./assets/avatar.png"; // avatar do usuário
+import profilePic from "./assets/user-icon.png"; 
+import Avatar from "./assets/avatar.png"; 
 import { logoutUsuario } from "./js/logout.js";
+import { carregarPerfil } from "./js/perfil.js"; // mesmo que você usa no Perfil
 
 function ExodusTop() {
   const [isLogged, setIsLogged] = useState(false);
-  const [userRole, setUserRole] = useState(null);
+  const [userData, setUserData] = useState({ roles: [], nome: "", foto: "" });
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token"); // pegar token
 
   useEffect(() => {
-    const userId = localStorage.getItem("id");
-    const role = localStorage.getItem("role"); // pega a role do usuário
-    setIsLogged(!!userId);
-    setUserRole(role);
-  }, []);
+    const fetchUser = async () => {
+      if (!token) {
+        setIsLogged(false);
+        return;
+      }
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
-
-  //LOGOUT DO USUARIO
-  const handleLogout = async () => {
-      
-                          //chama a função logoutUsuario que tá em logout.js
-      const result = await logoutUsuario();
-      if (result.success) {
-        // redireciona pra tela inicial
-        navigate("/");
-      } else {
-        alert("Erro ao fazer logout: " + result.message);
+      try {
+        const data = await carregarPerfil(token); // busca direto do backend
+        setUserData({
+          ...data,
+          roles: data.roles || [],
+        });
+        setIsLogged(true);
+      } catch (error) {
+        console.error("Erro ao carregar perfil:", error);
+        setIsLogged(false);
       }
     };
+
+    fetchUser();
+  }, [token]);
+
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+
+  const handleLogout = async () => {
+    const result = await logoutUsuario();
+    if (result.success) {
+      navigate("/");
+    } else {
+      alert("Erro ao fazer logout: " + result.message);
+    }
+  };
+
+  const isAdmin = userData.roles?.some(role => role.name?.toUpperCase() === "ADMIN");
 
   return (
     <header className={Style.login_header}>
       <Link to="/perfil" className={Style.hyperText}>
-        <h1>
-          <strong>SCX</strong>
-        </h1>
+        <h1><strong>SCX</strong></h1>
       </Link>
 
-
-      
-
       <div className={Style.headerRight}>
-        {/* Se o usuário for admin, mostra o botão "+" */}
-        {isLogged && userRole === "ADMIN" && (
+        {isLogged  && (
           <div className={Style.addButtonWrapper}>
-            <button className={Style.addButton} onClick={toggleMenu}>
-              +
-            </button>
-
+            <button className={Style.addButton} onClick={toggleMenu}>+</button>
             {menuOpen && (
               <div className={Style.addMenu}>
+                {isAdmin&&(
                 <p
                   onClick={() => {
                     navigate("/registerLaboratory");
@@ -64,10 +70,10 @@ function ExodusTop() {
                 >
                   Criar laboratório
                 </p>
-                <p className={Style.logout}
-                  onClick={() => {
-                    handleLogout();
-                  }}
+                )}
+                <p
+                  className={Style.logout}
+                  onClick={() => handleLogout()}
                 >
                   Fazer Logout
                 </p>
@@ -76,17 +82,12 @@ function ExodusTop() {
           </div>
         )}
 
-
-
-        {/* Ícone do usuário */}
         <div
           className={Style.user_icon}
-          onClick={() => {
-            if (isLogged) navigate("/perfil");
-          }}
+          onClick={() => { if (isLogged) navigate("/perfil"); }}
           style={{ cursor: isLogged ? "pointer" : "default" }}
         >
-          <img src={isLogged ? Avatar : profilePic} alt="Usuário" />
+          <img src={userData.foto || Avatar} alt="Usuário" />
         </div>
       </div>
     </header>

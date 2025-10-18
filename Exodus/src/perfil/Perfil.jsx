@@ -101,7 +101,7 @@ export default function Perfil() {
             />
             <h3>{userData.nome}</h3>
             <p>{userData.email}</p>
-            <button className={Style.edit_btn}>Editar Perfil</button>
+            <button className={Style.edit_btn}>Ver meus dados</button>
             <button
               className={Style.logout_btn}
               style={{ marginTop: "8px" }}
@@ -128,12 +128,13 @@ export default function Perfil() {
                   <div className={Style.buttons}>
                   <Redirect text="Cadastrar Laboratório" place="/registerLaboratory" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
 
-                  <Redirect text="Cadastrar Médico" place="/registerMedico" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
+                  <Redirect text="Cadastrar Médico" place="/checkDoctor" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
                   </div>
                   
                 </section>
                 )}
 
+                
                 {/* Área do usuário */}
                 <section className={Style.section}>
                   <h2>Área do Usuário</h2>

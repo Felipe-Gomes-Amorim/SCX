@@ -6,6 +6,7 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarLaboratorio } from "../js/cadastrar_laboratorio.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { cadastrarAdmLaboratorio } from "../js/cadastrar_adm_laboratorio.js";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,8 @@ export default function Register() {
     { name: "cnpj", type: "text", placeholder: "CNPJ", required: true },
     { name: "address", type: "text", placeholder: "Endereço", required: true },
     { name: "telephone", type: "text", placeholder: "Telefone", required: true },
+    { name: "labUser", type: "text", placeholder: "Nome do ADM do laboratório", required: true },
+    { name: "email", type: "email", placeholder: "Email", required: true },
   ];
 
   // Recebe o objeto com todos os valores do form
@@ -31,15 +34,31 @@ export default function Register() {
         cnpj: formValues.cnpj,
         address: formValues.telephone,
         telephone: formValues.telephone,
+        
+      };
+      const admLabData = {
+        name: formValues.labUser,
+        email: formValues.email,
+        cnpj: formValues.cnpj,
       };
       const token = localStorage.getItem("token"); 
+      //CASTRANDO O LABORATORIO
       const result = await cadastrarLaboratorio(labData, token);
 
       if (result.success) {
         alert("Laboratório cadastrado com sucesso!");
-        navigate("/"); // Redireciona para login
+        
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+      }
+
+      //CADASTRANDO O ADM
+      const result2 = await cadastrarAdmLaboratorio(admLabData, token);
+      if (result2.success) {
+        alert("Administrador do laboratório cadastrado com sucesso!");
+        navigate("/perfil"); 
+      } else {
+        setErrorMessage(result2.message || "Erro desconhecido ao cadastrar");
       }
     } catch (err) {
       setErrorMessage("Falha ao se conectar ao servidor.");

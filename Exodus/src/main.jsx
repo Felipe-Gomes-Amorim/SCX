@@ -12,9 +12,12 @@ import RegisterClinic from './cadastro/registerClinic.jsx'
 import RegisterLaboratory from './cadastro/registerLab.jsx'
 import RegisterDoctor from './cadastro/registerDoctor.jsx'
 
+import CheckDoctor from './cadastro/CheckDoctor.jsx' 
+
 import Perfil from './perfil/Perfil.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
+
 
 
 
@@ -34,6 +37,7 @@ const router = createBrowserRouter([
   {path: "/perfil", element: <Perfil/>},
   {path: "/resetSenha", element: <ResetSenha/>},
   {path: "/firstLogin/:token?", element: <FirstLogin/>},
+  {path: "/checkDoctor", element: <CheckDoctor/>},
   
 ]);
 

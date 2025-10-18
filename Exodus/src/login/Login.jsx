@@ -12,7 +12,7 @@ import Header from "../Header.jsx";
 export default function Login() {
   const [usernameKey, setUserKey] = useState("");
   const [password_key, setSenha] = useState("");
-  const [role, setRole] = useState("ADMIN");
+  const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false); 
 
