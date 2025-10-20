@@ -18,6 +18,7 @@ import Perfil from './perfil/Perfil.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
 
+import SelectAll from './select_all/SelectAll.jsx'
 
 
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
   {path: "/resetSenha", element: <ResetSenha/>},
   {path: "/firstLogin/:token?", element: <FirstLogin/>},
   {path: "/checkDoctor", element: <CheckDoctor/>},
+  { path: "/selectAll/:role?", element: <SelectAll /> },
   
 ]);
 

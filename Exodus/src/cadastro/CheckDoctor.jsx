@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { verificarMedico } from "../js/verificar_medico";
-import Style from "./register.module.css";
+import { transferirMedico } from "../js/transferir_medico";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import Style from "./register.module.css";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
-import { transferirMedico } from "../js/transferir_medico";
 
 export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);
@@ -27,9 +28,9 @@ export default function CheckDoctor() {
     } else if (result.status === "transferivel") {
       alert("🔁 Médico existe no sistema, mas não está vinculado à clínica. Cadastrando no sistema");
       const result2 = await transferirMedico(formValues);
-        if (result2.success) {
+      if (result2.success) {
         alert("Transferido com sucesso!");
-        navigate("/perfil"); // Redireciona para login
+        navigate("/perfil");
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
@@ -48,8 +49,28 @@ export default function CheckDoctor() {
     <>
       <div className={Style.login_page}>
         <ExodusTop />
+
         <div className={Style.login_card}>
-          <div className={Style.login_left}>
+          {/* Barra lateral / mensagem de boas-vindas */}
+          <motion.div
+            className={Style.login_right}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
+            <motion.h2>Bem-vindo!</motion.h2>
+            <motion.p>
+              Verifique se o médico já está cadastrado no sistema
+            </motion.p>
+          </motion.div>
+
+          {/* Formulário */}
+          <motion.div
+            className={Style.login_left}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
             <h2>Verificar Médico</h2>
             <p className={Style.subtitle}>Informe o CRM para verificar o cadastro</p>
 
@@ -60,9 +81,10 @@ export default function CheckDoctor() {
               loading={loading}
               errorMessage={errorMessage}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
+
       <Footer />
     </>
   );

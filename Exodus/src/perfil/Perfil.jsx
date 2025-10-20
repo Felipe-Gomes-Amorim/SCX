@@ -7,7 +7,9 @@ import axios from "axios";
 import { logoutUsuario } from "../js/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarPerfil } from "../js/perfil.js"; 
-import Redirect from "../assents_link/Redirect.jsx";
+
+import AdmArea from "./AdmArea.jsx";
+import MedicoArea from "./MedicoArea.jsx";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -119,19 +121,16 @@ export default function Perfil() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <>
+              
                 {userData.roles?.some(role => role.name === "Admin") && (
-                <section className={Style.section}>
-                  <h2>Área do {userData.roles[0]?.name}</h2>
-                  <p>
-                    <strong>Instituição:</strong> {userData.instituicao_vinc || "—"}
-                  </p>
-                  <div className={Style.buttons}>
-                  <Redirect text="Cadastrar Laboratório" place="/registerLaboratory" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
-
-                  <Redirect text="Cadastrar Médico" place="/checkDoctor" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff"/>
-                  </div>
-                  
-                </section>
+                  //AREA DO ADM
+                <AdmArea/>
+                
+                )}
+                {userData.roles?.some(role => role.name === "Doctor") && (
+                  //AREA DO ADM
+                <MedicoArea/>
+                
                 )}
 
                 

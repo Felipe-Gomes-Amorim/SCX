@@ -38,7 +38,7 @@ export default function RegisterClinic() {
 
       if (result.success) {
         alert("Clínica cadastrada com sucesso!");
-        navigate("/perfil"); // Redireciona para login
+        navigate("/"); // Redireciona para login
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }

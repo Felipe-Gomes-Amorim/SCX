@@ -5,7 +5,7 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
   // Inicializa o formData com os valores padrão (field.value)
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
-      acc[field.name] = field.value || "";
+      acc[field.name] = field.defaultValue || field.value || "";
       return acc;
     }, {})
   );
@@ -29,7 +29,7 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
           name={field.name}
           placeholder={field.placeholder}
           required={field.required}
-          value={formData[field.name] || field.defaultValue || "" } // mostra o valor inicial, mas permite edição
+          value={formData[field.name]} 
           onChange={handleChange}
         />
       ))}

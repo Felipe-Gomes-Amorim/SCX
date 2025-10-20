@@ -1,0 +1,98 @@
+/* Container da seção */
+.section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+/* Título */
+.section h2 {
+  color: #007bff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Tabela */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Botões de ação */
+.edit, .delete {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+  margin-right: 6px;
+}
+
+.edit {
+  background-color: transparent;
+  color: #ffc107;
+  border: 2px solid #ffc107;
+}
+
+.edit:hover {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.delete {
+  background-color: transparent;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+}
+
+.delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Mensagens de status */
+.loading {
+  color: #007bff;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.empty {
+  color: #555;
+  font-style: italic;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Botões principais da seção (se houver) */
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}

@@ -40,8 +40,8 @@ export default function FirstLogin() {
             transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
             className={Style.login_left}
           >
-            <h2>Crie sua Senha</h2>
-            <p className={Style.subtitle}>Digite sua Senha</p>
+            <h2>Redefinir Senha</h2>
+            <p className={Style.subtitle}>Digite sua nova Senha</p>
             <DynamicForm
                           fields={fields}
                           onSubmit={handleSubmit}

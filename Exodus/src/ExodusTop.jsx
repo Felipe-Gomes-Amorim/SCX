@@ -62,6 +62,7 @@ function ExodusTop() {
             {menuOpen && (
               <div className={Style.addMenu}>
                 {isAdmin&&(
+                <>
                 <p
                   onClick={() => {
                     navigate("/registerLaboratory");
@@ -70,6 +71,25 @@ function ExodusTop() {
                 >
                   Criar laboratório
                 </p>
+
+                <p
+                  onClick={() => {
+                    navigate("/checkDoctor");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cadastrar Médico
+                </p>
+                <p
+                  onClick={() => {
+                    navigate("/selectAll/doctor");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Ver Médicos
+                </p>
+                </>
+                
                 )}
                 <p
                   className={Style.logout}
