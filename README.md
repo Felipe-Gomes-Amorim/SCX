@@ -11,10 +11,12 @@ O Objetivo do Projeto SCX é ser uma ferramenta que unifica as requisições e d
 
 ##  Funcionalidades
 
-- Cadastro e login de pacientes, médicos, laboratório e secretariados
-- Consulta de exames liberados por parte do paciente, do laboratório e do médico
-- Interface simples e responsiva
+Controle de Clínicas por meio de um *Administrador* com as seguintes funcionalidades
+- Cadastrar um novo Laboratório relacionado com a Clínica ou ativar uma Laboratório em uma Clínica
+- Cadastrar um Médico na Clínica ou ativar a conta Médico em relação à Clínica
 
+- Ver Lista de Médicos ativas na Clínica
+- Ver Lista de Laboratórios ativos na Clínica
 
 
 
@@ -28,7 +30,8 @@ git clone https://github.com/Felipe-Gomes-Amorim/SAMMG.git
 cd ./Exodus
 
 # Instale as dependências
-yarn install
+yarn add vite
+yarn add axios
 
 # Inicie o servidor de desenvolvimento
 yarn dev
