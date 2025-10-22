@@ -17,10 +17,12 @@ export default function SelectAll() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await mostrar_todos(role, token);
-
+                console.log(response)
+                
                 // Como response já é um array:
                 if (response && response.length > 0) {
                     setDados(response);
+                    
                 } else {
                     setErro("Nenhum registro encontrado.");
                 }

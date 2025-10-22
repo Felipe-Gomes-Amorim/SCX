@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Style from "./Login.module.css";
 import Footer from "../Footer.jsx";
 
-import { loginUsuario } from "../js/login.js";
+import { loginUsuario } from "../js/login e perfil/login.js";
 import { useNavigate } from "react-router-dom";
 import ResetSenha from "../assents_link/ResetSenha.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";

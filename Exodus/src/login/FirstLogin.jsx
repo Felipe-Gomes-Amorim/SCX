@@ -6,7 +6,7 @@ import Header from "../Header.jsx";
 import { useNavigate } from "react-router-dom";
 import ResetSenha from "../assents_link/ResetSenha.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
-import { firstLogin } from "../js/firstLogin.js";
+import { firstLogin } from "../js/login e perfil/firstLogin.js";
 
 export default function FirstLogin() {
     const [loading, setLoading] = useState(false);

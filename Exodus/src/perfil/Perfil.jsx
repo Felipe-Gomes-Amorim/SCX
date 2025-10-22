@@ -4,9 +4,9 @@ import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import Avatar from "../assets/avatar.png";
 import axios from "axios";
-import { logoutUsuario } from "../js/logout.js";
+import { logoutUsuario } from "../js/login e perfil/logout.js";
 import { useNavigate } from "react-router-dom";
-import { carregarPerfil } from "../js/perfil.js"; 
+import { carregarPerfil } from "../js/login e perfil/perfil.js"; 
 
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
@@ -47,6 +47,7 @@ export default function Perfil() {
     } catch (error) {
       console.error(error);
       setErrorMsg("Erro ao carregar perfil.");
+      navigate("/login");
       setLoading(false);
     }
   };

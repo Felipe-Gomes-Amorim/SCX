@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarPaciente } from "../js/cadastrate.js";
+import { cadastrarPaciente } from "../js/registros/cadastrate.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function Register() {

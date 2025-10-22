@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
 import profilePic from "./assets/user-icon.png"; // ícone padrão
 import Avatar from "./assets/avatar.png"; // avatar do usuário
-import { logoutUsuario } from "./js/logout.js";
+import { logoutUsuario } from "./js/login e perfil/logout.js";
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false);

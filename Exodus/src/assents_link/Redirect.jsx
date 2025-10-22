@@ -10,7 +10,7 @@ export default function Redirect({
   hoverColor = "#007DFA",     // cor do texto no hover
   hoverBackground = "#fff",   // cor do fundo no hover
   glowColor = "#fff", 
-  //padding = "10px 215px"       permite ajustar o tamanho também
+  //padding = "10px 215px"       //permite ajustar o tamanho também
 }) {
   const navigate = useNavigate();
 
@@ -27,6 +27,7 @@ export default function Redirect({
       style={buttonStyle}
       type="button"
       onClick={() => navigate(place)}
+      
       onMouseEnter={(e) => {
         e.target.style.color = hoverColor;
         e.target.style.background = hoverBackground;
@@ -36,6 +37,7 @@ export default function Redirect({
         e.target.style.background = background;
       }}
     >
+      
       {text}
     </button>
   );

@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarLaboratorio } from "../js/cadastrar_laboratorio.js";
+import { cadastrarLaboratorio } from "../js/registros/cadastrar_laboratorio.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
-import { cadastrarAdmLaboratorio } from "../js/cadastrar_adm_laboratorio.js";
+import { cadastrarAdmLaboratorio } from "../js/registros/cadastrar_adm_laboratorio.js";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);

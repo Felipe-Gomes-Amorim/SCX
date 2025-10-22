@@ -1,7 +1,7 @@
 export async function mostrar_todos(role, token) {
   let url = "";
 
-  // Verifica a role e define a rota correspondente
+  // SE O ADM PEDIR PRA VER OS MEDICOS
   if (role === "doctor") {
     url = "http://localhost:8080/admin/doctorClinic";
   } else if (role === "adm") {
@@ -10,7 +10,12 @@ export async function mostrar_todos(role, token) {
   } else if (role === "lab_adm") {
     console.log("Função de listar administradores de laboratório ainda não implementada.");
     return [];
-  } else {
+  }
+  //SE O MÉDICO PEDIR PRA VER AS CLÍNICAS
+  else if (role === "clinics") {
+    url = "http://localhost:8080/doctor/clinicsDoctor";
+  }
+  else {
     console.error("Role inválida:", role);
     return [];
   }
@@ -22,13 +27,14 @@ export async function mostrar_todos(role, token) {
         Authorization: token ? `Bearer ${token}` : undefined,
        },
     });
-
+    
     if (!response.ok) {
       throw new Error(`Erro ao buscar dados (${response.status})`);
     }
     
     const data = await response.json();
-    console.log(data)
+    
+    
     return data;
   } catch (error) {
     console.error("Erro ao buscar dados:", error);

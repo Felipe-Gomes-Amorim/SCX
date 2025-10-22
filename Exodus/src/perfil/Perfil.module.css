@@ -137,9 +137,23 @@
   margin-bottom: 15px;
 }
 
-.buttons{
+.buttons {
   display: flex;
+  flex-wrap: wrap; /* Faz quebrar linha automaticamente */
+  margin-top: 1.5rem;
+  gap: 1.5rem;
+  justify-content: flex-start; /* mantém alinhado à esquerda */
+}
+
+.subsection {
   margin-top: 2rem;
-  gap: 2rem;
-  
+  padding-top: 1rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.subsection h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.8rem;
 }

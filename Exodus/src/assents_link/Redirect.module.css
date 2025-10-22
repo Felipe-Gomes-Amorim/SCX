@@ -1,6 +1,7 @@
 .btn {
- position: relative;
-  padding: 1rem 5rem;
+  position: relative;
+  width: 15rem;               /* 🔹 largura fixa igual pra todos */
+  height: 5rem;               /* 🔹 altura fixa */
   border-radius: 7px;
   border: 2px solid rgb(255, 255, 255);
   font-size: 14px;
@@ -11,13 +12,13 @@
   color: #fff;
   overflow: hidden;
   box-shadow: 0 0 0 0 transparent;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  display: flex;              /* centraliza texto */
+  justify-content: center;
+  align-items: center;
 }
 
 .btn:hover {
   color: #007DFA;
   background: rgb(252, 252, 252);
-
 }

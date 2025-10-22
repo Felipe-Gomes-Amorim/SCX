@@ -12,13 +12,14 @@ import RegisterClinic from './cadastro/registerClinic.jsx'
 import RegisterLaboratory from './cadastro/registerLab.jsx'
 import RegisterDoctor from './cadastro/registerDoctor.jsx'
 
-import CheckDoctor from './cadastro/CheckDoctor.jsx' 
+import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx' 
 
 import Perfil from './perfil/Perfil.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
 
 import SelectAll from './select_all/SelectAll.jsx'
+import RegisterSecretaria from './cadastro/registerSecretaria.jsx'
 
 
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
   {path: "/firstLogin/:token?", element: <FirstLogin/>},
   {path: "/checkDoctor", element: <CheckDoctor/>},
   { path: "/selectAll/:role?", element: <SelectAll /> },
+  { path: "/registerSecretaria", element: <RegisterSecretaria /> },
   
 ]);
 

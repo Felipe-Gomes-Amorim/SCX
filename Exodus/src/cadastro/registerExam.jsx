@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Style from "./registerExam.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarExame } from "../js/cadastrar_exame.js";
+import { cadastrarExame } from "../js/registros/cadastrar_exame.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function RegisterExam() {

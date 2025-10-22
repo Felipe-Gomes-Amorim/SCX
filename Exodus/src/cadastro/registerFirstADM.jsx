@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import Header from "../Header.jsx"
-import { cadastrarAdm } from "../js/cadastrate_adm.js";
+import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function Register() {

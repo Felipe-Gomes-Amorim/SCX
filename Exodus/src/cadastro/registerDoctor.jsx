@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { cadastrarMedico } from "../js/cadastrar_medico";
+import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import Style from "./register.module.css";
 import ExodusTop from "../ExodusTop.jsx";

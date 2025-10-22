@@ -4,7 +4,7 @@ import Style from "./Perfil.module.css";
 import axios from "axios";
 import Redirect from "../assents_link/Redirect.jsx";
 
-import { checarClinica } from "../js/check_clinica.js";
+import { checarClinica } from "../js/login e perfil/check_clinicaADM.js";
 
 
 export default function MedicoArea() {
@@ -23,11 +23,9 @@ export default function MedicoArea() {
                 
             </p>
             <div className={Style.buttons}>
-                <Redirect text="Cadastrar Laboratório" place="/registerLaboratory" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff" />
+                <Redirect text="Ver Clínicas cadastradas" place="/selectAll/clinics" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff" />
 
-                <Redirect text="Cadastrar Médico" place="/checkDoctor" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff" />
-
-                <Redirect text="Ver Médicos" place="/selectAll/doctor" color="#007bff" hoverColor="#ffffffff" background="#ffffffff" hoverBackground="#007bff" />
+                
             </div>
 
         </section>

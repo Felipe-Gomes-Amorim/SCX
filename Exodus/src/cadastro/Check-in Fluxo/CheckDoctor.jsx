@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { verificarMedico } from "../js/verificar_medico";
-import { transferirMedico } from "../js/transferir_medico";
-import DynamicForm from "../assents_link/DynamicForm.jsx";
-import Style from "./register.module.css";
-import ExodusTop from "../ExodusTop.jsx";
-import Footer from "../Footer.jsx";
+import { verificarMedico } from "../../js/fluxoMedico/verificar_medico.js";
+import { transferirMedico } from "../../js/fluxoMedico/transferir_medico.js";
+import DynamicForm from "../../assents_link/DynamicForm.jsx";
+import Style from "../register.module.css";
+import ExodusTop from "../../ExodusTop.jsx";
+import Footer from "../../Footer.jsx";
 
 export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);

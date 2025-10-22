@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
 import profilePic from "./assets/user-icon.png"; 
 import Avatar from "./assets/avatar.png"; 
-import { logoutUsuario } from "./js/logout.js";
-import { carregarPerfil } from "./js/perfil.js"; // mesmo que você usa no Perfil
+import { logoutUsuario } from "./js/login e perfil/logout.js";
+import { carregarPerfil } from "./js/login e perfil/perfil.js"; // mesmo que você usa no Perfil
 
 function ExodusTop() {
   const [isLogged, setIsLogged] = useState(false);
