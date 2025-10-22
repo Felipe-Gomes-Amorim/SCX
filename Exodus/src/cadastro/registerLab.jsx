@@ -12,11 +12,12 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const cnpjFromUrl = new URLSearchParams(location.search).get("cnpj");
 
   // Campos que o formulário vai renderizar dinamicamente
   const fields = [
     { name: "name", type: "text", placeholder: "Nome", required: true },
-    { name: "cnpj", type: "text", placeholder: "CNPJ", required: true },
+    { name: "cnpj", type: "text", placeholder: "CNPJ", required: true, defaultValue: cnpjFromUrl },
     { name: "address", type: "text", placeholder: "Endereço", required: true },
     { name: "telephone", type: "text", placeholder: "Telefone", required: true },
     { name: "labUser", type: "text", placeholder: "Nome do ADM do laboratório", required: true },

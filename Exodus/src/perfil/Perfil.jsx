@@ -10,6 +10,7 @@ import { carregarPerfil } from "../js/login e perfil/perfil.js";
 
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
+import SecretariaArea from "./SecretArea.jsx";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -47,6 +48,7 @@ export default function Perfil() {
     } catch (error) {
       console.error(error);
       setErrorMsg("Erro ao carregar perfil.");
+      localStorage.clear();
       navigate("/login");
       setLoading(false);
     }
@@ -131,6 +133,11 @@ export default function Perfil() {
                 {userData.roles?.some(role => role.name === "Doctor") && (
                   //AREA DO ADM
                 <MedicoArea/>
+                
+                )}
+                {userData.roles?.some(role => role.name === "Secretary") && (
+                  //AREA DO ADM
+                <SecretariaArea/>
                 
                 )}
 

@@ -6,6 +6,7 @@ import Footer from "../Footer.jsx";
 import Header from "../Header.jsx";
 import { cadastrarClinica } from "../js/registros/cadastrar_clinica.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 
 export default function RegisterClinic() {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,8 @@ export default function RegisterClinic() {
     { name: "cnpj", type: "text", placeholder: "CNPJ", required: true },
     { name: "address", type: "text", placeholder: "Endereço", required: true },
     { name: "telephone", type: "text", placeholder: "Telefone", required: true },
+    { name: "clinicaAdm", type: "text", placeholder: "Nome do ADM da Clínica", required: true },
+    { name: "email", type: "email", placeholder: "Email", required: true },
     
   ];
 
@@ -33,15 +36,30 @@ export default function RegisterClinic() {
         telephone: formValues.telephone,
         address: formValues.address,
       };
+      const admClinicaData = {
+        name: formValues.clinicaAdm,
+        email: formValues.email,
+        cnpj: formValues.cnpj,
+      };
       const token = localStorage.getItem("token"); 
       const result = await cadastrarClinica(clinicaData, token);
 
       if (result.success) {
         alert("Clínica cadastrada com sucesso!");
-        navigate("/"); // Redireciona para login
+        
+
+        const result2 = await cadastrarAdm(admClinicaData, token);
+        if(result2.success){
+          alert("Adm cadastrado com sucesso!");
+          navigate("/"); // Redireciona para login
+        }
+
+
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
+
+      
     } catch (err) {
       setErrorMessage("Falha ao se conectar ao servidor.");
     }

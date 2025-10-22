@@ -96,3 +96,42 @@
   justify-content: center;
   margin-top: 2rem;
 }
+.activate {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.activate:hover {
+  background-color: #0056b3;
+}
+
+.activeClinic {
+  margin-bottom: 10px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Garante que os botões dentro da tabela possam ser clicados */
+.table td button {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Corrige eventuais camadas invisíveis da tabela */
+.table {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Evita que alguma linha cubra o botão */
+.table tr {
+  position: relative;
+  z-index: 2;
+}

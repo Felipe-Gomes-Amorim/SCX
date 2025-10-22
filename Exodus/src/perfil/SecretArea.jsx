@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Style from "./Perfil.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
 import { checarClinica } from "../js/login e perfil/check_clinicaADM.js";
 
-export default function AdmArea() {
+export default function SecretariaArea() {
   const [instituicao, setInstituicao] = useState(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function AdmArea() {
 
   return (
     <section className={Style.section}>
-      <h2>Área do Administrador</h2>
+      <h2>Área da Secretária</h2>
       <p>
         <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
       </p>
@@ -38,31 +38,15 @@ export default function AdmArea() {
         <h3>Seção de Cadastro</h3>
         <div className={Style.buttons}>
           <Redirect
-            text="Cadastrar Laboratório"
-            place="/checkLab"
+            text="Cadastrar Paciente"
+            place="/registerPaciente"
             color="#007bff"
             hoverColor="#ffffffff"
             background="#ffffffff"
             hoverBackground="#007bff"
           />
 
-          <Redirect
-            text="Cadastrar Médico"
-            place="/checkDoctor"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
-
-          <Redirect
-            text="Cadastrar Secretaria"
-            place="/registerSecretaria"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
+          
         </div>
       </div>
 
@@ -71,20 +55,17 @@ export default function AdmArea() {
         <h3>Seção de Visualização</h3>
         <div className={Style.buttons}>
           <Redirect
-            text="Ver Médicos"
-            place="/selectAll/doctor"
+            text="Ver Pacientes"
+            place="/selectAll/patient"
             color="#007bff"
             hoverColor="#ffffffff"
             background="#ffffffff"
             hoverBackground="#007bff"
-            
           />
 
-          
-
           <Redirect
-            text="Ver Laboratórios"
-            place="/selectAll/lab"
+            text="Ver Médicos"
+            place="/selectAll/doctor"
             color="#007bff"
             hoverColor="#ffffffff"
             background="#ffffffff"

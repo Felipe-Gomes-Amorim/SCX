@@ -4,7 +4,7 @@ import Style from "./Perfil.module.css";
 import axios from "axios";
 import Redirect from "../assents_link/Redirect.jsx";
 
-import { checarClinica } from "../js/login e perfil/check_clinicaADM.js";
+
 
 
 export default function MedicoArea() {

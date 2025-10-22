@@ -3,12 +3,12 @@ import axios from "axios";
 export async function verificarLaboratorio(cnpj, token) {
   try {
     // 1️⃣ Verifica se o laboratório existe no sistema
-    const response = await axios.post("http://localhost:8080/laboratory/getByCnpj", { cnpj });
-
+    const response = await axios.post("http://localhost:8080/admin/verificLabExists", { cnpj });
+    console.log(response.data)
     if (response.data === true) {
       // 2️⃣ Verifica se já está vinculado à clínica
       const response2 = await axios.post(
-        "http://localhost:8080/laboratory/searchLab",
+        "http://localhost:8080/admin/verificLabCli",
         { cnpj },
         { headers: { Authorization: token ? `Bearer ${token}` : undefined } }
       );

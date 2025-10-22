@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { verificarLaboratorio } from "../js/fluxoLaboratorio/verificar_laboratorio.js";
-import { transferirLaboratorio } from "../js/fluxoLaboratorio/transferir_laboratorio.js";
-import DynamicForm from "../assents_link/DynamicForm.jsx";
-import Style from "./register.module.css";
-import ExodusTop from "../ExodusTop.jsx";
-import Footer from "../Footer.jsx";
+import { verificarLaboratorio } from "../../js/fluxoLaboratorio/verificar_laboratorio.js";
+import { transferirLaboratorio } from "../../js/fluxoLaboratorio/transferir_laboratorio.js";
+import DynamicForm from "../../assents_link/DynamicForm.jsx";
+import Style from "../register.module.css";
+import ExodusTop from "../../ExodusTop.jsx";
+import Footer from "../../Footer.jsx";
 
 export default function CheckLaboratory() {
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function CheckLaboratory() {
       }
     } else if (result.status === "novo") {
       alert("🆕 Laboratório não encontrado. Prossiga para o cadastro completo!");
-      navigate(`/registerLaboratorio?cnpj=${formValues.cnpj}`);
+      navigate(`/registerLaboratory?cnpj=${formValues.cnpj}`);
     } else {
       alert("❌ Ocorreu um erro ao verificar o CNPJ.");
       setErrorMessage(result.message);
