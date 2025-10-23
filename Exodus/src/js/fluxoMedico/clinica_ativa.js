@@ -1,12 +1,14 @@
 import axios from "axios";
 
 const API_BASE = "http://localhost:8080/doctor";
-
+const token = localStorage.getItem("token");
 
 // 🔹 Define a clínica ativa do médico
 export async function ativarClinica(clinica) {
+  console.log("Tipo de clinica:", typeof clinica);
+  console.log(clinica)
   try {
-    const response = await axios.post(
+    const response = await axios.patch(
       `${API_BASE}/updateClinicDocPresent`,
       { name: clinica },
       {
@@ -28,18 +30,28 @@ export async function ativarClinica(clinica) {
 }
 
 // 🔹 Busca a clínica ativa atual
-export async function buscarClinicaAtiva(token) {
+export async function buscarClinicaAtiva() {
   try {
-    const response = await axios.get(`${API_BASE}/getClinicActive`, {
+    const response = await axios.get("http://localhost:8080/doctor/getClinicActive", {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },
     });
+    
+    const data = response.data;
 
-    console.log("🏥 Clínica ativa obtida:", response.data);
-    return { success: true, data: response.data };
+    // Se não houver clínica ativa
+    if (data == "Null") {
+      console.log("💤 Nenhuma clínica ativa no momento.");
+      return { success: true, active: false, clinic: null };
+    }
+
+    // Caso tenha clínica
+    console.log("🏥 Clínica ativa obtida:", data);
+    return { success: true, active: true, clinic: data};
   } catch (error) {
     console.error("⚠️ Erro ao buscar clínica ativa:", error);
+    console.log(error)
     return {
       success: false,
       message: error.response?.data?.message || error.message,

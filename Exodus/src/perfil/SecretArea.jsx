@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Style from "./Perfil.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
-import { checarClinica } from "../js/login e perfil/check_clinicaADM.js";
+import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
 
 export default function SecretariaArea() {
   const [instituicao, setInstituicao] = useState(null);
@@ -39,7 +39,16 @@ export default function SecretariaArea() {
         <div className={Style.buttons}>
           <Redirect
             text="Cadastrar Paciente"
-            place="/registerPaciente"
+            place="/register"
+            color="#007bff"
+            hoverColor="#ffffffff"
+            background="#ffffffff"
+            hoverBackground="#007bff"
+          />
+
+          <Redirect
+            text="Abrir Consulta"
+            place="/registerConsulta"
             color="#007bff"
             hoverColor="#ffffffff"
             background="#ffffffff"
@@ -65,7 +74,7 @@ export default function SecretariaArea() {
 
           <Redirect
             text="Ver Médicos"
-            place="/selectAll/doctor"
+            place="/selectAll/doctorAval"
             color="#007bff"
             hoverColor="#ffffffff"
             background="#ffffffff"

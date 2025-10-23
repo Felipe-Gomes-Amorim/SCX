@@ -48,7 +48,7 @@ function ExodusTop() {
   };
 
   const isAdmin = userData.roles?.some(role => role.name?.toUpperCase() === "ADMIN");
-
+  const isSecretary = userData.roles?.some(role => role.name?.toUpperCase() === "SECRETARY");
   return (
     <header className={Style.login_header}>
       <Link to="/perfil" className={Style.hyperText}>
@@ -61,7 +61,10 @@ function ExodusTop() {
             <button className={Style.addButton} onClick={toggleMenu}>+</button>
             {menuOpen && (
               <div className={Style.addMenu}>
-                {isAdmin&&(
+                
+                {
+                //SE FOR ADM
+                isAdmin&&(
                 <>
                 <p
                   onClick={() => {
@@ -69,7 +72,7 @@ function ExodusTop() {
                     setMenuOpen(false);
                   }}
                 >
-                  Criar laboratório
+                  Cadastrar laboratório
                 </p>
 
                 <p
@@ -80,6 +83,15 @@ function ExodusTop() {
                 >
                   Cadastrar Médico
                 </p>
+
+                <p
+                  onClick={() => {
+                    navigate("/registerSecretaria");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cadastrar Secretaria
+                </p>
                 <p
                   onClick={() => {
                     navigate("/selectAll/doctor");
@@ -87,6 +99,58 @@ function ExodusTop() {
                   }}
                 >
                   Ver Médicos
+                </p>
+                <p
+                  onClick={() => {
+                    navigate("/selectAll/lab");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Ver Laboratórios
+                </p>
+                </>
+                
+                )}
+
+                {
+
+
+                //SE FOR SECRETARIA
+                isSecretary&&(
+                <>
+                <p
+                  onClick={() => {
+                    navigate("/register");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cadastrar Paciente
+                </p>
+
+                <p
+                  onClick={() => {
+                    navigate("/registerConsulta");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Abrir Consulta
+                </p>
+                <p
+                  onClick={() => {
+                    navigate("/selectAll/patient");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Ver Pacientes
+                </p>
+
+                <p
+                  onClick={() => {
+                    navigate("/selectAll/doctorAval");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Ver Médicos Disponíveis
                 </p>
                 </>
                 

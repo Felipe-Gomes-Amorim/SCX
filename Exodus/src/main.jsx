@@ -21,11 +21,12 @@ import FirstLogin from './login/FirstLogin.jsx'
 
 import SelectAll from './select_all/SelectAll.jsx'
 import RegisterSecretaria from './cadastro/registerSecretaria.jsx'
-
+import RegisterConsulta from './cadastro/registerConsulta.jsx'
 
 
 
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+
 
 //ROTAS!!!!!!!!!!!!!!!!!
 const router = createBrowserRouter([
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
   {path: "/checkLab", element: <CheckLaboratory/>},
   { path: "/selectAll/:role?", element: <SelectAll /> },
   { path: "/registerSecretaria", element: <RegisterSecretaria /> },
-  
+  { path: "/registerConsulta", element: <RegisterConsulta /> },
 ]);
 
 createRoot(document.getElementById("root")).render(

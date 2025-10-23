@@ -33,18 +33,15 @@ export default function SelectAll() {
     }
 
     async function carregarClinicaAtiva() {
+      if (role !== "clinics") return; // ✅ Só busca se for role "clinics"
+
       const saved = localStorage.getItem("activeClinic");
       if (saved) setClinicaAtiva(JSON.parse(saved));
 
       const backendResponse = await buscarClinicaAtiva(token);
-      console.log(token)
-      console.log(backendResponse)
-      if (backendResponse.success && backendResponse.data) {
-        setClinicaAtiva(backendResponse.data);
-        localStorage.setItem(
-          "activeClinic",
-          JSON.stringify(backendResponse.data)
-        );
+      if (backendResponse.success && backendResponse.clinic) {
+        setClinicaAtiva(backendResponse.clinic);
+        localStorage.setItem("activeClinic", JSON.stringify(backendResponse.clinic));
       }
     }
 
@@ -58,9 +55,8 @@ export default function SelectAll() {
   };
 
   const handleAtivarClinica = async (clinica) => {
-    
-    const response = await ativarClinica(clinica.id);
-    
+    const response = await ativarClinica(clinica.name);
+
     if (response.success) {
       setClinicaAtiva(clinica);
       localStorage.setItem("activeClinic", JSON.stringify(clinica));
@@ -70,9 +66,7 @@ export default function SelectAll() {
     }
   };
 
-  if (carregando) return <p>Carregando dados...</p>;
-  if (erro) return <p>Erro: {erro}</p>;
-  if (!dados || dados.length === 0) return <p>Nenhum registro encontrado.</p>;
+  
 
   return (
     <>
@@ -80,59 +74,66 @@ export default function SelectAll() {
       <section className={Style.section}>
         <h2>Listagem de {role}</h2>
 
-        {clinicaAtiva && (
+       
+
+        {/* Clínica ativa, só se role === "clinics" */}
+        {role === "clinics" && clinicaAtiva && (
           <p className={Style.activeClinic}>
             <strong>Clínica ativa:</strong> {clinicaAtiva.name}
           </p>
         )}
-
+    
+        {/* Tabela */}
         <table className={Style.table}>
           <thead>
             <tr>
-              {Object.keys(dados[0]).map((coluna, i) => (
-                <th key={i}>{coluna.toUpperCase()}</th>
-              ))}
+              {dados.length > 0
+                ? Object.keys(dados[0]).map((coluna, i) => <th key={i}>{coluna.toUpperCase()}</th>)
+                : <th>Nenhum dado</th>
+              }
               <th>AÇÕES</th>
             </tr>
           </thead>
 
           <tbody>
-            {dados.map((item, index) => (
-              <tr key={index}>
-                {Object.values(item).map((valor, j) => (
-                  <td key={j}>{valor || "-"}</td>
-                ))}
-                <td>
-                  {role === "clinics" ? (
-                    <button
-                      className={Style.activate}
-                      onClick={() => {
-                        console.log("Botão clicado:", item);
-                        handleAtivarClinica(item)}}
-                      disabled={clinicaAtiva?.id === item.id}
-                    >
-                      {clinicaAtiva?.id === item.id
-                        ? "Ativa"
-                        : "Ativar clínica"}
-                    </button>
-                  ) : (
-                    <button
-                      className={Style.delete}
-                      onClick={() => handleExcluir(item)}
-                    >
-                      Excluir
-                    </button>
-                  )}
+            {dados.length > 0 ? (
+              dados.map((item, index) => (
+                <tr key={index}>
+                  {Object.values(item).map((valor, j) => (
+                    <td key={j}>{valor || "-"}</td>
+                  ))}
+                  <td>
+                    {role === "clinics" ? (
+                      <button
+                        className={Style.activate}
+                        onClick={() => handleAtivarClinica(item)}
+                        disabled={clinicaAtiva?.name === item.name}
+                      >
+                        {clinicaAtiva?.name === item.name ? "Ativa" : "Ativar clínica"}
+                      </button>
+                    ) : (
+                      <button
+                        className={Style.delete}
+                        onClick={() => handleExcluir(item)}
+                      >
+                        Excluir
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={Object.keys(dados[0] || { a: 1 }).length + 1} style={{ textAlign: "center" }}>
+                  Nenhum registro encontrado ou disponível.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </section>
-
-      
-
       <Footer />
     </>
   );
+
 }
