@@ -12,7 +12,8 @@ import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
 import SecretariaArea from "./SecretArea.jsx";
 import ConsultArea from "./ConsultArea.jsx";
-
+import LabArea from "./LabArea.jsx";
+import PacienteArea from "./PacientArea.jsx";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -127,21 +128,34 @@ export default function Perfil() {
             ) : (
               <>
                 {userData.roles?.some(role => role.name === "Doctor") && (
-                  //AREA DO ADM
+                  
                 <ConsultArea/>
                 )}
-                {userData.roles?.some(role => role.name === "Admin") && (
-                  //AREA DO ADM
-                <AdmArea/>
-                
-                )}
+
                 {userData.roles?.some(role => role.name === "Doctor") && (
-                  //AREA DO ADM
+                 
                 <MedicoArea/>
                 
                 )}
+                {userData.roles?.some(role => role.name === "Admin") && (
+                 
+                <AdmArea/>
+                
+                )}
+                {userData.roles?.some(role => role.name === "LaboratoryAdmin") && (
+               
+                <LabArea/>
+                
+                )}
+
+                {userData.roles?.some(role => role.name === "Patient") && (
+               
+                <PacienteArea/>
+                
+                )}
+                
                 {userData.roles?.some(role => role.name === "Secretary") && (
-                  //AREA DO ADM
+             
                 <SecretariaArea/>
                 
                 )}

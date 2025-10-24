@@ -3,7 +3,7 @@ import Style from "./Perfil.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
 import { buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import { buscarConsultaAtual, encerrarConsulta } from "../js/fluxoMedico/consultas.js";
-import { requisitarExame } from "../js/fluxoMedico/exames.js";
+
 
 export default function MedicoArea() {
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
@@ -57,18 +57,7 @@ export default function MedicoArea() {
     }
   }
 
-  async function handleRequisitarExame() {
-    if (!consultaAtual) {
-      alert("Nenhuma consulta ativa para requisitar exame.");
-      return;
-    }
-    const result = await requisitarExame({ paciente: consultaAtual.paciente });
-    if (result.success) {
-      alert("Exame requisitado com sucesso!");
-    } else {
-      alert("Erro ao requisitar exame.");
-    }
-  }
+
 
   return (
     <section className={Style.section}>
@@ -88,10 +77,7 @@ export default function MedicoArea() {
       )}
 
       <div className={Style.containerArea}>
-        {/* Lado esquerdo - botões */}
-        <div className={Style.leftButtons}>
-          
-
+       
           <Redirect
             text="Exames Devolvidos"
             place="/examesDevolvidos"
@@ -101,17 +87,25 @@ export default function MedicoArea() {
             hoverBackground="#007bff"
           />
 
-           <Redirect
-                  text="Ver Clínicas Cadastradas"
-                  place="/selectAll/clinics"
-                  color="#007bff"
-                  hoverColor="#ffffffff"
-                  background="#ffffffff"
-                  hoverBackground="#007bff"
-                />
-        </div>
+          <Redirect
+            text="Ver Clínicas Cadastradas"
+            place="/selectAll/clinics"
+            color="#007bff"
+            hoverColor="#ffffffff"
+            background="#ffffffff"
+            hoverBackground="#007bff"
+          />
+          <Redirect
+            text="Ver Requisições Pendentes"
+            place="/selectAll/examsPend"
+            color="#007bff"
+            hoverColor="#ffffffff"
+            background="#ffffffff"
+            hoverBackground="#007bff"
+          />
+       
 
-        
+
       </div>
     </section>
   );

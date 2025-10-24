@@ -8,7 +8,20 @@ export async function mostrar_todos(role, token) {
   // SE A SECRETARIA PEDIR PRA VER OS MEDICOS DISPONIVEIS
   else if(role === "doctorAval") {
     url = "http://localhost:8080/secretary/getDocsAvailable";
+  }
+  // SE O MEDICO PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
+  else if(role === "examsPend") {
+    url = "http://localhost:8080/doctor/getRequestExamPendent";
   } 
+
+  // SE O PACIENTE PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
+  else if(role === "pendingExams") {
+    url = "http://localhost:8080/patient/getRequestExamPendent";
+  } 
+  // SE O O LAB PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
+  else if(role === "examRequests") {
+    url = "http://localhost:8080/laboratory/getRequestExamPendent";
+  }  
   else if (role === "adm") {
     console.log("Função de listar administradores ainda não implementada.");
     return [];

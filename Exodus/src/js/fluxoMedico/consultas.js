@@ -13,7 +13,7 @@ export async function buscarConsultaAtual(token) {
         });
 
         console.log("📦 Consulta atual retornada:", response.data);
-
+        
         if (response.data) {
             return { success: true, data: response.data };
         } else {

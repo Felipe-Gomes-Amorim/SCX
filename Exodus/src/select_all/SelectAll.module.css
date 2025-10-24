@@ -1,137 +1,149 @@
-/* Container da seção */
 .section {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
+  width: 90%;
   margin: 2rem auto;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-/* Título */
-.section h2 {
-  color: #007bff;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-align: center;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Tabela */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.table th, .table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-.table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-}
-
-/* Botões de ação */
-.edit, .delete {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease-in-out;
-  margin-right: 6px;
-}
-
-.edit {
-  background-color: transparent;
-  color: #ffc107;
-  border: 2px solid #ffc107;
-}
-
-.edit:hover {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.delete {
-  background-color: transparent;
-  color: #dc3545;
-  border: 2px solid #dc3545;
-}
-
-.delete:hover {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-/* Mensagens de status */
-.loading {
-  color: #007bff;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.empty {
-  color: #555;
-  font-style: italic;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-/* Botões principais da seção (se houver) */
-.buttons {
+.header {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-.activate {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
-.activate:hover {
-  background-color: #0056b3;
+.header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #222;
 }
 
 .activeClinic {
-  margin-bottom: 10px;
-  color: #007bff;
-  font-weight: bold;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-weight: 500;
 }
 
-/* Garante que os botões dentro da tabela possam ser clicados */
-.table td button {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 2rem;
 }
 
-/* Corrige eventuais camadas invisíveis da tabela */
-.table {
-  position: relative;
-  z-index: 1;
-  overflow: visible;
+.error {
+  color: #d32f2f;
 }
 
-/* Evita que alguma linha cubra o botão */
-.table tr {
-  position: relative;
-  z-index: 2;
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: #f9fafb;
+  border-radius: 20px;
+  padding: 1.2rem 1.6rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  background: #eef2f7;
+  transform: translateY(-3px);
+}
+
+.cardContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.2rem;
+  align-items: center;
+  flex: 1;
+}
+
+.data {
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: 1rem;
+}
+
+.button {
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.activate {
+  background-color: #1e88e5;
+  color: white;
+}
+
+.activate:hover {
+  background-color: #1565c0;
+}
+
+.active {
+  background-color: #43a047;
+  color: white;
+  cursor: default;
+}
+
+.delete {
+  background-color: #e53935;
+  color: white;
+}
+
+.delete:hover {
+  background-color: #c62828;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.8rem;
+  }
+
+  .data {
+    font-size: 0.9rem;
+  }
 }

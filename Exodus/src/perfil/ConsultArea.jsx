@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Perfil.module.css";
 import { buscarConsultaAtual, encerrarConsulta } from "../js/fluxoMedico/consultas.js";
-import { requisitarExame } from "../js/fluxoMedico/exames.js";
+import { useNavigate } from "react-router-dom";
 
 export default function ConsultArea() {
   const [consultaAtual, setConsultaAtual] = useState(null);
   const [loadingConsulta, setLoadingConsulta] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem("token")
+  
   useEffect(() => {
     async function carregarConsultaAtual() {
       setLoadingConsulta(true);
@@ -26,7 +28,7 @@ export default function ConsultArea() {
     if (!consultaAtual) return;
       const result = await encerrarConsulta(token);
       if (result.success) {
-        a
+        navigate("/perfil")
         setConsultaAtual(null);
       } else {
         alert("Erro ao encerrar consulta.");
@@ -34,18 +36,7 @@ export default function ConsultArea() {
     
   }
 
-  async function handleRequisitarExame() {
-    if (!consultaAtual) {
-      alert("Nenhuma consulta ativa para requisitar exame.");
-      return;
-    }
-    const result = await requisitarExame({ paciente: consultaAtual.paciente });
-    if (result.success) {
-      alert("Exame requisitado com sucesso!");
-    } else {
-      alert("Erro ao requisitar exame.");
-    }
-  }
+
 
   if (loadingConsulta) {
     return (
@@ -69,7 +60,7 @@ export default function ConsultArea() {
         
 
         <div className={Style.consultaButtons}>
-          <button className={Style.edit_btn} onClick={handleRequisitarExame}>
+          <button className={Style.edit_btn} onClick={() => navigate("/requisitarExame")}>
             Requisitar Exame
           </button>
           <button className={Style.logout_btn} onClick={handleEncerrarConsulta}>
