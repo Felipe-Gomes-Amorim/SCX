@@ -6,10 +6,9 @@ export async function mostrar_todos(role, token) {
     url = "http://localhost:8080/admin/doctorClinic";
   } 
   // SE A SECRETARIA PEDIR PRA VER OS MEDICOS DISPONIVEIS
-  if (role === "doctorAval") {
+  else if(role === "doctorAval") {
     url = "http://localhost:8080/secretary/getDocsAvailable";
   } 
-  
   else if (role === "adm") {
     console.log("Função de listar administradores ainda não implementada.");
     return [];
@@ -20,7 +19,6 @@ export async function mostrar_todos(role, token) {
   else if (role === "patient") {
     url = "http://localhost:8080/secretary/getPatientsCli";
   }
-
   //SE O ADM PEDIR PRA VER OS LABS
   else if (role === "lab") {
     url = "http://localhost:8080/admin/getLabCli";

@@ -11,6 +11,8 @@ import { carregarPerfil } from "../js/login e perfil/perfil.js";
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
 import SecretariaArea from "./SecretArea.jsx";
+import ConsultArea from "./ConsultArea.jsx";
+
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -124,7 +126,10 @@ export default function Perfil() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <>
-              
+                {userData.roles?.some(role => role.name === "Doctor") && (
+                  //AREA DO ADM
+                <ConsultArea/>
+                )}
                 {userData.roles?.some(role => role.name === "Admin") && (
                   //AREA DO ADM
                 <AdmArea/>
