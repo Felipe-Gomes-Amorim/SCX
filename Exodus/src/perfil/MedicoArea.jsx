@@ -80,7 +80,7 @@ export default function MedicoArea() {
        
           <Redirect
             text="Exames Devolvidos"
-            place="/examesDevolvidos"
+            place="/selectAll/examsReturn"
             color="#007bff"
             hoverColor="#fff"
             background="#fff"

@@ -1,6 +1,6 @@
 export async function mostrar_todos(role, token) {
   let url = "";
-
+  console.log(token)
   // SE O ADM PEDIR PRA VER OS MEDICOS
   if (role === "doctor") {
     url = "http://localhost:8080/admin/doctorClinic";
@@ -12,6 +12,16 @@ export async function mostrar_todos(role, token) {
   // SE O MEDICO PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
   else if(role === "examsPend") {
     url = "http://localhost:8080/doctor/getRequestExamPendent";
+  } 
+
+  // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
+  else if(role === "examsReturn") {
+    url = "http://localhost:8080/doctor/getExamsResult";
+  } 
+
+  // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
+  else if(role === "examsReturnPac") {
+    url = "http://localhost:8080/patient/getExamsResult";
   } 
 
   // SE O PACIENTE PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES

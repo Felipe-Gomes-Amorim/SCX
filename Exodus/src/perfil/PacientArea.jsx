@@ -26,6 +26,14 @@ export default function PacienteArea() {
             background="#ffffffff"
             hoverBackground="#007bff"
           />
+          <Redirect
+            text="Ver Exames Devolvidos"
+            place="/selectAll/examsReturnPac"
+            color="#007bff"
+            hoverColor="#ffffffff"
+            background="#ffffffff"
+            hoverBackground="#007bff"
+          />
         </div>
       </div>
     </section>
