@@ -64,10 +64,16 @@
   padding: 1.2rem 1.6rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   display: flex;
-  justify-content: space-between;
+  
   align-items: center;
   flex-wrap: wrap;
   transition: all 0.25s ease;
+}
+.card.examRequests {
+  display: grid;
+  grid-template-rows: auto auto; /* primeira linha dados, segunda linha botão */
+  gap: 5px;
+  padding: 10px;
 }
 
 .card:hover {
@@ -76,11 +82,15 @@
 }
 
 .cardContent {
-  display: flex;
+  display: flex; /* default flex para roles genéricos */
   flex-wrap: wrap;
-  gap: 0.8rem 1.2rem;
-  align-items: center;
-  flex: 1;
+  gap: 500px;
+}
+
+.cardContent.examRequests {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 5px;
 }
 
 .data {
@@ -96,6 +106,11 @@
   display: flex;
   gap: 0.6rem;
   margin-left: 1rem;
+}
+
+.actions.examRequests {
+  justify-content: flex-end; /* botão à direita */
+  padding-top: 5px;
 }
 
 .button {
@@ -120,6 +135,7 @@
   background-color: #43a047;
   color: white;
   cursor: default;
+  
 }
 
 .delete {
@@ -146,4 +162,40 @@
   .data {
     font-size: 0.9rem;
   }
+}
+
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* 8 campos para examRequests */
+  font-weight: bold;
+  padding: 10px 0;
+ 
+}
+
+.headerCell {
+  text-align: left;
+  padding: 0 8px;
+}
+
+
+.card {
+  display: grid;
+  grid-template-rows: auto auto; /* primeira linha dados, segunda linha botão */
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.cardContent {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end; /* botão alinhado à direita */
+  padding-top: 5px;
 }

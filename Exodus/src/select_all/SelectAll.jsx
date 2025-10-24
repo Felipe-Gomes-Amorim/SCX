@@ -5,6 +5,7 @@ import { mostrar_todos } from "../js/mostrar_todos.js";
 import { ativarClinica, buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function SelectAll() {
   const { role } = useParams();
@@ -12,6 +13,7 @@ export default function SelectAll() {
   const [erro, setErro] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -45,6 +47,8 @@ export default function SelectAll() {
       }
     }
 
+
+
     carregarDados();
     carregarClinicaAtiva();
   }, [role]);
@@ -62,6 +66,12 @@ export default function SelectAll() {
     } else {
       alert(`Erro: ${response.message}`);
     }
+  };
+
+
+  const handleCadastrarDevolucao = (exam) => {
+    navigate(`/registerExam?id=${exam.idReq}`); 
+   
   };
 
   return (
@@ -82,44 +92,71 @@ export default function SelectAll() {
         ) : erro ? (
           <p className={Style.error}>{erro}</p>
         ) : (
-          <div className={Style.listContainer}>
-            {dados.map((item, index) => (
-              <div key={index} className={Style.card}>
-                <div className={Style.cardContent}>
-                  {Object.entries(item).map(([key, value], i) => (
-                    <span key={i} className={Style.data}>
-                      {value || "-"}
-                    </span>
-                  ))}
+          <>
+            {/* Cabeçalho para examRequests */}
+            {role === "examRequests" || role === "examsPend"  && dados.length > 0 && (
+              <div className={Style.tableHeader}>
+                <span className={Style.headerCell}>Paciente</span>
+                <span className={Style.headerCell}>Clínica</span>
+                <span className={Style.headerCell}>Médico</span>
+                <span className={Style.headerCell}>Status</span>
+                <span className={Style.headerCell}>Complemento</span>
+                <span className={Style.headerCell}>Tipo de Exame</span>
+                <span className={Style.headerCell}>Amostra</span>
+                <span className={Style.headerCell}>Data/Hora</span>
+              </div>
+            )}
+
+            <div className={Style.listContainer}>
+              {dados.map((item, index) => (
+                <div key={index} className={`${Style.card} ${role === "examRequests" ? Style.examRequests : ""}`}>
+                  <div className={`${Style.cardContent} ${role === "examRequests" ? Style.examRequests : ""}`}>
+                    {Object.entries(item).map(([key, value], i) => {
+                      if (role === "examRequests" && key === "idReq") return null;
+                      return (
+                        <span key={i} className={Style.data}>
+                          {value || "-"}
+                        </span>
+                      );
+                    })}
+                  </div>
+
+                  <div className={`${Style.actions} ${role === "examRequests" ? Style.examRequests : ""}`}>
+                    {role === "clinics" ? (
+                      <button
+                        className={`${Style.button} ${clinicaAtiva?.name === item.name ? Style.active : Style.activate}`}
+                        onClick={() => handleAtivarClinica(item)}
+                        disabled={clinicaAtiva?.name === item.name}
+                      >
+                        {clinicaAtiva?.name === item.name ? "Ativa" : "Ativar clínica"}
+                      </button>
+                    ) : role === "examRequests" ? (
+                      <button
+                        className={`${Style.button} ${Style.register}`}
+                        onClick={() => handleCadastrarDevolucao(item)}
+                      >
+                        Cadastrar Devolução
+                      </button>
+                    ) 
+                    : role === "examsPend" ? (
+                      <></>
+                    ) : (
+                      <button
+                        className={`${Style.button} ${Style.delete}`}
+                        onClick={() => handleExcluir(item)}
+                      >
+                        Excluir
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                <div className={Style.actions}>
-                  {role === "clinics" ? (
-                    <button
-                      className={`${Style.button} ${
-                        clinicaAtiva?.name === item.name
-                          ? Style.active
-                          : Style.activate
-                      }`}
-                      onClick={() => handleAtivarClinica(item)}
-                      disabled={clinicaAtiva?.name === item.name}
-                    >
-                      {clinicaAtiva?.name === item.name ? "Ativa" : "Ativar clínica"}
-                    </button>
-                  ) : (
-                    <button
-                      className={`${Style.button} ${Style.delete}`}
-                      onClick={() => handleExcluir(item)}
-                    >
-                      Excluir
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </section>
+
       <Footer />
     </>
   );

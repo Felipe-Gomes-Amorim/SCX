@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 
   {path: "/register", element: <Register />},
   {path: "/registeradm", element: <RegisterADM />},
-  {path: "/registerExam", element: <RegisterExam/>},
+  {path: "/registerExam/:id?", element: <RegisterExam/>},
   {path: "/registerClinica", element: <RegisterClinic/>},
   {path: "/registerLaboratory", element: <RegisterLaboratory/>},
   {path: "/registerMedico", element: <RegisterDoctor/>},

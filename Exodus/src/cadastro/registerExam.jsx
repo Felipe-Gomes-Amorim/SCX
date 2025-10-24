@@ -1,82 +1,88 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Style from "./registerExam.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import Style from "./register.module.css"; 
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarExame } from "../js/registros/cadastrar_exame.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { cadastrarExame } from "../js/registros/cadastrar_exame.js";
+
 
 export default function RegisterExam() {
-  const [exam_type, setExamType] = useState("");
-  const [sample_type, setSampleType] = useState("");
-  const [complement, setComplement] = useState("");
-  const [requestDate, setRequestDate] = useState("");
-  const [executedDate, setExecutedDate] = useState("");
-  const [status, setStatus] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const idFromUrl = new URLSearchParams(location.search).get("id") || "";
+
+  const fields = [
+    { name: "cid", label: "CID", type: "text", placeholder: "Digite o CID", required: true },
+    { name: "result_value", label: "Valor do Resultado", type: "text", placeholder: "Ex: 5.2", required: true },
+    { name: "result_file_url", label: "Arquivo do Resultado", type: "text", placeholder: "URL do arquivo", required: true },
+    { name: "observation", label: "Observações", type: "textarea", placeholder: "Observações adicionais" },
+    { name: "id", label: "ID do Exame", type: "text", placeholder: "ID do exame", defaultValue: idFromUrl, required: true },
+  ];
+
+  const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
 
-    const examData = {
-      exam_type,
-      sample_type,
-      complement,
-      requestDate,
-      executedDate,
-      status,
-    };
+    try {
+      const result = await cadastrarExame(formValues); // envia todos os campos
+      setLoading(false);
 
-    const result = await cadastrarExame(examData);
-    setLoading(false);
-
-    if (!result.success) {
-      setErrorMessage(result.message || "Erro desconhecido ao cadastrar exame");
-    } else {
-      alert("Exame cadastrado com sucesso!");
-      // limpa os campos
-      setExamType("");
-      setSampleType("");
-      setComplement("");
-      setRequestDate("");
-      setExecutedDate("");
-      setStatus("");
+      if (!result.success) {
+        setErrorMessage(result.message || "Erro desconhecido ao cadastrar exame");
+      } else {
+        alert("Exame cadastrado com sucesso!");
+        navigate("/perfil"); // ou outra página após cadastro
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Falha ao se conectar ao servidor.");
+      setLoading(false);
     }
   };
 
-  const fields = [
-    { name: "exam_type", label: "Tipo de Exame", type: "text", placeholder: "Ex: Hemograma", required: true },
-    { name: "sample_type", label: "Tipo de Amostra", type: "text", placeholder: "Ex: Sangue, Urina...", required: true },
-    { name: "complement", label: "Complemento", type: "textarea", placeholder: "Observações adicionais..." },
-  ];
-
   return (
     <>
-      <div className={Style.page}>
+      <div className={Style.login_page}>
         <ExodusTop />
 
-        <div className={Style.card}>
+        <div className={Style.login_card}>
+          {/* Lado esquerdo - formulário */}
           <motion.div
-            className={Style.left}
-            initial={{ x: "-100%", opacity: 0 }}
+            className={Style.login_left}
+            initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.9 }}
           >
             <h2>Cadastro de Exame</h2>
-            <p>Preencha as informações do exame</p>
-             <DynamicForm
-                fields={fields}
-                onSubmit={handleSubmit}
-                buttonText="Enviar Exame"
-                loadingText="Enviando..."
-                loading={loading}
-                errorMessage={errorMessage}
-              />
-            
+            <p className={Style.subtitle}>Preencha as informações abaixo</p>
+
+            {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
+
+            <DynamicForm
+              fields={fields}
+              onSubmit={handleSubmit}
+              buttonText="Cadastrar"
+              loading={loading}
+            />
+          </motion.div>
+
+          {/* Lado direito - explicação */}
+          <motion.div
+            className={Style.login_right}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9 }}
+          >
+            <h2>Bem-vindo!</h2>
+            <p>
+              Cadastre os resultados de exames, preenchendo CID, valores, observações
+              e o ID do exame correspondente.
+            </p>
           </motion.div>
         </div>
       </div>

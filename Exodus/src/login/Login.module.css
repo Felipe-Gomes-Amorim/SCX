@@ -74,17 +74,19 @@
 }
 
 .login_left input {
-  padding: 12px;
+  padding: .7rem 15rem .7rem .8rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 20px;
   font-size: 14px;
   padding-right: 5.4rem;
+  text-align: left;
 }
 
 
 .login_left input::placeholder {
   color: rgb(182, 182, 182);
+  text-align: left;
   opacity: 1; 
 }
 
