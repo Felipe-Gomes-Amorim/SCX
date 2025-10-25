@@ -37,15 +37,3 @@ yarn add axios
 yarn dev
 ````
 
-## Integração com Banco de Dados SQLite no Node.js
-
-Este guia descreve como realizar a integração de um banco de dados **SQLite** em um projeto Node.js com Yarn.  
-O SQLite é um banco de dados relacional leve, baseado em arquivos, que não requer servidor, sendo ideal para aplicações locais, protótipos e sistemas de pequeno a médio porte.
-
----
-Instalação:
-
-```bash
----
-yarn add sqlite3
----
