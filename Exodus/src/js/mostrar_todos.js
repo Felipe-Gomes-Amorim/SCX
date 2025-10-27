@@ -12,7 +12,19 @@ export async function mostrar_todos(role, token) {
   // SE O MEDICO PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
   else if(role === "examsPend") {
     url = "http://localhost:8080/doctor/getRequestExamPendent";
-  } 
+  }
+
+  
+  else if(role === "registerTicket") {
+    url = "http://localhost:8080/support/registerTicket";
+  }
+  else if(role === "tickets") {
+    url = "http://localhost:8080/support/getTicket";
+  }
+  else if(role === "responseTicket") {
+    url = "http://localhost:8080/support/responseTicket";
+  }
+
 
   // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
   else if(role === "examsReturn") {
