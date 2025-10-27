@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import Style from "./register.module.css";
-import Footer from "../Footer.jsx";
+import Style from "./registerExamReq.module.css";
 import ExodusTop from "../ExodusTop.jsx";
-import DynamicForm from "../assents_link/DynamicForm.jsx";
-import { cadastrarRequisicaoExame, buscarLaboratorios, buscarTiposExame } from "../js/fluxoMedico/exames.js";
+import Footer from "../Footer.jsx";
+import {
+  cadastrarRequisicaoExame,
+  buscarLaboratorios,
+  buscarTiposExame,
+} from "../js/fluxoMedico/exames.js";
 
 export default function RegisterExameRequest() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [laboratorios, setLaboratorios] = useState([]);
   const [tiposExame, setTiposExame] = useState([]);
-  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    exam_type: "",
+    sample_type: "",
+    complement: "",
+    name: "",
+  });
 
-  // Carregar opções dinâmicas ao montar
+  // Carregar opções dinâmicas
   useEffect(() => {
     async function carregarDados() {
       try {
         const [labsRes, examsRes] = await Promise.all([
-          buscarLaboratorios(), // /getLabDocCli
-          buscarTiposExame(),   // /getExamsType
+          buscarLaboratorios(),
+          buscarTiposExame(),
         ]);
 
         if (labsRes.success) setLaboratorios(labsRes.data);
-        else setErrorMessage("Erro ao carregar laboratórios disponíveis.");
+        else setErrorMessage("Erro ao carregar laboratórios.");
 
         if (examsRes.success) setTiposExame(examsRes.data);
         else setErrorMessage("Erro ao carregar tipos de exame.");
-      } catch (err) {
+      } catch {
         setErrorMessage("Erro ao carregar dados iniciais.");
       }
     }
@@ -36,56 +42,26 @@ export default function RegisterExameRequest() {
     carregarDados();
   }, []);
 
-  const fields = [
-    {
-      name: "exam_type",
-      type: "select",
-      placeholder: "Selecione o tipo de exame",
-      options: tiposExame, // [{ name }]
-      required: true,
-    },
-    {
-      name: "sample_type",
-      type: "text",
-      placeholder: "Tipo de amostra",
-      required: true,
-    },
-    {
-      name: "complement",
-      type: "text",
-      placeholder: "Complemento",
-    },
-    {
-      name: "name",
-      type: "select",
-      placeholder: "Selecione o laboratório",
-      options: laboratorios, // [{ name }]
-      required: true,
-    },
-  ];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmit = async (formValues) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const exameData = {
-        exam_type: formValues.exam_type,
-        sample_type: formValues.sample_type,
-        complement: formValues.complement,
-        name: formValues.name, // laboratório
-      };
-
-      const result = await cadastrarRequisicaoExame(exameData);
+      const result = await cadastrarRequisicaoExame(form);
 
       if (result.success) {
         alert("Requisição de exame cadastrada com sucesso!");
-        navigate("/perfil");
+        setForm({ exam_type: "", sample_type: "", complement: "", name: "" });
       } else {
-        setErrorMessage(result.message || "Erro ao cadastrar requisição de exame.");
+        setErrorMessage(result.message || "Erro ao cadastrar exame.");
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       setErrorMessage("Falha ao se conectar ao servidor.");
     }
 
@@ -94,47 +70,88 @@ export default function RegisterExameRequest() {
 
   return (
     <>
-      <div className={Style.login_page}>
-        <ExodusTop />
+    <ExodusTop />
+    <div className={Style.register_page}>
+      
 
-        <div className={Style.login_card}>
-          {/* Lado esquerdo - formulário */}
-          <motion.div
-            className={Style.login_left}
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.9 }}
-          >
-            <h2>Requisição de Exame</h2>
-            <p className={Style.subtitle}>Preencha as informações abaixo</p>
+      <div className={Style.register_card}>
+        <h2>Cadastro de exame</h2>
+        <hr className={Style.section_line} />
 
-            {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
+        <form onSubmit={handleSubmit} className={Style.form_area}>
+          <div className={Style.form_group}>
+            <label>Tipo do Exame</label>
+            <select
+              name="exam_type"
+              value={form.exam_type}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecione o tipo de exame</option>
+              {tiposExame.map((item, idx) => (
+                <option key={idx} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <DynamicForm
-              fields={fields}
-              onSubmit={handleSubmit}
-              buttonText="Cadastrar"
-              loading={loading}
+          <div className={Style.form_group}>
+            <label>Tipo da Amostra</label>
+            <input
+              type="text"
+              name="sample_type"
+              placeholder="Ex: Sangue"
+              value={form.sample_type}
+              onChange={handleChange}
+              required
             />
-          </motion.div>
+          </div>
 
-          {/* Lado direito - explicação */}
-          <motion.div
-            className={Style.login_right}
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.9 }}
-          >
-            <h2>Bem-vindo!</h2>
-            <p>
-              Cadastre uma nova requisição de exame, escolhendo o tipo de exame,
-              o laboratório e os detalhes da amostra.
-            </p>
-          </motion.div>
-        </div>
+          <div className={Style.form_group}>
+            <label>Observações</label>
+            <textarea
+              name="complement"
+              placeholder="..."
+              value={form.complement}
+              onChange={handleChange}
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div className={Style.form_group}>
+            <label>Encaminhamento para o laboratório</label>
+            <select
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecione o Laboratório</option>
+              {laboratorios.map((item, idx) => (
+                <option key={idx} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <div className={Style.button_container}>
+            <button className={Style.bttn}type="submit" disabled={loading}>
+              {loading ? "Enviando..." : "Enviar Exame"}
+            </button>
+          </div>
+          </div>
+
+          
+        </form>
+
+        {errorMessage && <p className={Style.error}>{errorMessage}</p>}
       </div>
 
-      <Footer />
+      
+    </div>
+
+    <Footer />
+
     </>
   );
 }

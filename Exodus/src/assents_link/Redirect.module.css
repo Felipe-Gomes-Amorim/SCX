@@ -1,11 +1,11 @@
 .btn {
   position: relative;
-  width: 15rem;               /* 🔹 largura fixa igual pra todos */
-  height: 5rem;               /* 🔹 altura fixa */
-  border-radius: 7px;
+  width: 19rem;               /* 🔹 largura fixa igual pra todos */
+  height: 3rem;               /* 🔹 altura fixa */
+  border-radius: 10px;
   border: 2px solid rgb(255, 255, 255);
   font-size: 14px;
-  text-transform: uppercase;
+  
   font-weight: 600;
   letter-spacing: 2px;
   background: transparent;

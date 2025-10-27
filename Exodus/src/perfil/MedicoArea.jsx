@@ -3,17 +3,18 @@ import Style from "./Perfil.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
 import { buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import { buscarConsultaAtual, encerrarConsulta } from "../js/fluxoMedico/consultas.js";
-
+import { useNavigate } from "react-router-dom";
 
 export default function MedicoArea() {
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
   const [consultaAtual, setConsultaAtual] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadingConsulta, setLoadingConsulta] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function carregarClinicaAtiva() {
-      const token = localStorage.getItem("token");
       if (!token) {
         setLoading(false);
         return;
@@ -30,7 +31,7 @@ export default function MedicoArea() {
 
     async function carregarConsultaAtual() {
       setLoadingConsulta(true);
-      const response = await buscarConsultaAtual();
+      const response = await buscarConsultaAtual(token);
       if (response?.success) {
         setConsultaAtual(response.data);
       } else {
@@ -41,13 +42,13 @@ export default function MedicoArea() {
 
     carregarClinicaAtiva();
     carregarConsultaAtual();
-  }, []);
+  }, [token]);
 
   async function handleEncerrarConsulta() {
     if (!consultaAtual) return;
     const confirm = window.confirm("Deseja encerrar esta consulta?");
     if (confirm) {
-      const result = await encerrarConsulta(consultaAtual.id);
+      const result = await encerrarConsulta(token);
       if (result.success) {
         alert("Consulta encerrada com sucesso!");
         setConsultaAtual(null);
@@ -57,8 +58,6 @@ export default function MedicoArea() {
     }
   }
 
-
-
   return (
     <section className={Style.section}>
       <h2>Área do Médico</h2>
@@ -67,17 +66,19 @@ export default function MedicoArea() {
         <p>Carregando informações...</p>
       ) : clinicaAtiva ? (
         <p>
-          <strong>Clínica Ativa:</strong>{" "}
-          {clinicaAtiva.name || clinicaAtiva.nome}
+          <strong>Clínica Ativa:</strong> {clinicaAtiva.name || clinicaAtiva.nome}
         </p>
       ) : (
         <p>
           <strong>Clínica Ativa:</strong> Nenhuma clínica ativa no momento.
         </p>
       )}
-
+      <div className={Style.sectionDivider}></div>
+      
       <div className={Style.containerArea}>
-       
+        <div className={Style.buttonsArea}>
+          
+
           <Redirect
             text="Exames Devolvidos"
             place="/selectAll/examsReturn"
@@ -95,17 +96,43 @@ export default function MedicoArea() {
             background="#ffffffff"
             hoverBackground="#007bff"
           />
-          <Redirect
-            text="Ver Requisições Pendentes"
-            place="/selectAll/examsPend"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
-       
+        </div>
 
 
+        <div className={Style.rightBox}>
+          <h4>
+            {consultaAtual ? "Consulta Atual" : "Nenhuma consulta em andamento"}
+          </h4>
+
+          {loadingConsulta ? (
+            <p>Carregando consulta...</p>
+          ) : consultaAtual ? (
+            <div className={Style.consultaBox}>
+              <h3>Paciente: {consultaAtual.name}</h3>
+              <p>
+                Horário de abertura: {consultaAtual.localTime}
+              </p>
+              <div className={Style.consultaButtons}>
+                <button
+                  className={Style.edit_btn}
+                  onClick={() => navigate("/requisitarExame")}
+                >
+                  Requisitar Exame
+                </button>
+                <button
+                  className={Style.logout_btn}
+                  onClick={handleEncerrarConsulta}
+                >
+                  Encerrar Consulta
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={Style.emptyBox}>
+              <p>Você não possui nenhuma consulta ativa no momento.</p>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

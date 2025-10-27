@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ActionButton from "./ActionButton.jsx";
+import Style from "./DynamicForm.module.css";
 
 export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
   // Inicializa o formData com os valores padrão (field.value ou defaultValue)
@@ -21,8 +22,10 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={Style.form}>
+      <div className={Style.FitObj}>
       {fields.map((field, index) => {
+        
         // Renderiza select caso o tipo seja "select"
         if (field.type === "select") {
           return (
@@ -56,8 +59,10 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
           />
         );
       })}
-
+      </div>
+      <div className={Style.FitObj}>
       <ActionButton text={buttonText} loading={loading} />
+      </div>
     </form>
   );
 }

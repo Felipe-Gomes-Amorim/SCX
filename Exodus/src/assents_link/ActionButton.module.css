@@ -1,5 +1,6 @@
-.btn {
-  padding: .6rem 6rem;
+.btnAction {
+  display: inline-block;          /* tamanho ajusta ao conteúdo */
+  padding: .6rem 1.5rem;          /* espaçamento interno leve */
   border: 2px solid #007bff;
   text-align: center;
   background: transparent;
@@ -11,9 +12,11 @@
   font-weight: 600;
   letter-spacing: 2px;
   transition: all 0.2s ease-in;
+  align-self: center;           
 }
 
-.btn:hover:not(:disabled) {
+
+.btnAction:hover:not(:disabled) {
   background: #007bff;
   color: white;
   box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);

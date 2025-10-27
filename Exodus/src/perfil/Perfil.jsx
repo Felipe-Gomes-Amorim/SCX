@@ -112,7 +112,7 @@ export default function Perfil() {
             <button className={Style.edit_btn}>Ver meus dados</button>
             <button
               className={Style.logout_btn}
-              style={{ marginTop: "8px" }}
+              
               onClick={handleLogout}
             
             >
@@ -127,10 +127,7 @@ export default function Perfil() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <>
-                {userData.roles?.some(role => role.name === "Doctor") && (
-                  
-                <ConsultArea/>
-                )}
+                
 
                 {userData.roles?.some(role => role.name === "Doctor") && (
                  
@@ -161,37 +158,7 @@ export default function Perfil() {
                 )}
 
                 
-                {/* Área do usuário */}
-                <section className={Style.section}>
-                  <h2>Área do Usuário</h2>
-                  <p>
-                    <strong>Instituição:</strong> {userData.instituicao_vinc || "—"}
-                  </p>
-                  <p>
-                    <strong>CPF:</strong> {userData.cpf}
-                  </p>
-
-                  <h3 style={{ marginTop: "20px" }}>Laudos disponíveis</h3>
-
-                  {exames.length === 0 ? (
-                    <p>Nenhum exame disponível.</p>
-                  ) : (
-                    <div className={Style.laudos}>
-                      {exames.map((exame, i) => (
-                        <div key={i} className={Style.laudo_card}>
-                          <h4>{exame.tipo}</h4>
-                          <p>Status: {exame.status}</p>
-                          <button className={Style.btn}>Abrir</button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </section>
-
-
-
-
-
+                
 
                 {/* Histórico de atividades */}
                 <section className={Style.section}>

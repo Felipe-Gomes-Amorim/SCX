@@ -1,0 +1,114 @@
+.register_page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Card principal */
+.register_card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 2.5rem 3rem;
+  margin-top: 3rem;
+  width: 90%;
+  max-width: 750px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Título e linha */
+.register_card h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #000;
+}
+
+.section_line {
+  border: none;
+  height: 2px;
+  background-color: #ddd;
+  border-radius: 2px;
+  margin-top: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+/* Formulário */
+.form_area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form_group label {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+input,
+select,
+textarea {
+  font-family: "Inter", sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0.9rem;
+  background: #f9f9f9;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #007bff;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  height: 10rem;
+}
+
+
+.button_container {
+  grid-column: 2; /* alinhado à direita */
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+
+.bttn {
+  margin-top: 4rem;
+  border: 2px solid #007bff;
+  background: transparent;
+  width: 100%;
+  color: #007bff;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bttn:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* Mensagem de erro */
+.error {
+  color: #ff3333;
+  margin-top: 1.2rem;
+  font-weight: 600;
+}

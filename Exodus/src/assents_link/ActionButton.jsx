@@ -20,7 +20,7 @@ export default function ActionButton({ //coisas
   return (
     <button
     //classe no css
-      className={Style.btn}
+      className={Style.btnAction}
 
       type={"submit"}
       onClick={onClick}

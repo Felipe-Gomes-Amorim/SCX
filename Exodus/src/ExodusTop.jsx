@@ -58,7 +58,7 @@ function ExodusTop() {
       <div className={Style.headerRight}>
         {isLogged  && (
           <div className={Style.addButtonWrapper}>
-            <button className={Style.addButton} onClick={toggleMenu}>+</button>
+            <button className={Style.addButton} onClick={toggleMenu}></button>
             {menuOpen && (
               <div className={Style.addMenu}>
                 
