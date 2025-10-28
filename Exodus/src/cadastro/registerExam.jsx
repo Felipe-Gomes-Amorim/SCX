@@ -21,7 +21,7 @@ export default function RegisterExam() {
     { name: "result_value", label: "Valor do Resultado", type: "text", placeholder: "Ex: 5.2", required: true },
     { name: "result_file_url", label: "Arquivo do Resultado", type: "text", placeholder: "URL do arquivo", required: true },
     { name: "observation", label: "Observações", type: "textarea", placeholder: "Observações adicionais" },
-    { name: "id", label: "ID do Exame", type: "text", placeholder: "ID do exame", defaultValue: idFromUrl, required: true },
+    { name: "id", type: "hidden", defaultValue: idFromUrl, required: true },
   ];
 
   const handleSubmit = async (formValues) => {
@@ -29,7 +29,8 @@ export default function RegisterExam() {
     setErrorMessage("");
 
     try {
-      const result = await cadastrarExame(formValues); // envia todos os campos
+      const token = localStorage.getItem("token");
+      const result = await cadastrarExame(formValues, token); // envia todos os campos
       setLoading(false);
 
       if (!result.success) {
