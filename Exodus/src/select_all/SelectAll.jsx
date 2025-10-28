@@ -245,12 +245,7 @@ export default function SelectAll() {
                         Responder
                       </button>
                     ) : (
-                      <button
-                        className={`${Style.button} ${Style.delete}`}
-                        onClick={() => handleExcluir(item)}
-                      >
-                        Desativar
-                      </button>
+                      <></>
                     )}
                   </div>
 

@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
-import Avatar from "./assets/avatar.png"; 
+import Avatar from "./assets/avatar.png";
 import { logoutUsuario } from "./js/login e perfil/logout.js";
 import { carregarPerfil } from "./js/login e perfil/perfil.js";
 import { mostrar_todos } from "./js/mostrar_todos.js";
+import  { NotificationItem } from "./assents_link/NotificationItem.jsx"
 
 function ExodusTop() {
   const [isLogged, setIsLogged] = useState(false);
@@ -42,7 +43,7 @@ function ExodusTop() {
   const toggleNotifications = async () => {
     setNotificationsOpen(prev => !prev);
     if (!notificationsOpen) {
-      
+
       const data = await mostrar_todos("notific", token);
       if (data && data.length > 0) {
         const sorted = data
@@ -81,14 +82,17 @@ function ExodusTop() {
                     <p>Nenhuma notificação</p>
                   ) : (
                     notifications.map((item, index) => (
-                      <p key={index} onClick={() => navigate("/SelectAll/history")}>
-                        {item.message}
-                      </p>
+                      <NotificationItem
+                        key={index}
+                        item={item}
+                        navigate={navigate}
+                      />
                     ))
                   )}
                 </div>
               )}
             </div>
+
 
             {/* Botão de menu principal */}
             <div className={Style.addButtonWrapper}>

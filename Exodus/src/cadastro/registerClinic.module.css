@@ -1,75 +1,74 @@
 .registerContainer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Começa de cima, não centralizado */
   background: #e0e0e0;
   min-height: 100vh;
   flex-direction: column;
+  padding: 60px 0; /* Espaço vertical */
 }
 
+/* Card principal */
 .registerCard {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 950px;
+  flex-direction: column; /* Vertical por padrão */
+  align-items: stretch;
+  width: 800px;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin-top: 40px;
+  margin: 0 auto 60px auto; /* Centraliza e adiciona espaço abaixo */
 }
 
 /* Painel da direita (boas-vindas) */
 .rightPanel {
-  flex: 0.8;
   background: linear-gradient(to right, #007bff, #0046b3);
   color: white;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 0 12px 12px 0;
+  padding: 50px 40px;
+  text-align: center;
+  border-radius: 16px 16px 0 0; /* Topo arredondado */
 }
 
 .rightPanel h2 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .rightPanel p {
-  font-size: 15px;
+  font-size: 16px;
   opacity: 0.9;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Painel da esquerda (formulário) */
 .leftPanel {
-  flex: 1.2;
-  padding: 40px 50px;
+  padding: 50px 60px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .leftPanel h2 {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   color: #6c757d;
-  font-size: 14px;
+  font-size: 15px;
   font-style: italic;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
-/* Títulos das seções dentro do form */
+/* Título da seção */
 .sectionTitle {
   font-size: 18px;
   font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 25px;
+  margin-bottom: 12px;
   color: #007bff;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -79,37 +78,39 @@
   width: 100%;
   height: 2px;
   background: #007bff20;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* Grade de campos */
+/* Grid de campos */
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px 24px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-bottom: 25px;
 }
 
 .formGrid input,
-.formGrid select {
+.formGrid select,
+.formGrid textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 10px;
+  font-size: 16px;
   transition: 0.2s;
 }
 
 .formGrid input:focus,
-.formGrid select:focus {
+.formGrid select:focus,
+.formGrid textarea:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
 }
 
 /* Botão centralizado */
 .buttonArea {
-  margin-top: 15px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 }
@@ -117,12 +118,11 @@
 /* Responsivo */
 @media (max-width: 850px) {
   .registerCard {
-    flex-direction: column;
     width: 90%;
   }
 
   .leftPanel {
-    padding: 30px;
+    padding: 35px;
   }
 
   .formGrid {
@@ -130,6 +130,6 @@
   }
 
   .rightPanel {
-    border-radius: 0 0 12px 12px;
+    border-radius: 16px 16px 0 0;
   }
 }
