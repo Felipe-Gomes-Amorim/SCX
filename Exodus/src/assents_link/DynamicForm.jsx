@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ActionButton from "./ActionButton.jsx";
 import Style from "./DynamicForm.module.css";
-import { formatCNPJ, formatCPF, formatPhone, formatCRM, unmask } from "../js/formatters.js";
+import { formatCNPJ, formatCPF, formatPhone, formatCRM, formatCID, unmask } from "../js/formatters.js";
 
 export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
   const [formData, setFormData] = useState(
@@ -20,6 +20,7 @@ export default function DynamicForm({ fields, onSubmit, buttonText, loading }) {
     if (name === "telephone") formattedValue = formatPhone(value);
     if (name === "cpf") formattedValue = formatCPF(value);
     if (name === "crm") formattedValue = formatCRM(value);
+    if (name === "cid") formattedValue = formatCID(value);
 
     setFormData((prev) => ({ ...prev, [name]: formattedValue }));
   };

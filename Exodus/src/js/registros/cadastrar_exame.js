@@ -4,7 +4,9 @@ export async function cadastrarExame(examData, token) {
 
   try {                               //ver rotas do médico no DoctorController (Back-End)
     const response = await axios.post("http://localhost:8080/laboratory/registerExam", examData, {
-      
+      headers: {
+        Authorization: token ? `Bearer ${token}` : undefined,
+      },
     });
     
     //print pra teste com o body do exame

@@ -60,6 +60,21 @@ export const formatCRM = (value) => {
   // Monta o CRM no formato NNNNNN/UF
   return digits + (letters ? "/" + letters : "");
 };
+export const formatCID = (value) => {
+  if (!value) return "";
+
+  // Remove tudo que não seja letra ou número
+  let cleaned = value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+
+  // Pega a primeira letra
+  const letter = cleaned.slice(0, 1).replace(/[^A-Z]/g, "");
+
+  // Pega os próximos dois dígitos
+  const digits = cleaned.slice(1, 3).replace(/\D/g, "");
+
+  return letter + digits;
+};
+
 
 
 // Remove qualquer formatação (para enviar limpo ao back-end)
