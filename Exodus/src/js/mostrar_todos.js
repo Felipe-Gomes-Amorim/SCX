@@ -38,6 +38,17 @@ export async function mostrar_todos(role, token) {
   else if(role === "examsReturnPac") {
     url = "http://localhost:8080/patient/getExamsResult";
   } 
+  // SE O USUARIO PEDIR PRA VER O HISTÓRICO
+  else if(role === "history") {
+    url = "http://localhost:8080/auth/getHistory";
+  } 
+
+
+  // SE O USUARIO PEDIR PRA VER AS NOTIFICAÇÕES
+  else if(role === "notific") {
+    url = "http://localhost:8080/notification/getNoRead";
+  } 
+
 
   // SE O PACIENTE PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
   else if(role === "pendingExams") {

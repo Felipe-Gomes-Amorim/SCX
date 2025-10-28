@@ -14,6 +14,11 @@
   object-fit: cover;
   border-radius: 50%;
   border: .1rem solid #A7A7A7;
+  transition: all 0.3s ease;
+}
+.user_icon img:hover {
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+  transform: scale(1.1);
 }
 
 /* Logo */
@@ -268,11 +273,34 @@
   border-radius: 50%;
   width: 45px;
   height: 45px;
+  margin: 0 .5rem 0 .5rem;
+  transition: all 0.3s ease;
+}
+
+.addButton2 {
+  background-image: url("../assets/email.png");
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-color: transparent; 
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  
   transition: all 0.3s ease;
 }
 
 
 .addButton:hover {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+  transform: scale(1.1);
+}
+
+.addButton2:hover {
   background-color: #007bff;
   color: #fff;
   box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);

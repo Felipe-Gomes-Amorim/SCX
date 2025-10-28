@@ -1,17 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
-import profilePic from "./assets/user-icon.png"; 
 import Avatar from "./assets/avatar.png"; 
 import { logoutUsuario } from "./js/login e perfil/logout.js";
-import { carregarPerfil } from "./js/login e perfil/perfil.js"; // mesmo que você usa no Perfil
+import { carregarPerfil } from "./js/login e perfil/perfil.js";
+import { mostrar_todos } from "./js/mostrar_todos.js";
 
 function ExodusTop() {
   const [isLogged, setIsLogged] = useState(false);
   const [userData, setUserData] = useState({ roles: [], nome: "", foto: "" });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token"); // pegar token
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,7 +23,7 @@ function ExodusTop() {
       }
 
       try {
-        const data = await carregarPerfil(token); // busca direto do backend
+        const data = await carregarPerfil(token);
         setUserData({
           ...data,
           roles: data.roles || [],
@@ -36,11 +38,22 @@ function ExodusTop() {
     fetchUser();
   }, [token]);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const toggleMenu = () => setMenuOpen(prev => !prev);
+  const toggleNotifications = async () => {
+    setNotificationsOpen(prev => !prev);
+    if (!notificationsOpen) {
+      
+      const data = await mostrar_todos("notific", token);
+      if (data && data.length > 0) {
+        const sorted = data
+          .sort((a, b) => new Date(a.requestDate) - new Date(b.requestDate))
+          .reverse();
+        setNotifications(sorted.slice(0, 5));
+      }
+    }
+  };
 
- 
-
-  const handleTicket = async () => {
+  const handleLogout = async () => {
     const result = await logoutUsuario();
     if (result.success) {
       navigate("/");
@@ -49,8 +62,6 @@ function ExodusTop() {
     }
   };
 
-  const isAdmin = userData.roles?.some(role => role.name?.toUpperCase() === "ADMIN");
-  const isSecretary = userData.roles?.some(role => role.name?.toUpperCase() === "SECRETARY");
   return (
     <header className={Style.login_header}>
       <Link to="/perfil" className={Style.hyperText}>
@@ -58,29 +69,41 @@ function ExodusTop() {
       </Link>
 
       <div className={Style.headerRight}>
-        {isLogged  && (
-          <div className={Style.addButtonWrapper}>
-            <button className={Style.addButton} onClick={toggleMenu}></button>
-            {menuOpen && (
-              <div className={Style.addMenu}>
-                
-                
-                <p
-                  onClick={() => navigate("/selectAll/myTickets")}
-                >
-                  Ver Tickets
-                </p>
-                <p
-                  className={Style.logout}
-                  onClick={() => handleLogout()}
-                >
-                  Fazer Logout
-                </p>
-              </div>
-            )}
-          </div>
+        {isLogged && (
+          <>
+            {/* Botão de notificações */}
+            <div className={Style.addButtonWrapper}>
+              <button className={Style.addButton2} onClick={toggleNotifications}></button>
+              {notificationsOpen && (
+                <div className={Style.addMenu}>
+                  <p><strong>Notificações</strong></p>
+                  {notifications.length === 0 ? (
+                    <p>Nenhuma notificação</p>
+                  ) : (
+                    notifications.map((item, index) => (
+                      <p key={index} onClick={() => navigate("/SelectAll/history")}>
+                        {item.message}
+                      </p>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Botão de menu principal */}
+            <div className={Style.addButtonWrapper}>
+              <button className={Style.addButton} onClick={toggleMenu}></button>
+              {menuOpen && (
+                <div className={Style.addMenu}>
+                  <p onClick={() => navigate("/selectAll/myTickets")}>Ver Tickets</p>
+                  <p className={Style.logout} onClick={handleLogout}>Fazer Logout</p>
+                </div>
+              )}
+            </div>
+          </>
         )}
 
+        {/* Ícone do usuário */}
         <div
           className={Style.user_icon}
           onClick={() => { if (isLogged) navigate("/perfil"); }}

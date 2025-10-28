@@ -47,7 +47,7 @@ export default function AdmArea() {
           />
         
           <Redirect
-            text="Ver Médicos"
+            text="Gerenciar Médicos"
             place="/selectAll/doctor"
             color="#007bff"
             hoverColor="#fff"
@@ -55,7 +55,7 @@ export default function AdmArea() {
             hoverBackground="#007bff"
           />
           <Redirect
-            text="Ver Laboratórios"
+            text="Gerenciar Laboratórios"
             place="/selectAll/lab"
             color="#007bff"
             hoverColor="#fff"

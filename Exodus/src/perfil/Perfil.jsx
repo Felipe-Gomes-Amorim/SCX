@@ -15,6 +15,7 @@ import ConsultArea from "./ConsultArea.jsx";
 import LabArea from "./LabArea.jsx";
 import PacienteArea from "./PacientArea.jsx";
 import SuporteArea from "./SuportArea.jsx";
+import HistoricoAtividade from "./HistoricoAtividade.jsx";
 
 export default function Perfil() {
   const [userData, setUserData] = useState({
@@ -25,7 +26,7 @@ export default function Perfil() {
     foto: "",
     instituicao_vinc: "",
     email: "",
-  }); 
+  });
   const token = localStorage.getItem("token");
   const [exames, setExames] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -131,49 +132,17 @@ export default function Perfil() {
                 {userData.roles?.some(role => role.name === "Admin") ? (
                   <div className={Style.adminContainer}>
                     <AdmArea className={Style.admArea} />
-                    <section className={Style.section}>
-                      <h2>Histórico de Atividade</h2>
-                      <div className={Style.sectionDivider}></div> {/* linha cinza */}
-
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
-                          Requisição de exame enviada para laboratório X
-                        </p>
-                      </div>
-
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
-                          Teste de laudo 3 recebido
-                        </p>
-                      </div>
-
-                      <button className={Style.btn}>Ver mais</button>
-                    </section>
-
+                    <HistoricoAtividade />
                   </div>
+
+
                 ) : userData.roles?.some(role => role.name === "Support") ? (
                   <div className={Style.adminContainer}>
                     <SuporteArea className={Style.admArea} />
-                    <section className={Style.section}>
-                      <h2>Histórico de Atividade</h2>
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
-                          <br />
-                          Requisição de suporte enviada para equipe X
-                        </p>
-                      </div>
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
-                          <br />
-                          Resposta de ticket recebida
-                        </p>
-                      </div>
-                      <button className={Style.btn}>Ver mais</button>
-                    </section>
+                    <div className={Style.adminContainer}>
+                      
+                      <HistoricoAtividade />
+                    </div>
                   </div>
                 ) : (
                   <>
@@ -183,24 +152,10 @@ export default function Perfil() {
                     {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
 
                     {/* Histórico de atividades */}
-                    <section className={Style.section}>
-                      <h2>Histórico de Atividade</h2>
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
-                          <br />
-                          Requisição de exame enviada para laboratório X
-                        </p>
-                      </div>
-                      <div className={Style.activity}>
-                        <p>
-                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
-                          <br />
-                          Teste de laudo 3 recebido
-                        </p>
-                      </div>
-                      <button className={Style.btn}>Ver mais</button>
-                    </section>
+                    <div className={Style.adminContainer}>
+                      
+                      <HistoricoAtividade />
+                    </div>
                   </>
                 )}
               </>

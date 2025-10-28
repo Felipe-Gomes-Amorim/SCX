@@ -61,7 +61,7 @@ export default function MedicoArea() {
   return (
     <section className={Style.section}>
       <h2>Área do Médico</h2>
-
+      <div className={Style.sectionDivider}></div>
       {loading ? (
         <p>Carregando informações...</p>
       ) : clinicaAtiva ? (
@@ -73,7 +73,7 @@ export default function MedicoArea() {
           <strong>Clínica Ativa:</strong> Nenhuma clínica ativa no momento.
         </p>
       )}
-      <div className={Style.sectionDivider}></div>
+      
       
       <div className={Style.containerArea}>
         <div className={Style.buttonsArea}>

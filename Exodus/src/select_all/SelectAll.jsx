@@ -25,13 +25,14 @@ export default function SelectAll() {
     pendingExams: "Requisições Pendentes",
     examRequests: "Requisições de Exames",
     registerTicket: "Registrar Ticket",
-    tickets: "Tickets",
+    myTickets: "Tickets de Suporte",
     responseTicket: "Responder Ticket",
     patient: "Pacientes",
     lab: "Laboratórios",
     labs_adm: "Administradores de Laboratório",
     clinics: "Clínicas",
     adm: "Administradores",
+    history: "Histórico de Atividades",
   };
 
   useEffect(() => {
