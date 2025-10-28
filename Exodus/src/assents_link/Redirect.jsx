@@ -4,41 +4,39 @@ import Style from "./Redirect.module.css";
 
 export default function Redirect({
   text,
+  icon,
   place,
-  color = "#fff",       // cor padrão do texto e borda
-  background = "transparent", // cor de fundo padrão
-  hoverColor = "#007DFA",     // cor do texto no hover
-  hoverBackground = "#fff",   // cor do fundo no hover
-  glowColor = "#fff", 
-  //padding = "10px 215px"       //permite ajustar o tamanho também
+  color = "#fff",
+  background = "transparent",
+  hoverColor = "#007DFA",
+  hoverBackground = "#fff",
+  glowColor = "#fff",
 }) {
   const navigate = useNavigate();
 
   const buttonStyle = {
-    color: color,
+    color,
     borderColor: color,
-    background: background,
-    //padding: padding,
+    background,
   };
 
   return (
     <button
-      className={Style.btn}
+      className={`${Style.btn} ${icon ? Style.iconOnly : ""}`}
       style={buttonStyle}
       type="button"
       onClick={() => navigate(place)}
-      
       onMouseEnter={(e) => {
-        e.target.style.color = hoverColor;
-        e.target.style.background = hoverBackground;
+        e.currentTarget.style.color = hoverColor;
+        e.currentTarget.style.background = hoverBackground;
       }}
       onMouseLeave={(e) => {
-        e.target.style.color = color;
-        e.target.style.background = background;
+        e.currentTarget.style.color = color;
+        e.currentTarget.style.background = background;
       }}
     >
-      
-      {text}
+      {icon && <img src={icon} alt="icon" className={Style.icon} />}
+      {text && <span>{text}</span>}
     </button>
   );
 }

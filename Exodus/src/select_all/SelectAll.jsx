@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Style from "./SelectAll.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import { ativarClinica, buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
-import { useNavigate } from "react-router-dom";
+import Redirect from "../assents_link/Redirect.jsx";
+import maisIcon from "../assets/mais2.png";
 
 export default function SelectAll() {
   const { role } = useParams();
@@ -14,6 +15,24 @@ export default function SelectAll() {
   const [carregando, setCarregando] = useState(true);
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
   const navigate = useNavigate();
+  //TODAS AS OPÇÕES POSSÍVEIS
+  const roleNames = {
+    doctor: "Médicos",
+    doctorAval: "Médicos Disponíveis",
+    examsPend: "Requisições Pendentes",
+    examsReturn: "Devoluções de Exames",
+    examsReturnPac: "Meus Exames",
+    pendingExams: "Requisições Pendentes",
+    examRequests: "Requisições de Exames",
+    registerTicket: "Registrar Ticket",
+    tickets: "Tickets",
+    responseTicket: "Responder Ticket",
+    patient: "Pacientes",
+    lab: "Laboratórios",
+    labs_adm: "Administradores de Laboratório",
+    clinics: "Clínicas",
+    adm: "Administradores",
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,8 +66,6 @@ export default function SelectAll() {
       }
     }
 
-
-
     carregarDados();
     carregarClinicaAtiva();
   }, [role]);
@@ -68,23 +85,73 @@ export default function SelectAll() {
     }
   };
 
-
   const handleCadastrarDevolucao = (exam) => {
-    navigate(`/registerExam?id=${exam.idReq}`); 
-   
+    navigate(`/registerExam?id=${exam.idReq}`);
+  };
+
+  // 🔹 Determina se deve mostrar o botão de "Cadastrar novo"
+  const getCadastroButton = () => {
+    if (role === "doctor") {
+      return (
+        <Redirect
+          text="Cadastrar Médico"
+          place="/checkDoctor"
+          color="#007bff"
+          hoverColor="#ffffff"
+          background="#ffffff"
+          hoverBackground="#007bff"
+        />
+      );
+    }
+    if (role === "lab") {
+      return (
+        <Redirect
+          text="Cadastrar Laboratório"
+          place="/checkLab"
+          color="#007bff"
+          hoverColor="#ffffff"
+          background="#ffffff"
+          hoverBackground="#007bff"
+        />
+      );
+    }
+    return null;
   };
 
   return (
     <>
       <ExodusTop />
+
       <section className={Style.section}>
         <div className={Style.header}>
-          <h2>Listagem de {role}</h2>
+          <h2>Listagem de {roleNames[role] || "Itens"}</h2>
+
+          {/* Mostra clínica ativa */}
           {role === "clinics" && clinicaAtiva && (
             <div className={Style.activeClinic}>
               <strong>Clínica ativa:</strong> {clinicaAtiva.name}
             </div>
           )}
+
+          {/* 🔹 Botão de cadastrar novo (somente ícone “+”) */}
+          {role === "doctor" && (
+            <Redirect
+              place="/checkDoctor"
+              icon={maisIcon}
+              background="transparent"
+              hoverBackground="transparent"
+            />
+          )}
+
+          {role === "lab" && (
+            <Redirect
+              place="/checkLab"
+              icon={maisIcon}
+              background="transparent"
+              hoverBackground="transparent"
+            />
+          )}
+
         </div>
 
         {carregando ? (
@@ -93,8 +160,8 @@ export default function SelectAll() {
           <p className={Style.error}>{erro}</p>
         ) : (
           <>
-            {/* Cabeçalho para examRequests */}
-            {role === "examRequests" || role === "examsPend"  && dados.length > 0 && (
+            {/* Cabeçalho da tabela */}
+            {(role === "examRequests" || role === "examsPend") && dados.length > 0 && (
               <div className={Style.tableHeader}>
                 <span className={Style.headerCell}>Paciente</span>
                 <span className={Style.headerCell}>Clínica</span>
@@ -109,22 +176,36 @@ export default function SelectAll() {
 
             <div className={Style.listContainer}>
               {dados.map((item, index) => (
-                <div key={index} className={`${Style.card} ${role === "examRequests" ? Style.examRequests : ""}`}>
-                  <div className={`${Style.cardContent} ${role === "examRequests" ? Style.examRequests : ""}`}>
-                    {Object.entries(item).map(([key, value], i) => {
-                      if (role === "examRequests" && key === "idReq") return null;
-                      return (
+                <div
+                  key={index}
+                  className={`${Style.card} ${role === "examRequests" ? Style.examRequests : ""}`}
+                >
+                  <div className={Style.cardContent}>
+                    {role === "doctor" ? (
+                      // Ordem personalizada para médico
+                      <>
+                        <span className={Style.data}>{item.name || "-"}</span>
+                        <span className={Style.data}>{item.crm || "-"}</span>
+                      
+                      </>
+                    ) : (
+                      // Ordem padrão para outros roles
+                      Object.entries(item).map(([key, value], i) => (
                         <span key={i} className={Style.data}>
                           {value || "-"}
                         </span>
-                      );
-                    })}
+                      ))
+                    )}
                   </div>
 
-                  <div className={`${Style.actions} ${role === "examRequests" ? Style.examRequests : ""}`}>
+
+                  <div
+                    className={`${Style.actions} ${role === "examRequests" ? Style.examRequests : ""}`}
+                  >
                     {role === "clinics" ? (
                       <button
-                        className={`${Style.button} ${clinicaAtiva?.name === item.name ? Style.active : Style.activate}`}
+                        className={`${Style.button} ${clinicaAtiva?.name === item.name ? Style.active : Style.activate
+                          }`}
                         onClick={() => handleAtivarClinica(item)}
                         disabled={clinicaAtiva?.name === item.name}
                       >
@@ -137,20 +218,18 @@ export default function SelectAll() {
                       >
                         Cadastrar Devolução
                       </button>
-                    ) 
-                    : role === "examsPend" ? (
+                    ) : role === "examsPend" ? (
                       <></>
                     ) : (
                       <button
                         className={`${Style.button} ${Style.delete}`}
                         onClick={() => handleExcluir(item)}
                       >
-                        Excluir
+                        Desativar
                       </button>
                     )}
                   </div>
                 </div>
-
               ))}
             </div>
           </>

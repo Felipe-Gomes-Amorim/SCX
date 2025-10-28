@@ -1,24 +1,31 @@
 .btn {
-  position: relative;
-  width: 19rem;               /* 🔹 largura fixa igual pra todos */
-  height: 3rem;               /* 🔹 altura fixa */
-  border-radius: 10px;
-  border: 2px solid rgb(255, 255, 255);
-  font-size: 14px;
-  
-  font-weight: 600;
-  letter-spacing: 2px;
+  border: 2px solid #007bff;
   background: transparent;
-  color: #fff;
-  overflow: hidden;
-  box-shadow: 0 0 0 0 transparent;
-  transition: all 0.2s ease-in;
-  display: flex;              /* centraliza texto */
-  justify-content: center;
+  color: #007bff;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn img {
+  width: 3rem;
+  height: 3rem;
+  transition: filter 0.3s ease;
+  
 }
 
 .btn:hover {
-  color: #007DFA;
-  background: rgb(252, 252, 252);
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.btn:hover img {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(91%) saturate(2059%)
+    hue-rotate(198deg) brightness(98%) contrast(101%); /* azul */
 }

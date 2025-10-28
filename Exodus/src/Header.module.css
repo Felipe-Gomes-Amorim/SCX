@@ -1,17 +1,25 @@
-.top_bar {
-  background: linear-gradient(to right, rgba(0, 110, 255, 0.9), rgba(0, 50, 160, 0.95));
-  color: white;
-  font-size: 14px;
-  padding: 8px 20px;
-}
-
-.top_bar .top_info {
+/* Logo */
+.login_header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: .5rem 30px;
+  background: linear-gradient(to right, #007bff, #0046b3);
+  font-style: italic;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* separa logo e ícone */
+  align-items: center; /* alinha verticalmente */
+  z-index: 1000;
 }
 
-.top_bar a {
-  color: white;
+.hyperText{
   text-decoration: none;
+}
+
+.login_header h1 {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+     
 }

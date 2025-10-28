@@ -6,7 +6,7 @@ import Avatar from "../assets/avatar.png";
 import axios from "axios";
 import { logoutUsuario } from "../js/login e perfil/logout.js";
 import { useNavigate } from "react-router-dom";
-import { carregarPerfil } from "../js/login e perfil/perfil.js"; 
+import { carregarPerfil } from "../js/login e perfil/perfil.js";
 
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
@@ -31,46 +31,46 @@ export default function Perfil() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
- 
+
   useEffect(() => {
-  const foto = Avatar;
-  const fetchPerfil = async () => {
-    
-    if (!token) {
-      navigate("/login"); // não está logado
-      return;
-    }
+    const foto = Avatar;
+    const fetchPerfil = async () => {
 
-    try {
-      const data = await carregarPerfil(token); // aguarda o retorno
-      setUserData({
-        ...data,
-        roles: data.roles || []
-      });
-      console.log(data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setErrorMsg("Erro ao carregar perfil.");
-      localStorage.clear();
-      navigate("/login");
-      setLoading(false);
-    }
-  };
-  
+      if (!token) {
+        navigate("/login"); // não está logado
+        return;
+      }
 
-  fetchPerfil();
-}, [token]);
+      try {
+        const data = await carregarPerfil(token); // aguarda o retorno
+        setUserData({
+          ...data,
+          roles: data.roles || []
+        });
+        console.log(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setErrorMsg("Erro ao carregar perfil.");
+        localStorage.clear();
+        navigate("/login");
+        setLoading(false);
+      }
+    };
+
+
+    fetchPerfil();
+  }, [token]);
 
 
   //Função de LOGOUT
   const handleLogout = async () => {
-    
-                        //chama a função logoutUsuario que tá em logout.js
+
+    //chama a função logoutUsuario que tá em logout.js
     const result = await logoutUsuario();
     if (result.success) {
       // redireciona pra tela inicial
-      navigate("/"); 
+      navigate("/");
     } else {
       alert("Erro ao fazer logout: " + result.message);
     }
@@ -81,7 +81,7 @@ export default function Perfil() {
 
 
 
-  
+
 
   if (loading) {
     return (
@@ -113,13 +113,13 @@ export default function Perfil() {
             <button className={Style.edit_btn}>Ver meus dados</button>
             <button
               className={Style.logout_btn}
-              
+
               onClick={handleLogout}
-            
+
             >
               Logout
             </button>
-            
+
           </aside>
 
           {/* Conteúdo principal */}
@@ -128,66 +128,62 @@ export default function Perfil() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <>
-                
-
-                {userData.roles?.some(role => role.name === "Doctor") && (
-                 
-                <MedicoArea/>
-                
-                )}
-                {userData.roles?.some(role => role.name === "Admin") && (
-                 
-                <AdmArea/>
-                
-                )}
-                {userData.roles?.some(role => role.name === "LaboratoryAdmin") && (
-               
-                <LabArea/>
-                
-                )}
-
-                {userData.roles?.some(role => role.name === "Patient") && (
-               
-                <PacienteArea/>
-                
-                )}
-                
-                {userData.roles?.some(role => role.name === "Secretary") && (
-             
-                <SecretariaArea/>
-                
-                )}
-                {userData.roles?.some(role => role.name === "Support") && (
-             
-                <SuporteArea/>
-                
-                )}
-
-                
-                
-
-                {/* Histórico de atividades */}
-                <section className={Style.section}>
-                  <h2>Histórico de Atividade</h2>
-                  <div className={Style.activity}>
-                    <p>
-                      <strong>Terça-Feira, 5 de Agosto de 2025</strong>
-                      <br />
-                      Requisição de exame enviada para laboratório X
-                    </p>
+                {userData.roles?.some(role => role.name === "Admin") ? (
+                  <div className={Style.adminContainer}>
+                    <AdmArea className={Style.admArea}/>
+                    <section className={Style.section}>
+                      <h2>Histórico de Atividade</h2>
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
+                          <br />
+                          Requisição de exame enviada para laboratório X
+                        </p>
+                      </div>
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
+                          <br />
+                          Teste de laudo 3 recebido
+                        </p>
+                      </div>
+                      <button className={Style.btn}>Ver mais</button>
+                    </section>
                   </div>
-                  <div className={Style.activity}>
-                    <p>
-                      <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
-                      <br />
-                      Teste de laudo 3 recebido
-                    </p>
-                  </div>
-                  <button className={Style.btn}>Ver mais</button>
-                </section>
+                ) : (
+                  // Conteúdo para outros roles continua igual
+                  <>
+                    {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
+                    {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
+                    {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
+                    {userData.roles?.some(role => role.name === "Support") && <SuporteArea />}
+                    {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
+
+                    {/* Histórico de atividades */}
+                    <section className={Style.section}>
+                      <h2>Histórico de Atividade</h2>
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
+                          <br />
+                          Requisição de exame enviada para laboratório X
+                        </p>
+                      </div>
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
+                          <br />
+                          Teste de laudo 3 recebido
+                        </p>
+                      </div>
+                      <button className={Style.btn}>Ver mais</button>
+                    </section>
+                  </>
+                )}
               </>
             )}
           </main>
+
         </div>
       </div>
 

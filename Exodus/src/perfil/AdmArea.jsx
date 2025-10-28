@@ -28,70 +28,44 @@ export default function AdmArea() {
 
   return (
     <section className={Style.section}>
-      <h2>Área do Administrador</h2>
-      <p>
+      <h2 className={Style.sectionTitle}>Área do Administrador</h2>
+      <p className={Style.infoText}>
         <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
       </p>
 
       {/* Seção de Cadastro */}
       <div className={Style.subsection}>
-        <h3>Seção de Cadastro</h3>
-        <div className={Style.buttons}>
+       
+        <div className={Style.buttonRow}>
           <Redirect
-            text="Cadastrar Laboratório"
-            place="/checkLab"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
-
-          <Redirect
-            text="Cadastrar Médico"
-            place="/checkDoctor"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
-
-          <Redirect
-            text="Cadastrar Secretaria"
+            text="Cadastrar Secretária"
             place="/registerSecretaria"
             color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
+            hoverColor="#fff"
+            background="#fff"
             hoverBackground="#007bff"
           />
-        </div>
-      </div>
-
-      {/* Seção de Visualização */}
-      <div className={Style.subsection}>
-        <h3>Seção de Visualização</h3>
-        <div className={Style.buttons}>
+        
           <Redirect
             text="Ver Médicos"
             place="/selectAll/doctor"
             color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
+            hoverColor="#fff"
+            background="#fff"
             hoverBackground="#007bff"
-            
           />
-
-          
-
           <Redirect
             text="Ver Laboratórios"
             place="/selectAll/lab"
             color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
+            hoverColor="#fff"
+            background="#fff"
             hoverBackground="#007bff"
           />
+            
         </div>
       </div>
+      
     </section>
   );
 }

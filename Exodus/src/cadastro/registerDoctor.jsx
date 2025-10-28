@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
-import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { motion } from "framer-motion";
 import Style from "./register.module.css";
-import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
+import ExodusTop from "../ExodusTop.jsx";
+import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
 
 export default function RegisterDoctor() {
   const [loading, setLoading] = useState(false);
@@ -21,11 +22,21 @@ export default function RegisterDoctor() {
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
-    const token = localStorage.getItem("token");
+    setErrorMessage("");
 
-    const result = await cadastrarMedico(formValues, token);
-    alert(result.message);
-    navigate("/perfil");
+    try {
+      const token = localStorage.getItem("token");
+      const result = await cadastrarMedico(formValues, token);
+
+      if (result.success) {
+        navigate("/perfil");
+      } else {
+        setErrorMessage(result.message || "Erro desconhecido ao cadastrar médico.");
+      }
+    } catch (err) {
+      setErrorMessage("Falha ao se conectar ao servidor.");
+    }
+
     setLoading(false);
   };
 
@@ -33,10 +44,30 @@ export default function RegisterDoctor() {
     <>
       <div className={Style.login_page}>
         <ExodusTop />
+
         <div className={Style.login_card}>
-          <div className={Style.login_left}>
+          {/* Lado direito - boas-vindas */}
+          <motion.div
+            className={Style.login_right}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
+            <motion.h2>Bem-vindo!</motion.h2>
+            <motion.p>
+              Digite os dados do médico para que ele possa utilizar do Sistema
+            </motion.p>
+          </motion.div>
+
+          {/* Lado esquerdo - formulário */}
+          <motion.div
+            className={Style.login_left}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
             <h2>Cadastro de Médico</h2>
-            <p className={Style.subtitle}>Preencha os dados para cadastrar o médico</p>
+            <p className={Style.subtitle}>Preencha com os dados</p>
 
             <DynamicForm
               fields={fields}
@@ -45,9 +76,10 @@ export default function RegisterDoctor() {
               loading={loading}
               errorMessage={errorMessage}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
+
       <Footer />
     </>
   );

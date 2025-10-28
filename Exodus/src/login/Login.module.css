@@ -5,18 +5,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .user_icon img {
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
   border-radius: 50%;
+  border: .1rem solid #A7A7A7;
 }
 
 /* Logo */
 .login_header {
   width: 100%;
-  padding: 20px 40px;
+  padding: 15px 40px;
   background: linear-gradient(to right, #007bff, #0046b3);
   font-style: italic;
   display: flex;
@@ -30,14 +33,17 @@
 
 .login_header h1 {
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
   font-weight: bold;
   text-decoration: none;
      
 }
 
+
+
 /* Card de login */
 .login_card {
+  top: 3rem;
   display: flex;
   background: white;
   margin-top: 40px;

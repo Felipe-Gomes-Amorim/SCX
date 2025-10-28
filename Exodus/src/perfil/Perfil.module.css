@@ -37,6 +37,7 @@
   margin-bottom: 15px;
   justify-items: center;
   object-fit: cover;
+  border: .2rem solid #A7A7A7;
 }
 
 .edit_btn {
@@ -89,6 +90,7 @@
 .section {
   background: #fff;
   padding: 20px;
+  min-height: 21rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -255,4 +257,58 @@
   height: 3px;
   background-color: #d1d5db; 
   margin: 1rem 0 1rem 0;
+}
+
+.section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.infoText {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+
+
+
+.buttonRow {
+  display: grid;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+
+.adminContainer {
+  display: flex;
+  gap: 20px; /* espaço entre AdmArea e histórico */
+  align-items: flex-start;
+  flex-wrap: wrap; /* para telas pequenas, empilha verticalmente */
+}
+
+/* Forçar cada seção a ocupar metade do container */
+.adminContainer .admArea,
+.adminContainer .section {
+  flex: 1; /* divide igualmente */
+  min-width: 300px; /* evita que fique muito estreito em telas pequenas */
+}
+
+/* Ajustes visuais para deixar separadas e arredondadas */
+.adminContainer .admArea {
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.adminContainer .section {
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
