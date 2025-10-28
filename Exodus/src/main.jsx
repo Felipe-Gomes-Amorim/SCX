@@ -28,7 +28,8 @@ import RequisitarExame from './cadastro/registerRequisicaoExame.jsx'
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import AdmArea from './perfil/AdmArea.jsx'
 import RegisterRequisicaoExame from './cadastro/registerRequisicaoExame.jsx'
-
+import RegisterTicket from './cadastro/registerTicket.jsx'
+import ResponseTicket from './cadastro/registerTicketResponse.jsx'
 
 //ROTAS!!!!!!!!!!!!!!!!!
 const router = createBrowserRouter([
@@ -50,6 +51,8 @@ const router = createBrowserRouter([
   { path: "/registerSecretaria", element: <RegisterSecretaria /> },
   { path: "/registerConsulta", element: <RegisterConsulta /> },
   { path: "/requisitarExame", element: <RequisitarExame /> },
+  { path: "/registerTicket", element: <RegisterTicket /> },
+  { path: "/responseTicket/:id", element: <ResponseTicket /> }
   
 ]);
 

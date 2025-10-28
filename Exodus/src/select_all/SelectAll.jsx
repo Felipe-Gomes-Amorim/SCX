@@ -65,9 +65,10 @@ export default function SelectAll() {
         localStorage.setItem("activeClinic", JSON.stringify(backendResponse.clinic));
       }
     }
-
+    console.log(role)
     carregarDados();
-    carregarClinicaAtiva();
+    if (role === "clinics") carregarClinicaAtiva();
+
   }, [role]);
 
   const handleExcluir = (item) => {
@@ -186,7 +187,20 @@ export default function SelectAll() {
                       <>
                         <span className={Style.data}>{item.name || "-"}</span>
                         <span className={Style.data}>{item.crm || "-"}</span>
-                      
+                      </>
+                    ) : role === "tickets" ? (
+                      // Ordem personalizada para suporte
+                      <>
+                        <span className={Style.data}>{item.subject || "-"}</span>
+                        <span className={Style.data}>{item.message || "-"}</span>
+                      </>
+                    ) : role === "myTickets" ? (
+                      // Ordem personalizada para suporte
+                      <>
+                        <span className={Style.data}>{item.subject || "-"}</span>
+                        <span className={Style.data}>{item.message || "-"}</span>
+                        
+                        <span className={Style.data}>{item.response || "-"}</span>
                       </>
                     ) : (
                       // Ordem padrão para outros roles
@@ -196,6 +210,7 @@ export default function SelectAll() {
                         </span>
                       ))
                     )}
+
                   </div>
 
 
@@ -204,8 +219,7 @@ export default function SelectAll() {
                   >
                     {role === "clinics" ? (
                       <button
-                        className={`${Style.button} ${clinicaAtiva?.name === item.name ? Style.active : Style.activate
-                          }`}
+                        className={`${Style.button} ${clinicaAtiva?.name === item.name ? Style.active : Style.activate}`}
                         onClick={() => handleAtivarClinica(item)}
                         disabled={clinicaAtiva?.name === item.name}
                       >
@@ -220,6 +234,14 @@ export default function SelectAll() {
                       </button>
                     ) : role === "examsPend" ? (
                       <></>
+                    ) : role === "tickets" ? (
+                      // 🔹 Novo caso: suporte (tickets)
+                      <button
+                        className={`${Style.button} ${Style.register}`}
+                        onClick={() => navigate(`/responseTicket/${item.id}`)}
+                      >
+                        Responder
+                      </button>
                     ) : (
                       <button
                         className={`${Style.button} ${Style.delete}`}
@@ -229,6 +251,7 @@ export default function SelectAll() {
                       </button>
                     )}
                   </div>
+
                 </div>
               ))}
             </div>

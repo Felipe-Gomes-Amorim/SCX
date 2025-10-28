@@ -130,33 +130,56 @@ export default function Perfil() {
               <>
                 {userData.roles?.some(role => role.name === "Admin") ? (
                   <div className={Style.adminContainer}>
-                    <AdmArea className={Style.admArea}/>
+                    <AdmArea className={Style.admArea} />
+                    <section className={Style.section}>
+                      <h2>Histórico de Atividade</h2>
+                      <div className={Style.sectionDivider}></div> {/* linha cinza */}
+
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Terça-Feira, 5 de Agosto de 2025</strong>
+                          Requisição de exame enviada para laboratório X
+                        </p>
+                      </div>
+
+                      <div className={Style.activity}>
+                        <p>
+                          <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
+                          Teste de laudo 3 recebido
+                        </p>
+                      </div>
+
+                      <button className={Style.btn}>Ver mais</button>
+                    </section>
+
+                  </div>
+                ) : userData.roles?.some(role => role.name === "Support") ? (
+                  <div className={Style.adminContainer}>
+                    <SuporteArea className={Style.admArea} />
                     <section className={Style.section}>
                       <h2>Histórico de Atividade</h2>
                       <div className={Style.activity}>
                         <p>
                           <strong>Terça-Feira, 5 de Agosto de 2025</strong>
                           <br />
-                          Requisição de exame enviada para laboratório X
+                          Requisição de suporte enviada para equipe X
                         </p>
                       </div>
                       <div className={Style.activity}>
                         <p>
                           <strong>Sexta-Feira, 1 de Agosto de 2025</strong>
                           <br />
-                          Teste de laudo 3 recebido
+                          Resposta de ticket recebida
                         </p>
                       </div>
                       <button className={Style.btn}>Ver mais</button>
                     </section>
                   </div>
                 ) : (
-                  // Conteúdo para outros roles continua igual
                   <>
                     {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
                     {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
                     {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
-                    {userData.roles?.some(role => role.name === "Support") && <SuporteArea />}
                     {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
 
                     {/* Histórico de atividades */}
@@ -183,6 +206,7 @@ export default function Perfil() {
               </>
             )}
           </main>
+
 
         </div>
       </div>

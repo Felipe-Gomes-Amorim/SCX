@@ -277,6 +277,7 @@
 
 
 .buttonRow {
+ 
   display: grid;
   flex-wrap: wrap;
   gap: 15px;
@@ -311,4 +312,71 @@
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+/* === Histórico de atividade === */
+
+.section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.section h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+/* Linha divisória */
+.sectionDivider {
+  width: 100%;
+  height: 2px;
+  background-color: #d1d5db; /* cinza suave */
+  margin: 0.8rem 0 1rem 0;
+}
+
+/* Texto dentro das atividades */
+.activity {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activity:last-child {
+  border-bottom: none;
+}
+
+.activity strong {
+  display: block;
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 0.2rem;
+}
+
+.activity p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Botão “Ver mais” */
+.btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+  background: #007bff;
+  color: #fff;
 }

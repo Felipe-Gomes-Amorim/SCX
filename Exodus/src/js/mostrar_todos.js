@@ -13,18 +13,21 @@ export async function mostrar_todos(role, token) {
   else if(role === "examsPend") {
     url = "http://localhost:8080/doctor/getRequestExamPendent";
   }
+  // SE O SUPORTE PEDIR RPA VER TODOS OS TICKETS
+  else if(role === "tickets") {
+    url = "http://localhost:8080/support/getOpen";
+  }
 
+  // SE ALGM PEDIR PRA VER OS TICKETS DELE
+  else if(role === "myTickets") {
+    url = "http://localhost:8080/support/getByUser";
+    
+  }
   
   else if(role === "registerTicket") {
     url = "http://localhost:8080/support/registerTicket";
   }
-  else if(role === "tickets") {
-    url = "http://localhost:8080/support/getTicket";
-  }
-  else if(role === "responseTicket") {
-    url = "http://localhost:8080/support/responseTicket";
-  }
-
+  
 
   // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
   else if(role === "examsReturn") {

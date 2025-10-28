@@ -38,7 +38,9 @@ function ExodusTop() {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const handleLogout = async () => {
+ 
+
+  const handleTicket = async () => {
     const result = await logoutUsuario();
     if (result.success) {
       navigate("/");
@@ -62,99 +64,12 @@ function ExodusTop() {
             {menuOpen && (
               <div className={Style.addMenu}>
                 
-                {
-                //SE FOR ADM
-                isAdmin&&(
-                <>
-                <p
-                  onClick={() => {
-                    navigate("/registerLaboratory");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Cadastrar laboratório
-                </p>
-
-                <p
-                  onClick={() => {
-                    navigate("/checkDoctor");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Cadastrar Médico
-                </p>
-
-                <p
-                  onClick={() => {
-                    navigate("/registerSecretaria");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Cadastrar Secretaria
-                </p>
-                <p
-                  onClick={() => {
-                    navigate("/selectAll/doctor");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Ver Médicos
-                </p>
-                <p
-                  onClick={() => {
-                    navigate("/selectAll/lab");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Ver Laboratórios
-                </p>
-                </>
                 
-                )}
-
-                {
-
-
-                //SE FOR SECRETARIA
-                isSecretary&&(
-                <>
                 <p
-                  onClick={() => {
-                    navigate("/register");
-                    setMenuOpen(false);
-                  }}
+                  onClick={() => navigate("/selectAll/myTickets")}
                 >
-                  Cadastrar Paciente
+                  Ver Tickets
                 </p>
-
-                <p
-                  onClick={() => {
-                    navigate("/registerConsulta");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Abrir Consulta
-                </p>
-                <p
-                  onClick={() => {
-                    navigate("/selectAll/patient");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Ver Pacientes
-                </p>
-
-                <p
-                  onClick={() => {
-                    navigate("/selectAll/doctorAval");
-                    setMenuOpen(false);
-                  }}
-                >
-                  Ver Médicos Disponíveis
-                </p>
-                </>
-                
-                )}
                 <p
                   className={Style.logout}
                   onClick={() => handleLogout()}

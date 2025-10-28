@@ -1,5 +1,8 @@
 import Style from './Footer.module.css'
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function About() {
+  const navigate = useNavigate();
 return (
     <footer className={Style.footer}>
   <div className={Style.footer_container}>
@@ -14,7 +17,11 @@ return (
       <ul>
         <li><a href="#">Início</a></li>
         <li><a href="#">Sobre nós</a></li>
-        <li><a href="#">Serviços</a></li>
+        <li>
+          <Link to="/registerTicket">
+          <a >Suporte</a>
+          </Link></li>
+          
         <li><a href="#">Contato</a></li>
       </ul>
     </div>
