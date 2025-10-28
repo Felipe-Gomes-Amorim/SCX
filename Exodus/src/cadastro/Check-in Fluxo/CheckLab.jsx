@@ -18,11 +18,11 @@ export default function CheckLaboratory() {
     { name: "cnpj", type: "text", placeholder: "Digite o CNPJ do laboratório", required: true },
   ];
 
-  const handleSubmit = async (formValues) => {
+  const handleSubmit = async (formData) => {
     setLoading(true);
     const token = localStorage.getItem("token");
 
-    const result = await verificarLaboratorio(formValues.cnpj, token);
+    const result = await verificarLaboratorio(formData.cnpj, token);
     console.log("Resultado da verificação:", result);
 
     if (result.status === "jaCadastrado") {
@@ -30,7 +30,7 @@ export default function CheckLaboratory() {
       navigate("/perfil");
     } else if (result.status === "transferivel") {
       alert("🔁 Laboratório existe no sistema, mas não está vinculado à clínica. Cadastrando no sistema...");
-      const result2 = await transferirLaboratorio(formValues);
+      const result2 = await transferirLaboratorio(formData);
       if (result2.success) {
         alert("Transferido com sucesso!");
         navigate("/perfil");
@@ -39,7 +39,7 @@ export default function CheckLaboratory() {
       }
     } else if (result.status === "novo") {
       alert("🆕 Laboratório não encontrado. Prossiga para o cadastro completo!");
-      navigate(`/registerLaboratory?cnpj=${formValues.cnpj}`);
+      navigate(`/registerLaboratory?cnpj=${formData.cnpj}`);
     } else {
       alert("❌ Ocorreu um erro ao verificar o CNPJ.");
       setErrorMessage(result.message);

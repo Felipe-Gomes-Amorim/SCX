@@ -31,7 +31,9 @@ function Top() {
         <GenericButton text="Portal do Médico" place={"/login"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
         <GenericButton text="Portal do Laboratório" place={"/register"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
         <GenericButton text="Portal da Secretaria" place={"/register"} color="#007DFA" hoverColor="#fff" hoverBackground="#007DFA"/>
-        
+        <button onClick={handleCadastrarSuporte}>
+           Criar Usuário Suporte
+        </button>
 
     </section>
   );

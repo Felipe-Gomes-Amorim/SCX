@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarSecretaria } from "../js/registros/cadastrar_secretaria.js"; // ✅ import atualizado
+import { cadastrarSecretaria } from "../js/registros/cadastrar_secretaria.js"; 
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function RegisterSecretaria() {
@@ -20,32 +20,33 @@ export default function RegisterSecretaria() {
   ];
 
   // ✅ Envio dos dados
-  const handleSubmit = async (formValues) => {
+  const handleSubmit = async (formData) => {  // <-- agora recebe formData diretamente
     setLoading(true);
     setErrorMessage("");
 
     try {
       const secretariaData = {
-        name: formValues.name,
-        cpf: formValues.cpf,
-        email: formValues.email,
+        name: formData.name,
+        cpf: formData.cpf,       // já vai vir com máscara ou limpa se usar unmask
+        email: formData.email,   // digitação direta
       };
 
       const token = localStorage.getItem("token");
       const result = await cadastrarSecretaria(secretariaData, token);
 
       if (result.success) {
-        alert("Secretária cadastrada com sucesso!");
-        navigate("/perfil");
+      alert("Secretária cadastrada com sucesso!");
+      navigate("/perfil");
       } else {
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar secretária.");
+      setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
     } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+    setErrorMessage("Falha ao se conectar ao servidor.");
     }
 
-    setLoading(false);
+  setLoading(false);
   };
+
 
   return (
     <>

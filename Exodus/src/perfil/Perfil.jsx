@@ -25,7 +25,7 @@ export default function Perfil() {
     foto: "",
     instituicao_vinc: "",
     email: "",
-  });
+  }); 
   const token = localStorage.getItem("token");
   const [exames, setExames] = useState([]);
   const [loading, setLoading] = useState(true);
