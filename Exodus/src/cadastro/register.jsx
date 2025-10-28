@@ -19,34 +19,34 @@ export default function RegisterPaciente() {
     { name: "email", type: "email", placeholder: "E-mail", required: true },
   ];
 
-  // Função de envio
-  const handleSubmit = async (formValues) => {
+  // 🔹 Funções utilitárias para validar CPF e e-mail
+  const handleSubmit = async (formData) => {  // <-- agora recebe formData diretamente
     setLoading(true);
     setErrorMessage("");
 
     try {
       const pacienteData = {
-        name: formValues.name,
-        cpf: formValues.cpf,
-        email: formValues.email,
+        name: formData.name,
+        cpf: formData.cpf,       // já vai vir com máscara ou limpa se usar unmask
+        email: formData.email,   // digitação direta
       };
 
       const token = localStorage.getItem("token");
       const result = await cadastrarPaciente(pacienteData, token);
 
       if (result.success) {
-        // Redireciona diretamente para /perfil sem alert
-        navigate("/perfil");
+      alert("Paciente cadastrado com sucesso!");
+      navigate("/perfil");
       } else {
-        // Mensagem de erro inline
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar paciente.");
+      setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
     } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+    setErrorMessage("Falha ao se conectar ao servidor.");
     }
 
-    setLoading(false);
+  setLoading(false);
   };
+
 
   return (
     <>
@@ -62,9 +62,7 @@ export default function RegisterPaciente() {
             transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
           >
             <motion.h2>Bem-vindo!</motion.h2>
-            <motion.p>
-              Digite os dados do paciente para que ele possa utilizar do Sistema
-            </motion.p>
+            <motion.p>Digite os dados do paciente para que ele possa utilizar do Sistema.</motion.p>
           </motion.div>
 
           {/* Lado esquerdo - formulário */}
@@ -82,7 +80,7 @@ export default function RegisterPaciente() {
               onSubmit={handleSubmit}
               buttonText="Cadastrar"
               loading={loading}
-              errorMessage={errorMessage} 
+              errorMessage={errorMessage}
             />
           </motion.div>
         </div>

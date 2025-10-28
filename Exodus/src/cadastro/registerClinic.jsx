@@ -7,6 +7,8 @@ import Header from "../Header.jsx";
 import { cadastrarClinica } from "../js/registros/cadastrar_clinica.js";
 import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import ActionButton from "../assents_link/ActionButton.jsx";
+import { IMaskInput } from "react-imask";
+
 
 export default function RegisterClinic() {
   const [loading, setLoading] = useState(false);
@@ -27,43 +29,50 @@ export default function RegisterClinic() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage("");
+  e.preventDefault();
+  setLoading(true);
+  setErrorMessage("");
 
-    try {
-      const clinicaData = {
-        name: formData.name,
-        cnpj: formData.cnpj,
-        telephone: formData.telephone,
-        address: formData.address,
-      };
-      const admClinicaData = {
-        name: formData.clinicaAdm,
-        email: formData.email,
-        cnpj: formData.cnpj,
-      };
+  // 🔹 Limpar a formatação dos campos antes de enviar
+  const cleanCNPJ = formData.cnpj.replace(/\D/g, ""); // remove tudo que não é número
+  const cleanPhone = formData.telephone.replace(/\D/g, "");
 
-      const token = localStorage.getItem("token");
-      const result = await cadastrarClinica(clinicaData, token);
+  try {
+    const clinicaData = {
+      name: formData.name,
+      cnpj: cleanCNPJ, // envia sem máscara
+      telephone: cleanPhone, // envia sem máscara
+      address: formData.address,
+    };
 
-      if (result.success) {
-        alert("Clínica cadastrada com sucesso!");
+    const admClinicaData = {
+      name: formData.clinicaAdm,
+      email: formData.email,
+      cnpj: cleanCNPJ,
+    };
 
-        const result2 = await cadastrarAdm(admClinicaData, token);
-        if (result2.success) {
-          alert("Administrador cadastrado com sucesso!");
-          navigate("/");
-        }
-      } else {
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+    const token = localStorage.getItem("token");
+    const result = await cadastrarClinica(clinicaData, token);
+
+    if (result.success) {
+      alert("Clínica cadastrada com sucesso!");
+
+      const result2 = await cadastrarAdm(admClinicaData, token);
+      if (result2.success) {
+        alert("Administrador cadastrado com sucesso!");
+        navigate("/");
       }
-    } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+    } else {
+      setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
     }
+  } catch (err) {
+    setErrorMessage("Falha ao se conectar ao servidor.");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
+
+
 
   return (
     <>
@@ -89,11 +98,38 @@ export default function RegisterClinic() {
               <div className={Style.divider}></div>
 
               <div className={Style.formGrid}>
-                <input name="name" placeholder="Nome da Clínica" required onChange={handleChange} />
-                <input name="cnpj" placeholder="CNPJ" required onChange={handleChange} />
-                <input name="address" placeholder="Endereço" required onChange={handleChange} />
-                <input name="telephone" placeholder="Telefone" required onChange={handleChange} />
-              </div>
+              <input
+                name="name"
+                placeholder="Nome da Clínica"
+                required
+                onChange={handleChange}
+              />
+
+              <IMaskInput
+                mask="00.000.000/0000-00"
+                name="cnpj"
+                placeholder="CNPJ"
+                required
+                value={formData.cnpj}
+                onAccept={(value) => setFormData((prev) => ({ ...prev, cnpj: value }))}
+              />
+              <input
+                name="address"
+                placeholder="Endereço"
+                required
+                onChange={handleChange}
+              />
+
+              <IMaskInput
+                mask="(00) 00000-0000"
+                name="telephone"
+                placeholder="Telefone"
+                required
+                value={formData.telephone}
+                onAccept={(value) => setFormData((prev) => ({ ...prev, telephone: value }))}
+              />
+            </div>
+
 
               {/* Seção do ADM */}
               <h3 className={Style.sectionTitle}>Administrador da Clínica</h3>
