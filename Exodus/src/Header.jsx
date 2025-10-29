@@ -22,34 +22,42 @@ function Header() {
     setMenuOpen((prev) => !prev);
   };
 
-  //LOGOUT DO USUARIO
+  // LOGOUT DO USUARIO
   const handleLogout = async () => {
-      
-                          //chama a função logoutUsuario que tá em logout.js
-      const result = await logoutUsuario();
-      if (result.success) {
-        // redireciona pra tela inicial
-        navigate("/");
-      } else {
-        alert("Erro ao fazer logout: " + result.message);
-      }
-    };
+    // chama a função logoutUsuario que tá em logout.js
+    const result = await logoutUsuario();
+    if (result.success) {
+      // redireciona pra tela inicial
+      navigate("/");
+    } else {
+      alert("Erro ao fazer logout: " + result.message);
+    }
+  };
 
   return (
     <header className={Style.login_header}>
-      <Link to="/" className={Style.hyperText}>
-        <h1>
-          <strong>SCX</strong>
-        </h1>
-      </Link>
-      <div className={Style.links}>
-        
-
+      {/* Seção esquerda: Logo */}
+      <div className={Style.logo}>
+        <Link to="/" className={Style.hyperText}>
+          <h1>
+            <strong>SCX</strong>
+          </h1>
+        </Link>
       </div>
 
-      
+      {/* Seção central: Navegação com links */}
+      <nav className={Style.nav}>
+        <Link to="/" className={Style.navLink}>Início</Link>
+        <Link to="/sobre" className={Style.navLink}>Sobre nós</Link>
+        <Link to="/suporte" className={Style.navLink}>Suporte</Link>
+        <Link to="/contato" className={Style.navLink}>Contato</Link>
+      </nav>
 
-    
+      {/* Seção direita: Menu do usuário (expanda aqui se necessário) */}
+      <div className={Style.userMenu}>
+        {/* Exemplo: Ícone de perfil ou menu dropdown */}
+        {/* Você pode adicionar lógica aqui para renderizar o menu baseado em isLogged */}
+      </div>
     </header>
   );
 }

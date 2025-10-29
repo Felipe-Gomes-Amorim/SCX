@@ -1,25 +1,71 @@
-/* Logo */
+/* Header principal */
 .login_header {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: .5rem 30px;
+  padding: 0.5rem 30px;
   background: linear-gradient(to right, #007bff, #0046b3);
-  font-style: italic;
+  
   display: flex;
-  justify-content: space-between; /* separa logo e ícone */
-  align-items: center; /* alinha verticalmente */
+  justify-content: space-between; /* Logo à esquerda, nav centralizada, menu à direita */
+  align-items: center;
   z-index: 1000;
 }
 
-.hyperText{
+/* Seção esquerda: Logo */
+.logo {
+  flex-shrink: 0; /* Evita que o logo encolha */
+  font-style: italic;
+
+}
+
+.hyperText {
   text-decoration: none;
 }
 
 .login_header h1 {
   color: white;
-  font-size: 2rem;
+  font-size: 5rem;
   font-weight: bold;
   text-decoration: none;
-     
+}
+
+/* Seção central: Navegação */
+.nav {
+  display: flex;
+  gap: 2.5rem; /* Espaço entre os links */
+  justify-content: center; /* Centraliza os links horizontalmente */
+  flex: 1; /* Faz a nav ocupar o espaço central disponível */
+  align-items: center; /* Alinha verticalmente com o header */
+}
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 100;
+  transition: color 0.3s ease; /* Efeito suave ao passar o mouse */
+}
+
+.navLink:hover {
+  color: #e0e0e0; /* Cor ao passar o mouse (leve cinza) */
+}
+
+/* Seção direita: Menu do usuário */
+.userMenu {
+  flex-shrink: 0; /* Evita que encolha */
+  /* Adicione estilos aqui se expandir o menu (ex.: ícone, dropdown) */
+}
+
+/* Responsividade (opcional, para telas menores) */
+@media (max-width: 768px) {
+  .nav {
+    gap: 1rem; /* Reduz espaço em telas pequenas */
+  }
+  .navLink {
+    font-size: 0.9rem; /* Fonte menor */
+  }
+  .login_header h1 {
+    font-size: 1.5rem; /* Logo menor */
+  }
 }
