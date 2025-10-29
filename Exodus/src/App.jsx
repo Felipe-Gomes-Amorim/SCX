@@ -14,7 +14,7 @@ function App() {
   return (
    <>
    <Header></Header>  
-   <Top></Top>
+   
    <Hero></Hero>
    <About></About>
    <Footer></Footer>

@@ -23,10 +23,10 @@ export default function CheckDoctor() {
     console.log("Resultado da verificação:", result);
 
     if (result.status === "jaCadastrado") {
-      alert("✅ Médico já está cadastrado na clínica!");
+      alert("Médico já está cadastrado na clínica.");
       navigate("/perfil");
     } else if (result.status === "transferivel") {
-      alert("🔁 Médico existe no sistema, mas não está vinculado à clínica. Cadastrando no sistema");
+      alert("Médico existe no sistema mas não está vinculado à clínica. Cadastrando no sistema");
       const result2 = await transferirMedico(formValues);
       if (result2.success) {
         alert("Transferido com sucesso!");
@@ -35,10 +35,10 @@ export default function CheckDoctor() {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
     } else if (result.status === "novo") {
-      alert("🆕 Médico não encontrado. Prossiga para o cadastro completo!");
+      alert("Médico não encontrado. Prossiga para o cadastro completo!");
       navigate(`/registerMedico?crm=${formValues.crm}`);
     } else {
-      alert("❌ Ocorreu um erro ao verificar o CRM.");
+      alert("Ocorreu um erro ao verificar o CRM.");
       setErrorMessage(result.message);
     }
 

@@ -62,6 +62,7 @@ export default function Login() {
             />
 
             <ResetSenha />
+            <p className={Style.subtitle2}>Ao entrar, você concorda com nosso Acordo de usuário e Políticas de Privacidade</p>
           </motion.div>
 
           {/* Coluna direita - info */}
@@ -71,14 +72,14 @@ export default function Login() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
             >
-              Bem-vindo!
+              Sua jornada de saúde mais simples começa aqui.
             </motion.h2>
             <motion.p
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
             >
-              Selecione seu tipo de usuário e entre no sistema
+              O Projeto SCX é a ferramenta que unifica e transforma o gerenciamento de exames. Para pacientes, profissionais e clínicas: mais transparência, menos complicação. Faça login e acesse seus dados e processos.
             </motion.p>
           </motion.div>
         </div>

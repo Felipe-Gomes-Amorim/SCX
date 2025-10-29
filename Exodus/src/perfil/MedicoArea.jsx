@@ -117,7 +117,7 @@ export default function MedicoArea() {
                   className={Style.edit_btn}
                   onClick={() => navigate("/requisitarExame")}
                 >
-                  Requisitar Exame
+                  Pedir Exame
                 </button>
                 <button
                   className={Style.logout_btn}

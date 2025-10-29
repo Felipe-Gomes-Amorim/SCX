@@ -42,7 +42,10 @@ function Header() {
           <strong>SCX</strong>
         </h1>
       </Link>
+      <div className={Style.links}>
+        
 
+      </div>
 
       
 

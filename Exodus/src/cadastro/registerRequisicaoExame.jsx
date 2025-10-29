@@ -75,7 +75,7 @@ export default function RegisterExameRequest() {
       
 
       <div className={Style.register_card}>
-        <h2>Cadastro de exame</h2>
+        <h2>Pedido de exame</h2>
         <hr className={Style.section_line} />
 
         <form onSubmit={handleSubmit} className={Style.form_area}>

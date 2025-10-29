@@ -7,6 +7,7 @@ import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
+import testePDF from "../assets/teste.pdf";
 
 export default function SelectAll() {
   const { role } = useParams();
@@ -144,7 +145,7 @@ export default function SelectAll() {
               hoverBackground="transparent"
             />
           )}
-
+          
           {role === "lab" && (
             <Redirect
               place="/checkLab"
@@ -189,7 +190,15 @@ export default function SelectAll() {
                         <span className={Style.data}>{item.name || "-"}</span>
                         <span className={Style.data}>{item.crm || "-"}</span>
                       </>
-                    ) : role === "tickets" ? (
+                    ) :
+                     role === "lab" ? (
+                      // Ordem personalizada para laboratorio
+                      <>
+                        <span className={Style.data}>{item.name || "-"}</span>
+                        <span className={Style.data}>{item.cnpj || "-"}</span>
+                      </>
+                    ):
+                     role === "tickets" ? (
                       // Ordem personalizada para suporte
                       <>
                         <span className={Style.data}>{item.subject || "-"}</span>
@@ -203,6 +212,20 @@ export default function SelectAll() {
                         <span className={Style.data}>{item.message || "-"}</span>
                         
                         <span className={Style.data}>{item.response || "-"}</span>
+                      </>
+                    ): role === "clinics" ? (
+                      // Ordem personalizada para suporte
+                      <>
+                        
+                        <span className={Style.data}>{item.name || "-"}</span>
+                        
+                      </>
+                    ): role === "examsReturn" ? (
+                      // Ordem personalizada para suporte
+                      <>
+                        
+                        <span className={Style.data}>{item.cid || "-"}</span>
+                        <a href={testePDF} className={Style.data}>{item.observation|| "-"}</a>
                       </>
                     ) : (
                       // Ordem padrão para outros roles

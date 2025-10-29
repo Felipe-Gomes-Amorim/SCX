@@ -53,21 +53,21 @@
 .leftPanel h2 {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: .1rem;
 }
 
 .subtitle {
   color: #6c757d;
   font-size: 15px;
   font-style: italic;
-  margin-bottom: 25px;
+  
 }
 
 /* Título da seção */
 .sectionTitle {
   font-size: 18px;
   font-weight: 600;
-  margin-top: 25px;
+  margin-top: 1rem;
   margin-bottom: 12px;
   color: #007bff;
   text-transform: uppercase;
@@ -132,4 +132,28 @@
   .rightPanel {
     border-radius: 16px 16px 0 0;
   }
+}
+
+.cepButton{
+  margin-top: 1rem;
+ border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+
+
+
+.cepButton:hover {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
 }
