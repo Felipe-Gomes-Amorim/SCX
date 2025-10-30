@@ -37,7 +37,7 @@ export default function RegisterExam() {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar exame");
       } else {
         alert("Exame cadastrado com sucesso!");
-        navigate("/perfil"); // ou outra página após cadastro
+        navigate("/home"); // ou outra página após cadastro
       }
     } catch (err) {
       console.error(err);

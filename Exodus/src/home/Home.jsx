@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Style from "./Perfil.module.css";
+import Style from "./home.module.css";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import Avatar from "../assets/avatar.png";
 import axios from "axios";
-import { logoutUsuario } from "../js/login e perfil/logout.js";
+import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
-import { carregarPerfil } from "../js/login e perfil/perfil.js";
+import { carregarhome } from "../js/login e home/home.js";
 
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
@@ -17,7 +17,7 @@ import PacienteArea from "./PacientArea.jsx";
 import SuporteArea from "./SuportArea.jsx";
 import HistoricoAtividade from "./HistoricoAtividade.jsx";
 
-export default function Perfil() {
+export default function home() {
   const [userData, setUserData] = useState({
     nome: "",
     roles: "",
@@ -35,7 +35,7 @@ export default function Perfil() {
 
   useEffect(() => {
     const foto = Avatar;
-    const fetchPerfil = async () => {
+    const fetchhome = async () => {
 
       if (!token) {
         navigate("/login"); // não está logado
@@ -43,7 +43,7 @@ export default function Perfil() {
       }
 
       try {
-        const data = await carregarPerfil(token); // aguarda o retorno
+        const data = await carregarhome(token); // aguarda o retorno
         setUserData({
           ...data,
           roles: data.roles || []
@@ -52,7 +52,7 @@ export default function Perfil() {
         setLoading(false);
       } catch (error) {
         console.error(error);
-        setErrorMsg("Erro ao carregar perfil.");
+        setErrorMsg("Erro ao carregar home.");
         localStorage.clear();
         navigate("/login");
         setLoading(false);
@@ -60,7 +60,7 @@ export default function Perfil() {
     };
 
 
-    fetchPerfil();
+    fetchhome();
   }, [token]);
 
 
@@ -86,7 +86,7 @@ export default function Perfil() {
 
   if (loading) {
     return (
-      <div className={Style.perfil_page}>
+      <div className={Style.home_page}>
         <ExodusTop />
         <main className={Style.main_area}>
           <p>Carregando informações...</p>
@@ -98,15 +98,15 @@ export default function Perfil() {
 
   return (
     <>
-      <div className={Style.perfil_page}>
+      <div className={Style.home_page}>
         <ExodusTop />
 
-        <div className={Style.perfil_content}>
+        <div className={Style.home_content}>
           {/* Coluna lateral esquerda */}
           <aside className={Style.sidebar}>
             <img
               src={userData.foto || Avatar}
-              alt="Foto de perfil"
+              alt="Foto de home"
               className={Style.avatar}
             />
             <h3>{userData.nome}</h3>
@@ -128,39 +128,31 @@ export default function Perfil() {
             {errorMsg ? (
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
-              <>
-                {userData.roles?.some(role => role.name === "Admin") ? (
-                  <div className={Style.adminContainer}>
-                    <AdmArea className={Style.admArea} />
-                    <HistoricoAtividade />
-                  </div>
+              <div className={Style.mainLayout}>
+                {/* Área principal (Admin, Médico, etc.) */}
+                <div className={Style.mainContent}>
+                  {userData.roles?.some(role => role.name === "Admin") ? (
+                    <AdmArea />
+                  ) : userData.roles?.some(role => role.name === "Support") ? (
+                    <SuporteArea />
+                  ) : (
+                    <>
+                      {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
+                      {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
+                      {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
+                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
+                    </>
+                  )}
+                </div>
 
-
-                ) : userData.roles?.some(role => role.name === "Support") ? (
-                  <div className={Style.adminContainer}>
-                    <SuporteArea className={Style.admArea} />
-                    <div className={Style.adminContainer}>
-                      
-                      <HistoricoAtividade />
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
-                    {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
-                    {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
-                    {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
-
-                    {/* Histórico de atividades */}
-                    <div className={Style.adminContainer}>
-                      
-                      <HistoricoAtividade />
-                    </div>
-                  </>
-                )}
-              </>
+                {/* Painel lateral direito */}
+                
+                  <HistoricoAtividade />
+                
+              </div>
             )}
           </main>
+
 
 
         </div>

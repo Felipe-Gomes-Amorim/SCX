@@ -36,7 +36,7 @@ export default function RegisterPaciente() {
 
       if (result.success) {
       alert("Paciente cadastrado com sucesso!");
-      navigate("/perfil");
+      navigate("/home");
       } else {
       setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }

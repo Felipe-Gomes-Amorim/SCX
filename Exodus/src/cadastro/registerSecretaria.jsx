@@ -36,7 +36,7 @@ export default function RegisterSecretaria() {
 
       if (result.success) {
       alert("Secretária cadastrada com sucesso!");
-      navigate("/perfil");
+      navigate("/home");
       } else {
       setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }

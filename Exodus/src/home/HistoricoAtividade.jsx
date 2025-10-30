@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Style from "./Perfil.module.css";
+import Style from "./home.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 
 export default function HistoricoAtividade() {

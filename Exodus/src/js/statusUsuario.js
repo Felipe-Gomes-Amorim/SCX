@@ -22,11 +22,11 @@ if (token && nome) {
 
 
     //PACIENTE
-    if(role=="paciente") statusDiv.innerHTML = `<a href="perfil.html" class="textHeader2"> Bem-vindo, ${nome}! </a>`;
+    if(role=="paciente") statusDiv.innerHTML = `<a href="home.html" class="textHeader2"> Bem-vindo, ${nome}! </a>`;
     
     
     //MEDICO
-    if(role=="medico") statusDiv.innerHTML = `<a href="perfil.html" class="textHeader2"> Bem-vindo, ${nome}! </a>`;
+    if(role=="medico") statusDiv.innerHTML = `<a href="home.html" class="textHeader2"> Bem-vindo, ${nome}! </a>`;
 
     //LABORATORIO
     if(role=="laboratorio") statusDiv.innerHTML = `<a href="exames_paciente.html" class="textHeader2"> Bem-vindo, ${nome}! </a>`;

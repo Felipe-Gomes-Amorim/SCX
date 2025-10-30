@@ -47,7 +47,7 @@ export default function RegisterConsulta() {
       console.log(consultaData)
       if (result.success) {
         alert("Consulta cadastrada com sucesso!");
-        navigate("/perfil");
+        navigate("/home");
       } else {
         // ⚡ mensagem customizada para CPF incorreto ou outro erro
         setErrorMessage(result.message || "CPF do paciente incorreto");

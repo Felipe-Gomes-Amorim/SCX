@@ -65,7 +65,7 @@ export default function Register() {
       const result2 = await cadastrarAdmLaboratorio(admLabData, token);
       if (result2.success) {
         alert("Administrador do laboratório cadastrado com sucesso!");
-        navigate("/perfil");
+        navigate("/home");
       } else {
         setErrorMessage(result2.message || "Erro desconhecido ao cadastrar");
       }

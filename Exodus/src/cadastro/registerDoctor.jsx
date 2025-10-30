@@ -29,7 +29,7 @@ export default function RegisterDoctor() {
       const result = await cadastrarMedico(formValues, token);
 
       if (result.success) {
-        navigate("/perfil");
+        navigate("/home");
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar médico.");
       }

@@ -27,13 +27,13 @@ export default function CheckLaboratory() {
 
     if (result.status === "jaCadastrado") {
       alert("✅ Laboratório já está cadastrado na clínica!");
-      navigate("/perfil");
+      navigate("/home");
     } else if (result.status === "transferivel") {
       alert("🔁 Laboratório existe no sistema, mas não está vinculado à clínica. Cadastrando no sistema...");
       const result2 = await transferirLaboratorio(formData);
       if (result2.success) {
         alert("Transferido com sucesso!");
-        navigate("/perfil");
+        navigate("/home");
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar laboratório.");
       }

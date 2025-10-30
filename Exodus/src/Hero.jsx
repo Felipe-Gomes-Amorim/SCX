@@ -6,7 +6,7 @@ import GenericButton from './assents_link/GenericButton.jsx';
 
 function Hero(){
   const navigate = useNavigate();
-  const perfilWindow = localStorage.getItem("perfilAberto");
+  const homeWindow = localStorage.getItem("homeAberto");
 
   return (
     <section className={Style.hero}>
@@ -20,7 +20,7 @@ function Hero(){
         <p>
           Sua plataforma SCX está pronta para transformar o fluxo de trabalho. Gerencie as requisições, acompanhe o status das devoluções e acesse os dados dos pacientes com total agilidade. Concentre-se no cuidado: nós unificamos e simplificamos a burocracia do processo de exames.
         </p>
-        <GenericButton text="Entrar" perfilWindow={perfilWindow}/>
+        <GenericButton text="Entrar" homeWindow={homeWindow}/>
       </motion.div>
     </section>
   )

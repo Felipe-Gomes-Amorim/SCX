@@ -7,9 +7,13 @@
   flex-direction: column;
   align-items: center;
 }
+.user_icon{
+  justify-content: right;
+}
 
 .user_icon img {
   width: 4rem; /* De px para rem (escala com zoom) */
+  
   height: 4rem;
   object-fit: cover;
   border-radius: 50%;
@@ -253,13 +257,7 @@
   display: block;
 }
 
-/* Container que agrupa o botão + e o ícone do usuário */
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 0.9375rem; /* De 15px para rem */
-  position: relative;
-}
+
 
 .addButton {
   background-image: url("../assets/mais.png");
@@ -291,9 +289,9 @@
 }
 
 .addButton:hover {
-  background-color: #007bff;
+  background-color: rgba(57, 152, 255, 0.8);
   color: #fff;
-  box-shadow: 0 0 0.9375rem rgba(0, 123, 255, 0.8); /* De 15px para rem */
+  box-shadow: 0 0 0.9375rem rgba(57, 152, 255, 0.8); /* De 15px para rem */
   transform: scale(1.1);
 }
 
@@ -307,6 +305,7 @@
 /* Wrapper do botão + (para posicionar o menu) */
 .addButtonWrapper {
   position: relative;
+  
 }
 
 /* Menu suspenso */
@@ -406,5 +405,36 @@
 @media (min-width: 1025px) { /* Telas grandes (desktop) */
   .login_card {
     width: 80vw; /* Limita largura para não ficar excessivo */
+  }
+}
+
+/* ... (mantenha o resto do CSS existente) ... */
+
+/* Container que agrupa os botões (seção esquerda) */
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem; /* Espaço entre botões */
+  position: relative;
+}
+
+/* Container que agrupa o ícone do usuário (seção direita) */
+.headerRight {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 1rem;
+  /* Remova width: 100% se existir, pois agora é uma seção à direita */
+}
+
+/* ... (mantenha o resto do CSS, incluindo .user_icon, .addButton, etc.) ... */
+
+/* Media Queries para Responsividade (ajuste se necessário) */
+@media (max-width: 768px) {
+  .headerLeft {
+    gap: 0.5rem; /* Espaço menor em mobile */
+  }
+  .headerRight {
+    /* Ajustes se necessário */
   }
 }

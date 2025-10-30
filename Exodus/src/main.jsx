@@ -12,11 +12,10 @@ import RegisterClinic from './cadastro/registerClinic.jsx'
 import RegisterLaboratory from './cadastro/registerLab.jsx'
 import RegisterDoctor from './cadastro/registerDoctor.jsx'
 
-
 import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx' 
 import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
 
-import Perfil from './perfil/Perfil.jsx'
+import Home from './home/home.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
 
@@ -26,7 +25,7 @@ import RegisterConsulta from './cadastro/registerConsulta.jsx'
 import RequisitarExame from './cadastro/registerRequisicaoExame.jsx'
 
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import AdmArea from './perfil/AdmArea.jsx'
+import AdmArea from './home/AdmArea.jsx'
 import RegisterRequisicaoExame from './cadastro/registerRequisicaoExame.jsx'
 import RegisterTicket from './cadastro/registerTicket.jsx'
 import ResponseTicket from './cadastro/registerTicketResponse.jsx'
@@ -42,7 +41,7 @@ const router = createBrowserRouter([
   {path: "/registerClinica", element: <RegisterClinic/>},
   {path: "/registerLaboratory", element: <RegisterLaboratory/>},
   {path: "/registerMedico", element: <RegisterDoctor/>},
-  {path: "/perfil", element: <Perfil/>},
+  {path: "/home", element: <Home/>},
   {path: "/resetSenha", element: <ResetSenha/>},
   {path: "/firstLogin/:token?", element: <FirstLogin/>},
   {path: "/checkDoctor", element: <CheckDoctor/>},
