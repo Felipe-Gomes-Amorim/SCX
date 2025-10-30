@@ -128,39 +128,31 @@ export default function home() {
             {errorMsg ? (
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
-              <>
-                {userData.roles?.some(role => role.name === "Admin") ? (
-                  <div className={Style.adminContainer}>
-                    <AdmArea className={Style.admArea} />
-                    <HistoricoAtividade />
-                  </div>
+              <div className={Style.mainLayout}>
+                {/* Área principal (Admin, Médico, etc.) */}
+                <div className={Style.mainContent}>
+                  {userData.roles?.some(role => role.name === "Admin") ? (
+                    <AdmArea />
+                  ) : userData.roles?.some(role => role.name === "Support") ? (
+                    <SuporteArea />
+                  ) : (
+                    <>
+                      {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
+                      {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
+                      {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
+                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
+                    </>
+                  )}
+                </div>
 
-
-                ) : userData.roles?.some(role => role.name === "Support") ? (
-                  <div className={Style.adminContainer}>
-                    <SuporteArea className={Style.admArea} />
-                    <div className={Style.adminContainer}>
-                      
-                      <HistoricoAtividade />
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
-                    {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
-                    {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
-                    {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
-
-                    {/* Histórico de atividades */}
-                    <div className={Style.adminContainer}>
-                      
-                      <HistoricoAtividade />
-                    </div>
-                  </>
-                )}
-              </>
+                {/* Painel lateral direito */}
+                
+                  <HistoricoAtividade />
+                
+              </div>
             )}
           </main>
+
 
 
         </div>

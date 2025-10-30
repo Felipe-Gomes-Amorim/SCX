@@ -19,7 +19,7 @@ return (
         <li><a href="#">Sobre nós</a></li>
         <li>
           <Link to="/registerTicket">
-          <a >Suporte</a>
+          Suporte
           </Link></li>
           
         <li><a href="#">Contato</a></li>

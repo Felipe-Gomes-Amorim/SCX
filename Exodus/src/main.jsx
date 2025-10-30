@@ -12,7 +12,6 @@ import RegisterClinic from './cadastro/registerClinic.jsx'
 import RegisterLaboratory from './cadastro/registerLab.jsx'
 import RegisterDoctor from './cadastro/registerDoctor.jsx'
 
-
 import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx' 
 import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
 

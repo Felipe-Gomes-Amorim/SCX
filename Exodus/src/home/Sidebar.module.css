@@ -1,0 +1,105 @@
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  transition: opacity .4s ease;
+  opacity: 0;
+  pointer-events: none; /* Bloqueia cliques quando invisível */
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto; /* Permite cliques quando visível */
+}
+
+/* Barra lateral */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform .4s ease, opacity 1s ease;
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* ... resto do CSS permanece o mesmo ... */
+/* Botão de fechar */
+.closeButton {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.closeButton:hover {
+  color: #0056b3;
+}
+
+/* Lista de menu */
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuItem {
+  margin-bottom: 0.5rem;
+}
+
+.menuItem button {
+  width: 100%;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.menuItem button:hover {
+  background: #dfdfdf;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+}
+
+/* Linha de separação */
+.separator {
+  border: none;
+  border-top: 1px solid #ccc; /* Cor neutra */
+  margin: 1rem 0; /* Espaçamento vertical */
+  width: 100%;
+}
+
