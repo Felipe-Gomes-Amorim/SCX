@@ -1,4 +1,4 @@
-//metodo principal ( vai ser chamado pelo Perfil.jsx )
+//metodo principal ( vai ser chamado pelo home.jsx )
 export async function logoutUsuario() {
   try {
     let endpoint = "";

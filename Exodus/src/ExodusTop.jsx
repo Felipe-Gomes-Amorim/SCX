@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./login/Login.module.css";
 import Avatar from "./assets/avatar.png";
-import { logoutUsuario } from "./js/login e perfil/logout.js";
-import { carregarPerfil } from "./js/login e perfil/perfil.js";
+import { logoutUsuario } from "./js/login e home/logout.js";
+import { carregarhome } from "./js/login e home/home.js";
 import { mostrar_todos } from "./js/mostrar_todos.js";
 import  { NotificationItem } from "./assents_link/NotificationItem.jsx"
 
@@ -24,14 +24,14 @@ function ExodusTop() {
       }
 
       try {
-        const data = await carregarPerfil(token);
+        const data = await carregarhome(token);
         setUserData({
           ...data,
           roles: data.roles || [],
         });
         setIsLogged(true);
       } catch (error) {
-        console.error("Erro ao carregar perfil:", error);
+        console.error("Erro ao carregar home:", error);
         setIsLogged(false);
       }
     };
@@ -65,7 +65,7 @@ function ExodusTop() {
 
   return (
     <header className={Style.login_header}>
-      <Link to="/perfil" className={Style.hyperText}>
+      <Link to="/home" className={Style.hyperText}>
         <h1><strong>SCX</strong></h1>
       </Link>
 
@@ -110,7 +110,7 @@ function ExodusTop() {
         {/* Ícone do usuário */}
         <div
           className={Style.user_icon}
-          onClick={() => { if (isLogged) navigate("/perfil"); }}
+          onClick={() => { if (isLogged) navigate("/home"); }}
           style={{ cursor: isLogged ? "pointer" : "default" }}
         >
           <img src={userData.foto || Avatar} alt="Usuário" />

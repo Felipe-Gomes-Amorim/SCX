@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Style from "./Header.module.css";
 import profilePic from "./assets/user-icon.png"; // ícone padrão
 import Avatar from "./assets/avatar.png"; // avatar do usuário
-import { logoutUsuario } from "./js/login e perfil/logout.js";
+import { logoutUsuario } from "./js/login e home/logout.js";
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false);
@@ -55,7 +55,7 @@ function Header() {
 
       {/* Seção direita: Menu do usuário (expanda aqui se necessário) */}
       <div className={Style.userMenu}>
-        {/* Exemplo: Ícone de perfil ou menu dropdown */}
+        {/* Exemplo: Ícone de home ou menu dropdown */}
         {/* Você pode adicionar lógica aqui para renderizar o menu baseado em isLogged */}
       </div>
     </header>

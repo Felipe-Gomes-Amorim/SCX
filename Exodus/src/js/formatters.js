@@ -74,7 +74,19 @@ export const formatCID = (value) => {
 
   return letter + digits;
 };
+export const formatCEP = (value) => {
+  if (!value) return "";
 
+  // Remove tudo que não é número
+  const numbers = value.replace(/\D/g, "").slice(0, 8); // CEP tem 8 dígitos
+
+  // Adiciona o traço após o quinto dígito
+  if (numbers.length > 5) {
+    return numbers.replace(/^(\d{5})(\d{1,3})/, "$1-$2");
+  }
+
+  return numbers;
+};
 
 
 // Remove qualquer formatação (para enviar limpo ao back-end)

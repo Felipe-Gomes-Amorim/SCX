@@ -4,47 +4,56 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarSecretaria } from "../js/registros/cadastrar_secretaria.js"; 
+import { cadastrarSecretaria } from "../js/registros/cadastrar_secretaria.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 
 export default function RegisterSecretaria() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false); // ✅ controle do sucesso
   const navigate = useNavigate();
+  const [formdata, setformdata] = useState({
+    name: "",
+    cpf: "",
+    email: "",
+  });
 
   // ✅ Campos do formulário (secretária)
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
-    { name: "cpf", type: "text", placeholder: "CPF", required: true },
+    { name: "cpf", type: "text", placeholder: "CPF", required: true, defaultValue: formdata.cpf },
     { name: "email", type: "email", placeholder: "E-mail", required: true },
   ];
 
   // ✅ Envio dos dados
-  const handleSubmit = async (formData) => {  // <-- agora recebe formData diretamente
+  const handleSubmit = async (formdata) => {  // <-- agora recebe formData diretamente
     setLoading(true);
     setErrorMessage("");
+    setSuccess(false);
 
     try {
       const secretariaData = {
-        name: formData.name,
-        cpf: formData.cpf,       // já vai vir com máscara ou limpa se usar unmask
-        email: formData.email,   // digitação direta
+        name: formdata.name,
+        cpf: formdata.cpf,       // já vai vir com máscara ou limpa se usar unmask
+        email: formdata.email,   // digitação direta
       };
 
       const token = localStorage.getItem("token");
       const result = await cadastrarSecretaria(secretariaData, token);
 
       if (result.success) {
-      alert("Secretária cadastrada com sucesso!");
-      navigate("/perfil");
+        setSuccess(true); // ✅ ativa o botão verde
+        setTimeout(() => {
+          navigate("/home"); // redireciona após 2s
+        }, 2000);
       } else {
-      setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+        setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
     } catch (err) {
-    setErrorMessage("Falha ao se conectar ao servidor.");
+      setErrorMessage("Falha ao se conectar ao servidor.");
     }
 
-  setLoading(false);
+    setLoading(false);
   };
 
 
@@ -77,10 +86,18 @@ export default function RegisterSecretaria() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              errorMessage={errorMessage}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.3s ease",
+              }}
             />
           </motion.div>
         </div>

@@ -6,7 +6,7 @@ import GenericButton from './assents_link/GenericButton.jsx';
 
 function Hero(){
   const navigate = useNavigate();
-  const perfilWindow = localStorage.getItem("perfilAberto");
+  const homeWindow = localStorage.getItem("homeAberto");
 
   return (
     <section className={Style.hero}>
@@ -16,7 +16,7 @@ function Hero(){
         transition={{ duration: 0.7, ease: [0.25, 0.8, 0.25, 1], delay: 0.4 }}
         className={Style.hero_content}
       >
-        <h2>Acesse seu Perfil</h2>
+        <h2>Acesse seu home</h2>
         <p>
           elementum erat sit amet rutrum vestibulum. Nullam odio tortor, 
           vulputate semper hendrerit et, scelerisque a arcu. Aliquam ultricies 
@@ -24,7 +24,7 @@ function Hero(){
           Pellentesque urna massa, rhoncus vitae lacus vitae, rutrum hendrerit quam. 
           Nulla ac aliquam ipsum. Pellentesque quis eros eu libero elementum laoreet.
         </p>
-        <GenericButton text="Entrar" perfilWindow={perfilWindow}/>
+        <GenericButton text="Entrar" homeWindow={homeWindow}/>
       </motion.div>
     </section>
   )

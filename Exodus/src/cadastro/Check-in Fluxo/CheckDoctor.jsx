@@ -12,8 +12,11 @@ export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [formdata, setformdata] = useState({
+      crm: ""
+    });
 
-  const fields = [{ name: "crm", type: "text", placeholder: "Digite o CRM do médico", required: true }];
+  const fields = [{ name: "crm", type: "text", placeholder: "Digite o CRM do médico", required: true, defaultValue: formdata.crm }];
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
@@ -24,13 +27,13 @@ export default function CheckDoctor() {
 
     if (result.status === "jaCadastrado") {
       alert("Médico já está cadastrado na clínica.");
-      navigate("/perfil");
+      navigate("/home");
     } else if (result.status === "transferivel") {
       alert("Médico existe no sistema mas não está vinculado à clínica. Cadastrando no sistema");
       const result2 = await transferirMedico(formValues);
       if (result2.success) {
         alert("Transferido com sucesso!");
-        navigate("/perfil");
+        navigate("/home");
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
@@ -76,6 +79,8 @@ export default function CheckDoctor() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}                    
+              onChangeValues={setformdata} 
               onSubmit={handleSubmit}
               buttonText="Verificar"
               loading={loading}

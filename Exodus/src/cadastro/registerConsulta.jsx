@@ -11,8 +11,12 @@ export default function RegisterConsulta() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // ⚡ estado de erro
   const [medicos, setMedicos] = useState([]);
+  const [success,setSuccess]= useState(false);
   const navigate = useNavigate();
-
+  const [formdata, setformdata] = useState({
+    cpf: "",
+    email: "",
+  });
   useEffect(() => {
     async function carregarMedicos() {
       const response = await buscarMedicosDisponiveis();
@@ -23,7 +27,7 @@ export default function RegisterConsulta() {
   }, []);
 
   const fields = [
-    { name: "cpf", type: "text", placeholder: "CPF do paciente", required: true },
+    { name: "cpf", type: "text", placeholder: "CPF do paciente", required: true, defaultValue: formdata.cpf },
     {
       name: "email",
       type: "select",
@@ -46,8 +50,8 @@ export default function RegisterConsulta() {
       const result = await cadastrarConsulta(consultaData);
       console.log(consultaData)
       if (result.success) {
-        alert("Consulta cadastrada com sucesso!");
-        navigate("/perfil");
+        setTimeout(()=> {navigate("/home");},1500);
+        
       } else {
         // ⚡ mensagem customizada para CPF incorreto ou outro erro
         setErrorMessage(result.message || "CPF do paciente incorreto");
@@ -80,9 +84,18 @@ export default function RegisterConsulta() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.1s ease",
+              }}
             />
           </motion.div>
 

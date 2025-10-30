@@ -190,3 +190,58 @@
   margin: 8px 0;
   display: block;
 }
+.cepButton {
+  padding: 10px 6.1vh;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 15px;
+ -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.cepButton:hover {
+  background: #007bff;
+  color: white;
+
+  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+.cepButtonSuccess {
+  box-shadow: 0 0 15px 3px #28a745; /* sombra verde para sucesso */
+}
+.ticketButton {
+  padding: 10px 6.1vh;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 15px;
+ -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.ticketButton:hover {
+  background: #007bff;
+  color: white;
+
+  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}

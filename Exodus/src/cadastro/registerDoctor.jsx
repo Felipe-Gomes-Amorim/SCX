@@ -6,13 +6,20 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
+import { formatCRM } from "../js/formatters.js";
 
 export default function RegisterDoctor() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false); // ✅ controle do sucesso
   const navigate = useNavigate();
   const location = useLocation();
   const crmFromUrl = new URLSearchParams(location.search).get("crm");
+  const [formdata, setformdata] = useState({
+      name: "",
+      crm:  crmFromUrl ? formatCRM(crmFromUrl) : "",
+      email: "",
+  });
 
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
@@ -23,17 +30,22 @@ export default function RegisterDoctor() {
   const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
+    setSuccess(false);
 
     try {
       const token = localStorage.getItem("token");
       const result = await cadastrarMedico(formValues, token);
 
       if (result.success) {
-        navigate("/perfil");
+        setSuccess(true); 
+        setTimeout(() => {
+          navigate("/home"); 
+        }, 1500);
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar médico.");
       }
     } catch (err) {
+      console.error(err);
       setErrorMessage("Falha ao se conectar ao servidor.");
     }
 
@@ -55,7 +67,7 @@ export default function RegisterDoctor() {
           >
             <motion.h2>Bem-vindo!</motion.h2>
             <motion.p>
-              Digite os dados do médico para que ele possa utilizar do Sistema
+              Digite os dados do médico para que ele possa utilizar do Sistema.
             </motion.p>
           </motion.div>
 
@@ -69,12 +81,22 @@ export default function RegisterDoctor() {
             <h2>Cadastro de Médico</h2>
             <p className={Style.subtitle}>Preencha com os dados</p>
 
+            {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
+
             <DynamicForm
               fields={fields}
+              values={formdata}                    
+              onChangeValues={setformdata} 
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              errorMessage={errorMessage}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.1s ease",
+              }}
             />
           </motion.div>
         </div>

@@ -89,21 +89,31 @@ textarea {
 
 .bttn {
   margin-top: 4rem;
+  width: 100%;
+  border-radius: 10px;
+  padding: 0.8rem 2rem;
   border: 2px solid #007bff;
   background: transparent;
-  width: 100%;
   color: #007bff;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.8rem 2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 15px;
+ -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .bttn:hover {
   background: #007bff;
   color: white;
+  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 /* Mensagem de erro */

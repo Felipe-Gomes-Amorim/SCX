@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 import Style from "./registerClinic.module.css";
 import Footer from "../Footer.jsx";
 import Header from "../Header.jsx";
-import { cadastrarClinica, buscarCep, validarCnpj } from "../js/registros/cadastrar_clinica.js";
-
+import { cadastrarClinica } from "../js/registros/cadastrar_clinica.js";
+import { buscarCep } from "../js/checarCep/buscarCep.js";
 import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import ActionButton from "../assents_link/ActionButton.jsx";
 import { IMaskInput } from "react-imask";
+import { validarCnpj } from "../js/validarCNPJ/validarCnpj.js";
 
 
 

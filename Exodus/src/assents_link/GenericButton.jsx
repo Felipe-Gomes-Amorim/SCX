@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "./GenericButton.module.css"; 
-let perfilWindow = null; 
+let homeWindow = null; 
 
 export default function ActionButton({
   text,
@@ -19,10 +19,10 @@ export default function ActionButton({
 
   if (token) {
     // verifica se a aba ainda existe e não foi fechada
-    if (!perfilWindow || perfilWindow.closed) {
-      perfilWindow = window.open("/perfil", "perfil");
+    if (!homeWindow || homeWindow.closed) {
+      homeWindow = window.open("/home", "home");
     } else {
-      perfilWindow.focus();
+      homeWindow.focus();
     }
   } else {
     navigate("/login");

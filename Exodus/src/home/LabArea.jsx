@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Style from "./Perfil.module.css";
+import Style from "./home.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
 
 

@@ -11,32 +11,39 @@ export default function RegisterPaciente() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
+  const [formdata, setformdata]= useState({
+    name: "",
+    cpf: "",
+    email: "",
+  });
 
   // Campos do formulário
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
-    { name: "cpf", type: "text", placeholder: "CPF", required: true },
+    { name: "cpf", type: "text", placeholder: "CPF", required: true, defaultValue: formdata.cpf },
     { name: "email", type: "email", placeholder: "E-mail", required: true },
   ];
 
   // 🔹 Funções utilitárias para validar CPF e e-mail
-  const handleSubmit = async (formData) => {  // <-- agora recebe formData diretamente
+  const handleSubmit = async (formdata) => {  // <-- agora recebe formData diretamente
     setLoading(true);
     setErrorMessage("");
+    setSuccess(false)
 
     try {
       const pacienteData = {
-        name: formData.name,
-        cpf: formData.cpf,       // já vai vir com máscara ou limpa se usar unmask
-        email: formData.email,   // digitação direta
+        name: formdata.name,
+        cpf: formdata.cpf,       // já vai vir com máscara ou limpa se usar unmask
+        email: formdata.email,   // digitação direta
       };
 
       const token = localStorage.getItem("token");
       const result = await cadastrarPaciente(pacienteData, token);
 
       if (result.success) {
-      alert("Paciente cadastrado com sucesso!");
-      navigate("/perfil");
+      setSuccess(true);
+      setTimeout(() => {navigate("/home");}, 2000);
       } else {
       setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
@@ -77,10 +84,18 @@ export default function RegisterPaciente() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              errorMessage={errorMessage}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.3s ease",
+              }}
             />
           </motion.div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Style from "./Perfil.module.css";
+import Style from "./home.module.css";
 import { buscarConsultaAtual, encerrarConsulta } from "../js/fluxoMedico/consultas.js";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ export default function ConsultArea() {
     if (!consultaAtual) return;
       const result = await encerrarConsulta(token);
       if (result.success) {
-        navigate("/perfil")
+        navigate("/home")
         setConsultaAtual(null);
       } else {
         alert("Erro ao encerrar consulta.");

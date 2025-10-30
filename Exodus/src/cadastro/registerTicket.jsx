@@ -10,7 +10,12 @@ import DynamicForm from "../assents_link/DynamicForm.jsx";
 export default function RegisterTicket() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess]= useState(false);
   const navigate = useNavigate();
+  const [formdata, setformdata]= useState({
+    subject: "",
+    message: "",
+  });
 
   // Campos do formulário
   const fields = [
@@ -22,6 +27,7 @@ export default function RegisterTicket() {
   const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
+    setSuccess(false);
 
     try {
       const ticketData = {
@@ -33,8 +39,8 @@ export default function RegisterTicket() {
       const result = await cadastrarTicket(ticketData, token);
 
       if (result.success) {
-        // Redireciona diretamente para /perfil sem alert
-        navigate("/perfil");
+        setSuccess(true);
+        navigate("/home");
       } else {
         // Mensagem de erro inline
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar paciente.");
@@ -77,10 +83,19 @@ export default function RegisterTicket() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Enviado" : "Enviar Ticket"}
               loading={loading}
-              errorMessage={errorMessage} 
+              className={Style.ticketButton}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.1s ease",
+              }}
             />
           </motion.div>
         </div>

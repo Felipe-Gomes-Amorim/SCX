@@ -11,6 +11,10 @@ import Footer from "../../Footer.jsx";
 export default function CheckLaboratory() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+  cnpj: "",
+  });
+ 
   const navigate = useNavigate();
 
   // Campo para identificar o laboratório (CNPJ)
@@ -27,13 +31,13 @@ export default function CheckLaboratory() {
 
     if (result.status === "jaCadastrado") {
       alert("✅ Laboratório já está cadastrado na clínica!");
-      navigate("/perfil");
+      navigate("/home");
     } else if (result.status === "transferivel") {
       alert("🔁 Laboratório existe no sistema, mas não está vinculado à clínica. Cadastrando no sistema...");
       const result2 = await transferirLaboratorio(formData);
       if (result2.success) {
         alert("Transferido com sucesso!");
-        navigate("/perfil");
+        navigate("/home");
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar laboratório.");
       }
@@ -79,6 +83,8 @@ export default function CheckLaboratory() {
 
             <DynamicForm
               fields={fields}
+              values={formData}                  // ✅ novo
+              onChangeValues={setFormData}
               onSubmit={handleSubmit}
               buttonText="Verificar"
               loading={loading}

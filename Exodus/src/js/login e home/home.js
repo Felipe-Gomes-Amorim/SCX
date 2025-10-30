@@ -1,6 +1,6 @@
 //SCRIPT INCOMPLETO FAVOR NAO USAR ATE FINALIZAR
 import axios from 'axios';
-export async function carregarPerfil(token) {
+export async function carregarhome(token) {
   if (!token) throw new Error("Token não fornecido");
 
   const response = await axios.get('http://127.0.0.1:8080/auth/perfil', {
@@ -48,8 +48,8 @@ export async function carregarPerfil(token) {
     
 
   } catch (error) {
-    console.error('Erro ao carregar perfil:', error.response?.data || error.message);
-    alert('Erro ao carregar o perfil.');
+    console.error('Erro ao carregar home:', error.response?.data || error.message);
+    alert('Erro ao carregar o home.');
   }
 }
 */
