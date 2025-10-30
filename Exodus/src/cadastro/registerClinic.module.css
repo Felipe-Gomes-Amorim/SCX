@@ -10,6 +10,8 @@
 
 /* Card principal */
 .registerCard {
+  top: 7.2rem;
+  position: relative;
   display: flex;
   flex-direction: column; /* Vertical por padrão */
   align-items: stretch;
@@ -23,6 +25,7 @@
 
 /* Painel da direita (boas-vindas) */
 .rightPanel {
+  
   background: linear-gradient(to right, #007bff, #0046b3);
   color: white;
   padding: 50px 40px;
@@ -44,6 +47,7 @@
 
 /* Painel da esquerda (formulário) */
 .leftPanel {
+  
   padding: 50px 60px;
   display: flex;
   flex-direction: column;

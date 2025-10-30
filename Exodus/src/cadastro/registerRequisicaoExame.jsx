@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // <-- importa o hook
 import Style from "./registerExamReq.module.css";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
@@ -19,6 +20,8 @@ export default function RegisterExameRequest() {
     complement: "",
     name: "",
   });
+  const [sent, setSent] = useState(false); // novo estado
+  const navigate = useNavigate(); // para redirecionar
 
   // Carregar opções dinâmicas
   useEffect(() => {
@@ -51,13 +54,19 @@ export default function RegisterExameRequest() {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
+    setSent(false);
 
     try {
       const result = await cadastrarRequisicaoExame(form);
 
       if (result.success) {
-        alert("Requisição de exame cadastrada com sucesso!");
+        setSent(true);
         setForm({ exam_type: "", sample_type: "", complement: "", name: "" });
+
+        // espera 3 segundos e redireciona para a home
+        setTimeout(() => {
+          navigate("/home");
+        }, 3000);
       } else {
         setErrorMessage(result.message || "Erro ao cadastrar exame.");
       }
@@ -70,88 +79,93 @@ export default function RegisterExameRequest() {
 
   return (
     <>
-    <ExodusTop />
-    <div className={Style.register_page}>
-      
+      <ExodusTop />
+      <div className={Style.register_page}>
+        <div className={Style.register_card}>
+          <h2>Pedido de exame</h2>
+          <hr className={Style.section_line} />
 
-      <div className={Style.register_card}>
-        <h2>Pedido de exame</h2>
-        <hr className={Style.section_line} />
+          <form onSubmit={handleSubmit} className={Style.form_area}>
+            <div className={Style.form_group}>
+              <label>Tipo do Exame</label>
+              <select
+                name="exam_type"
+                value={form.exam_type}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Selecione o tipo de exame</option>
+                {tiposExame.map((item, idx) => (
+                  <option key={idx} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <form onSubmit={handleSubmit} className={Style.form_area}>
-          <div className={Style.form_group}>
-            <label>Tipo do Exame</label>
-            <select
-              name="exam_type"
-              value={form.exam_type}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecione o tipo de exame</option>
-              {tiposExame.map((item, idx) => (
-                <option key={idx} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className={Style.form_group}>
+              <label>Tipo da Amostra</label>
+              <input
+                type="text"
+                name="sample_type"
+                placeholder="Ex: Sangue"
+                value={form.sample_type}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div className={Style.form_group}>
-            <label>Tipo da Amostra</label>
-            <input
-              type="text"
-              name="sample_type"
-              placeholder="Ex: Sangue"
-              value={form.sample_type}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <div className={Style.form_group}>
+              <label>Observações</label>
+              <textarea
+                name="complement"
+                placeholder="..."
+                value={form.complement}
+                onChange={handleChange}
+                rows="3"
+              ></textarea>
+            </div>
 
-          <div className={Style.form_group}>
-            <label>Observações</label>
-            <textarea
-              name="complement"
-              placeholder="..."
-              value={form.complement}
-              onChange={handleChange}
-              rows="3"
-            ></textarea>
-          </div>
+            <div className={Style.form_group}>
+              <label>Encaminhamento para o laboratório</label>
+              <select
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Selecione o Laboratório</option>
+                {laboratorios.map((item, idx) => (
+                  <option key={idx} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
 
-          <div className={Style.form_group}>
-            <label>Encaminhamento para o laboratório</label>
-            <select
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecione o Laboratório</option>
-              {laboratorios.map((item, idx) => (
-                <option key={idx} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            <div className={Style.button_container}>
-            <button className={Style.bttn}type="submit" disabled={loading}>
-              {loading ? "Enviando..." : "Enviar Exame"}
-            </button>
-          </div>
-          </div>
+              <div className={Style.button_container}>
+                <button
+                  className={Style.bttn}
+                  type="submit"
+                  disabled={loading || sent}
+                  style={{
+                    backgroundColor: sent ? "#28a745" : "#007bff",
+                    borderColor: sent ? "#28a745" : "#007bff",
+                    color: "white",
+                    boxShadow: sent ? "0 0 10px 2px #28a745" : "none",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  {loading ? "Enviando..." : sent ? "Enviado" : "Enviar Exame"}
+                </button>
+              </div>
+            </div>
+          </form>
 
-          
-        </form>
-
-        {errorMessage && <p className={Style.error}>{errorMessage}</p>}
+          {errorMessage && <p className={Style.error}>{errorMessage}</p>}
+        </div>
       </div>
 
-      
-    </div>
-
-    <Footer />
-
+      <Footer />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
-import Style from "./register.module.css"; 
+import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
@@ -12,21 +12,35 @@ export default function RegisterExam() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
+  const [success,setSuccess]= useState(false);
   const navigate = useNavigate();
+  const [formdata, setformdata] = useState({
+    cid: "",
+    result_value: "",
+    result_file_url: "",
+    observation: "",
+    id: "",
+  });
 
   const idFromUrl = new URLSearchParams(location.search).get("id") || "";
 
   const fields = [
     { name: "cid", label: "CID", type: "text", placeholder: "Digite o CID", required: true },
-    { name: "result_value", label: "Valor do Resultado", type: "text", placeholder: "Ex: 5.2", required: true },
+    { name: "result_value", label: "Valor do Resultado", type: "text", placeholder: "Resultado", required: true },
     { name: "result_file_url", label: "Arquivo do Resultado", type: "text", placeholder: "URL do arquivo", required: true },
     { name: "observation", label: "Observações", type: "textarea", placeholder: "Observações adicionais" },
-    { name: "id", type: "hidden", defaultValue: idFromUrl, required: true },
+    { name: "id", type: "text", defaultValue: idFromUrl, required: true },
   ];
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
+    setSuccess(false);
+    if (!formValues.id || formValues.id.trim() === "") {
+      setErrorMessage("ID do exame ausente. Acesse o cadastro através de uma requisição válida.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const token = localStorage.getItem("token");
@@ -34,10 +48,11 @@ export default function RegisterExam() {
       setLoading(false);
 
       if (!result.success) {
+
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar exame");
       } else {
-        alert("Exame cadastrado com sucesso!");
-        navigate("/home"); // ou outra página após cadastro
+        setSuccess(true);
+        setTimeout(() => { navigate("/home"); }, 1500);
       }
     } catch (err) {
       console.error(err);
@@ -66,9 +81,18 @@ export default function RegisterExam() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText="Cadastrar"
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.1s ease",
+              }}
             />
           </motion.div>
 

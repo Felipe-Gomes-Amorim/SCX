@@ -11,6 +11,10 @@ import Header from "../Header.jsx";
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(""); // ⚡ estado para exibir mensagem de erro
+  const [formdata, setformdata] = useState({
+    usernameKey: "",
+    password_key: ""
+  });
 
   const navigate = useNavigate();
 
@@ -56,10 +60,13 @@ export default function Login() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}                
+              onChangeValues={setformdata}     
               onSubmit={handleSubmit}
               buttonText="Entrar"
               loading={loading}
             />
+
 
             <ResetSenha />
             <p className={Style.subtitle2}>Ao entrar, você concorda com nosso Acordo de usuário e Políticas de Privacidade</p>

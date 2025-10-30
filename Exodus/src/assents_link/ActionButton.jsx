@@ -1,35 +1,22 @@
 import React from "react";
-//estilo do css
 import Style from "./ActionButton.module.css"; 
 
-export default function ActionButton({ //coisas 
-  //Texto do botão
+export default function ActionButton({ 
   text,           
-  //metodo de load da própria página
   loading,       
-  //condições pra desabilitar o botão  
   disabled,       
-  //evento de clique <---------- O MAIS IMPORTANTE 
-  onClick,       
- 
-
-
-
-  
+  onClick,
+  style // ✅ adicionamos o estilo dinâmico
 }) {
   return (
     <button
-    //classe no css
       className={Style.btnAction}
-
-      type={"submit"}
+      type="submit"
       onClick={onClick}
       disabled={disabled || loading}
-
+      style={style} // ✅ aplica a cor dinamicamente
     >
-      {
-      //if(loading) = loadingText; else = text
-      loading ? "Carregando..." : text}
+      {loading ? "Carregando..." : text}
     </button>
   );
 }

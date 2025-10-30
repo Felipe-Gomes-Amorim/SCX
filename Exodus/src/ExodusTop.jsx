@@ -123,13 +123,13 @@ function ExodusTop() {
             )}
           </div>
 
-          <div
-            className={Style.user_icon}
-            onClick={() => { if (isLogged) navigate("/home"); }}
-            style={{ cursor: isLogged ? "pointer" : "default" }}
-          >
-            <img src={userData.foto || Avatar} alt="Usuário" />
-          </div>
+        {/* Ícone do usuário */}
+        <div
+          className={Style.user_icon}
+          onClick={() => { if (isLogged) navigate("/home"); }}
+          style={{ cursor: isLogged ? "pointer" : "default" }}
+        >
+          <img src={userData.foto || Avatar} alt="Usuário" />
         </div>
       </header>
     </>

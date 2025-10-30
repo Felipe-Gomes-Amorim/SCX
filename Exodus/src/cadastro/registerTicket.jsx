@@ -7,7 +7,12 @@ import DynamicForm from "../assents_link/DynamicForm.jsx";
 function RegisterTicket() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // Novo estado para mensagem de sucesso
+  const [success, setSuccess]= useState(false);
+  const navigate = useNavigate();
+  const [formdata, setformdata]= useState({
+    subject: "",
+    message: "",
+  });
 
   // Campos do formulário
   const fields = [
@@ -19,7 +24,7 @@ function RegisterTicket() {
   const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
-    setSuccessMessage(""); // Limpa mensagem anterior
+    setSuccess(false);
 
     try {
       const ticketData = {
@@ -31,8 +36,8 @@ function RegisterTicket() {
       const result = await cadastrarTicket(ticketData, token);
 
       if (result.success) {
-        // Em vez de redirecionar, mostra mensagem de sucesso
-        setSuccessMessage("Ticket cadastrado com sucesso! Nossa equipe entrará em contato em breve.");
+        setSuccess(true);
+        navigate("/home");
       } else {
         // Mensagem de erro inline
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar ticket.");
@@ -60,16 +65,38 @@ function RegisterTicket() {
 
           {successMessage && <p className={Style.successMessage}>{successMessage}</p>} {/* Mensagem de sucesso */}
 
-          <DynamicForm
-            fields={fields}
-            onSubmit={handleSubmit}
-            buttonText="Cadastrar"
-            loading={loading}
-            errorMessage={errorMessage} 
-          />
-        </motion.div>
-     
-    </section>
+          {/* Lado esquerdo - formulário */}
+          <motion.div
+            className={Style.login_left}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
+            <h2>Cadastro de Ticket</h2>
+            <p className={Style.subtitle}>Preencha com os dados</p>
+
+            <DynamicForm
+              fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
+              onSubmit={handleSubmit}
+              buttonText={success ? "Enviado" : "Enviar Ticket"}
+              loading={loading}
+              className={Style.ticketButton}
+              buttonStyle={{
+                backgroundColor: success ? "#28a745" : "#007bff",
+                color: "white",
+                borderColor: success ? "#28a745" : "#007bff",
+                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
+                transition: "all 0.1s ease",
+              }}
+            />
+          </motion.div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
   );
 }
 

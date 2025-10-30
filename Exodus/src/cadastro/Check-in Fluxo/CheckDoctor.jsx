@@ -12,8 +12,11 @@ export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [formdata, setformdata] = useState({
+      crm: ""
+    });
 
-  const fields = [{ name: "crm", type: "text", placeholder: "Digite o CRM do médico", required: true }];
+  const fields = [{ name: "crm", type: "text", placeholder: "Digite o CRM do médico", required: true, defaultValue: formdata.crm }];
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
@@ -76,6 +79,8 @@ export default function CheckDoctor() {
 
             <DynamicForm
               fields={fields}
+              values={formdata}                    
+              onChangeValues={setformdata} 
               onSubmit={handleSubmit}
               buttonText="Verificar"
               loading={loading}

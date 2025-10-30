@@ -11,6 +11,10 @@ import Footer from "../../Footer.jsx";
 export default function CheckLaboratory() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+  cnpj: "",
+  });
+ 
   const navigate = useNavigate();
 
   // Campo para identificar o laboratório (CNPJ)
@@ -79,6 +83,8 @@ export default function CheckLaboratory() {
 
             <DynamicForm
               fields={fields}
+              values={formData}                  // ✅ novo
+              onChangeValues={setFormData}
               onSubmit={handleSubmit}
               buttonText="Verificar"
               loading={loading}
