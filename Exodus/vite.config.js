@@ -10,7 +10,10 @@ export default defineConfig({
     },
   },
   server: {
-    host: "0.0.0.0", // ou '0.0.0.0'
+    allowedHosts: ['scx-sistema-de-controle-de-exames.onrender.com'],
+    host: "0.0.0.0", 
     port: 5173,
   }
+
+  
 });
