@@ -6,6 +6,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "react/jsx-runtime": "react/jsx-runtime",
+      
     },
   },
+  server: {
+    host: "0.0.0.0", // ou '0.0.0.0'
+    port: 5173,
+  }
 });
