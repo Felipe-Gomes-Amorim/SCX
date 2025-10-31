@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { cadastrarTicket } from "../js/registros/cadastrar_tickets.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer.jsx'
 
 
 
@@ -25,6 +27,7 @@ function RegisterTicket() {
     setLoading(true);
     setErrorMessage("");
     setSuccess(false);
+    const navigate = useNavigate();
 
     try {
       const ticketData = {

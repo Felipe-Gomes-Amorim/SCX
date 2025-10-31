@@ -79,23 +79,7 @@ export default function MedicoArea() {
         <div className={Style.buttonsArea}>
           
 
-          <Redirect
-            text="Exames Devolvidos"
-            place="/selectAll/examsReturn"
-            color="#007bff"
-            hoverColor="#fff"
-            background="#fff"
-            hoverBackground="#007bff"
-          />
-
-          <Redirect
-            text="Ver Clínicas Cadastradas"
-            place="/selectAll/clinics"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
+          
         </div>
 
 

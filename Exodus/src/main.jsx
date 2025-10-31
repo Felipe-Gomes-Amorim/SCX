@@ -11,6 +11,7 @@ import RegisterExam from './cadastro/registerExam.jsx'
 import RegisterClinic from './cadastro/registerClinic.jsx'
 import RegisterLaboratory from './cadastro/registerLab.jsx'
 import RegisterDoctor from './cadastro/registerDoctor.jsx'
+import SelectClinics from './select_all/SelectClinics.jsx'
 
 import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx' 
 import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
@@ -18,6 +19,7 @@ import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
 import Home from './home/home.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
+import ExamsReturn from "./select_all/ExamsReturn.jsx";
 
 import SelectAll from './select_all/SelectAll.jsx'
 import RegisterSecretaria from './cadastro/registerSecretaria.jsx'
@@ -51,7 +53,9 @@ const router = createBrowserRouter([
   { path: "/registerConsulta", element: <RegisterConsulta /> },
   { path: "/requisitarExame", element: <RequisitarExame /> },
   { path: "/registerTicket", element: <RegisterTicket /> },
-  { path: "/responseTicket/:id", element: <ResponseTicket /> }
+  { path: "/responseTicket/:id", element: <ResponseTicket /> },
+  {path: "/selectAll/clinics", element: <SelectClinics />},
+  {path: "/examsReturn", element: <ExamsReturn/>}
   
 ]);
 
