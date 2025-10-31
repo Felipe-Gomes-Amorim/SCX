@@ -72,13 +72,16 @@ export default function Register() {
       };
 
       const token = localStorage.getItem("token");
+
       const result = await cadastrarLaboratorio(labData, token);
-      if (result.success) {        
+
+      if (result.success) {
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
 
       const result2 = await cadastrarAdmLaboratorio(admLabData, token);
+
       if (result2.success) {
         setSuccess(true);
         setTimeout(() => navigate("/home"), 2000)
@@ -97,13 +100,10 @@ export default function Register() {
       <div className={Style.login_page}>
         <ExodusTop />
         <div className={Style.login_card}>
-          {/* Lado direito */}
-          <motion.div className={Style.login_right} initial={{ x: "-100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
-            <motion.h2>Bem-vindo!</motion.h2>
-            <motion.p>Registre o Laboratório no sistema.</motion.p>
-          </motion.div>
 
-          {/* Lado esquerdo */}
+
+
+
           <motion.div className={Style.login_left} initial={{ x: "100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
             <h2>Cadastro de Laboratório</h2>
             <p className={Style.subtitle}>Preencha com os dados</p>
@@ -114,19 +114,25 @@ export default function Register() {
                 if (field.name === "cep") {
                   return {
                     ...field,
-                    render: (props) => (
+                    render: ({ value, onChange, name, placeholder, type }) => (
                       <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                        <input {...props} />
+                        <input
+                          value={value}
+                          onChange={onChange}
+                          name={name}
+                          placeholder={placeholder}
+                          type={type}
+                        />
                         <button
                           type="button"
                           className={Style.cepButton}
                           onClick={async () => {
-                            const data = await buscarCep(unmask(formdata.cep)); // remove máscara
+                            const data = await buscarCep(unmask(value)); // usa o value atual
                             if (data) {
                               setformdata(prev => ({
                                 ...prev,
                                 cep: data.cep,
-                                address: data.logradouro,  // mapeia logradouro para address
+                                address: data.logradouro,
                                 bairro: data.bairro,
                                 localidade: data.localidade,
                                 uf: data.uf,
@@ -137,11 +143,11 @@ export default function Register() {
                             }
                           }}
                         >
-                          Buscar CEP
+                          Confirmar CEP
                         </button>
-
                       </div>
-                    ),
+                    )
+
                   };
                 }
                 return field;
@@ -151,15 +157,17 @@ export default function Register() {
               onSubmit={handleSubmit}
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              buttonStyle={{
-                backgroundColor: success ? "#28a745" : "#007bff",
-                color: "white",
-                borderColor: success ? "#28a745" : "#007bff",
-                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
-                transition: "all 0.1s ease",
-              }}
+              buttonSuccess={success}
+
+
             />
 
+          </motion.div>
+          <motion.div className={Style.login_right} initial={{ x: "-100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
+            <motion.h2>Integração do Laboratório ao Sistema</motion.h2>
+            <motion.p>Cadastre o laboratório no sistema para garantir sua identificação e autenticação dentro da plataforma.
+              O registro armazena informações essenciais como endereço, telefone e responsável técnico, permitindo que o laboratório realize operações com segurança e confiabilidade.
+              Esse processo assegura a integridade dos dados e facilita futuras integrações com clínicas e unidades parceiras.</motion.p>
           </motion.div>
         </div>
       </div>

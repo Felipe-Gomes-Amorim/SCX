@@ -89,13 +89,7 @@ export default function RegisterConsulta() {
               onSubmit={handleSubmit}
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              buttonStyle={{
-                backgroundColor: success ? "#28a745" : "#007bff",
-                color: "white",
-                borderColor: success ? "#28a745" : "#007bff",
-                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
-                transition: "all 0.1s ease",
-              }}
+              buttonSuccess={success}
             />
           </motion.div>
 

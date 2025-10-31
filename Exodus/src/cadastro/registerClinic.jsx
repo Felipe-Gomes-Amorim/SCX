@@ -10,6 +10,7 @@ import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import ActionButton from "../assents_link/ActionButton.jsx";
 import { IMaskInput } from "react-imask";
 import { validarCnpj } from "../js/validarCNPJ/validarCnpj.js";
+import { style } from "framer-motion/client";
 
 
 
@@ -97,8 +98,8 @@ export default function RegisterClinic() {
   return (
     <>
       <div className={Style.registerContainer}>
-        <Header />
-
+      <Header />
+        <div className={Style.clinic_page}>      
         <div className={Style.registerCard}>
           {/* Painel esquerdo - formulário */}
           <motion.div
@@ -155,7 +156,7 @@ export default function RegisterClinic() {
                         }
                       }}
                     >
-                      Buscar CEP
+                      Confirmar CEP
                     </button>
                   </div>
 
@@ -212,6 +213,7 @@ export default function RegisterClinic() {
         </div>
 
 
+      </div>
       </div>
       <Footer />
     </>

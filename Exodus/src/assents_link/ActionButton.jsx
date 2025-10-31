@@ -6,15 +6,20 @@ export default function ActionButton({
   loading,       
   disabled,       
   onClick,
-  style // ✅ adicionamos o estilo dinâmico
+  success = false,
+  
 }) {
+
+  const buttonClass = success 
+    ? `${Style.btnAction} ${Style.btnSuccess}` 
+    : Style.btnAction
+  
   return (
     <button
-      className={Style.btnAction}
+      className={buttonClass}
       type="submit"
       onClick={onClick}
       disabled={disabled || loading}
-      style={style} // ✅ aplica a cor dinamicamente
     >
       {loading ? "Carregando..." : text}
     </button>

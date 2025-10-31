@@ -1,0 +1,121 @@
+.container {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  /* Limite de altura */
+  max-height: 500px; /* ou outro valor que fizer sentido */
+
+  /* Scroll interno se passar do limite */
+  overflow-y: auto;
+  padding-right: 8px; /* evita que o scroll "encoste" nos cards */
+}
+
+
+.card {
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  background: #eef2f7;
+  transform: translateY(-2px);
+}
+
+.infoArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #333;
+}
+
+.downloadBtn {
+  background: #007bff;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.downloadBtn:hover {
+  background: #0056b3;
+}
+
+.info {
+  text-align: center;
+  color: #555;
+}
+
+.error {
+  text-align: center;
+  color: #d32f2f;
+}
+
+.tabHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+
+.title:hover {
+  color: #222;
+}
+
+.activeTab {
+  color: #007bff;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 4px;
+}

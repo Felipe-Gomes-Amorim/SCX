@@ -22,7 +22,7 @@ function ExodusTop() {
       if (!token) {
         setIsLogged(false);
         return;
-      }
+      }            
 
       try {
         const data = await carregarhome(token);
@@ -122,15 +122,16 @@ function ExodusTop() {
               </div>
             )}
           </div>
-
-        {/* Ícone do usuário */}
-        <div
-          className={Style.user_icon}
-          onClick={() => { if (isLogged) navigate("/home"); }}
-          style={{ cursor: isLogged ? "pointer" : "default" }}
-        >
-          <img src={userData.foto || Avatar} alt="Usuário" />
+          {/* Ícone do usuário */}
+          <div
+            className={Style.user_icon}
+            onClick={() => { if (isLogged) navigate("/home"); }}
+            style={{ cursor: isLogged ? "pointer" : "default" }}
+          >
+            <img src={userData.foto || Avatar} alt="Usuário" />
+          </div>
         </div>
+      </div>
       </header>
     </>
   );

@@ -78,7 +78,8 @@ export default function RegisterExameRequest() {
   };
 
   return (
-    <>
+    <> 
+      <div className={Style.req_page}>
       <ExodusTop />
       <div className={Style.register_page}>
         <div className={Style.register_card}>
@@ -164,7 +165,7 @@ export default function RegisterExameRequest() {
           {errorMessage && <p className={Style.error}>{errorMessage}</p>}
         </div>
       </div>
-
+      </div>
       <Footer />
     </>
   );

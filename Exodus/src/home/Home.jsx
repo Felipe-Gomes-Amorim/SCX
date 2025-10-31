@@ -8,6 +8,7 @@ import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarhome } from "../js/login e home/home.js";
 
+import ExamsReturn from "../select_all/ExamsReturn.jsx";
 import AdmArea from "./AdmArea.jsx";
 import MedicoArea from "./MedicoArea.jsx";
 import SecretariaArea from "./SecretArea.jsx";
@@ -16,6 +17,8 @@ import LabArea from "./LabArea.jsx";
 import PacienteArea from "./PacientArea.jsx";
 import SuporteArea from "./SuportArea.jsx";
 import HistoricoAtividade from "./HistoricoAtividade.jsx";
+import ClinicaList from "../select_all/SelectClinics.jsx";
+import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
 
 export default function home() {
   const [userData, setUserData] = useState({
@@ -137,8 +140,8 @@ export default function home() {
                     <SuporteArea />
                   ) : (
                     <>
-                      {userData.roles?.some(role => role.name === "Doctor") && <MedicoArea />}
-                      {userData.roles?.some(role => role.name === "Patient") && <PacienteArea />}
+                      {userData.roles?.some(role => role.name === "Doctor") && <><ExamsReturn /><MedicoArea /></>}
+                      {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /><PacienteArea /></>}
                       {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
                     </>
@@ -146,10 +149,20 @@ export default function home() {
                 </div>
 
                 {/* Painel lateral direito */}
-                
-                  <HistoricoAtividade />
-                
+                <div className={Style.rightColumn}>
+                  {userData.roles?.some(role => role.name === "Doctor") && (
+                  
+                      <ClinicaList />
+                   
+                  )}
+
+                  
+                    <HistoricoAtividade />
+                 
+                </div>
+
               </div>
+
             )}
           </main>
 
