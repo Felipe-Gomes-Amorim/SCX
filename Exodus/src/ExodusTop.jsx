@@ -131,7 +131,7 @@ function ExodusTop() {
             <img src={userData.foto || Avatar} alt="Usuário" />
           </div>
         </div>
-      </div>
+      
       </header>
     </>
   );
