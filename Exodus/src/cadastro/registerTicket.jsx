@@ -3,10 +3,13 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { cadastrarTicket } from "../js/registros/cadastrar_tickets.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer.jsx'
 
 function RegisterTicket() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessmessage] = useState("");
   const [success, setSuccess]= useState(false);
   const navigate = useNavigate();
   const [formdata, setformdata]= useState({
@@ -25,6 +28,7 @@ function RegisterTicket() {
     setLoading(true);
     setErrorMessage("");
     setSuccess(false);
+    const navigate = useNavigate();
 
     try {
       const ticketData = {
@@ -53,18 +57,7 @@ function RegisterTicket() {
     <section className={Style.about_ticket}>
    
   
-        {/* Formulário de cadastro de ticket integrado */}
-        <motion.div
-          initial={{ x: "100%", opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
-          className={Style.ticket_form} // Adicione uma classe CSS se precisar estilizar o formulário
-        >
-          <h3>Cadastro de Ticket</h3>
-          <p className={Style.subtitle}>Preencha com os dados do ticket</p>
-
-          {successMessage && <p className={Style.successMessage}>{successMessage}</p>} {/* Mensagem de sucesso */}
-
+        
           {/* Lado esquerdo - formulário */}
           <motion.div
             className={Style.login_left}
@@ -92,11 +85,10 @@ function RegisterTicket() {
               }}
             />
           </motion.div>
-        </div>
-      </div>
-
-      <Footer />
-    </>
+      
+      
+      
+    </section>
   );
 }
 

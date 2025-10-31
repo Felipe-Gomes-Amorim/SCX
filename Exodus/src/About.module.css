@@ -1,91 +1,214 @@
 .about_section {
+
   position: relative;
-  
-  
+
+
   min-height: 42rem;
+
   color: rgb(0, 0, 0);
+
   overflow: hidden;
+
+
   background-size: 100%;
-  
+
   background-image: url(assets/fundo-login.png);
+
+
 }
 
-.about_inside{
+
+.about_inside {
+
+
   margin: 8rem;
+
+
   display: flex;
+
+
   align-items: center;
- 
- 
+
+
+
+
+
+
+
+
 }
 
 
-.about_ticket{
+.about_ticket {
+
+
   align-items: center;
+
+
   text-align: center;
+
+
   background-color: rgb(255, 255, 255);
+
+
   border: 2px solid #007bff;
+
+
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+
   border-radius: 1rem;
+
+
   width: 35vw;
+
+  padding: 3rem;
+
   margin: 3rem;
+
 }
-.about_ticket input{
+
+
+.about_ticket input {
+
+
   margin-bottom: .8rem;
+
+
   width: 100%;
+
+
 }
 
 
 .about-section::before {
+
+  
+
   content: "";
+
   position: absolute;
+
   inset: 0;
+
+
+
 
 }
 
 
 .about_section h2 {
+
+
+
   text-align: right;
+
   font-size: 28px;
+
   margin-bottom: 15px;
+
 }
 
-.about_content p{
+.about_inside h2{
+
+  text-align: center;
+
+}
+
+
+
+.about_content p {
+
+
   font-size: 15px;
+
+
   text-align: right;
+
+
   margin-bottom: 40px;
+
+
   line-height: 1.6;
-  
+
+
+
+
+
 }
+
 .about_content {
-  
+
+
+
+
   position: relative;
+
   max-width: 600px;
-  margin-left: auto; /* empurra para direita */
+
+  margin-left: auto;
+  /* empurra para direita */
+
   padding: 40px;
+
   z-index: 1;
+
 }
 
-.ticket_form {
-  margin-top: 2rem;
-  
-}
+
+
+
+
+
+
+
 .successMessage {
+
+
   color: green;
+
+
   font-size: 0.875rem;
+
+
   margin: 0.5rem 0;
+
+
 }
+
+
 .subtitle {
+
+
   font-size: 0.875rem;
+
+
   font-weight: 100;
+
+
   color: #6c757d;
+
+
   margin: 1rem 0 .3rem 0;
+
+
   font-style: italic;
+
+
 }
+
+
+
+
+
+
+
+
+
 
 
 .ticket_form {
-  display:block;
+  display: block;
   align-items: center;
-  margin: 5rem;
- 
 }
+
