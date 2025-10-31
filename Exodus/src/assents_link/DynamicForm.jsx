@@ -14,8 +14,8 @@ import {
 
 export default function DynamicForm({
   fields,
-  values,          
-  onChangeValues,  
+  values,
+  onChangeValues,
   onSubmit,
   buttonText,
   loading,
@@ -113,7 +113,7 @@ export default function DynamicForm({
         <ActionButton
           text={buttonText}
           loading={loading}
-          style={buttonStyle}
+          success={buttonText === "Enviado" || buttonText === "Cadastrado" || buttonText === "Verificado"} // 👈 muda cor automaticamente
         />
       </div>
     </form>

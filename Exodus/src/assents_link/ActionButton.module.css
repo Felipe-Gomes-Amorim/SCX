@@ -15,7 +15,16 @@
   align-self: center;           
 }
 
-
+.btnSuccess{
+  color: white;
+  background-color: #28a745;
+  border-color: #28a745;
+  box-shadow: 0 0 15px 3px #28a745;
+}
+.btnSuccess:hover{
+  background-color: #218838;
+  border-color: #218838;
+}
 .btnAction:hover:not(:disabled) {
   background: #007bff;
   color: white;
