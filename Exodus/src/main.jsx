@@ -16,7 +16,7 @@ import SelectClinics from './select_all/SelectClinics.jsx'
 import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx' 
 import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
 
-import Home from './home/home.jsx'
+import Home from './home/Home.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
 import ExamsReturn from "./select_all/ExamsReturn.jsx";
