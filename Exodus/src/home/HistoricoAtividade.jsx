@@ -40,7 +40,7 @@ export default function HistoricoAtividade() {
 
     return (
         <section className={Style.section}>
-            <h2>Histórico de Atividade</h2>
+            <h3 className={Style.title}>Histórico de Atividade</h3>
             <div className={Style.sectionDivider}></div>
 
             {atividades.length === 0 ? (

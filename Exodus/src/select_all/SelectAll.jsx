@@ -220,14 +220,7 @@ export default function SelectAll() {
                         <span className={Style.data}>{item.name || "-"}</span>
                         
                       </>
-                    ): role === "examsReturn" ? (
-                      // Ordem personalizada para suporte
-                      <>
-                        
-                        <span className={Style.data}>{item.cid || "-"}</span>
-                        <a href={testePDF} className={Style.data}>{item.observation|| "-"}</a>
-                      </>
-                    ) : (
+                    ): (
                       // Ordem padrão para outros roles
                       Object.entries(item).map(([key, value], i) => (
                         <span key={i} className={Style.data}>
