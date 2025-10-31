@@ -5,17 +5,14 @@
   background-size: cover;
   background-position: center;
   position: relative;
-  background: linear-gradient(to right, #007bff, #0046b3);
+  background-image: url(assets/banner2.jpg);
 }
 
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  
-  
 }
-
 
 .hero_content {
   position: relative;
