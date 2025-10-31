@@ -1,8 +1,6 @@
 .about_section {
 
   position: relative;
-
-
   min-height: 42rem;
 
   color: rgb(0, 0, 0);
@@ -11,16 +9,12 @@
 
 
   background-size: 100%;
-
   background-image: url(assets/fundo-login.png);
 
 
 }
 
-
 .about_inside {
-
-
   margin: 8rem;
 
 
@@ -28,29 +22,14 @@
 
 
   align-items: center;
-
-
-
-
-
-
-
-
 }
 
-
 .about_ticket {
-
-
   align-items: center;
 
 
   text-align: center;
-
-
-  background-color: rgb(255, 255, 255);
-
-
+  background-color: #fff;
   border: 2px solid #007bff;
 
 
@@ -61,17 +40,12 @@
 
 
   width: 35vw;
-
   padding: 3rem;
-
   margin: 3rem;
 
 }
 
-
 .about_ticket input {
-
-
   margin-bottom: .8rem;
 
 
@@ -79,7 +53,6 @@
 
 
 }
-
 
 .about-section::before {
 
@@ -90,36 +63,17 @@
   position: absolute;
 
   inset: 0;
-
-
-
-
 }
 
-
 .about_section h2 {
-
-
-
-  text-align: right;
-
+  text-align: center;
   font-size: 28px;
 
   margin-bottom: 15px;
 
 }
 
-.about_inside h2{
-
-  text-align: center;
-
-}
-
-
-
 .about_content p {
-
-
   font-size: 15px;
 
 
@@ -130,37 +84,16 @@
 
 
   line-height: 1.6;
-
-
-
-
-
 }
 
 .about_content {
-
-
-
-
   position: relative;
 
   max-width: 600px;
-
-  margin-left: auto;
-  /* empurra para direita */
-
+  margin-left: auto; 
   padding: 40px;
 
   z-index: 1;
-
-}
-
-
-
-
-
-
-
 
 .successMessage {
 
@@ -175,7 +108,6 @@
 
 
 }
-
 
 .subtitle {
 
@@ -197,18 +129,19 @@
 
 }
 
-
-
-
-
-
-
-
-
-
-
 .ticket_form {
   display: block;
   align-items: center;
+}
+
+.ticketButtonSuccess {
+  background-color: #28a745;
+  border-color: #28a745;
+  box-shadow: 0 0 15px 3px #28a745;
+}
+
+.ticketButtonSuccess:hover {
+  background-color: #218838;
+  border-color: #218838;
 }
 

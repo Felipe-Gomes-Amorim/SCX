@@ -1,50 +1,69 @@
 /* Página */
 .login_page {
-  background: #e0e0e0;
-  
+  background-image: url("../assets/fundo-login2.png");
+  background-size: cover;
+  min-height: 120vh; /* Mantém vh para altura mínima baseada na viewport */
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.user_icon{
+  justify-content: right;
+}
+
+.user_icon img {
+  width: 4rem; /* De px para rem (escala com zoom) */
+  
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 0.1rem solid #A7A7A7; /* De px para rem */
+  transition: all 0.3s ease;
+}
+.user_icon img:hover {
+  box-shadow: 0 0 1rem rgba(0, 123, 255, 0.8); /* De px para rem */
+  transform: scale(1.1);
 }
 
 /* Logo */
 .login_header {
   width: 100%;
-  padding: 20px 40px;
+  padding: 0.9375rem 2.5rem; /* De 15px/40px para rem (15/16=0.9375, 40/16=2.5) */
   background: linear-gradient(to right, #007bff, #0046b3);
   font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.hyperText{
+.hyperText {
   text-decoration: none;
 }
 
 .login_header h1 {
   color: white;
-  font-size: 32px;
+  font-size: 3rem; /* Já é rem, bom para zoom */
   font-weight: bold;
   text-decoration: none;
-     
 }
 
 /* Card de login */
 .login_card {
+  top: 20vh; /* Mantém vh */
   display: flex;
-  margin-bottom: 2rem;
   background: white;
-  margin-top: 40px;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 700px;
-  min-height: 350px;
+  margin-top: 2.5rem; /* De 40px para rem */
+  border-radius: 0.625rem; /* De 10px para rem */
+  width: 90vw; /* De 160vh (erro?) para 90% da largura da viewport - ajusta automaticamente */
+  max-width: 1200px; /* Limita largura máxima para telas grandes */
   position: relative;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.15); /* De px para rem */
 }
 
 /* Coluna esquerda */
 .login_left {
   flex: 1;
-  padding: 40px;
+  padding: 2.5rem; /* De 40px para rem */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,142 +72,371 @@
 }
 
 .login_left h2 {
-  font-size: 24px;
+  font-size: 2.25rem; /* De 36px para rem */
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 2rem;
 }
 
 .login_left .subtitle {
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #6c757d; /* slightly grey */
+  font-size: 0.875rem; /* De 14px para rem */
+  margin-bottom: 0.6rem;
+  color: #6c757d;
   font-style: italic;
 }
 
-.login_left input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  padding-right: 5.4rem;
+.login_left .subtitle2 {
+  font-size: 0.75rem; /* De 12px para rem */
+  margin-top: 1rem;
+  color: #6c757d;
 }
 
+.login_left input {
+  width: 100%;
+  border: 0.0625rem solid #ccc; /* De 1px para rem */
+  border-radius: 0.5rem; /* De 8px para rem */
+  margin-bottom: 1.25rem; /* De 20px para rem */
+  font-size: 0.875rem; /* De 14px para rem */
+  padding-right: 3.375rem; /* De 54px para rem (aprox.) */
+  text-align: left;
+}
 
 .login_left input::placeholder {
   color: rgb(182, 182, 182);
-  opacity: 1; 
+  text-align: left;
+  opacity: 1;
 }
 
 .login_left input:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 0 1px rgb(0, 123, 255); /* thicker blue outline */
+  box-shadow: 0 0 0 0.0625rem rgb(0, 123, 255); /* De 1px para rem */
 }
 
 .login_left .btn {
-  padding: 10px 6.1vh;
-  border: 2px solid #007bff;
+  padding: 0.625rem; /* De 10px para rem */
+  border: 0.125rem solid #007bff; /* De 2px para rem */
   background: transparent;
   color: #007bff;
-  border-radius: 8px;
+  border-radius: 0.5rem; /* De 8px para rem */
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9375rem; /* De 15px para rem */
   text-transform: uppercase;
   font-weight: 600;
-  letter-spacing: 2px;
-  font-size: 15px;
- -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
+  letter-spacing: 0.125rem; /* De 2px para rem */
   transition: all 0.2s ease-in;
 }
-
 
 .login_left .btn:hover {
   background: #007bff;
   color: white;
-
-  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
+  box-shadow: 0 0 1.875rem 0.3125rem rgba(12, 126, 255, 0.815); /* De px para rem */
   transition: all 0.2s ease-out;
 }
 
 /* Coluna direita */
 .login_right {
   flex: 1;
-  background: linear-gradient(to right, #007bff, #003b99);
   color: white;
-  padding: 40px;
+  padding: 1.375rem; /* De 22px para rem */
   display: flex;
+  text-align: right;
   flex-direction: column;
   justify-content: center;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0.625rem 0.625rem 0; /* De 10px para rem */
   position: relative;
+  background: linear-gradient(to right, #007bff, #003b99);
   z-index: 2;
 }
 
 .login_right h2 {
-  font-size: 26px;
-  margin-bottom: 15px;
+  font-size: 2rem; /* De 32px para rem */
+  margin-bottom: 0.9375rem; /* De 15px para rem */
+  margin-right: 1rem;
 }
 
 .login_right p {
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 0.75rem; /* De 12px para rem */
+  
+  direction: ltr;
+  text-justify: inter-ideograph;
+  font-weight: 100;
+  line-height: 1.8;
+  margin-right: 1rem;
+  text-align: right;
 }
 
-/* Seta central */
-.login_arrow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* centraliza em X e Y */
-  z-index: 5;
-  background: #005cbe;
-  color: white;
-  font-size: 24px;
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.select {
-  width: 73%;
-  padding: 12px;
-  border: 1px solid #ccc;   /* igual ao input */
-  border-radius: 8px;
-  background: white;
+/* Dropdown Wrapper */
+.dropdownWrapper {
+  position: relative;
+  margin-bottom: 1.25rem; /* De 20px para rem */
+  width: 72.5%;
   color: #007bff;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 20px;
-  transition: all 0.2s ease-in;
-  appearance: none; /* remove seta padrão */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path fill='%23007bff' d='M5.25 7.5L10 12.25 14.75 7.5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
 }
 
-.select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 1px rgb(0, 123, 255); /* mesmo highlight do input */
-  outline: none;
+/* Botão principal do dropdown */
+.dropdownBtn {
+  width: 100%;
+  padding: 0.75rem; /* De 12px para rem */
+  border: 0.0625rem solid #ccc; /* De 1px para rem */
+  border-radius: 0.5rem; /* De 8px para rem */
+  font-size: 0.875rem; /* De 14px para rem */
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Setinhas do botão */
+.arrowDown, .arrowUp {
+  margin-left: 0.5rem; /* De 8px para rem */
+  font-size: 0.75rem; /* De 12px para rem */
+  transition: transform 0.25s ease;
+}
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  margin-bottom: 1.25rem; /* De 20px para rem */
+}
+
+.dropdownHeader {
+  padding: 0.75rem; /* De 12px para rem */
+  border: 0.0625rem solid #007bff; /* De 1px para rem */
+  border-radius: 0.5rem; /* De 8px para rem */
+  font-size: 0.875rem; /* De 14px para rem */
+  cursor: pointer;
+  background: white;
+  color: #333;
+  transition: all 0.2s ease-in;
+}
+
+.dropdownHeader:hover {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 0.125rem rgba(0, 123, 255, 0.2); /* De 2px para rem */
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 0.0625rem solid #007bff; /* De 1px para rem */
+  border-radius: 0.5rem; /* De 8px para rem */
+  list-style: none;
+  margin: 0.25rem 0 0 0; /* De 4px para rem */
+  padding: 0.375rem 0; /* De 6px para rem */
+  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.12); /* De px para rem */
+  z-index: 9999;
+}
+
+.dropdownMenu li {
+  padding: 0.625rem 0.875rem; /* De 10px/14px para rem */
+  cursor: pointer;
+  font-size: 0.875rem; /* De 14px para rem */
+  transition: background 0.2s ease;
+}
+
+.dropdownMenu li:hover {
+  background: #007bff;
+  color: white;
+}
+
+.activeOption {
+  background: #0056b3;
+  color: white;
 }
 
 .formError {
   color: red !important;
-  font-size: 14px;
-  margin: 8px 0;
+  font-size: 0.875rem; /* De 14px para rem */
+  margin: 0.5rem 0; /* De 8px para rem */
   display: block;
+}
+
+
+.addButton {
+  background-image: url("../assets/mais.png");
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 2.8125rem; /* De 45px para rem */
+  height: 2.8125rem;
+  margin: 0 0.3125rem; /* De 5px para rem */
+  transition: all 0.3s ease;
+}
+
+.addButton2 {
+  background-image: url("../assets/email.png");
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 2.8125rem; /* De 45px para rem */
+  height: 2.8125rem;
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background-color: rgba(57, 152, 255, 0.8);
+  color: #fff;
+  box-shadow: 0 0 0.9375rem rgba(57, 152, 255, 0.8); /* De 15px para rem */
+  transform: scale(1.1);
+}
+
+.addButton2:hover {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 0 0.9375rem rgba(0, 123, 255, 0.8); /* De 15px para rem */
+  transform: scale(1.1);
+}
+
+/* Wrapper do botão + (para posicionar o menu) */
+.addButtonWrapper {
+  position: relative;
+  
+}
+
+/* Menu suspenso */
+.addMenu {
+  position: absolute;
+  top: 4rem; /* Já é rem */
+  right: 0;
+  background: white;
+  border: 0.125rem solid #007bff; /* De 2px para rem */
+  border-radius: 0.625rem; /* De 10px para rem */
+  box-shadow: 0 -0.25rem #007bff; /* De -4px para rem */
+  z-index: 999;
+  min-width: 11.25rem; /* De 180px para rem */
+  padding: 0.625rem 0; /* De 10px para rem */
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Itens do menu */
+.addMenu p {
+  text-decoration: underline;
+  margin: 0;
+  padding: 0.625rem 0.9375rem; /* De 10px/15px para rem */
+  font-size: 0.9375rem; /* De 15px para rem */
+  color: #007bff;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.addMenu p:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.addMenu p.logout {
+  color: #007bff;
+}
+
+.addMenu p.logout:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+/* Animação de aparição */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.3125rem); /* De -5px para rem */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) { /* Telas pequenas (mobile) */
+  .login_header {
+    padding: 0.75rem 1.25rem; /* Padding menor */
+  }
+  .login_header h1 {
+    font-size: 2rem; /* Logo menor */
+  }
+  .login_card {
+    width: 95vw; /* Mais estreito */
+    flex-direction: column; /* Empilha colunas verticalmente */
+  }
+  .login_left, .login_right {
+    padding: 1.5rem; /* Padding menor */
+  }
+  .login_left h2 {
+    font-size: 1.75rem;
+  }
+  .login_right h2 {
+    font-size: 1.5rem;
+  }
+  .addButton, .addButton2 {
+    width: 2.5rem; /* Botões menores */
+    height: 2.5rem;
+  }
+  .addMenu {
+    min-width: 10rem; /* Menu menor */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { /* Telas médias (tablet) */
+  .login_card {
+    width: 85vw; /* Ajuste intermediário */
+  }
+  .login_left h2 {
+    font-size: 2rem;
+  }
+  .login_right h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1025px) { /* Telas grandes (desktop) */
+  .login_card {
+    width: 80vw; /* Limita largura para não ficar excessivo */
+  }
+}
+
+/* ... (mantenha o resto do CSS existente) ... */
+
+/* Container que agrupa os botões (seção esquerda) */
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem; /* Espaço entre botões */
+  position: relative;
+}
+
+/* Container que agrupa o ícone do usuário (seção direita) */
+.headerRight {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 1rem;
+  /* Remova width: 100% se existir, pois agora é uma seção à direita */
+}
+
+/* ... (mantenha o resto do CSS, incluindo .user_icon, .addButton, etc.) ... */
+
+/* Media Queries para Responsividade (ajuste se necessário) */
+@media (max-width: 768px) {
+  .headerLeft {
+    gap: 0.5rem; /* Espaço menor em mobile */
+  }
+  .headerRight {
+    /* Ajustes se necessário */
+  }
 }
 .cepButton {
   padding: 10px 6.1vh;
@@ -205,38 +453,10 @@
  -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  margin-bottom: 1.3rem ;
 }
 
 .cepButton:hover {
-  background: #007bff;
-  color: white;
-
-  box-shadow: 0 0 30px 5px rgba(12, 126, 255, 0.815);
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-}
-.cepButtonSuccess {
-  box-shadow: 0 0 15px 3px #28a745; /* sombra verde para sucesso */
-}
-.ticketButton {
-  padding: 10px 6.1vh;
-  border: 2px solid #007bff;
-  background: transparent;
-  color: #007bff;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 2px;
-  font-size: 15px;
- -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-}
-
-.ticketButton:hover {
   background: #007bff;
   color: white;
 

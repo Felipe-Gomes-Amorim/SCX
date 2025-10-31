@@ -1,13 +1,23 @@
 .registerContainer {
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Começa de cima, não centralizado */
-  background: #e0e0e0;
+  justify-content: center; /* centraliza verticalmente */
+  align-items: center; /* centraliza horizontalmente */
   min-height: 100vh;
-  flex-direction: column;
-  padding: 60px 0; /* Espaço vertical */
+  background: #e0e0e0;
+   /* remove espaçamento extra */
+  flex-direction: row; /* faz o card ficar lado a lado com possíveis painéis, se houver */
 }
-
+.clinic_page {
+  background-image: url("../assets/fundo-login2.png"); /* ou use o caminho correto */
+  background-size: cover;       /* garante que a imagem cubra toda a tela */
+  background-repeat: no-repeat; /* evita repetir a imagem */
+  background-position: center;  /* centraliza a imagem */
+  min-height: 120vh;            /* altura mínima da viewport */
+  width: 100vw  ;                 /* largura total da viewport */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 /* Card principal */
 .registerCard {
   top: 7.2rem;
@@ -20,7 +30,7 @@
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin: 0 auto 60px auto; /* Centraliza e adiciona espaço abaixo */
+  margin: 0 auto 10rem auto; /* Centraliza e adiciona espaço abaixo */
 }
 
 /* Painel da direita (boas-vindas) */
@@ -153,11 +163,9 @@
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-
-
-
 .cepButton:hover {
   background: #007bff;
   color: white;
   border-color: #007bff;
 }
+

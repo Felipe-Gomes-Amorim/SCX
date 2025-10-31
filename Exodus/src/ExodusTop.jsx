@@ -22,7 +22,7 @@ function ExodusTop() {
       if (!token) {
         setIsLogged(false);
         return;
-      }
+      }            
 
       try {
         const data = await carregarhome(token);
@@ -131,7 +131,7 @@ function ExodusTop() {
             <img src={userData.foto || Avatar} alt="Usuário" />
           </div>
         </div>
-
+      </div>
       </header>
     </>
   );

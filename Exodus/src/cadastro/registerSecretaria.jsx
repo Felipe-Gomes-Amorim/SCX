@@ -64,16 +64,6 @@ export default function RegisterSecretaria() {
 
         <div className={Style.login_card}>
           {/* Lado direito - boas-vindas */}
-          <motion.div
-            className={Style.login_right}
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
-          >
-            <motion.h2>Bem-vinda!</motion.h2>
-            <motion.p>Crie a conta da secretária da clínica.</motion.p>
-          </motion.div>
-
           {/* Lado esquerdo - formulário */}
           <motion.div
             className={Style.login_left}
@@ -91,15 +81,25 @@ export default function RegisterSecretaria() {
               onSubmit={handleSubmit}
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              buttonStyle={{
-                backgroundColor: success ? "#28a745" : "#007bff",
-                color: "white",
-                borderColor: success ? "#28a745" : "#007bff",
-                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
-                transition: "all 0.3s ease",
-              }}
+              buttonSuccess={success}
             />
           </motion.div>
+          
+          <motion.div
+            className={Style.login_right}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.8, 0.25, 1] }}
+          >
+            <motion.h2>Nova Secretária</motion.h2>
+            <motion.p>
+              Preencha os dados necessários para cadastrar a secretária no sistema e habilitar o acesso às funções operacionais da clínica.
+            </motion.p>
+
+          </motion.div>
+
+      
+
         </div>
       </div>
 
