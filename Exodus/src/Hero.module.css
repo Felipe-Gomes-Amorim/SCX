@@ -30,6 +30,8 @@
 }
 
 .hero_content p {
+  font-family: "Montserrat";
+  font-weight: 300;
   font-size: 15px;
   margin-bottom: 40px;
   line-height: 1.6;
