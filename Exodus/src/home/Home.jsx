@@ -19,7 +19,8 @@ import SuporteArea from "./SuportArea.jsx";
 import HistoricoAtividade from "./HistoricoAtividade.jsx";
 import ClinicaList from "../select_all/SelectClinics.jsx";
 import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
-import PatientList from "../select_all/PatientDoctorList.jsx";
+import SelectMedLab from "../select_all/SelectMedLab.jsx";
+
 
 export default function home() {
   const [userData, setUserData] = useState({
@@ -135,8 +136,8 @@ export default function home() {
               <div className={Style.mainLayout}>
                 {/* Área principal (Admin, Médico, etc.) */}
                 <div className={Style.mainContent}>
-                  {userData.roles?.some(role => role.name === "Admin") ? (
-                    <AdmArea />
+                  {userData.roles?.some(role => role.name === "Admin" ) ? (
+                    <><SelectMedLab/><AdmArea/></>
                   ) : userData.roles?.some(role => role.name === "Support") ? (
                     <SuporteArea />
                   ) : (

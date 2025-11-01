@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 
 import Login from './login/Login.jsx'
+import Sobre from './sobre.jsx'
 
 import Register from './cadastro/register.jsx'
 import RegisterADM from './cadastro/registerFirstADM.jsx'
@@ -36,7 +37,7 @@ import ResponseTicket from './cadastro/registerTicketResponse.jsx'
 const router = createBrowserRouter([
   {path: "/", element: <App />},
   {path: "/login", element: <Login />},
-
+  {path: "/sobre", element: <Sobre />},
   {path: "/register", element: <Register />},
   {path: "/registeradm", element: <RegisterADM />},
   {path: "/registerExam/:id?", element: <RegisterExam/>},
