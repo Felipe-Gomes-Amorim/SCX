@@ -63,14 +63,7 @@ export default function SecretariaArea() {
       <div className={Style.subsection}>
         <h3>Seção de Visualização</h3>
         <div className={Style.buttons}>
-          <Redirect
-            text="Ver Pacientes"
-            place="/selectAll/patient"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
+       
 
           <Redirect
             text="Ver Médicos"

@@ -404,9 +404,9 @@
 }
 
 /* Título */
-.rightPanel h2 {
+.section .title {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.8rem;
   color: #333;
 }

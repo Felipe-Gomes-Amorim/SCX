@@ -19,6 +19,7 @@ import SuporteArea from "./SuportArea.jsx";
 import HistoricoAtividade from "./HistoricoAtividade.jsx";
 import ClinicaList from "../select_all/SelectClinics.jsx";
 import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
+import PatientList from "../select_all/PatientDoctorList.jsx";
 
 export default function home() {
   const [userData, setUserData] = useState({
@@ -142,7 +143,7 @@ export default function home() {
                     <>
                       {userData.roles?.some(role => role.name === "Doctor") && <><ExamsReturn /><MedicoArea /></>}
                       {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /><PacienteArea /></>}
-                      {userData.roles?.some(role => role.name === "Secretary") && <SecretariaArea />}
+                      {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /><SecretariaArea /></>}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
                     </>
                   )}
