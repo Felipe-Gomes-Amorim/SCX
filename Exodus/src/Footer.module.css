@@ -15,6 +15,7 @@
 .footer_col h2 {
   font-size: 24px;
   margin-bottom: 15px;
+  -webkit-text-fill-color: #ddd;
 }
 
 .footer_col h3 {
@@ -65,5 +66,5 @@
   padding-top: 15px;
   text-align: center;
   font-size: 13px;
-  color: #ddd;
+  -webkit-text-fill-color: #ddd;
 }

@@ -136,7 +136,7 @@
 /* Coluna direita */
 .login_right {
   flex: 1;
-  color: white;
+  -webkit-text-fill-color: #ddd;
   padding: 1.375rem; /* De 22px para rem */
   display: flex;
   text-align: right;
@@ -156,8 +156,8 @@
 
 .login_right p {
   font-size: 0.75rem; /* De 12px para rem */
-  text-align: justify;
-  direction: rtl;
+  text-align: right;
+  direction: ltr;
   text-justify: inter-ideograph;
   font-weight: 100;
   line-height: 1.8;

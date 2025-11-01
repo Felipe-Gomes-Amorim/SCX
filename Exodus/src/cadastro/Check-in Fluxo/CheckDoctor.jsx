@@ -8,10 +8,12 @@ import Style from "../register.module.css";
 import ExodusTop from "../../ExodusTop.jsx";
 import Footer from "../../Footer.jsx";
 
+
 export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(false)
   const [formdata, setformdata] = useState({
       crm: ""
     });
@@ -20,26 +22,27 @@ export default function CheckDoctor() {
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
+    setSuccess(false)
     const token = localStorage.getItem("token");
 
     const result = await verificarMedico(formValues.crm, token);
     console.log("Resultado da verificação:", result);
 
     if (result.status === "jaCadastrado") {
-      alert("Médico já está cadastrado na clínica.");
-      navigate("/home");
+      setSuccess(true)
+      setTimeout(()=>{navigate("/home")},1500);
     } else if (result.status === "transferivel") {
       alert("Médico existe no sistema mas não está vinculado à clínica. Cadastrando no sistema");
       const result2 = await transferirMedico(formValues);
       if (result2.success) {
-        alert("Transferido com sucesso!");
-        navigate("/home");
+      setSuccess(true)
+      setTimeout(()=>{navigate("/home")},1500);
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
       }
     } else if (result.status === "novo") {
-      alert("Médico não encontrado. Prossiga para o cadastro completo!");
-      navigate(`/registerMedico?crm=${formValues.crm}`);
+      setSuccess(true)
+      setTimeout(()=>{navigate(`/registerMedico?crm=${formValues.crm}`)},1500);
     } else {
       alert("Ocorreu um erro ao verificar o CRM.");
       setErrorMessage(result.message);
@@ -72,7 +75,7 @@ export default function CheckDoctor() {
               values={formdata}                    
               onChangeValues={setformdata} 
               onSubmit={handleSubmit}
-              buttonText="Verificar"
+              buttonText={success ? "Verificado" : "Verificar"}
               loading={loading}
               errorMessage={errorMessage}
               buttonSuccess={success}

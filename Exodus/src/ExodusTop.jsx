@@ -75,8 +75,6 @@ function ExodusTop() {
   const dynamicMenuItems = [];
   if (userData.roles?.some(role => role.name === "Admin")) {
     dynamicMenuItems.push(
-      { label: "Gerenciar Médicos", onClick: (navigate) => navigate("/selectAll/doctor") },
-      { label: "Gerenciar Laboratórios", onClick: (navigate) => navigate("/selectAll/lab") },
       { label: "Cadastrar Secretária", onClick: (navigate) => navigate("/registerSecretaria") }
     );
   }
