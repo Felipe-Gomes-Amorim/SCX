@@ -186,36 +186,10 @@ export default function Home() {
                     <SuporteArea />
                   ) : (
                     <>
-                      {userData.roles?.some(
-                        (role) => role.name === "Doctor"
-                      ) && (
-                          <>
-                            <ExamsReturn />
-                            <MedicoArea />
-                          </>
-                        )}
-
-                      {userData.roles?.some(
-                        (role) => role.name === "Patient"
-                      ) && (
-                          <>
-                            <ExamsReturnPacList />
-                            <PacienteArea />
-                          </>
-                        )}
-
-                      {userData.roles?.some(
-                        (role) => role.name === "Secretary"
-                      ) && (
-                          <>
-                            <PatientList />
-                            <SecretariaArea />
-                          </>
-                        )}
-
-                      {userData.roles?.some(
-                        (role) => role.name === "LaboratoryAdmin"
-                      ) && <LabArea />}
+                      {userData.roles?.some(role => role.name === "Doctor") && <><MedicoArea /><ExamsReturn /></>}
+                      {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /></>}
+                      {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /><SecretariaArea /></>}
+                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
                     </>
                   )}
                 </div>

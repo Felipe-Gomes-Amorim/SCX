@@ -1,4 +1,3 @@
-/* Estrutura já existente */
 .home_page {
   background: #e0e0e0;
   min-height: 95vh;
@@ -26,6 +25,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease; /* animação suave ao expandir */
 }
+
 .sidebar p {
   margin-bottom: 0.8rem;
 }
@@ -101,10 +101,10 @@
   margin-bottom: .2rem;
 }
 
-.section p{
+.section p {
   font-size: 1rem;
   color: #333;
-  
+
 }
 
 .laudos {
@@ -248,7 +248,7 @@
 .buttonsArea {
   display: flex;
   flex-direction: column;
-  gap: 15px;           
+  gap: 15px;
   width: 40%;
   max-width: 220px;
 }
@@ -257,7 +257,7 @@
 .sectionDivider {
   width: 100%;
   height: 3px;
-  background-color: #d1d5db; 
+  background-color: #d1d5db;
   margin: 1rem 0 1rem 0;
 }
 
@@ -279,7 +279,7 @@
 
 
 .buttonRow {
- 
+
   display: grid;
   flex-wrap: wrap;
   gap: 15px;
@@ -289,16 +289,20 @@
 
 .adminContainer {
   display: flex;
-  gap: 20px; /* espaço entre AdmArea e histórico */
+  gap: 20px;
+  /* espaço entre AdmArea e histórico */
   align-items: flex-start;
-  flex-wrap: wrap; /* para telas pequenas, empilha verticalmente */
+  flex-wrap: wrap;
+  /* para telas pequenas, empilha verticalmente */
 }
 
 /* Forçar cada seção a ocupar metade do container */
 .adminContainer .admArea,
 .adminContainer .section {
-  flex: 1; /* divide igualmente */
-  min-width: 300px; /* evita que fique muito estreito em telas pequenas */
+  flex: 1;
+  /* divide igualmente */
+  min-width: 300px;
+  /* evita que fique muito estreito em telas pequenas */
 }
 
 /* Ajustes visuais para deixar separadas e arredondadas */
@@ -306,14 +310,14 @@
   padding: 20px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .adminContainer .section {
   padding: 20px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -323,7 +327,7 @@
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .section h2 {
@@ -337,7 +341,8 @@
 .sectionDivider {
   width: 100%;
   height: 2px;
-  background-color: #d1d5db; /* cinza suave */
+  background-color: #d1d5db;
+  /* cinza suave */
   margin: 0.8rem 0 1rem 0;
 }
 
@@ -364,24 +369,6 @@
   margin: 0;
 }
 
-/* Botão “Ver mais” */
-.btn {
-  margin-top: 1rem;
-  padding: 0.6rem 1rem;
-  border: 2px solid #007bff;
-  background: transparent;
-  color: #007bff;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease-in;
-}
-
-.btn:hover {
-  background: #007bff;
-  color: #fff;
-}
 
 /* === Layout geral === */
 .home_content {
@@ -393,13 +380,15 @@
 
 /* Lado direito fixo com o histórico */
 .rightPanel {
-  width: 280px; /* largura parecida com o GitHub changelog */
+  width: 280px;
+  /* largura parecida com o GitHub changelog */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 16px;
   position: sticky;
-  top: 80px; /* fixa abaixo do header */
+  top: 80px;
+  /* fixa abaixo do header */
   align-self: flex-start;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
@@ -472,10 +461,12 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .rightColumn {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* espaço entre as caixinhas */
+  gap: 1.5rem;
+  /* espaço entre as caixinhas */
   width: 300px;
   align-self: flex-start;
 }
@@ -493,4 +484,481 @@
   margin-top: 1rem;
   width: 100%; /* 🔹 ocupa toda a largura do sidebar */
   
+
+/* Fundo escurecido com blur e fade-in */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  /* 🟢 desfoca o fundo */
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Caixa animada: sobe com fade-in */
+.popupBox {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideUpFade 0.4s ease forwards;
+}
+
+/* Animação para os botões */
+.popupButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.popupButtons button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  transform: scale(1);
+}
+
+/* 🟢 Botão 1 – azul */
+.popupButtons button:nth-child(1) {
+  background: white;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.popupButtons button:nth-child(1):hover {
+  background: #007bff;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 🟢 Botão 2 – verde */
+.popupButtons button:nth-child(2) {
+  background: white;
+  color: #28a745;
+  border: 2px solid #28a745;
+}
+
+.popupButtons button:nth-child(2):hover {
+  background: #28a745;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 🟢 Botão Cancelar – vermelho */
+.popupButtons .cancelBtn {
+  background: white;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+}
+
+.popupButtons .cancelBtn:hover {
+  background: #dc3545;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 🔵 Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ==== Caixa de consulta ativa compacta ==== */
+.activeConsultBox {
+  background: #f8fafc;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+/* ==== Menu expandido ==== */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.menuBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUpFade 0.4s ease forwards;
+}
+
+.menuBox h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.menuBox p {
+  color: #444;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1.2rem;
+}
+
+.menuButtons button {
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Cores */
+.menuButtons button:nth-child(1) {
+  background: #007bff;
+  color: white;
+}
+
+.menuButtons button:nth-child(1):hover {
+  background: #0056d2;
+}
+
+.menuButtons button:nth-child(2) {
+  background: #28a745;
+  color: white;
+}
+
+.menuButtons button:nth-child(2):hover {
+  background: #1e8b39;
+}
+
+.menuButtons .closeBtn {
+  background: #dc3545;
+  color: white;
+}
+
+.menuButtons .closeBtn:hover {
+  background: #b02a37;
+}
+
+.expandido {
+  background: #f9f9f9;
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.expandedArea {
+  margin-top: 1rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.historicoBox {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.expandedButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.card {
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  background: #eef2f7;
+  transform: translateY(-2px);
+}
+
+.infoArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #333;
+}
+
+/* Ajustes para menuBox maior horizontalmente */
+.menuBox {
+  width: 90%;
+  /* Aumentei de, digamos, 80% para 90% para cobrir mais da tela */
+  max-width: 1200px;
+  /* Adicionei um max-width para não ficar excessivo em telas grandes */
+  /* Outros estilos existentes... */
+  height: 80b;
+}
+
+/* Novo header com título e botões */
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+}
+
+.menuHeader h3 {
+  margin: 0;
+}
+
+.menuButtons {
+  display: flex;
+  gap: 0.5rem;
+  /* Espaçamento entre botões */
+}
+
+/* Infos do paciente */
+.patientInfo {
+  margin-bottom: 1rem;
+}
+
+/* Ajustes para menuBox conter tudo dentro */
+.menuBox {
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  
+  overflow-y: auto;
+  /* Scroll vertical se o conteúdo exceder a altura */
+  /* Outros estilos existentes, como background, border-radius, etc. */
+}
+
+/* Novo header com título, infos e botões */
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* Alinha ao topo para evitar desalinhamento */
+  margin-bottom: 0.5rem;
+}
+
+.titleAndInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* Espaçamento entre título e infos */
+}
+
+.menuButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Infos do paciente */
+.patientInfo {
+  /* Removi margin-bottom, pois agora está dentro de titleAndInfo */
+}
+
+/* Centralizar a lista */
+.historicoBox {
+  text-align: left;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 350px;
+  /* controla o tamanho visível */
+  overflow-y: auto;
+  /* scroll só aqui */
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f0f0f0;
+}
+
+
+/* Estilos existentes mantidos */
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+/* card */
+.card {
+  background: #f8f9fb;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: block;
+  /* cada card ocupa a largura */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* área que contém todas as linhas (cada linha tem 2 colunas label/value) */
+.infoArea {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* mantém linhas empilhadas; cada linha cria suas próprias colunas */
+  gap: 0.6rem;
+  width: 100%;
+}
+
+/* cada linha (label à esquerda, value à direita) — usamos grid para garantir alinhamento */
+.infoRow {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  /* label fixa, value ocupa o resto */
+  column-gap: 12px;
+  align-items: center;
+}
+
+/* label (título do campo) */
+.label {
+  font-weight: 700;
+  color: #1877f2;
+  /* azul para destaque */
+  font-size: 0.95rem;
+}
+
+/* value (conteúdo) */
+.value {
+  color: #222;
+  font-size: 0.95rem;
+  word-break: break-word;
+  /* evita overflow em strings longas (UUIDs, datas ISO, URLs) */
+  white-space: normal;
+}
+
+/* responsivo: em telas estreitas, empilha label em cima do value */
+@media (max-width: 640px) {
+  .infoRow {
+    grid-template-columns: 1fr;
+    /* uma coluna só */
+    row-gap: 4px;
+  }
+
+  .label {
+    font-size: 0.92rem;
+  }
+
+  .value {
+    font-size: 0.92rem;
+  }
+}
+
+/* hover / micro-interação */
+.card:hover {
+  background: #eef6ff;
+  transform: translateY(-2px);
 }

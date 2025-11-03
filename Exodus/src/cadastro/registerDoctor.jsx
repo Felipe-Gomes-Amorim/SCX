@@ -23,8 +23,10 @@ export default function RegisterDoctor() {
 
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
+    { name: "speciality", type: "text", placeholder: "Especialidade do Médico", required: true },
     { name: "crm", type: "text", placeholder: "CRM", required: true, defaultValue: crmFromUrl },
     { name: "email", type: "email", placeholder: "E-mail", required: true },
+    
   ];
 
   const handleSubmit = async (formValues) => {

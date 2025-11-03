@@ -13,7 +13,6 @@
 
 .user_icon img {
   width: 4rem; /* De px para rem (escala com zoom) */
-  
   height: 4rem;
   object-fit: cover;
   border-radius: 50%;
@@ -49,7 +48,7 @@
 
 /* Card de login */
 .login_card {
-  top: 20vh; /* Mantém vh */
+  top: 10vh; /* Mantém vh */
   display: flex;
   background: white;
   margin-top: 2.5rem; /* De 40px para rem */
@@ -427,16 +426,12 @@
   /* Remova width: 100% se existir, pois agora é uma seção à direita */
 }
 
-/* ... (mantenha o resto do CSS, incluindo .user_icon, .addButton, etc.) ... */
-
 /* Media Queries para Responsividade (ajuste se necessário) */
 @media (max-width: 768px) {
   .headerLeft {
     gap: 0.5rem; /* Espaço menor em mobile */
   }
-  .headerRight {
-    /* Ajustes se necessário */
-  }
+  
 }
 .cepButton {
   padding: 10px 6.1vh;

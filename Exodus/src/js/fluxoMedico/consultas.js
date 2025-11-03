@@ -13,7 +13,7 @@ export async function buscarConsultaAtual(token) {
         });
 
         console.log("📦 Consulta atual retornada:", response.data);
-        
+
         if (response.data) {
             return { success: true, data: response.data };
         } else {
@@ -29,18 +29,38 @@ export async function buscarConsultaAtual(token) {
     }
 }
 
-// 🔹 Encerra a consulta atual
-export async function encerrarConsulta(token) {
+// 🔹 Abre uma nova consulta
+export async function abrirConsulta(token) {
     try {
-    const response = await axios.patch(
-      `${API_BASE}/closeAppointment`,
-      {}, // corpo vazio (se o endpoint não precisa de body)
-      {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
-      }
-    );
+        const response = await axios.post(`${API_BASE}/openConsultation`, {}, {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : undefined,
+            },
+        });
+
+        console.log("✅ Consulta aberta com sucesso:", response.data);
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("❌ Erro ao abrir consulta:", error);
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message,
+        };
+    }
+}
+
+// 🔹 Encerra a consulta atual
+export async function encerrarConsulta(token, patientShouldReturn) {
+    try {
+        const response = await axios.patch(
+            `${API_BASE}/closeConsultation`,
+            { patientShouldReturn }, // envia o boolean no body
+            {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : undefined,
+                },
+            }
+        );
 
         console.log("✅ Consulta encerrada com sucesso:", response.data);
         return { success: true, data: response.data };
