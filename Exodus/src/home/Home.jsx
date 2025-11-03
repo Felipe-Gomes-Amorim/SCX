@@ -7,6 +7,7 @@ import axios from "axios";
 import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarhome } from "../js/login e home/home.js";
+import { motion, AnimatePresence } from "framer-motion";
 
 import ExamsReturn from "../select_all/ExamsReturn.jsx";
 import AdmArea from "./AdmArea.jsx";
@@ -21,9 +22,9 @@ import ClinicaList from "../select_all/SelectClinics.jsx";
 import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
 import SelectMedLab from "../select_all/SelectMedLab.jsx";
 import PatientList from "../select_all/PatientDoctorList.jsx";
+import ProfileCard from "../login/Profile.jsx"; // ✅ Novo import
 
-
-export default function home() {
+export default function Home() {
   const [userData, setUserData] = useState({
     nome: "",
     roles: "",
@@ -33,28 +34,29 @@ export default function home() {
     instituicao_vinc: "",
     email: "",
   });
-  const token = localStorage.getItem("token");
-  const [exames, setExames] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showProfile, setShowProfile] = useState(false); // ✅ controla exibição do perfil
+
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  // Carrega dados da home
   useEffect(() => {
-    const foto = Avatar;
     const fetchhome = async () => {
-
       if (!token) {
-        navigate("/login"); // não está logado
+        navigate("/login");
         return;
       }
 
       try {
-        const data = await carregarhome(token); // aguarda o retorno
+        const data = await carregarhome(token);
         setUserData({
           ...data,
-          roles: data.roles || []
+          roles: data.roles || [],
         });
-        console.log(data);
+        console.log("Dados do usuário:", data);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -65,37 +67,28 @@ export default function home() {
       }
     };
 
-
     fetchhome();
-  }, [token]);
+  }, [token, navigate]);
 
-
-  //Função de LOGOUT
+  // Logout
   const handleLogout = async () => {
-
-    //chama a função logoutUsuario que tá em logout.js
     const result = await logoutUsuario();
     if (result.success) {
-      // redireciona pra tela inicial
       navigate("/");
     } else {
       alert("Erro ao fazer logout: " + result.message);
     }
   };
-  // Dentro do componente home()
+
+  // Alterna exibição do perfil
   const handleViewProfile = () => {
-    const role = userData.roles?.[0]?.name;
-    
-    console.log(role)
-    navigate("/profile/"+role);
+    setShowProfile(!showProfile);
   };
 
+  // Redireciona para página de edição
+  const handleEditProfile = () => {
 
-
-
-
-
-
+  };
 
   if (loading) {
     return (
@@ -115,30 +108,63 @@ export default function home() {
         <ExodusTop />
 
         <div className={Style.home_content}>
-          {/* Coluna lateral esquerda */}
+          {/* Sidebar */}
           <aside className={Style.sidebar}>
             <img
               src={userData.foto || Avatar}
-              alt="Foto de home"
+              alt="Foto de perfil"
               className={Style.avatar}
             />
             <h3>{userData.nome}</h3>
             <p>{userData.email}</p>
-            <button
-              className={Style.edit_btn}
-              onClick={handleViewProfile}
-            >
-              Ver meus dados
+
+            {/* ✅ Exibe o perfil acima do botão */}
+            <AnimatePresence>
+              {showProfile && userData.roles?.[0]?.name && (
+                <motion.div
+                  key="profile-card"
+                  initial={{ y: "-22%", opacity: 0 }}
+                  animate={{ y: "0%", opacity: 1 }}
+                  exit={{ y: "-20%", opacity: 0 }}  // 🔹 animação ao fechar
+                  transition={{
+                    y: { duration: 1.2, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
+                    opacity: { duration: 0.5, ease: "easeOut" },   
+                    opacity: { duration: 0.5, ease: "easeIn" }      // 🔹 suaviza o fade-in
+                  }}
+                  className={Style.profileBox}
+                >
+                  <ProfileCard role={userData.roles[0].name} />
+
+                  {/* Botão para editar dados */}
+                  <button
+                    className={Style.btn}
+                    onClick={handleEditProfile}
+                  >
+                    Editar meus dados
+                  </button>
+                </motion.div>
+              )}
+              </AnimatePresence>
+            <AnimatePresence>
+
+            <motion.div 
+            key="profile-card"
+            initial={{ y: "-10%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            
+            transition={{
+              y: { duration: 0.4, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
+              opacity: { duration: 0.5, ease: "easeOut" },         // 🔹 suaviza o fade-in
+            }}>
+            <button className={Style.edit_btn} onClick={handleViewProfile}>
+              {showProfile ? "Fechar meus dados" : "Ver meus dados"}
             </button>
 
-            <button
-              className={Style.logout_btn}
-
-              onClick={handleLogout}
-
-            >
+            <button className={Style.logout_btn} onClick={handleLogout}>
               Logout
             </button>
+            </motion.div>
+            </AnimatePresence>
 
           </aside>
 
@@ -148,42 +174,62 @@ export default function home() {
               <p style={{ color: "red" }}>{errorMsg}</p>
             ) : (
               <div className={Style.mainLayout}>
-                {/* Área principal (Admin, Médico, etc.) */}
                 <div className={Style.mainContent}>
-                  {userData.roles?.some(role => role.name === "Admin") ? (
-                    <><SelectMedLab /><AdmArea /></>
-                  ) : userData.roles?.some(role => role.name === "Support") ? (
+                  {userData.roles?.some((role) => role.name === "Admin") ? (
+                    <>
+                      <SelectMedLab />
+                      <AdmArea />
+                    </>
+                  ) : userData.roles?.some(
+                    (role) => role.name === "Support"
+                  ) ? (
                     <SuporteArea />
                   ) : (
                     <>
-                      {userData.roles?.some(role => role.name === "Doctor") && <><ExamsReturn /><MedicoArea /></>}
-                      {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /><PacienteArea /></>}
-                      {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /><SecretariaArea /></>}
-                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
+                      {userData.roles?.some(
+                        (role) => role.name === "Doctor"
+                      ) && (
+                          <>
+                            <ExamsReturn />
+                            <MedicoArea />
+                          </>
+                        )}
+
+                      {userData.roles?.some(
+                        (role) => role.name === "Patient"
+                      ) && (
+                          <>
+                            <ExamsReturnPacList />
+                            <PacienteArea />
+                          </>
+                        )}
+
+                      {userData.roles?.some(
+                        (role) => role.name === "Secretary"
+                      ) && (
+                          <>
+                            <PatientList />
+                            <SecretariaArea />
+                          </>
+                        )}
+
+                      {userData.roles?.some(
+                        (role) => role.name === "LaboratoryAdmin"
+                      ) && <LabArea />}
                     </>
                   )}
                 </div>
 
-                {/* Painel lateral direito */}
+                {/* Coluna lateral direita */}
                 <div className={Style.rightColumn}>
-                  {userData.roles?.some(role => role.name === "Doctor") && (
-
+                  {userData.roles?.some((role) => role.name === "Doctor") && (
                     <ClinicaList />
-
                   )}
-
-
                   <HistoricoAtividade />
-
                 </div>
-
               </div>
-
             )}
           </main>
-
-
-
         </div>
       </div>
 

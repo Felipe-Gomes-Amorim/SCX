@@ -7,7 +7,7 @@ export async function profileAdm() {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log("Doctor:", response.data);
+        console.log("Admin:", response.data);
         return { success: true, data: response.data };
     } catch (error) {
         console.error("Erro ao buscar perfil do Médico:", error.response?.data || error.message);
