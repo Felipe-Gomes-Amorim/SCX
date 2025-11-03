@@ -82,6 +82,13 @@ export default function home() {
       alert("Erro ao fazer logout: " + result.message);
     }
   };
+  // Dentro do componente home()
+  const handleViewProfile = () => {
+    const role = userData.roles?.[0]?.name;
+    
+    console.log(role)
+    navigate("/profile/"+role);
+  };
 
 
 
@@ -117,7 +124,13 @@ export default function home() {
             />
             <h3>{userData.nome}</h3>
             <p>{userData.email}</p>
-            <button className={Style.edit_btn}>Ver meus dados</button>
+            <button
+              className={Style.edit_btn}
+              onClick={handleViewProfile}
+            >
+              Ver meus dados
+            </button>
+
             <button
               className={Style.logout_btn}
 
@@ -137,8 +150,8 @@ export default function home() {
               <div className={Style.mainLayout}>
                 {/* Área principal (Admin, Médico, etc.) */}
                 <div className={Style.mainContent}>
-                  {userData.roles?.some(role => role.name === "Admin" ) ? (
-                    <><SelectMedLab/><AdmArea/></>
+                  {userData.roles?.some(role => role.name === "Admin") ? (
+                    <><SelectMedLab /><AdmArea /></>
                   ) : userData.roles?.some(role => role.name === "Support") ? (
                     <SuporteArea />
                   ) : (
@@ -154,14 +167,14 @@ export default function home() {
                 {/* Painel lateral direito */}
                 <div className={Style.rightColumn}>
                   {userData.roles?.some(role => role.name === "Doctor") && (
-                  
-                      <ClinicaList />
-                   
+
+                    <ClinicaList />
+
                   )}
 
-                  
-                    <HistoricoAtividade />
-                 
+
+                  <HistoricoAtividade />
+
                 </div>
 
               </div>

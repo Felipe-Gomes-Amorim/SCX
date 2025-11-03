@@ -1,12 +1,15 @@
 import axios from "axios";
+
 //metodo principal ( data vai vir do registerADM.jsx / token tá armazenado no localStorage )
 export async function cadastrarAdm(admData, token) {
-  try {                              //ver rotas do médico no AdminController (Back-End)      
+  console.log("chegou antes do try")
+  try {  
+    console.log("chegou dentro do try")                            //ver rotas do médico no AdminController (Back-End)      
     const response = await axios.post("http://localhost:8080/clinic/firstAdm", admData, {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : undefined,
-      },
+      
+      
     });
+    
     //print pra teste com o body do exame
     console.log("Resposta do servidor:", response.data);
 
@@ -20,6 +23,7 @@ export async function cadastrarAdm(admData, token) {
       data: response.data,
     };
   } catch (error) {
+    console.log(error)
     console.error(
       "Erro ao cadastrar ADM:",
       error.response?.data || error.message

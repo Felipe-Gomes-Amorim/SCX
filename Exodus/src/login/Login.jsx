@@ -27,6 +27,7 @@ export default function Login() {
     setLoading(false);
 
     if (result.success) {
+      
       window.open("/home", "_blank");
       window.close();
     } else {
