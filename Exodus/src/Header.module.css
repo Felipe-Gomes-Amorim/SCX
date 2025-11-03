@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 0.5rem 30px;
+  padding: 0.5rem 5rem;
   background: linear-gradient(to right, #007bff, #0046b3);
   display: flex;
   justify-content: space-between; /* Logo à esquerda, nav centralizada, menu à direita */
