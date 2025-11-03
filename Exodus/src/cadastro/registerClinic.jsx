@@ -74,12 +74,15 @@ export default function RegisterClinic() {
       };
 
       const token = localStorage.getItem("token");
+      console.log("aqui chegou")
       const result = await cadastrarClinica(clinicaData, token);
 
       if (result.success) {
         alert("Clínica cadastrada com sucesso!");
+        console.log("aqui chegou tambem")
         const result2 = await cadastrarAdm(admClinicaData, token);
         if (result2.success) {
+          
           alert("Administrador cadastrado com sucesso!");
           navigate("/");
         }

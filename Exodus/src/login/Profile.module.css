@@ -1,0 +1,54 @@
+.profilePage {
+  background: #f1f3f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 60px;
+}
+
+.profileCard {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 18px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  width: 360px;
+  text-align: left;
+}
+
+.profileCard p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #333;
+}
+
+.updateButton {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: #0057b7;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.updateButton:hover {
+  background-color: #003d80;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-size: 1.1rem;
+  color: #555;
+}
