@@ -76,7 +76,7 @@ export default function RegisterConsulta() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.9 }}
           >
-            <h2>Cadastro de Consulta</h2>
+            <h2>Iniciar Atendimento</h2>
             <p className={Style.subtitle}>Informe o paciente e o médico</p>
 
             {/* ⚡ Mensagem de erro */}
