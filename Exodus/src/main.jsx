@@ -24,7 +24,7 @@ import FirstLogin from './login/FirstLogin.jsx'
 
 import SelectAll from './select_all/SelectAll.jsx'
 import RegisterSecretaria from './cadastro/registerSecretaria.jsx'
-import RegisterConsulta from './cadastro/registerConsulta.jsx'
+import RegisterConsulta from './cadastro/registerAtendimento.jsx'
 import RequisitarExame from './cadastro/registerRequisicaoExame.jsx'
 import Profile from './login/Profile.jsx'
 
