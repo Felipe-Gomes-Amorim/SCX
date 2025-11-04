@@ -1,82 +1,39 @@
+import API_URL from "./apiConfig.js";
+
 export async function mostrar_todos(role, token) {
   let url = "";
-  console.log(token)
-  // SE O ADM PEDIR PRA VER OS MEDICOS
+
   if (role === "doctor") {
-    url = "http://localhost:8080/admin/doctorClinic";
-  } 
-  // SE A SECRETARIA PEDIR PRA VER OS MEDICOS DISPONIVEIS
-  else if(role === "doctorAval") {
-    url = "http://localhost:8080/secretary/getDocsAvailable";
-  }
-  // SE O MEDICO PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
-  else if(role === "examsPend") {
-    url = "http://localhost:8080/doctor/getRequestExamPendent";
-  }
-  // SE O SUPORTE PEDIR RPA VER TODOS OS TICKETS
-  else if(role === "tickets") {
-    url = "http://localhost:8080/support/getOpen";
-  }
-
-  // SE ALGM PEDIR PRA VER OS TICKETS DELE
-  else if(role === "myTickets") {
-    url = "http://localhost:8080/support/getByUser";
-    
-  }
-  
-  else if(role === "registerTicket") {
-    url = "http://localhost:8080/support/registerTicket";
-  }
-  
-
-  // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
-  else if(role === "examsReturn") {
-    url = "http://localhost:8080/doctor/getExamsResult";
-  } 
-
-  // SE O MEDICO PEDIR PRA VER TODAS AS DEVOLUÇÕES DE EXAMES
-  else if(role === "examsReturnPac") {
-    url = "http://localhost:8080/patient/getExamsResult";
-  } 
-  // SE O USUARIO PEDIR PRA VER O HISTÓRICO
-  else if(role === "history") {
-    url = "http://localhost:8080/auth/getHistory";
-  } 
-
-
-  // SE O USUARIO PEDIR PRA VER AS NOTIFICAÇÕES
-  else if(role === "notific") {
-    url = "http://localhost:8080/notification/getNoRead";
-  } 
-
-
-  // SE O PACIENTE PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
-  else if(role === "pendingExams") {
-    url = "http://localhost:8080/patient/getRequestExamPendent";
-  } 
-  // SE O O LAB PEDIR PRA VER TODAS AS REQUISIÇÕES DE EXAMES PENDENTES
-  else if(role === "examRequests") {
-    url = "http://localhost:8080/laboratory/getRequestExamPendent";
-  }  
-  else if (role === "adm") {
-    console.log("Função de listar administradores ainda não implementada.");
-    return [];
-  } else if (role === "lab_adm") {
-    console.log("Função de listar administradores de laboratório ainda não implementada.");
-    return [];
-  }
-  else if (role === "patient") {
-    url = "http://localhost:8080/secretary/getPatientsCli";
-  }
-  //SE O ADM PEDIR PRA VER OS LABS
-  else if (role === "lab") {
-    url = "http://localhost:8080/admin/getLabCli";
-  }
-  //SE O MÉDICO PEDIR PRA VER AS CLÍNICAS
-  else if (role === "clinics") {
-    url = "http://localhost:8080/doctor/clinicsDoctor";
-  }
-  else {
+    url = `${API_URL}/admin/doctorClinic`;
+  } else if (role === "doctorAval") {
+    url = `${API_URL}/secretary/getDocsAvailable`;
+  } else if (role === "examsPend") {
+    url = `${API_URL}/doctor/getRequestExamPendent`;
+  } else if (role === "tickets") {
+    url = `${API_URL}/support/getOpen`;
+  } else if (role === "myTickets") {
+    url = `${API_URL}/support/getByUser`;
+  } else if (role === "registerTicket") {
+    url = `${API_URL}/support/registerTicket`;
+  } else if (role === "examsReturn") {
+    url = `${API_URL}/doctor/getExamsResult`;
+  } else if (role === "examsReturnPac") {
+    url = `${API_URL}/patient/getExamsResult`;
+  } else if (role === "history") {
+    url = `${API_URL}/auth/getHistory`;
+  } else if (role === "notific") {
+    url = `${API_URL}/notification/getNoRead`;
+  } else if (role === "pendingExams") {
+    url = `${API_URL}/patient/getRequestExamPendent`;
+  } else if (role === "examRequests") {
+    url = `${API_URL}/laboratory/getRequestExamPendent`;
+  } else if (role === "patient") {
+    url = `${API_URL}/secretary/getPatientsCli`;
+  } else if (role === "lab") {
+    url = `${API_URL}/admin/getLabCli`;
+  } else if (role === "clinics") {
+    url = `${API_URL}/doctor/clinicsDoctor`;
+  } else {
     console.error("Role inválida:", role);
     return [];
   }
@@ -84,19 +41,21 @@ export async function mostrar_todos(role, token) {
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
         Authorization: token ? `Bearer ${token}` : undefined,
-       },
+      },
     });
-    
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar dados (${response.status})`);
+
+    if (!response.ok) throw new Error(`Erro ao buscar dados (${response.status})`);
+
+    const text = await response.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      console.error("Resposta não é JSON válida:", text);
+      return [];
     }
-    
-    const data = await response.json();
-    
-    
-    return data;
   } catch (error) {
     console.error("Erro ao buscar dados:", error);
     return [];

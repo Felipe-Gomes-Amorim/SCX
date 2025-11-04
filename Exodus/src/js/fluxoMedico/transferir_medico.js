@@ -1,11 +1,13 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
+
 const token = localStorage.getItem("token"); 
 
 //metodo principal ( data vai vir do register.jsx / token tá armazenado no localStorage )
 export async function transferirMedico(medicoData) {
   try {                               //ver rotas do médico no DoctorController (Back-End)
     const response = await axios.post(
-          "http://localhost:8080/doctor/transferDoctor",
+          "${API_URL}/doctor/transferDoctor",
           medicoData,
           {
             headers: {

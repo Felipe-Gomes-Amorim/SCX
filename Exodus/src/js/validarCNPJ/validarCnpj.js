@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 /**
  * Valida um CNPJ através da rota /getCnpj.
  * Retorna o status da empresa e outros dados.
@@ -9,7 +10,7 @@ export async function validarCnpj(cnpj) {
   
   try {
     const response = await axios.post(
-      "http://localhost:8080/consult/getCnpj",
+      "${API_URL}/consult/getCnpj",
       { cnpj: cnpj },
       { headers: { "Content-Type": "application/json" } }
     );
