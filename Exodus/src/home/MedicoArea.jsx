@@ -4,6 +4,7 @@ import { buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import { buscarConsultaAtual, encerrarConsulta, abrirConsulta } from "../js/fluxoMedico/consultas.js";
 import { getAppointmentsPat } from "../js/fluxoMedico/getAppointmentsPat.js";
 import { useNavigate } from "react-router-dom";
+import { salvarAnamneseAPI } from "../js/fluxoMedico/anamnese.js";
 
 export default function MedicoArea() {
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
@@ -15,29 +16,77 @@ export default function MedicoArea() {
   const [expanded, setExpanded] = useState(null);
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Novo estado para pesquisa
+  const [consultaAbertaPorMedico, setConsultaAbertaPorMedico] = useState(false); // Novo estado para rastrear se a consulta foi aberta pelo médico
+  const [tempoDecorrido, setTempoDecorrido] = useState(0); // Novo estado para o timer
+  const [showAnamnese, setShowAnamnese] = useState(false); // Novo estado para mostrar anamnese
+  const [anamneseData, setAnamneseData] = useState({
+    mainComplaint: "",
+    historyOfCurrentIllness: "",
+    personalMedicalHistory: "",
+    familyHistory: "",
+    allergies: "",
+    useMedications: "",
+    previousHospitalizations: "",
+    previousSurgeries: "",
+    diet: "",
+    sleep: "",
+    physicalActivity: "",
+    smoking: false,
+    alcoholism: false,
+    bloodPressure: "",
+    heartRate: "",
+    temperature: "",
+    weight: "",
+    height: "",
+    bmi: "",
+    observations: "",
+    diagnosticHypothesis: "",
+    treatmentPlan: ""
+  }); // Estado para os dados da anamnese
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function carregarDados() {
-      const clinicaResp = await buscarClinicaAtiva(token);
-      setClinicaAtiva(clinicaResp?.clinic || null);
-
       const consultaResp = await buscarConsultaAtual(token);
-      if (consultaResp?.success) setConsultaAtual(consultaResp.data);
-      else setConsultaAtual(null);
+      if (consultaResp?.success && consultaResp.data) {
+        setConsultaAtual(consultaResp.data);
+        // Não marcar como aberta automaticamente
+        setConsultaAbertaPorMedico(false);
+        setShowAnamnese(false);
+      } else {
+        setConsultaAtual(null);
+        setConsultaAbertaPorMedico(false);
+      }
+
 
       setLoading(false);
     }
     carregarDados();
   }, [token]);
 
+
+  // Timer: incrementa tempoDecorrido a cada segundo se consultaAbertaPorMedico for true
+  useEffect(() => {
+    let interval;
+    if (consultaAbertaPorMedico && consultaAtual) {
+      interval = setInterval(() => {
+        setTempoDecorrido((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setTempoDecorrido(0);
+    }
+    return () => clearInterval(interval);
+  }, [consultaAbertaPorMedico, consultaAtual]);
+
   async function confirmarEncerramento(patientShouldReturn) {
     setShowPopup(false);
     const result = await encerrarConsulta(token, patientShouldReturn);
     if (result.success) {
-      alert("Consulta encerrada com sucesso!");
+      // alert("Consulta encerrada com sucesso!"); // Removido
       setConsultaAtual(null);
+      setConsultaAbertaPorMedico(false); // Resetar flag
+      setShowAnamnese(false); // Resetar anamnese
       setShowMenu(false);
     } else {
       alert("Erro ao encerrar consulta.");
@@ -45,18 +94,39 @@ export default function MedicoArea() {
   }
 
   async function iniciarNovaConsulta() {
+    if (consultaAbertaPorMedico && consultaAtual) {
+      alert("Já existe uma consulta aberta.");
+      return;
+    }
+
     const result = await abrirConsulta(token);
     if (result.success) {
-      alert("Consulta aberta com sucesso!");
-      // Recarregar a consulta atual após abrir
+      setConsultaAbertaPorMedico(true);
+      setTempoDecorrido(0);
+      setShowAnamnese(true);
       const consultaResp = await buscarConsultaAtual(token);
       if (consultaResp?.success) setConsultaAtual(consultaResp.data);
-      else setConsultaAtual(null);
-      setShowMenu(false);
     } else {
       alert("Erro ao abrir consulta.");
     }
   }
+
+
+  async function salvarAnamnese() {
+    console.log(anamneseData);
+    const result = await salvarAnamneseAPI(token, anamneseData);
+
+    if (result.success) {
+      alert("Anamnese salva com sucesso!");
+
+      setExpanded(null); // Fecha todas as seções
+
+    } else {
+      alert(result.message);
+    }
+  }
+
+
 
   async function abrirMenuDetalhes() {
     setShowMenu(true);
@@ -87,6 +157,14 @@ export default function MedicoArea() {
     );
   });
 
+  // Função para formatar tempo decorrido (HH:MM:SS)
+  function formatarTempo(segundos) {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segs = segundos % 60;
+    return `${String(horas).padStart(2, "0")}:${String(minutos).padStart(2, "0")}:${String(segs).padStart(2, "0")}`;
+  }
+
   if (loading) return <p>Carregando consulta...</p>;
 
   function formatarDataHora(isoString) {
@@ -104,14 +182,25 @@ export default function MedicoArea() {
     }
   }
 
+  function atualizarIMCSePossivel(peso, altura) {
+    const pesoNum = parseFloat(peso);
+    const alturaNum = parseFloat(altura);
+
+    if (pesoNum > 0 && alturaNum > 0) {
+      const imc = pesoNum / (alturaNum * alturaNum);
+      setAnamneseData((prev) => ({ ...prev, bmi: imc.toFixed(2) }));
+    }
+  }
+
+
   return (
     <section className={Style.prontuarioSection}>
-      <h2>Atendimento Médico</h2>
+
 
       {consultaAtual ? (
         <div className={Style.activeConsultBox}>
           <p>
-            <strong>Atendimento ativo:</strong> {consultaAtual.name}
+            <strong>Atendimento ativo: {consultaAtual.name}</strong>
           </p>
           <button className={Style.btn} onClick={abrirMenuDetalhes}>
             Expandir detalhes
@@ -130,77 +219,221 @@ export default function MedicoArea() {
               <div className={Style.titleAndInfo}>
                 <h3>Paciente: {consultaAtual?.name}</h3>
                 <div className={Style.patientInfo}>
-
-                  <p><strong>Horário:</strong> {consultaAtual?.localTime}</p>
+                  <p><strong>Início do atendimento:</strong> {consultaAtual?.localTime}</p>
                 </div>
               </div>
               <div className={Style.menuButtons}>
-                {/* <button onClick={() => navigate("/requisitarExame")}>Pedir Exame</button> */} {/* Comentado */}
-                <button onClick={iniciarNovaConsulta}>Abrir Consulta</button>
-                <button onClick={() => setShowPopup(true)}>Encerrar Atendimento</button>
+                {/* Timer grande acima dos botões */}
+                {consultaAbertaPorMedico && (
+                  <div className={Style.timerDisplay}>
+                    {formatarTempo(tempoDecorrido)}
+                  </div>
+                )}
+                {/* Botão "Abrir Consulta" só aparece se não há consulta ativa ou se não foi aberta pelo médico */}
+                {(!consultaAtual || !consultaAbertaPorMedico) && (
+                  <button onClick={iniciarNovaConsulta}>Abrir Consulta</button>
+                )}
+                {/* Botão "Encerrar Atendimento" só aparece se a consulta foi aberta pelo médico */}
+                {consultaAbertaPorMedico && (
+                  <button onClick={() => setShowPopup(true)}>Encerrar Atendimento</button>
+                )}
                 <button className={Style.closeBtn} onClick={() => setShowMenu(false)}>
-                  Fechar
+                  Voltar
                 </button>
               </div>
             </div>
 
-            {/* 🩺 HISTÓRICO DO PACIENTE DENTRO DO MENU */}
-            <div className={Style.historicoBox}>
-              <h4>Histórico de Atendimentos do Paciente</h4>
+            {/* Condicional: Anamnese ou Prontuário */}
+            {showAnamnese ? (
+              <div className={Style.anamneseBox}>
+                <h4>Anamnese</h4>
 
-              {/* 🔍 Barra de pesquisa */}
-              <div className={Style.searchBox}>
-                <input
-                  type="text"
-                  placeholder="Pesquisar por médico, clínica, especialidade ou ID..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={Style.searchInput}
-                />
-              </div>
-
-              {loadingHistorico ? (
-                <p>Carregando histórico...</p>
-              ) : filteredHistorico.length > 0 ? (
-                <div
-                  className={Style.listContainer}
-                  style={{ maxHeight: "14rem", overflowY: "auto" }}
-                >
-                  {filteredHistorico.map((item, index) => (
-                    <div key={index} className={Style.card}>
-                      <div className={Style.infoArea}>
-
-                        {/* Linha 1: Data de fim (coluna 1) | Médico (coluna 2) */}
-                        <div className={Style.infoRow}>
-                          <div className={Style.label}>Data de Fim:</div>
-                          <div className={Style.value}>{formatarDataHora(item.dateEnd)}</div>
-                        </div>
-
-                        <div className={Style.infoRow}>
-                          <div className={Style.label}>Médico:</div>
-                          <div className={Style.value}>{item.nameM || "-"}</div>
-                        </div>
-
-                        {/* Linha 2: Clínica (coluna 1) | Especialidade (coluna 2) */}
-                        <div className={Style.infoRow}>
-                          <div className={Style.label}>Clínica:</div>
-                          <div className={Style.value}>{item.nameC || "-"}</div>
-                        </div>
-
-                        <div className={Style.infoRow}>
-                          <div className={Style.label}>Especialidade:</div>
-                          <div className={Style.value}>{item.specialty || "-"}</div>
-                        </div>
-
-                      </div>
-                    </div>
+                {/* 🔹 Abas */}
+                <div className={Style.tabHeader}>
+                  {["Queixa e Doença Atual", "Hábitos e Estilo de Vida", "Exame Físico", "Observações e Tratamento"].map((tab, idx) => (
+                    <button
+                      key={idx}
+                      className={`${Style.tabButton} ${expanded === idx ? Style.activeTab : ""}`}
+                      onClick={() => setExpanded(idx)}
+                    >
+                      {tab}
+                    </button>
                   ))}
-
                 </div>
-              ) : (
-                <p>Nenhum atendimento encontrado.</p>
-              )}
-            </div>
+
+                <form onSubmit={(e) => { e.preventDefault(); salvarAnamnese(); }}>
+                  <div className={Style.formGrid}>
+                    {/* 🩺 Seção 1: Queixa principal e doença atual */}
+                    {expanded === 0 && (
+                      <>
+                        <label>Queixa Principal:
+                          <textarea value={anamneseData.mainComplaint} onChange={(e) => setAnamneseData({ ...anamneseData, mainComplaint: e.target.value })} />
+                        </label>
+                        <label>História da Doença Atual:
+                          <textarea value={anamneseData.historyOfCurrentIllness} onChange={(e) => setAnamneseData({ ...anamneseData, historyOfCurrentIllness: e.target.value })} />
+                        </label>
+                        <label>História Médica Pessoal:
+                          <textarea value={anamneseData.personalMedicalHistory} onChange={(e) => setAnamneseData({ ...anamneseData, personalMedicalHistory: e.target.value })} />
+                        </label>
+                        <label>História Familiar:
+                          <textarea value={anamneseData.familyHistory} onChange={(e) => setAnamneseData({ ...anamneseData, familyHistory: e.target.value })} />
+                        </label>
+                        <label>Alergias:
+                          <input type="text" value={anamneseData.allergies} onChange={(e) => setAnamneseData({ ...anamneseData, allergies: e.target.value })} />
+                        </label>
+                        <label>Medicamentos em Uso:
+                          <textarea value={anamneseData.useMedications} onChange={(e) => setAnamneseData({ ...anamneseData, useMedications: e.target.value })} />
+                        </label>
+                        <label>Hospitalizações Anteriores:
+                          <textarea value={anamneseData.previousHospitalizations} onChange={(e) => setAnamneseData({ ...anamneseData, previousHospitalizations: e.target.value })} />
+                        </label>
+                        <label>Cirurgias Anteriores:
+                          <textarea value={anamneseData.previousSurgeries} onChange={(e) => setAnamneseData({ ...anamneseData, previousSurgeries: e.target.value })} />
+                        </label>
+                      </>
+                    )}
+
+                    {/* 🍎 Seção 2: Hábitos e estilo de vida */}
+                    {expanded === 1 && (
+                      <>
+                        <label>Dieta:
+                          <input type="text" value={anamneseData.diet} onChange={(e) => setAnamneseData({ ...anamneseData, diet: e.target.value })} />
+                        </label>
+                        <label>Sono:
+                          <input type="text" value={anamneseData.sleep} onChange={(e) => setAnamneseData({ ...anamneseData, sleep: e.target.value })} />
+                        </label>
+                        <label>Atividade Física:
+                          <input type="text" value={anamneseData.physicalActivity} onChange={(e) => setAnamneseData({ ...anamneseData, physicalActivity: e.target.value })} />
+                        </label>
+                        <label>Fumante:
+                          <input type="checkbox" checked={anamneseData.smoking} onChange={(e) => setAnamneseData({ ...anamneseData, smoking: e.target.checked })} />
+                        </label>
+                        <label>Alcoolismo:
+                          <input type="checkbox" checked={anamneseData.alcoholism} onChange={(e) => setAnamneseData({ ...anamneseData, alcoholism: e.target.checked })} />
+                        </label>
+                      </>
+                    )}
+
+                    {/* ❤️ Seção 3: Exame físico */}
+                    {expanded === 2 && (
+                      <>
+                        <label>Pressão Arterial:
+                          <input type="text" value={anamneseData.bloodPressure} onChange={(e) => setAnamneseData({ ...anamneseData, bloodPressure: e.target.value })} />
+                        </label>
+                        <label>Frequência Cardíaca:
+                          <input type="text" value={anamneseData.heartRate} onChange={(e) => setAnamneseData({ ...anamneseData, heartRate: e.target.value })} />
+                        </label>
+                        <label>Temperatura:
+                          <input type="number" step="0.1" value={anamneseData.temperature} onChange={(e) => setAnamneseData({ ...anamneseData, temperature: e.target.value })} />
+                        </label>
+                        <label>Peso:
+                          <input
+                            type="number"
+                            step="0.1"
+                            value={anamneseData.weight}
+                            onChange={(e) => {
+                              const novoPeso = e.target.value;
+                              setAnamneseData({ ...anamneseData, weight: novoPeso });
+                              atualizarIMCSePossivel(novoPeso, anamneseData.height);
+                            }}
+                          />
+                        </label>
+                        <label>Altura:
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={anamneseData.height}
+                            onChange={(e) => {
+                              const novaAltura = e.target.value;
+                              setAnamneseData({ ...anamneseData, height: novaAltura });
+                              atualizarIMCSePossivel(anamneseData.weight, novaAltura);
+                            }}
+                          />
+                        </label>
+                        <label>IMC:
+                          <input type="number" step="0.1" value={anamneseData.bmi} readOnly />
+                        </label>
+                      </>
+                    )}
+
+                    {/* 🧾 Seção 4: Observações e tratamento */}
+                    {expanded === 3 && (
+                      <>
+                        <label>Observações:
+                          <textarea value={anamneseData.observations} onChange={(e) => setAnamneseData({ ...anamneseData, observations: e.target.value })} />
+                        </label>
+                        <label>Hipótese Diagnóstica:
+                          <textarea value={anamneseData.diagnosticHypothesis} onChange={(e) => setAnamneseData({ ...anamneseData, diagnosticHypothesis: e.target.value })} />
+                        </label>
+                        <label>Plano de Tratamento:
+                          <textarea value={anamneseData.treatmentPlan} onChange={(e) => setAnamneseData({ ...anamneseData, treatmentPlan: e.target.value })} />
+                        </label>
+                      </>
+                    )}
+                  </div>
+
+                  <button type="submit" className={Style.saveBtn}>Salvar Anamnese</button>
+                </form>
+              </div>
+            ) : (
+              /* 🩺 HISTÓRICO DO PACIENTE DENTRO DO MENU */
+              <div className={Style.historicoBox}>
+                <h4>Prontuário do Paciente</h4>
+
+                {/* 🔍 Barra de pesquisa */}
+                <div className={Style.searchBox}>
+                  <input
+                    type="text"
+                    placeholder="Pesquisar por médico, clínica, especialidade ou ID..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={Style.searchInput}
+                  />
+                </div>
+
+                {loadingHistorico ? (
+                  <p>Carregando histórico...</p>
+                ) : filteredHistorico.length > 0 ? (
+                  <div
+                    className={Style.listContainer}
+                    style={{ maxHeight: "14rem", overflowY: "auto" }}
+                  >
+                    {filteredHistorico.map((item, index) => (
+                      <div key={index} className={Style.card}>
+                        <div className={Style.infoArea}>
+
+                          {/* Linha 1: Data de fim (coluna 1) | Médico (coluna 2) */}
+                          <div className={Style.infoRow}>
+                            <div className={Style.label}>Conclusão da consulta:</div>
+                            <div className={Style.value}>{formatarDataHora(item.dateEnd)}</div>
+                          </div>
+
+                          <div className={Style.infoRow}>
+                            <div className={Style.label}>Médico:</div>
+                            <div className={Style.value}>{item.nameM || "-"}</div>
+                          </div>
+
+                          {/* Linha 2: Clínica (coluna 1) | Especialidade (coluna 2) */}
+                          <div className={Style.infoRow}>
+                            <div className={Style.label}>Clínica:</div>
+                            <div className={Style.value}>{item.nameC || "-"}</div>
+                          </div>
+
+                          <div className={Style.infoRow}>
+                            <div className={Style.label}>Especialidade:</div>
+                            <div className={Style.value}>{item.specialty || "-"}</div>
+                          </div>
+
+                        </div>
+                      </div>
+                    ))}
+
+                  </div>
+                ) : (
+                  <p>Nenhum atendimento encontrado.</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
