@@ -51,7 +51,7 @@ export default function ProfileCard({ role }) {
 
   return (
     <div className={Style.profileCard}>
-      <h3>Informações do Usuário</h3>
+      <h3>Dados do Usuário</h3>
       {role === "Admin" && (
         <>
           
