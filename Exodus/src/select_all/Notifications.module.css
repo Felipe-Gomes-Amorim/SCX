@@ -1,0 +1,171 @@
+/* Notifications.module.css */
+
+.container {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
+  margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.loading,
+.error,
+.info {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.error {
+  color: #d32f2f;
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%; /* Garante que cubra toda a largura do container */
+}
+
+.searchInput {
+  width: 100%; /* O input ocupa toda a largura disponível */
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+  /* Scrollbar azul e simplificada */
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f0f0f0;
+  /* Para navegadores WebKit (Chrome, Safari, Edge) */
+  -webkit-scrollbar {
+    width: 8px; /* Largura da scrollbar */
+  }
+  -webkit-scrollbar-track {
+    background: #f0f0f0; /* Fundo da track */
+    border-radius: 4px;
+  }
+  -webkit-scrollbar-thumb {
+    background: #007bff; /* Cor do thumb */
+    border-radius: 4px;
+  }
+  -webkit-scrollbar-thumb:hover {
+    background: #0056b3; /* Cor ao passar o mouse */
+  }
+}
+
+.card {
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 1.2rem 1.6rem; /* Aumentei o padding para mais espaço */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Mudança para flex-start para alinhar ao topo se necessário */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  background: #eef2f7;
+  transform: translateY(-2px);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column; /* Cada campo em linha separada para mais espaço */
+  gap: 1rem; /* Gap maior para separar os campos */
+  width: 100%; /* Ocupa toda a largura para caber textos longos */
+}
+
+.field {
+  display: flex;
+  flex-direction: column; /* Label em cima, data embaixo, para melhor legibilidade */
+  gap: 0.5rem;
+  word-wrap: break-word; /* Permite quebra de palavra para textos longos */
+  overflow-wrap: break-word; /* Compatibilidade */
+}
+
+.label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.data {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem; /* Padding maior para mais espaço interno */
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+  color: #555;
+  word-wrap: break-word; /* Quebra palavras longas */
+  overflow-wrap: break-word;
+  white-space: pre-wrap; /* Preserva quebras de linha se houver */
+  flex: 1; /* Permite que o data expanda */
+}
+
+.titleData {
+  font-size: 1.2rem; /* Maior para o título */
+  font-weight: bold; /* Negrito para destacar */
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .data {
+    font-size: 0.9rem;
+  }
+
+  .field {
+    gap: 0.3rem;
+  }
+
+  .titleData {
+    font-size: 1.1rem; /* Ajuste para mobile */
+  }
+}

@@ -43,16 +43,7 @@ function ExodusTop() {
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
   const toggleNotifications = async () => {
-    setNotificationsOpen(prev => !prev);
-    if (!notificationsOpen) {
-      const data = await mostrar_todos("notific", token);
-      if (data && data.length > 0) {
-        const sorted = data
-          .sort((a, b) => new Date(a.requestDate) - new Date(b.requestDate))
-          .reverse();
-        setNotifications(sorted.slice(0, 5));
-      }
-    }
+    navigate("/notification");
   };
 
   const handleLogout = async () => {
@@ -103,22 +94,7 @@ function ExodusTop() {
         <div className={Style.headerRight}>
           <div className={Style.addButtonWrapper}>
             <button className={Style.addButton2} onClick={toggleNotifications}></button>
-            {notificationsOpen && (
-              <div className={Style.addMenu}>
-                <p><strong>Notificações</strong></p>
-                {notifications.length === 0 ? (
-                  <p>Nenhuma notificação</p>
-                ) : (
-                  notifications.map((item, index) => (
-                    <NotificationItem
-                      key={index}
-                      item={item}
-                      navigate={navigate}
-                    />
-                  ))
-                )}
-              </div>
-            )}
+            
           </div>
           {/* Ícone do usuário */}
           <div

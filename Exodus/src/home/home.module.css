@@ -677,7 +677,7 @@
 }
 
 .menuButtons button {
-  padding: 0.9rem;
+  padding: 0.9rem 4rem;
   border-radius: 10px;
   border: none;
   font-weight: 600;
@@ -694,7 +694,8 @@
 }
 
 .menuButtons button:nth-child(1):hover {
-  background: #0056d2;
+  background: #007bff;
+  color: white;
 }
 
 .menuButtons button:nth-child(2) {
@@ -829,6 +830,7 @@
 .menuButtons {
   display: flex;
   gap: 0.5rem;
+  
   /* Espaçamento entre botões */
 }
 
