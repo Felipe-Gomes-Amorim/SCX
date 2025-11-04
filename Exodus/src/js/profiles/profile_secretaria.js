@@ -1,9 +1,10 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function profileSecretary() {
   try {
     const token = localStorage.getItem("token")
-    const response = await axios.get("http://localhost:8080/auth/getProfileSecretary", {
+    const response = await axios.get(`${API_URL}/auth/getProfileSecretary`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

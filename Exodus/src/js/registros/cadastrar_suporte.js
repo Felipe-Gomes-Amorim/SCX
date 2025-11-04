@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function cadastrarSuporte() {
   try {
@@ -8,7 +9,7 @@ export async function cadastrarSuporte() {
     );
 
     const response = await axios.post(
-      "http://localhost:8080/support/registerUser",
+      `${API_URL}/support/registerUser`,
     );
 
     console.info(

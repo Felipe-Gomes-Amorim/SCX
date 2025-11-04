@@ -20,6 +20,7 @@ import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx'
 import Home from './home/Home.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
+import Notifications from './select_all/NotificList.jsx'
 
 
 import SelectAll from './select_all/SelectAll.jsx'
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
   { path: "/responseTicket/:id", element: <ResponseTicket /> },
   { path: "/selectAll/clinics", element: <SelectClinics /> },
   { path: "/profile/:role?", element: <Profile /> },
+  { path: "/notification", element: <Notifications /> },
 
 
 

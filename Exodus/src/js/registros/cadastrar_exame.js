@@ -1,9 +1,10 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 //metodo principal ( data vai vir do registerExam.jsx / token tá armazenado no localStorage )
 export async function cadastrarExame(examData, token) {
 
   try {                               //ver rotas do médico no DoctorController (Back-End)
-    const response = await axios.post("http://localhost:8080/laboratory/registerExam", examData, {
+    const response = await axios.post(`${API_URL}/laboratory/registerExam`, examData, {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },

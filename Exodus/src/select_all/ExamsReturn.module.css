@@ -4,6 +4,7 @@
   padding: 1.5rem;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease-in-out;
+  margin-bottom: 2rem;
 }
 
 .title {

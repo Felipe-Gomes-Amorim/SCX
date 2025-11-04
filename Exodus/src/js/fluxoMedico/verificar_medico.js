@@ -1,14 +1,15 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function verificarMedico(crm, token) {
   try {
     // 1️⃣ Verifica se o médico existe no sistema
-    const response = await axios.post("http://localhost:8080/doctor/getByCrm", { crm });
+    const response = await axios.post(`${API_URL}/doctor/getByCrm`, { crm });
 
     if (response.data === true) {
       // 2️⃣ Verifica se já está vinculado à clínica
       const response2 = await axios.post(
-        "http://localhost:8080/doctor/searchDoc",
+        `${API_URL}/doctor/searchDoc`,
         { crm },
         { headers: { Authorization: token ? `Bearer ${token}` : undefined } }
       );

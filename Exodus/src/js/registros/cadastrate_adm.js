@@ -1,11 +1,12 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 //metodo principal ( data vai vir do registerADM.jsx / token tá armazenado no localStorage )
 export async function cadastrarAdm(admData, token) {
   console.log("chegou antes do try")
   try {  
     console.log("chegou dentro do try")                            //ver rotas do médico no AdminController (Back-End)      
-    const response = await axios.post("http://localhost:8080/clinic/firstAdm", admData, {
+    const response = await axios.post(`${API_URL}/clinic/firstAdm`, admData, {
       
       
     });

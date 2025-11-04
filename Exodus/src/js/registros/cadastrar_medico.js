@@ -1,11 +1,12 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function cadastrarMedico(medicoData, token) {
   try {
     console.info("%c🆕 Cadastrando médico no sistema...", "color: #4DD0E1; font-weight: bold;");
 
     const response = await axios.post(
-      "http://localhost:8080/doctor/register",
+      `${API_URL}/doctor/register`,
       medicoData,
       {
         headers: {

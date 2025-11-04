@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 /**
  * Cadastra uma nova clínica no sistema.
@@ -7,7 +8,7 @@ import axios from "axios";
  */
 export async function cadastrarClinica(clinicaData) {
   try {
-    const response = await axios.post("http://localhost:8080/clinic/create", clinicaData);
+    const response = await axios.post(`${API_URL}/clinic/create`, clinicaData);
 
     console.log("Resposta do servidor:", response.data);
 

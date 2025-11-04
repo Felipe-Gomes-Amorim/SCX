@@ -1,5 +1,7 @@
 import axios from "axios";
-const API_BASE = "http://localhost:8080/doctor";
+import API_URL from "../apiConfig.js";
+
+const API_BASE = `${API_URL}/doctor`;
 
 export async function buscarLaboratorios() {
   try {

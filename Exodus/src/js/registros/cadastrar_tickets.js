@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function cadastrarTicket(ticketData, token) {
   try {
@@ -7,7 +8,7 @@ export async function cadastrarTicket(ticketData, token) {
       "color: #4DD0E1; font-weight: bold;"
     );
 
-    const response = await axios.post( "http://localhost:8080/support/registerTicket", ticketData,{
+    const response = await axios.post( `${API_URL}/support/registerTicket`, ticketData,{
         headers: {
         Authorization: `Bearer ${token}`,
       },

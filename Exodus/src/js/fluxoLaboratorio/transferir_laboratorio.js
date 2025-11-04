@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 const token = localStorage.getItem("token");
 
 // Método principal (dados vêm do form / token armazenado no localStorage)
@@ -6,7 +7,7 @@ export async function transferirLaboratorio(labData) {
   try {
     // 📤 Rota de transferência do laboratório
     const response = await axios.post(
-      "http://localhost:8080/admin/transferLab",
+      `${API_URL}/admin/transferLab`,
       labData,
       {
         headers: {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 /**
  * Busca informações de endereço a partir do CEP.
@@ -10,7 +11,7 @@ export async function buscarCep(cep) {
 
   try {
     const response = await axios.post(
-      "http://localhost:8080/consult/getCep",
+      `${API_URL}/consult/getCep`,
       { cep: cep },
       { headers: { "Content-Type": "application/json" } }
     );
