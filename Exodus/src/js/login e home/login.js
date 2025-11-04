@@ -9,7 +9,7 @@ export async function loginUsuario(loginData, role) {
 
     const response = await axios.post(
       //ver rotas do médico no AuthController (Back-End)
-      `http://127.0.0.1:8080/auth/login`,
+      `${API_URL}/auth/login`,
       loginData
     );
 

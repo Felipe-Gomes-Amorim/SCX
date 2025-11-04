@@ -11,7 +11,7 @@ export async function firstLogin(loginData) {
 
     const response = await axios.post(
       //ver rotas do médico no AuthController (Back-End)
-      `http://127.0.0.1:8080/auth/first-login/` + token,
+      `${API_URL}/auth/first-login/` + token,
       loginData
     );
 

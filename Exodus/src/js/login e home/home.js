@@ -4,7 +4,7 @@ import API_URL from "../apiConfig.js";
 export async function carregarhome(token) {
   if (!token) throw new Error("Token não fornecido");
 
-  const response = await axios.get('http://127.0.0.1:8080/auth/perfil', {
+  const response = await axios.get(`${API_URL}/auth/perfil`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 
