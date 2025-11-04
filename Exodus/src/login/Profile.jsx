@@ -3,7 +3,7 @@ import { profileAdm } from "../js/profiles/profile_adm.js";
 import { profileDoctor } from "../js/profiles/profile_medico.js";
 import { profilePatient } from "../js/profiles/profile_paciente.js";
 import { profileSecretary } from "../js/profiles/profile_secretaria.js";
-import Style from "./profile.module.css";
+import Style from "./Profile.module.css";
 
 export default function ProfileCard({ role }) {
   const [profile, setProfile] = useState(null);
