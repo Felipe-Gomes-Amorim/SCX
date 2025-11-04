@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 //metodo principal ( data vai vir do Login.jsx / token tá armazenado no localStorage )
 export async function firstLogin(loginData) {
   try {

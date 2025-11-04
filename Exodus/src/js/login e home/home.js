@@ -1,5 +1,6 @@
-//SCRIPT INCOMPLETO FAVOR NAO USAR ATE FINALIZAR
 import axios from 'axios';
+
+import API_URL from "../apiConfig.js";
 export async function carregarhome(token) {
   if (!token) throw new Error("Token não fornecido");
 

@@ -1,7 +1,6 @@
-// src/js/fluxoMedico/anamnese.js
-import axios from "axios";
 
-const API_URL = "http://localhost:8080/doctor";
+import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function salvarAnamneseAPI(token, anamneseData) {
   try {

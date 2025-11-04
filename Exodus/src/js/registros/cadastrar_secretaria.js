@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../apiConfig.js";
 
 export async function cadastrarSecretaria(secretariaData, token) {
   try {
@@ -8,7 +9,7 @@ export async function cadastrarSecretaria(secretariaData, token) {
     );
 
     const response = await axios.post(
-      "http://localhost:8080/admin/registerSecretary",
+      "${API_URL}/admin/registerSecretary",
       secretariaData,
       {
         headers: {

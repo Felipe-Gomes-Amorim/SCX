@@ -1,4 +1,5 @@
-//metodo principal ( vai ser chamado pelo home.jsx )
+
+
 export async function logoutUsuario() {
   try {
     let endpoint = "";

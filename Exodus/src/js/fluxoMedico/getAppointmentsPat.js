@@ -1,6 +1,8 @@
+import API_URL from "../apiConfig.js";
+
 export async function getAppointmentsPat(token) {
   try {
-    const response = await fetch("http://localhost:8080/doctor/getAppointmentsPat", {
+    const response = await fetch("${API_URL}/doctor/getAppointmentsPat", {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
