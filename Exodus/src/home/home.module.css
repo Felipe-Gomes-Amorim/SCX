@@ -20,7 +20,7 @@
   background: #fff;
   padding: 1.5rem;
   border-radius: 10px;
-  width: 18vw; /* 🔹 largura fixa */
+  width: 15vw; /* 🔹 largura fixa */
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease; /* animação suave ao expandir */
@@ -479,10 +479,9 @@
 }
 .profileBox {
   background: #fff;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-top: 1rem;
-  width: 100%; /* 🔹 ocupa toda a largura do sidebar */
+  border-radius: 1px;
+  
+  /* 🔹 ocupa toda a largura do sidebar */
   
 }
 /* Fundo escurecido com blur e fade-in */
@@ -958,7 +957,21 @@
 }
 
 /* hover / micro-interação */
-.card:hover {
-  background: #eef6ff;
-  transform: translateY(-2px);
+.btn_edit {
+  margin-bottom: 1rem;
+  width: 10rem;
+  padding: 1rem 0;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease-in;
+}
+
+.btn_edit:hover {
+  background: #007bff;
+  color: white;
 }

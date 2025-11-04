@@ -123,13 +123,13 @@ export default function Home() {
               {showProfile && userData.roles?.[0]?.name && (
                 <motion.div
                   key="profile-card"
-                  initial={{ y: "-22%", opacity: 0 }}
+                  initial={{ y: "-12%", opacity: 0 }}
                   animate={{ y: "0%", opacity: 1 }}
-                  exit={{ y: "-20%", opacity: 0 }}  // 🔹 animação ao fechar
+                  exit={{ y: "-18%", opacity: 0 }}  // 🔹 animação ao fechar
                   transition={{
                     y: { duration: 1.2, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
                     opacity: { duration: 0.5, ease: "easeOut" },   
-                    opacity: { duration: 0.5, ease: "easeIn" }      // 🔹 suaviza o fade-in
+                       // 🔹 suaviza o fade-in
                   }}
                   className={Style.profileBox}
                 >
@@ -137,7 +137,7 @@ export default function Home() {
 
                   {/* Botão para editar dados */}
                   <button
-                    className={Style.btn}
+                    className={Style.btn_edit}
                     onClick={handleEditProfile}
                   >
                     Editar meus dados

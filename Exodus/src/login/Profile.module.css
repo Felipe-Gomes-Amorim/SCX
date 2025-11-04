@@ -16,22 +16,26 @@
 
 .profileCard {
   background: #fff;
-  padding: 0.5rem;
-  border-radius: 18px;
   
-  width: 16rem;
+  border-radius: 0.1rem;
+  
+  width: 3rem;
   text-align: left;
 }
 
 .profileCard p {
-  font-size: 15px;
+  font-size: 0.8rem;
   margin: 8px 0;
   color: #333;
 }
-
+.profileCard h3 {
+  font-size: 0.8rem;
+  margin: 8px 0;
+  color: #333;
+}
 .updateButton {
   margin-top: 20px;
-  padding: 10px 16px;
+  
   background-color: #0057b7;
   color: #fff;
   border: none;
