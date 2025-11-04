@@ -4,7 +4,7 @@ import API_URL from "../apiConfig.js";
 
 export async function salvarAnamneseAPI(token, anamneseData) {
   try {
-    const response = await axios.post(`${API_URL}/registerAnamnese`, anamneseData, {
+    const response = await axios.post(`${API_URL}/doctor/registerAnamnese`, anamneseData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
