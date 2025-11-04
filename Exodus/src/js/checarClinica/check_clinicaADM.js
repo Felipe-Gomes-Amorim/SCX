@@ -4,7 +4,7 @@ import API_URL from "../apiConfig.js";
 //metodo principal ( data vai vir do register.jsx / token tá armazenado no localStorage )
 export async function checarClinica(token) {
   try {                               //ver rotas do médico no DoctorController (Back-End)
-    const request = await axios.get("${API_URL}/admin/clinicAdm", {
+    const request = await axios.get(`${API_URL}/admin/clinicAdm`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -4,7 +4,7 @@ import API_URL from "../apiConfig.js";
 export async function cadastrarExame(examData, token) {
 
   try {                               //ver rotas do médico no DoctorController (Back-End)
-    const response = await axios.post("${API_URL}/laboratory/registerExam", examData, {
+    const response = await axios.post(`${API_URL}/laboratory/registerExam`, examData, {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },

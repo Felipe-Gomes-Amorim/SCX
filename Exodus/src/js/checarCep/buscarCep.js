@@ -11,7 +11,7 @@ export async function buscarCep(cep) {
 
   try {
     const response = await axios.post(
-      "${API_URL}/consult/getCep",
+      `${API_URL}/consult/getCep`,
       { cep: cep },
       { headers: { "Content-Type": "application/json" } }
     );

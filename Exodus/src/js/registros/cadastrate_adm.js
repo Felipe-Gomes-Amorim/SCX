@@ -6,7 +6,7 @@ export async function cadastrarAdm(admData, token) {
   console.log("chegou antes do try")
   try {  
     console.log("chegou dentro do try")                            //ver rotas do médico no AdminController (Back-End)      
-    const response = await axios.post("${API_URL}/clinic/firstAdm", admData, {
+    const response = await axios.post(`${API_URL}/clinic/firstAdm`, admData, {
       
       
     });

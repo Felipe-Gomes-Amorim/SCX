@@ -9,7 +9,7 @@ export async function cadastrarSecretaria(secretariaData, token) {
     );
 
     const response = await axios.post(
-      "${API_URL}/admin/registerSecretary",
+      `${API_URL}/admin/registerSecretary`,
       secretariaData,
       {
         headers: {

@@ -6,7 +6,7 @@ export async function cadastrarMedico(medicoData, token) {
     console.info("%c🆕 Cadastrando médico no sistema...", "color: #4DD0E1; font-weight: bold;");
 
     const response = await axios.post(
-      "${API_URL}/doctor/register",
+      `${API_URL}/doctor/register`,
       medicoData,
       {
         headers: {

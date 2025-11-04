@@ -7,7 +7,7 @@ const token = localStorage.getItem("token");
 export async function transferirMedico(medicoData) {
   try {                               //ver rotas do médico no DoctorController (Back-End)
     const response = await axios.post(
-          "${API_URL}/doctor/transferDoctor",
+          `${API_URL}/doctor/transferDoctor`,
           medicoData,
           {
             headers: {

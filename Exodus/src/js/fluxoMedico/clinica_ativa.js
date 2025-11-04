@@ -1,7 +1,7 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-const API_BASE = "${API_URL}/doctor";
+const API_BASE = `${API_URL}/doctor`;
 const token = localStorage.getItem("token");
 
 // 🔹 Define a clínica ativa do médico
@@ -33,7 +33,7 @@ export async function ativarClinica(clinica) {
 // 🔹 Busca a clínica ativa atual
 export async function buscarClinicaAtiva() {
   try {
-    const response = await axios.get("${API_URL}/doctor/getClinicActive", {
+    const response = await axios.get(`${API_URL}/doctor/getClinicActive`, {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },

@@ -10,7 +10,7 @@ export async function validarCnpj(cnpj) {
   
   try {
     const response = await axios.post(
-      "${API_URL}/consult/getCnpj",
+      `${API_URL}/consult/getCnpj`,
       { cnpj: cnpj },
       { headers: { "Content-Type": "application/json" } }
     );

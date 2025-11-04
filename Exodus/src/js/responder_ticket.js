@@ -5,7 +5,7 @@ import API_URL from "./apiConfig.js";
 export async function responderTicket(ticketData, token) {
   try {
     const response = await axios.patch(
-      "${API_URL}/support/responseTicket", // substitua pela sua URL da API
+      `${API_URL}/support/responseTicket`, // substitua pela sua URL da API
       ticketData,
       {
         headers: {

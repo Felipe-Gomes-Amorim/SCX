@@ -9,7 +9,7 @@ export async function cadastrarSuporte() {
     );
 
     const response = await axios.post(
-      "${API_URL}/support/registerUser",
+      `${API_URL}/support/registerUser`,
     );
 
     console.info(

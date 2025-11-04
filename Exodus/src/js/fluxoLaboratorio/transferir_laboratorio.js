@@ -7,7 +7,7 @@ export async function transferirLaboratorio(labData) {
   try {
     // 📤 Rota de transferência do laboratório
     const response = await axios.post(
-      "${API_URL}/admin/transferLab",
+      `${API_URL}/admin/transferLab`,
       labData,
       {
         headers: {

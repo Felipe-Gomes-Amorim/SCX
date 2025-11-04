@@ -1,8 +1,8 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-const API_BASE = "${API_URL}/secretary/openAppointment"; // endpoint para cadastrar consulta
-const DOCS_BASE = "${API_URL}/secretary/getDocsAvailable"; // endpoint para buscar médicos
+const API_BASE = `${API_URL}/secretary/openAppointment`; // endpoint para cadastrar consulta
+const DOCS_BASE = `${API_URL}/secretary/getDocsAvailable`; // endpoint para buscar médicos
 
 export async function buscarMedicosDisponiveis(tokenParam) {
   const authToken = tokenParam || localStorage.getItem("token");

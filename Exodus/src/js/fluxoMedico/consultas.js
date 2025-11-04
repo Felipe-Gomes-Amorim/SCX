@@ -1,7 +1,7 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-const API_BASE = "${API_URL}/doctor";
+const API_BASE = `${API_URL}/doctor`;
 
 
 // 🔹 Busca a consulta atual do médico
