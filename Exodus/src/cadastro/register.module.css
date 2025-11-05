@@ -83,6 +83,7 @@
   font-style: italic;
 }
 
+
 .login_left .subtitle2 {
   font-size: 0.75rem; /* De 12px para rem */
   margin-top: 1rem;
@@ -459,4 +460,21 @@
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+}
+
+
+.consulta_container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.subtitle {
+  font-size: 0.875rem; /* De 14px para rem */
+  margin-bottom: 0.6rem;
+  color: #6c757d;
+  font-style: italic;
 }

@@ -3,6 +3,7 @@ import Style from "./ExamsReturn.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
+import RegisterAtendimento from "../cadastro/registerAtendimento.jsx"; // ✅ importa o container do formulário
 
 export default function PatientDoctorList({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -10,6 +11,8 @@ export default function PatientDoctorList({ limit = null }) {
   const [erro, setErro] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [abaAtiva, setAbaAtiva] = useState("pacientes");
+  const [showConsultaForm, setShowConsultaForm] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -50,6 +53,12 @@ export default function PatientDoctorList({ limit = null }) {
   });
 
   const displayedData = limit ? filteredData.slice(0, limit) : filteredData;
+
+  // 📋 Função para abrir o formulário com o médico selecionado
+  const handleStartConsulta = (doctor) => {
+    setSelectedDoctor(doctor);
+    setShowConsultaForm(true);
+  };
 
   return (
     <div className={Style.container}>
@@ -134,8 +143,31 @@ export default function PatientDoctorList({ limit = null }) {
                       <strong>Email:</strong> {item.email || "-"}
                     </span>
                   </div>
+
+                  {/* ✅ Botão de iniciar atendimento */}
+                  <button
+                    className={Style.startButton}
+                    onClick={() => handleStartConsulta(item)}
+                  >
+                    Iniciar atendimento
+                  </button>
                 </div>
               ))}
+        </div>
+      )}
+
+      {/* ⚡ Modal do formulário de consulta */}
+      {showConsultaForm && (
+        <div className={Style.overlay}>
+          <div className={Style.modal}>
+            <button
+              className={Style.closeButton}
+              onClick={() => setShowConsultaForm(false)}
+            >
+              ✕
+            </button>
+            <RegisterAtendimento selectedDoctor={selectedDoctor} />
+          </div>
         </div>
       )}
     </div>
