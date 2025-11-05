@@ -10,15 +10,27 @@ import { firstLogin } from "../js/login e home/firstLogin.js";
 export default function FirstLogin() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false); // ✅ controle do sucesso
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const [formdata,setformdata] = useState({
+  const [formdata, setformdata] = useState({
     password_key: "",
-    confirm_password:"",
+    confirm_password: "",
   });
+
+  
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])(?=.{8,})/;
 
   const handleSubmit = async (formValues) => {
     const { password_key, confirm_password } = formValues;
+
+    
+    if (!passwordPattern.test(password_key)) {
+      setErrorMessage(
+        "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial."
+      );
+      return;
+    }
 
     // 🔒 Validação: senhas precisam coincidir
     if (password_key !== confirm_password) {
@@ -33,9 +45,7 @@ export default function FirstLogin() {
     setLoading(false);
 
     if (result.success) {
-      setSuccess(true); // ✅ ativa estado de sucesso
-
-      // ⏳ Espera 3 segundos e redireciona
+      setSuccess(true);
       setTimeout(() => {
         navigate("/");
       }, 1500);
@@ -46,8 +56,18 @@ export default function FirstLogin() {
 
   // 🔧 Campos do formulário
   const fields = [
-    { name: "password_key", type: "password", placeholder: "Nova Senha", required: true },
-    { name: "confirm_password", type: "password", placeholder: "Confirmar Senha", required: true },
+    {
+      name: "password_key",
+      type: "password",
+      placeholder: "Nova Senha",
+      required: true,
+    },
+    {
+      name: "confirm_password",
+      type: "password",
+      placeholder: "Confirmar Senha",
+      required: true,
+    },
   ];
 
   return (
@@ -65,7 +85,7 @@ export default function FirstLogin() {
             <h2>Ative sua conta</h2>
             <p className={Style.subtitle}>Digite e confirme sua nova senha</p>
 
-            {/* Mensagem de erro */}
+            {/* Mensagem de erro acima do campo */}
             {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
 
             <DynamicForm
@@ -73,15 +93,9 @@ export default function FirstLogin() {
               values={formdata}
               onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText={success ? "Cadastrado" : "Confirmar"} 
+              buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
-              buttonStyle={{
-                backgroundColor: success ? "#28a745" : "#007bff",
-                color: "white",
-                borderColor: success ? "#28a745" : "#007bff",
-                boxShadow: success ? "0 0 15px 3px #28a745" : "#007bff",
-                transition: "all 0.1s ease",
-              }}
+              buttonSuccess={success}
             />
           </motion.div>
 
@@ -98,8 +112,8 @@ export default function FirstLogin() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9 }}
             >
-              Para completar seu login você precisa definir uma senha para sua conta. 
-              Lembre-se de escolher uma senha segura
+              Para completar seu login você precisa definir uma senha para sua
+              conta. Lembre-se de escolher uma senha segura.
             </motion.p>
           </motion.div>
         </div>
