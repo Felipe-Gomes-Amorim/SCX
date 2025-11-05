@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Style from "./ExamsReturn.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
+import Redirect from "../assents_link/Redirect.jsx";
+import maisIcon from "../assets/mais2.png";
 
 export default function PatientDoctorList({ limit = null }) {
   const [dados, setDados] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [abaAtiva, setAbaAtiva] = useState("pacientes"); // 👈 controla qual aba está ativa
+  const [abaAtiva, setAbaAtiva] = useState("pacientes");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function carregarDados() {
       setCarregando(true);
       setErro(null);
-
       try {
-        const endpoint =
-          abaAtiva === "pacientes" ? "patient" : "doctorAval";
-
+        const endpoint = abaAtiva === "pacientes" ? "patient" : "doctorAval";
         const data = await mostrar_todos(endpoint, token);
         if (data && data.length > 0) setDados(data);
         else setErro("Nenhum registro encontrado.");
@@ -50,7 +49,6 @@ export default function PatientDoctorList({ limit = null }) {
     }
   });
 
-  // Limita a quantidade de itens (se for passado um limite)
   const displayedData = limit ? filteredData.slice(0, limit) : filteredData;
 
   return (
@@ -75,19 +73,30 @@ export default function PatientDoctorList({ limit = null }) {
         </h3>
       </div>
 
-      {/* 🔍 Barra de pesquisa */}
-      <div className={Style.searchBox}>
-        <input
-          type="text"
-          placeholder={
-            abaAtiva === "pacientes"
-              ? "Pesquisar por nome, telefone ou email..."
-              : "Pesquisar por nome ou email..."
-          }
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={Style.searchInput}
-        />
+      {/* 🔍 Barra de pesquisa com botão "+" à direita */}
+      <div className={Style.searchHeader}>
+        <div className={Style.searchBox}>
+          <input
+            type="text"
+            placeholder={
+              abaAtiva === "pacientes"
+                ? "Pesquisar por nome, telefone ou email..."
+                : "Pesquisar por nome ou email..."
+            }
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={Style.searchInput}
+          />
+        </div>
+        {abaAtiva === "pacientes" && (
+          <Redirect
+            icon={maisIcon}
+            place="/register"
+            color="transparent"
+            hoverColor="transparent"
+            background="transparent"
+          />
+        )}
       </div>
 
       {/* Conteúdo */}
@@ -98,10 +107,7 @@ export default function PatientDoctorList({ limit = null }) {
       ) : displayedData.length === 0 ? (
         <p className={Style.info}>Nenhum resultado encontrado.</p>
       ) : (
-        <div
-          className={Style.listContainer}
-          style={{ maxHeight: "500px", overflowY: "auto" }}
-        >
+        <div className={Style.listContainer}>
           {abaAtiva === "pacientes"
             ? displayedData.map((item, index) => (
                 <div key={index} className={Style.card}>

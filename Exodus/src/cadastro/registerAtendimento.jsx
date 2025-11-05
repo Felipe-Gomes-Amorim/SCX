@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export default function RegisterConsulta() {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // ⚡ estado de erro
+  const [errorMessage, setErrorMessage] = useState(""); 
   const [medicos, setMedicos] = useState([]);
   const [success,setSuccess]= useState(false);
   const navigate = useNavigate();

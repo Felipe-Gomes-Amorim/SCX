@@ -37,16 +37,7 @@ export default function AdmArea() {
       </p>
 
       <div className={Style.subsection}>
-      <div className={Style.buttonRow}>
-          <Redirect
-            text="Cadastrar Secretária"
-            place="/registerSecretaria"
-            color="#007bff"
-            hoverColor="#fff"
-            background="#fff"
-            hoverBackground="#007bff"
-          />
-        </div>
+      
         
       </div>
     </section>

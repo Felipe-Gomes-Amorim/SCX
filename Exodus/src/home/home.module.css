@@ -20,7 +20,8 @@
   background: #fff;
   padding: 1.5rem;
   border-radius: 10px;
-  width: 15vw; /* 🔹 largura fixa */
+  width: 18vw;
+  /* 🔹 largura fixa */
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease;
@@ -128,7 +129,7 @@
 
 .btn {
   margin-top: 10px;
-  margin-bottom: 1rem;
+
   width: 10rem;
   padding: 1rem 0;
   border: 2px solid #007bff;
@@ -482,10 +483,12 @@
 
 .profileBox {
   background: #fff;
-  border-radius: 1px;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
   
   /* 🔹 ocupa toda a largura do sidebar */
-  
+
 }
 
 /* Fundo escurecido com blur e fade-in */
