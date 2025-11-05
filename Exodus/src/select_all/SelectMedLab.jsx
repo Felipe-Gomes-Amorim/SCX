@@ -3,14 +3,36 @@ import Style from "./SelectMedLab.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
+import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
 
 export default function SelectMedLab({ limit = null }) {
   const [dados, setDados] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [abaAtiva, setAbaAtiva] = useState("doctor"); 
+  const [abaAtiva, setAbaAtiva] = useState("doctor");
   const token = localStorage.getItem("token");
+  const [instituicao, setInstituicao] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    let mounted = true;
+
+    async function loadhome() {
+      if (!token) return;
+      try {
+        const data = await checarClinica(token);
+        if (mounted) setInstituicao(data);
+      } catch (err) {
+        console.error("Failed to load home", err);
+      }
+    }
+
+    loadhome();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     async function carregarDados() {
@@ -61,19 +83,23 @@ export default function SelectMedLab({ limit = null }) {
   return (
     <div className={Style.container}>
       {/* 🟦 Abas */}
+
+      <h2 className={Style.sectionTitle}>Área do Administrador</h2>
+      <p className={Style.infoText}>
+        <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
+      </p>
+      <div className={Style.subsection}>
       <div className={Style.tabHeader}>
         <h3
-          className={`${Style.title} ${
-            abaAtiva === "doctor" ? Style.activeTab : ""
-          }`}
+          className={`${Style.title} ${abaAtiva === "doctor" ? Style.activeTab : ""
+            }`}
           onClick={() => setAbaAtiva("doctor")}
         >
           Médicos
         </h3>
         <h3
-          className={`${Style.title} ${
-            abaAtiva === "lab" ? Style.activeTab : ""
-          }`}
+          className={`${Style.title} ${abaAtiva === "lab" ? Style.activeTab : ""
+            }`}
           onClick={() => setAbaAtiva("lab")}
         >
           Laboratórios
@@ -117,31 +143,32 @@ export default function SelectMedLab({ limit = null }) {
         <div className={Style.listContainer}>
           {abaAtiva === "doctor"
             ? displayedData.map((item) => (
-                <div key={item.id} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <span>
-                      <strong>Nome:</strong> {item.name || "-"}
-                    </span>
-                    <span>
-                      <strong>CRM:</strong> {item.crm || "-"}
-                    </span>
-                  </div>
+              <div key={item.id} className={Style.card}>
+                <div className={Style.infoArea}>
+                  <span>
+                    <strong>Nome:</strong> {item.name || "-"}
+                  </span>
+                  <span>
+                    <strong>CRM:</strong> {item.crm || "-"}
+                  </span>
                 </div>
-              ))
+              </div>
+            ))
             : displayedData.map((item) => (
-                <div key={item.id} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <span>
-                      <strong>Nome:</strong> {item.name || "-"}
-                    </span>
-                    <span>
-                      <strong>CNPJ:</strong> {item.cnpj || "-"}
-                    </span>
-                  </div>
+              <div key={item.id} className={Style.card}>
+                <div className={Style.infoArea}>
+                  <span>
+                    <strong>Nome:</strong> {item.name || "-"}
+                  </span>
+                  <span>
+                    <strong>CNPJ:</strong> {item.cnpj || "-"}
+                  </span>
                 </div>
-              ))}
+              </div>
+            ))}
         </div>
       )}
+    </div>
     </div>
   );
 }

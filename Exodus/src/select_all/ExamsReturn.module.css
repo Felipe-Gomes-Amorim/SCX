@@ -8,6 +8,11 @@
   animation: fadeIn 0.4s ease-in-out;
   margin-bottom: 2rem;
 }
+.subsection {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e0e0e0;
+}
 
 @keyframes fadeIn {
   from {
@@ -42,7 +47,8 @@
   color: #333;
   cursor: pointer;
   margin: 0;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, border-bottom 0.2s;
+
 }
 
 .title:hover {
@@ -51,9 +57,9 @@
 
 .activeTab {
   color: #007bff;
-  font-weight: bold;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 4px;
 }
-
 .searchBox {
   display: flex;
   justify-content: center;
@@ -224,4 +230,6 @@
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+
 

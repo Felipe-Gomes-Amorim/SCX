@@ -10,9 +10,6 @@ export default function PacienteArea() {
   return (
     <section className={Style.section}>
       <h2>Área do Paciente</h2>
-      <p>
-        
-      </p>
 
       {/* Seção de Exames Pendentes */}
       <div className={Style.subsection}>

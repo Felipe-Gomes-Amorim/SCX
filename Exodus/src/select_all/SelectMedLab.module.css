@@ -7,6 +7,12 @@
   margin-bottom: 2rem;
 }
 
+.subsection {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e0e0e0;
+}
+
 .tabHeader {
   display: flex;
   justify-content: space-between;

@@ -178,7 +178,7 @@ export default function Home() {
                   {userData.roles?.some((role) => role.name === "Admin") ? (
                     <>
                       <SelectMedLab />
-                      <AdmArea />
+                      
                     </>
                   ) : userData.roles?.some(
                     (role) => role.name === "Support"
@@ -188,7 +188,7 @@ export default function Home() {
                     <>
                       {userData.roles?.some(role => role.name === "Doctor") && <><MedicoArea /><ExamsReturn /></>}
                       {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /></>}
-                      {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /><SecretariaArea /></>}
+                      {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /></>}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
                     </>
                   )}

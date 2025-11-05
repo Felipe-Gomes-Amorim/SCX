@@ -1,3 +1,6 @@
+/* home.module.css - Versão Otimizada e Consolidada */
+
+/* Layout Geral */
 .home_page {
   background: #e0e0e0;
   min-height: 95vh;
@@ -5,14 +8,14 @@
   flex-direction: column;
 }
 
-
 .home_content {
   display: flex;
   padding: 20px;
   gap: 2rem;
+  align-items: flex-start;
 }
 
-/* Lateral esquerda */
+/* Sidebar */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -21,11 +24,9 @@
   padding: 1.5rem;
   border-radius: 10px;
   width: 18vw;
-  /* 🔹 largura fixa */
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease;
-  /* animação suave ao expandir */
 }
 
 .sidebar p {
@@ -37,23 +38,29 @@
   height: 120px;
   border-radius: 50%;
   margin-bottom: 15px;
-  justify-items: center;
   object-fit: cover;
-  border: .2rem solid #A7A7A7;
+  border: 0.2rem solid #A7A7A7;
 }
 
-.edit_btn {
-
+/* Botões Gerais */
+.edit_btn,
+.logout_btn,
+.btn,
+.rightPanel .btn,
+.saveBtn {
   width: 10rem;
   padding: 1rem 0;
-  border: 2px solid #777;
-  background: transparent;
-  color: #777;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.2s ease-in;
+  background: transparent;
+}
+
+.edit_btn {
+  border: 2px solid #777;
+  color: #777;
 }
 
 .edit_btn:hover {
@@ -63,25 +70,42 @@
 
 .logout_btn {
   margin-top: 1rem;
-  width: 10rem;
-  padding: 1rem 0;
   border: 2px solid #c53b3b;
-  background: transparent;
   color: #c53b3b;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease-in;
 }
 
 .logout_btn:hover {
   background: #ff0000;
-  border: 2px solid #ff0000;
+  border-color: #ff0000;
   color: white;
 }
 
-/* Conteúdo principal */
+.btn,
+.rightPanel .btn {
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.btn:hover,
+.rightPanel .btn:hover {
+  background: #007bff;
+  color: white;
+}
+
+.saveBtn {
+  margin-top: 1rem;
+  border: 2px solid #28a745;
+  color: #28a745;
+  font-size: 1rem;
+  align-self: flex-start;
+}
+
+.saveBtn:hover {
+  background: #28a745;
+  color: white;
+}
+
+/* Conteúdo Principal */
 .main_area {
   flex: 1;
   display: flex;
@@ -92,21 +116,21 @@
 .section {
   background: #fff;
   padding: 20px;
-  min-height: 23rem;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: 23rem;
 }
 
 .section h2 {
   font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: .2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
 }
 
 .section p {
   font-size: 1rem;
   color: #333;
-
 }
 
 .laudos {
@@ -127,34 +151,41 @@
   font-weight: bold;
 }
 
-.btn {
-  margin-top: 10px;
-
-  width: 10rem;
-  padding: 1rem 0;
-  border: 2px solid #007bff;
-  background: transparent;
-  color: #007bff;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease-in;
-}
-
-.btn:hover {
-  background: #007bff;
-  color: white;
-}
-
 .activity {
   margin-bottom: 15px;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activity:last-child {
+  border-bottom: none;
+}
+
+.activity strong {
+  display: block;
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 0.2rem;
+}
+
+.activity p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Estruturas de Layout */
+.buttons,
+.popupButtons,
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1.5rem;
 }
 
 .buttons {
-  display: flex;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
   gap: 1.5rem;
   justify-content: flex-start;
 }
@@ -172,7 +203,6 @@
   margin-bottom: 0.8rem;
 }
 
-
 .containerArea {
   display: flex;
   justify-content: space-between;
@@ -181,8 +211,8 @@
   gap: 20px;
 }
 
-/* Botões da esquerda */
-.leftButtons {
+.leftButtons,
+.buttonsArea {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -190,7 +220,6 @@
   max-width: 220px;
 }
 
-/* Caixa da direita (Consulta Atual ou Nenhuma consulta) */
 .rightBox {
   margin-left: 5rem;
   flex: 1;
@@ -198,7 +227,6 @@
   border: 2px solid #A7A7A7;
   border-radius: 12px;
   padding: 20px;
-
   min-height: 180px;
 }
 
@@ -238,39 +266,12 @@
   font-style: italic;
 }
 
-
-.containerArea {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 20px;
-  gap: 20px;
-}
-
-
-.buttonsArea {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 40%;
-  max-width: 220px;
-}
-
-
 .sectionDivider {
   width: 100%;
-  height: 3px;
+  height: 2px;
   background-color: #d1d5db;
-  margin: 1rem 0 1rem 0;
+  margin: 0.8rem 0 1rem 0;
 }
-
-.section {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 16px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
 
 .infoText {
   font-size: 1rem;
@@ -278,142 +279,54 @@
   margin-bottom: 25px;
 }
 
-
-
-
 .buttonRow {
-
   display: grid;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: flex-start;
 }
 
-
+/* Admin Layout */
 .adminContainer {
   display: flex;
   gap: 20px;
-  /* espaço entre AdmArea e histórico */
   align-items: flex-start;
   flex-wrap: wrap;
-  /* para telas pequenas, empilha verticalmente */
 }
 
-/* Forçar cada seção a ocupar metade do container */
 .adminContainer .admArea,
 .adminContainer .section {
   flex: 1;
-  /* divide igualmente */
   min-width: 300px;
-  /* evita que fique muito estreito em telas pequenas */
-}
-
-/* Ajustes visuais para deixar separadas e arredondadas */
-.adminContainer .admArea {
   padding: 20px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.adminContainer .section {
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-
-/* === Histórico de atividade === */
-
-.section {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.section h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-/* Linha divisória */
-.sectionDivider {
-  width: 100%;
-  height: 2px;
-  background-color: #d1d5db;
-  /* cinza suave */
-  margin: 0.8rem 0 1rem 0;
-}
-
-/* Texto dentro das atividades */
-.activity {
-  padding: 0.8rem 0;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.activity:last-child {
-  border-bottom: none;
-}
-
-.activity strong {
-  display: block;
-  font-size: 1rem;
-  color: #222;
-  margin-bottom: 0.2rem;
-}
-
-.activity p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 0;
-}
-
-
-/* === Layout geral === */
-.home_content {
-  display: flex;
-  padding: 20px;
-  gap: 2rem;
-  align-items: flex-start;
-}
-
-/* Lado direito fixo com o histórico */
-.rightPanel {
-  width: 280px;
-  /* largura parecida com o GitHub changelog */
+/* Painel Direito */
+.rightPanel,
+.rightColumn .section {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 16px;
+}
+
+.rightPanel {
+  width: 280px;
   position: sticky;
   top: 80px;
-  /* fixa abaixo do header */
   align-self: flex-start;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
 }
 
-/* Título */
-.section .title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  color: #333;
-}
-
-/* Divisória */
 .rightPanel .sectionDivider {
-  width: 100%;
   height: 1.5px;
   background-color: #ddd;
-  margin: 0.8rem 0 1rem 0;
 }
 
-/* Atividades */
 .rightPanel .activity {
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -428,30 +341,6 @@
   display: block;
 }
 
-.rightPanel .activity p {
-  margin-top: 0.2rem;
-}
-
-/* Botão “Ver mais” */
-.rightPanel .btn {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.5rem 0;
-  border: 2px solid #007bff;
-  background: transparent;
-  color: #007bff;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease-in;
-}
-
-.rightPanel .btn:hover {
-  background: #007bff;
-  color: #fff;
-}
-
 .mainLayout {
   display: flex;
   gap: 2rem;
@@ -462,23 +351,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-
 }
 
 .rightColumn {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  /* espaço entre as caixinhas */
   width: 300px;
   align-self: flex-start;
-}
-
-.rightColumn .section {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 16px;
 }
 
 .profileBox {
@@ -486,20 +366,17 @@
   border-radius: 10px;
   padding: 1rem;
   margin-top: 1rem;
-  
-  /* 🔹 ocupa toda a largura do sidebar */
-
 }
 
-/* Fundo escurecido com blur e fade-in */
-.popupOverlay {
+/* Popups e Overlays */
+.popupOverlay,
+.menuOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   backdrop-filter: blur(6px);
-  /* 🟢 desfoca o fundo */
   background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
@@ -508,155 +385,22 @@
   animation: fadeIn 0.3s ease forwards;
 }
 
-/* Caixa animada: sobe com fade-in */
-.popupBox {
-  background: #fff;
-  border-radius: 12px;
-  padding: 2rem;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
-  transform: translateY(30px);
-  opacity: 0;
-  animation: slideUpFade 0.4s ease forwards;
-}
-
-/* Animação para os botões */
-.popupButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 1.5rem;
-}
-
-.popupButtons button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  transform: scale(1);
-}
-
-/* 🟢 Botão 1 – azul */
-.popupButtons button:nth-child(1) {
-  background: white;
-  color: #007bff;
-  border: 2px solid #007bff;
-}
-
-.popupButtons button:nth-child(1):hover {
-  background: #007bff;
-  color: white;
-  transform: scale(1.05);
-}
-
-/* 🟢 Botão 2 – verde */
-.popupButtons button:nth-child(2) {
-  background: white;
-  color: #28a745;
-  border: 2px solid #28a745;
-}
-
-.popupButtons button:nth-child(2):hover {
-  background: #28a745;
-  color: white;
-  transform: scale(1.05);
-}
-
-/* 🟢 Botão Cancelar – vermelho */
-.popupButtons .cancelBtn {
-  background: white;
-  color: #dc3545;
-  border: 2px solid #dc3545;
-}
-
-.popupButtons .cancelBtn:hover {
-  background: #dc3545;
-  color: white;
-  transform: scale(1.05);
-}
-
-/* 🔵 Animações */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0px);
-  }
-
-  to {
-    opacity: 1;
-    backdrop-filter: blur(6px);
-  }
-}
-
-@keyframes slideUpFade {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* ==== Caixa de consulta ativa compacta ==== */
-.activeConsultBox {
-  background: #f8fafc;
-
-  border-radius: 12px;
-  padding: 1.5rem;
-  /* Aumentado para ocupar mais espaço */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
-  min-height: 3rem;
-  /* Aumentado para mais destaque */
-}
-
-.activeConsultBox p {
-  font-size: 1.2rem;
-  /* Maior para mais destaque */
-  font-weight: 400;
-  /* Azul para destacar */
-  margin: 0;
-}
-
-
-
-/* ==== Menu expandido ==== */
-.menuOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 3000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.3s ease forwards;
-}
-
+.popupBox,
 .menuBox {
   background: #fff;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 2rem;
   width: 90%;
-  max-width: 600px;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
   transform: translateY(20px);
   opacity: 0;
   animation: slideUpFade 0.4s ease forwards;
+}
+
+.menuBox {
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .menuBox h3 {
@@ -670,57 +414,97 @@
   font-size: 1rem;
 }
 
-.menuButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 1.2rem;
-}
-
-.menuButtons button {
+/* Botões em Popups */
+.menuButtons button,
+.popupButtons button {
   padding: 0.9rem 4rem;
   border-radius: 10px;
-  border: none;
+  border: 2px solid;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-/* Cores */
-.menuButtons button:nth-child(1) {
-  background: white;
+.menuButtons button:nth-child(1),
+.popupButtons button:nth-child(1) {
+  border-color: #007bff;
   color: #007bff;
-  border: 2px solid #007bff;
 }
 
-.menuButtons button:nth-child(1):hover {
+.menuButtons button:nth-child(1):hover,
+.popupButtons button:nth-child(1):hover {
   background: #007bff;
   color: white;
 }
 
-.menuButtons button:nth-child(2) {
-  background: white;
+.menuButtons button:nth-child(2),
+.popupButtons button:nth-child(2) {
+  border-color: #28a745;
   color: #28a745;
-  border: 2px solid #28a745;
 }
 
-.menuButtons button:nth-child(2):hover {
-  color: white;
+.menuButtons button:nth-child(2):hover,
+.popupButtons button:nth-child(2):hover {
   background: #28a745;
+  color: white;
 }
 
-.menuButtons .closeBtn {
-  background: white;
+.menuButtons .closeBtn,
+.popupButtons .cancelBtn {
+  border-color: #dc3545;
   color: #dc3545;
-  border: 2px solid #dc3545;
 }
 
-.menuButtons .closeBtn:hover {
+.menuButtons .closeBtn:hover,
+.popupButtons .cancelBtn:hover {
   background: #dc3545;
   color: white;
 }
 
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Caixa de Consulta Ativa */
+.activeConsultBox {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  min-height: 3rem;
+}
+
+.activeConsultBox p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Elementos Extras */
 .expandido {
   background: #f9f9f9;
   padding: 20px;
@@ -739,7 +523,8 @@
   margin-bottom: 1rem;
 }
 
-.historicoBox {
+.historicoBox,
+.anamneseBox {
   background: #fff;
   padding: 1rem;
   border-radius: 10px;
@@ -776,376 +561,77 @@
 .listContainer {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
   max-height: 400px;
   overflow-y: auto;
-  padding-right: 8px;
-}
-
-.card {
-  background: #f8f9fb;
-  border-radius: 12px;
-  padding: 0.8rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  transition: 0.2s ease;
-}
-
-.card:hover {
-  background: #eef2f7;
-  transform: translateY(-2px);
-}
-
-.infoArea {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  color: #333;
-}
-
-/* Ajustes para menuBox maior horizontalmente */
-.menuBox {
-  width: 90%;
-  /* Aumentei de, digamos, 80% para 90% para cobrir mais da tela */
-  max-width: 1200px;
-  /* Adicionei um max-width para não ficar excessivo em telas grandes */
-  /* Outros estilos existentes... */
-  height: 80b;
-}
-
-/* Novo header com título e botões */
-.menuHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-
-}
-
-.menuHeader h3 {
-  margin: 0;
-}
-
-.menuButtons {
-  display: flex;
-  gap: 0.5rem;
-  
-  /* Espaçamento entre botões */
-}
-
-/* Infos do paciente */
-.patientInfo {
-  margin-bottom: 1rem;
-}
-
-/* Ajustes para menuBox conter tudo dentro */
-.menuBox {
-  width: 90%;
-  max-width: 1200px;
-  max-height: 90vh;
-
-  overflow-y: auto;
-  /* Scroll vertical se o conteúdo exceder a altura */
-  /* Outros estilos existentes, como background, border-radius, etc. */
-}
-
-/* Novo header com título, infos e botões */
-.menuHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  /* Alinha ao topo para evitar desalinhamento */
-  margin-bottom: 0.5rem;
-}
-
-.titleAndInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  /* Espaçamento entre título e infos */
-}
-
-.menuButtons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-
-
-/* Centralizar a lista */
-.historicoBox {
-  text-align: left;
-}
-
-.historicoBox h4 {
-  color: #333;
-}
-
-.listContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-height: 350px;
-  /* controla o tamanho visível */
-  overflow-y: auto;
-  /* scroll só aqui */
   padding-right: 8px;
   scrollbar-width: thin;
   scrollbar-color: #007bff #f0f0f0;
 }
 
-
-/* Estilos existentes mantidos */
-.searchBox {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.searchInput {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.searchInput:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
-}
-
-/* card */
 .card {
   background: #f8f9fb;
   border-radius: 10px;
   padding: 1rem 1.25rem;
   display: block;
-  /* cada card ocupa a largura */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
-/* área que contém todas as linhas (cada linha tem 2 colunas label/value) */
-.infoArea {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* mantém linhas empilhadas; cada linha cria suas próprias colunas */
-  gap: 0.6rem;
-  width: 100%;
-}
-
-/* cada linha (label à esquerda, value à direita) — usamos grid para garantir alinhamento */
-.infoRow {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  /* label fixa, value ocupa o resto */
-  column-gap: 12px;
-  align-items: center;
-}
-
-/* label (título do campo) */
-.label {
-  font-weight: 700;
-  color: #1877f2;
-  /* azul para destaque */
-  font-size: 0.95rem;
-}
-
-/* value (conteúdo) */
-.value {
-  color: #222;
-  font-size: 0.95rem;
-  word-break: break-word;
-  /* evita overflow em strings longas (UUIDs, datas ISO, URLs) */
-  white-space: normal;
-}
-
-/* responsivo: em telas estreitas, empilha label em cima do value */
-@media (max-width: 640px) {
-  .infoRow {
-    grid-template-columns: 1fr;
-    /* uma coluna só */
-    row-gap: 4px;
-  }
-
-  .label {
-    font-size: 0.92rem;
-  }
-
-  .value {
-    font-size: 0.92rem;
-  }
-}
-
-/* hover / micro-interação */
 .card:hover {
   background: #eef6ff;
   transform: translateY(-2px);
 }
 
-/* Timer grande acima dos botões */
-.timerDisplay {
-  font-size: 2rem;
-  /* Grande */
-  font-weight: bold;
-  color: #007bff;
-  /* Azul para destacar */
-  text-align: center;
-  margin-bottom: 0.5rem;
-  /* Espaço acima dos botões */
+.infoArea {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  width: 100%;
+  color: #333;
 }
 
-/* Para as linhas de info na lista */
 .infoRow {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 12px;
+  align-items: center;
 }
 
 .label {
-  font-weight: bold;
-  color: #555;
-  flex: 0 0 40%;
-  /* Ajuste conforme necessário para alinhamento */
+  font-weight: 700;
+  color: #1877f2;
+  font-size: 0.95rem;
 }
 
 .value {
-  color: #333;
-  flex: 1;
-}
-
-/* Adicione ao seu home.module.css */
-
-/* Estilo para a caixa da anamnese */
-.anamneseBox {
-  background: #fff;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
-}
-
-.anamneseBox h4 {
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-/* Formulário em lista vertical */
-.formGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  /* Espaço entre cada campo */
-
-}
-
-/* Mantém o comportamento padrão dos campos de texto */
-.formGrid label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: #333;
-  width: 100%;
-}
-
-/* Corrige o alinhamento das checkboxes */
-.formGrid label:has(input[type="checkbox"]) {
-  flex-direction: row;
-  /* checkbox + texto lado a lado */
-  align-items: center;
-  /* centraliza verticalmente */
-  gap: 0.6rem;
-  /* pequeno espaço entre checkbox e texto */
-  font-weight: 500;
-}
-
-/* Garante que a checkbox fique à esquerda */
-.formGrid input[type="checkbox"] {
-  margin-left: 0;
-  width: auto;
-  /* não ocupa toda a largura */
-  flex-shrink: 0;
-  /* impede de "esticar" com o label */
-}
-
-
-.formGrid input,
-.formGrid textarea {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  color: #222;
   font-size: 0.95rem;
-  transition: border-color 0.2s ease;
-
+  word-break: break-word;
+  white-space: normal;
 }
 
-.formGrid input:focus,
-.formGrid textarea:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+@media (max-width: 640px) {
+  .infoRow {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+  .label,
+  .value {
+    font-size: 0.92rem;
+  }
 }
 
-.formGrid textarea {
-  resize: vertical;
-  min-height: 60px;
+/* Timer */
+.timerDisplay {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-
-
-
-
-/* Botão salvar */
-.saveBtn {
-
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  border: 2px solid #28a745;
-  background: transparent;
-  color: #28a745;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  align-self: flex-start;
-  /* Alinha à esquerda */
-}
-
-.saveBtn:hover {
-  background: #28a745;
-  color: white;
-}
-
-/* Atualize o estilo para textareas no seu home.module.css */
-
-.formGrid textarea {
-  resize: vertical;
-  /* Permite expansão vertical */
-  height: 2.5rem;
-  /* Altura inicial igual a um input normal */
-  min-height: 2.5rem;
-  /* Mínimo para não ficar menor */
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 0.95rem;
-  transition: border-color 0.2s ease;
-
-}
-
-.formGrid textarea:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
-}
-
+/* Abas e Popups */
 .tabHeader {
   display: flex;
   gap: 0.5rem;
@@ -1172,13 +658,11 @@
   border-color: #0077cc;
 }
 
+/* Overlay e PopupCard */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.4);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1191,7 +675,7 @@
   border-radius: 12px;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1203,7 +687,8 @@
   margin-top: 10px;
 }
 
-.confirmButton, .cancelButton {
+.confirmButton,
+.cancelButton {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
@@ -1217,4 +702,50 @@
 
 .cancelButton {
   background: #e0e0e0;
+}
+
+/* Anamnese */
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGrid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #333;
+  width: 100%;
+}
+
+.formGrid label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.formGrid input,
+.formGrid textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.formGrid input:focus,
+.formGrid textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.formGrid textarea {
+  resize: vertical;
+  height: 2.5rem;
+  min-height: 2.5rem;
 }

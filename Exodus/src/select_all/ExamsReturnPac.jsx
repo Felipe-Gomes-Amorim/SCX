@@ -57,6 +57,9 @@ export default function ExamsReturnPacList({ limit = null }) {
 
   return (
     <div className={Style.container}>
+
+      <h2>Área do Paciente</h2>
+      <div className={Style.subsection}>
       {/* 🟦 Títulos clicáveis */}
       <div className={Style.tabHeader}>
         <h3
@@ -148,6 +151,7 @@ export default function ExamsReturnPacList({ limit = null }) {
               ))}
         </div>
       )}
+    </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { mostrar_todos } from "../js/mostrar_todos.js";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
 import RegisterAtendimento from "../cadastro/registerAtendimento.jsx"; // ✅ importa o container do formulário
+import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
 
 export default function PatientDoctorList({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -14,6 +15,28 @@ export default function PatientDoctorList({ limit = null }) {
   const [showConsultaForm, setShowConsultaForm] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const token = localStorage.getItem("token");
+  const [instituicao, setInstituicao] = useState(null);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    let mounted = true;
+
+    async function loadhome() {
+      if (!token) return;
+      try {
+        const data = await checarClinica(token);
+        if (mounted) setInstituicao(data);
+      } catch (err) {
+        console.error("Failed to load home", err);
+      }
+    }
+
+    loadhome();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     async function carregarDados() {
@@ -62,63 +85,70 @@ export default function PatientDoctorList({ limit = null }) {
 
   return (
     <div className={Style.container}>
-      {/* 🟦 Abas clicáveis */}
-      <div className={Style.tabHeader}>
-        <h3
-          className={`${Style.title} ${
-            abaAtiva === "pacientes" ? Style.activeTab : ""
-          }`}
-          onClick={() => setAbaAtiva("pacientes")}
-        >
-          Pacientes
-        </h3>
-        <h3
-          className={`${Style.title} ${
-            abaAtiva === "medicos" ? Style.activeTab : ""
-          }`}
-          onClick={() => setAbaAtiva("medicos")}
-        >
-          Médicos Disponíveis
-        </h3>
-      </div>
+      <h2>Área da Secretária</h2>
+      <p>
+        <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
+      </p>
 
-      {/* 🔍 Barra de pesquisa com botão "+" à direita */}
-      <div className={Style.searchHeader}>
-        <div className={Style.searchBox}>
-          <input
-            type="text"
-            placeholder={
-              abaAtiva === "pacientes"
-                ? "Pesquisar por nome, telefone ou email..."
-                : "Pesquisar por nome ou email..."
-            }
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={Style.searchInput}
-          />
+      <div className={Style.subsection}>
+
+
+
+        {/* 🟦 Abas clicáveis */}
+        <div className={Style.tabHeader}>
+          <h3
+            className={`${Style.title} ${abaAtiva === "pacientes" ? Style.activeTab : ""
+              }`}
+            onClick={() => setAbaAtiva("pacientes")}
+          >
+            Pacientes
+          </h3>
+          <h3
+            className={`${Style.title} ${abaAtiva === "medicos" ? Style.activeTab : ""
+              }`}
+            onClick={() => setAbaAtiva("medicos")}
+          >
+            Médicos Disponíveis
+          </h3>
         </div>
-        {abaAtiva === "pacientes" && (
-          <Redirect
-            icon={maisIcon}
-            place="/checkPatient"
-            color="transparent"
-            hoverColor="transparent"
-            background="transparent"
-          />
-        )}
-      </div>
 
-      {/* Conteúdo */}
-      {carregando ? (
-        <p className={Style.info}>Carregando dados...</p>
-      ) : erro ? (
-        <p className={Style.error}>{erro}</p>
-      ) : displayedData.length === 0 ? (
-        <p className={Style.info}>Nenhum resultado encontrado.</p>
-      ) : (
-        <div className={Style.listContainer}>
-          {abaAtiva === "pacientes"
-            ? displayedData.map((item, index) => (
+        {/* 🔍 Barra de pesquisa com botão "+" à direita */}
+        <div className={Style.searchHeader}>
+          <div className={Style.searchBox}>
+            <input
+              type="text"
+              placeholder={
+                abaAtiva === "pacientes"
+                  ? "Pesquisar por nome, telefone ou email..."
+                  : "Pesquisar por nome ou email..."
+              }
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={Style.searchInput}
+            />
+          </div>
+          {abaAtiva === "pacientes" && (
+            <Redirect
+              icon={maisIcon}
+              place="/checkPatient"
+              color="transparent"
+              hoverColor="transparent"
+              background="transparent"
+            />
+          )}
+        </div>
+
+        {/* Conteúdo */}
+        {carregando ? (
+          <p className={Style.info}>Carregando dados...</p>
+        ) : erro ? (
+          <p className={Style.error}>{erro}</p>
+        ) : displayedData.length === 0 ? (
+          <p className={Style.info}>Nenhum resultado encontrado.</p>
+        ) : (
+          <div className={Style.listContainer}>
+            {abaAtiva === "pacientes"
+              ? displayedData.map((item, index) => (
                 <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
                     <span>
@@ -133,7 +163,7 @@ export default function PatientDoctorList({ limit = null }) {
                   </div>
                 </div>
               ))
-            : displayedData.map((item, index) => (
+              : displayedData.map((item, index) => (
                 <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
                     <span>
@@ -153,23 +183,24 @@ export default function PatientDoctorList({ limit = null }) {
                   </button>
                 </div>
               ))}
-        </div>
-      )}
-
-      {/* ⚡ Modal do formulário de consulta */}
-      {showConsultaForm && (
-        <div className={Style.overlay}>
-          <div className={Style.modal}>
-            <button
-              className={Style.closeButton}
-              onClick={() => setShowConsultaForm(false)}
-            >
-              ✕
-            </button>
-            <RegisterAtendimento selectedDoctor={selectedDoctor} />
           </div>
-        </div>
-      )}
+        )}
+
+        {/* ⚡ Modal do formulário de consulta */}
+        {showConsultaForm && (
+          <div className={Style.overlay}>
+            <div className={Style.modal}>
+              <button
+                className={Style.closeButton}
+                onClick={() => setShowConsultaForm(false)}
+              >
+                ✕
+              </button>
+              <RegisterAtendimento selectedDoctor={selectedDoctor} />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
