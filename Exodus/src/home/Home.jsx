@@ -137,7 +137,7 @@ export default function Home() {
 
                   {/* Botão para editar dados */}
                   <button
-                    className={Style.btn_edit}
+                    className={Style.btn}
                     onClick={handleEditProfile}
                   >
                     Editar meus dados
