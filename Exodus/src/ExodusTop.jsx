@@ -66,9 +66,19 @@ function ExodusTop() {
   const dynamicMenuItems = [];
   if (userData.roles?.some(role => role.name === "Admin")) {
     dynamicMenuItems.push(
-      { label: "Cadastrar Secretária", onClick: (navigate) => navigate("/registerSecretaria") }
+      { label: "Cadastrar Secretária", onClick: (navigate) => navigate("/registerSecretaria") },
+      { label: "Cadastrar Médico", onClick: (navigate) => navigate("/checkDoctor") },
+      { label: "Cadastrar Laboratório", onClick: (navigate) => navigate("/checkLab") }
     );
   }
+  else if (userData.roles?.some(role => role.name === "Secretary")) {
+    dynamicMenuItems.push(
+      { label: "Cadastrar Paciente", onClick: (navigate) => navigate("/register") },
+      
+    );
+  }
+
+  
 
   return (
     <>

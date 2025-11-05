@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Style from "./home.module.css"; // Assumindo que você pode adicionar estilos similares aqui, ou importar do outro módulo se compatível
 import { buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
-import { buscarConsultaAtual, encerrarConsulta, abrirConsulta } from "../js/fluxoMedico/consultas.js";
+import {
+  verificarConsultaAtiva,
+  buscarAtendimentoAtual,
+  encerrarAtendimento,
+  abrirConsulta
+} from "../js/fluxoMedico/consultas.js";
+
 import { getAppointmentsPat } from "../js/fluxoMedico/getAppointmentsPat.js";
 import { useNavigate } from "react-router-dom";
 import { salvarAnamneseAPI } from "../js/fluxoMedico/anamnese.js";
+
+import { createCustomField } from "../js/createCustomField.js";
 
 export default function MedicoArea() {
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
@@ -13,6 +21,9 @@ export default function MedicoArea() {
   const [loading, setLoading] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [customName, setCustomName] = useState("");
+  const [customValue, setCustomValue] = useState("");
+  const [addingCustom, setAddingCustom] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Novo estado para pesquisa
@@ -46,24 +57,50 @@ export default function MedicoArea() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
+
+
   useEffect(() => {
     async function carregarDados() {
-      const consultaResp = await buscarConsultaAtual(token);
-      if (consultaResp?.success && consultaResp.data) {
-        setConsultaAtual(consultaResp.data);
-        // Não marcar como aberta automaticamente
-        setConsultaAbertaPorMedico(false);
-        setShowAnamnese(false);
-      } else {
-        setConsultaAtual(null);
-        setConsultaAbertaPorMedico(false);
+      setLoading(true);
+
+      try {
+        // 1️⃣ Verifica se há um atendimento ativo
+        const atendimentoResp = await buscarAtendimentoAtual(token);
+        console.log("📦 Atendimento atual retornado:", atendimentoResp);
+
+        if (atendimentoResp?.success && atendimentoResp.data) {
+          setConsultaAtual(atendimentoResp.data);
+
+          // 2️⃣ Agora verifica se há uma consulta ativa dentro do atendimento
+          const consultaCheck = await verificarConsultaAtiva(token);
+          console.log("🔍 Resultado verificarConsultaAtiva:", consultaCheck);
+
+          if (consultaCheck.success && consultaCheck.isConsulting) {
+            console.log("✅ Consulta ativa detectada dentro do atendimento.");
+            setConsultaAbertaPorMedico(true);
+            setShowAnamnese(true);
+          } else {
+            console.log("🟡 Nenhuma consulta ativa dentro do atendimento.");
+            setConsultaAbertaPorMedico(false);
+            setShowAnamnese(false);
+          }
+        } else {
+          // Nenhum atendimento ativo
+          setConsultaAtual(null);
+          setConsultaAbertaPorMedico(false);
+          setShowAnamnese(false);
+        }
+      } catch (error) {
+        console.error("⚠️ Erro ao carregar dados iniciais:", error);
+      } finally {
+        setLoading(false);
       }
-
-
-      setLoading(false);
     }
+
     carregarDados();
   }, [token]);
+
+
 
 
   // Timer: incrementa tempoDecorrido a cada segundo se consultaAbertaPorMedico for true
@@ -81,7 +118,7 @@ export default function MedicoArea() {
 
   async function confirmarEncerramento(patientShouldReturn) {
     setShowPopup(false);
-    const result = await encerrarConsulta(token, patientShouldReturn);
+    const result = await encerrarAtendimento(token, patientShouldReturn);
     if (result.success) {
       // alert("Consulta encerrada com sucesso!"); // Removido
       setConsultaAtual(null);
@@ -104,7 +141,7 @@ export default function MedicoArea() {
       setConsultaAbertaPorMedico(true);
       setTempoDecorrido(0);
       setShowAnamnese(true);
-      const consultaResp = await buscarConsultaAtual(token);
+      const consultaResp = await buscarAtendimentoAtual(token);
       if (consultaResp?.success) setConsultaAtual(consultaResp.data);
     } else {
       alert("Erro ao abrir consulta.");
@@ -125,6 +162,39 @@ export default function MedicoArea() {
       alert(result.message);
     }
   }
+
+
+
+  const handleSaveAnamnese = async () => {
+    const result = await salvarAnamneseAPI(anamneseData, token);
+    if (result.success) {
+      alert("Anamnese salva com sucesso!");
+      // abre o popup de campo customizado
+      setShowPopup(true);
+    } else {
+      alert("Erro ao salvar anamnese.");
+    }
+  };
+
+  const handleCreateCustomField = async () => {
+    if (!customName || !customValue) return alert("Preencha nome e valor!");
+    setAddingCustom(true);
+    const result = await createCustomField(customName, customValue, token);
+    setAddingCustom(false);
+
+    if (result.success) {
+      alert("Campo criado com sucesso!");
+      // limpa os campos
+      setCustomName("");
+      setCustomValue("");
+      // pergunta se quer criar outro
+      const outro = window.confirm("Deseja criar outro campo personalizado?");
+      if (!outro) setShowPopup(false);
+    } else {
+      alert("Erro ao criar campo: " + result.message);
+    }
+  };
+
 
 
 
@@ -354,7 +424,53 @@ export default function MedicoArea() {
                           <input type="number" step="0.1" value={anamneseData.bmi} readOnly />
                         </label>
                       </>
+
                     )}
+                    {showPopup && (
+                      <div className={Style.overlay}>
+                        <div className={Style.popupCard}>
+                          <h3>Criar Campo Personalizado</h3>
+                          <div className={Style.formGroup}>
+                            <label>Nome do campo</label>
+                            <input
+                              type="text"
+                              value={customName}
+                              onChange={(e) => setCustomName(e.target.value)}
+                              placeholder="Ex: Pressão arterial"
+                              className={Style.input}
+                            />
+                          </div>
+
+                          <div className={Style.formGroup}>
+                            <label>Valor</label>
+                            <input
+                              type="text"
+                              value={customValue}
+                              onChange={(e) => setCustomValue(e.target.value)}
+                              placeholder="Ex: 12/8"
+                              className={Style.input}
+                            />
+                          </div>
+
+                          <div className={Style.buttonsRow}>
+                            <button
+                              className={Style.confirmButton}
+                              onClick={handleCreateCustomField}
+                              disabled={addingCustom}
+                            >
+                              {addingCustom ? "Salvando..." : "Salvar Campo"}
+                            </button>
+                            <button
+                              className={Style.cancelButton}
+                              onClick={() => setShowPopup(false)}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
 
                     {/* 🧾 Seção 4: Observações e tratamento */}
                     {expanded === 3 && (

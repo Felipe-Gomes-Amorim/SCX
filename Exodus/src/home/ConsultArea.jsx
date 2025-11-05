@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Style from "./home.module.css";
-import { buscarConsultaAtual, encerrarConsulta } from "../js/fluxoMedico/consultas.js";
+import { buscarAtendimentoAtual, encerrarAtendimento } from "../js/fluxoMedico/consultas.js";
 import { useNavigate } from "react-router-dom";
 
 export default function ConsultArea() {
@@ -26,7 +26,7 @@ export default function ConsultArea() {
 
   async function handleEncerrarConsulta() {
     if (!consultaAtual) return;
-    const result = await encerrarConsulta(token);
+    const result = await encerrarAtendimento(token);
     if (result.success) {
       setConsultaAtual(null);
       setMostrarMenu(false);

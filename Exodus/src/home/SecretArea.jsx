@@ -33,21 +33,7 @@ export default function SecretariaArea() {
         <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
       </p>
 
-      {/* Seção de Cadastro */}
-      <div className={Style.subsection}>
-        <h3>Seção de Cadastro</h3>
-        <div className={Style.buttons}>
-       
-          <Redirect
-            text="Abrir Consulta"
-            place="/registerConsulta"
-            color="#007bff"
-            hoverColor="#ffffffff"
-            background="#ffffffff"
-            hoverBackground="#007bff"
-          />
-        </div>
-      </div>
+      
     </section>
   );
 }
