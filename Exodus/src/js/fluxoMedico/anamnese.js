@@ -1,24 +1,53 @@
-
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
+// 🔹 Função principal: salvar a anamnese
 export async function salvarAnamneseAPI(token, anamneseData) {
   try {
-    const response = await axios.post(`${API_URL}/doctor/registerAnamnese`, anamneseData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(
+      `${API_URL}/anamnese`,
+      anamneseData,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    // Se o backend respondeu 200, consideramos sucesso
-    if (response.status === 200) {
-      return { success: true, message: "Anamnese cadastrada com sucesso!" };
-    } else {
-      return { success: false, message: "Erro ao cadastrar anamnese." };
-    }
+    console.log("✅ Anamnese salva:", response.data);
+    return { success: true, data: response.data };
+
   } catch (error) {
-    console.error("Erro ao salvar anamnese:", error);
-    return { success: false, message: "Erro ao salvar anamnese." };
+    console.error("❌ Erro ao salvar anamnese:", error);
+    return { success: false, message: error.response?.data?.message || error.message };
+  }
+}
+
+// 🔹 Envia lista de campos customizados (CustomFieldDTO)
+export async function enviarCustomFieldsAPI(token, customFields) {
+  if (!Array.isArray(customFields) || customFields.length === 0) {
+    console.log("⚪ Nenhum campo customizado para enviar.");
+    return { success: true, message: "Sem campos extras." };
+  }
+
+  try {
+    const response = await axios.post(
+      `${API_URL}/anamnese/custom-fields`,
+      customFields,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("✅ Campos customizados enviados:", response.data);
+    return { success: true, data: response.data };
+
+  } catch (error) {
+    console.error("❌ Erro ao enviar campos customizados:", error);
+    return { success: false, message: error.response?.data?.message || error.message };
   }
 }
