@@ -28,3 +28,49 @@
 .FitObj button{
   width: 100%;
 }
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+/* Corrige o botão de olho sem afetar outros */
+.passwordContainer .eyeButton {
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: none;
+  border: none;
+}
+
+
+.passwordContainer input {
+  padding-right: 2.5rem; /* espaço para o botão do olho */
+  box-sizing: border-box;
+}
+
+/* 🔍 Botão do olho ajustado */
+.eyeButton {
+  position: absolute;
+  right: 0.8rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  color: #666;
+}
+
+.eyeButton:hover {
+  color: #007bff;
+}
+
+/* Garante que o SVG (ícone) fique pequeno e centralizado */
+.eyeButton svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}

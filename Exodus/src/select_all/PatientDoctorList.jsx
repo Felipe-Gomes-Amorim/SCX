@@ -100,7 +100,7 @@ export default function PatientDoctorList({ limit = null }) {
         {abaAtiva === "pacientes" && (
           <Redirect
             icon={maisIcon}
-            place="/register"
+            place="/checkPatient"
             color="transparent"
             hoverColor="transparent"
             background="transparent"

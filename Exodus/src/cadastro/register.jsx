@@ -6,15 +6,17 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarPaciente } from "../js/registros/cadastrar_paciente.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { formatCPF } from "../js/formatters.js";
 
 export default function RegisterPaciente() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
+  const cpfFromUrl = new URLSearchParams(location.search).get("cpf");
   const [formdata, setformdata]= useState({
     name: "",
-    cpf: "",
+    cpf: cpfFromUrl ? formatCPF(cpfFromUrl) : "",
     email: "",
   });
 

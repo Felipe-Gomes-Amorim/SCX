@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import ActionButton from "./ActionButton.jsx";
 import Style from "./DynamicForm.module.css";
+import { Eye, EyeOff } from "lucide-react";
 
 import {
   formatCNPJ,
@@ -21,6 +22,8 @@ export default function DynamicForm({
   loading,
   buttonStyle,
 }) {
+  const [showPassword, setShowPassword] = useState({});
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -32,7 +35,7 @@ export default function DynamicForm({
     if (name === "cid") formattedValue = formatCID(value);
     if (name === "cep") formattedValue = formatCEP(value);
 
-    onChangeValues(prev => ({ ...prev, [name]: formattedValue }));
+    onChangeValues((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
   const handleSubmit = (e) => {
@@ -48,6 +51,10 @@ export default function DynamicForm({
     }, {});
 
     onSubmit(cleanedData);
+  };
+
+  const togglePassword = (name) => {
+    setShowPassword((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
   return (
@@ -87,9 +94,36 @@ export default function DynamicForm({
                   required: field.required,
                   value: values[field.name],
                   onChange: handleChange,
-                  formdata: values,        // permite acessar todos os dados
-                  setformdata: onChangeValues, // permite atualizar vários campos
+                  formdata: values,
+                  setformdata: onChangeValues,
                 })}
+              </div>
+            );
+          }
+
+          // Campo de senha com botão de olho 👁️
+          if (field.type === "password") {
+            return (
+              <div key={index} className={Style.passwordContainer}>
+                <input
+                  type={showPassword[field.name] ? "text" : "password"}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  required={field.required}
+                  value={values[field.name]}
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  onClick={() => togglePassword(field.name)}
+                  className={Style.eyeButton}
+                >
+                  {showPassword[field.name] ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
               </div>
             );
           }
@@ -113,7 +147,11 @@ export default function DynamicForm({
         <ActionButton
           text={buttonText}
           loading={loading}
-          success={buttonText === "Enviado" || buttonText === "Cadastrado" || buttonText === "Verificado"} // 👈 muda cor automaticamente
+          success={
+            buttonText === "Enviado" ||
+            buttonText === "Cadastrado" ||
+            buttonText === "Verificado"
+          }
         />
       </div>
     </form>

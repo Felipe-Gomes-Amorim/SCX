@@ -21,7 +21,7 @@ import Home from './home/Home.jsx'
 import ResetSenha from './login/ResetSenha.jsx'
 import FirstLogin from './login/FirstLogin.jsx'
 import Notifications from './select_all/NotificList.jsx'
-
+import CheckPatient from './cadastro/Check-in Fluxo/CheckPatient.jsx'
 
 import SelectAll from './select_all/SelectAll.jsx'
 import RegisterSecretaria from './cadastro/registerSecretaria.jsx'
@@ -51,6 +51,7 @@ const router = createBrowserRouter([
   { path: "/firstLogin/:token?", element: <FirstLogin /> },
   { path: "/checkDoctor", element: <CheckDoctor /> },
   { path: "/checkLab", element: <CheckLaboratory /> },
+  { path: "/checkPatient", element: <CheckPatient /> },
   { path: "/selectAll/:role?", element: <SelectAll /> },
   { path: "/registerSecretaria", element: <RegisterSecretaria /> },
   { path: "/registerConsulta", element: <RegisterConsulta /> },
