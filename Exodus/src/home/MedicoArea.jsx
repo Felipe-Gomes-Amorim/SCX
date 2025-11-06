@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "./home.module.css";
 
-import { buscarAtendimentoAtual, verificarConsultaAtiva, encerrarAtendimento, abrirConsulta } from "../js/fluxoMedico/consultas.js";
+import { buscarAtendimentoAtual, verificarConsultaAtiva, encerrarAtendimento, abrirConsulta, buscarDiagnostico } from "../js/fluxoMedico/consultas.js";
 import { getAppointmentsPat } from "../js/fluxoMedico/getAppointmentsPat.js";
 import { salvarAnamneseAPI, enviarCustomFieldsAPI } from "../js/fluxoMedico/anamnese.js";
+
 
 export default function MedicoArea() {
   const navigate = useNavigate();
@@ -24,6 +25,10 @@ export default function MedicoArea() {
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [tempoDecorrido, setTempoDecorrido] = useState(0);
   const [consultaAbertaPorMedico, setConsultaAbertaPorMedico] = useState(false);
+
+  const [selectedConsulta, setSelectedConsulta] = useState(null);
+  const [diagnostico, setDiagnostico] = useState("");
+  const [loadingDiag, setLoadingDiag] = useState(false);
 
   const [customName, setCustomName] = useState("");
   const [customValue, setCustomValue] = useState("");
@@ -161,6 +166,24 @@ export default function MedicoArea() {
 
   if (loading) return <p>Carregando consulta...</p>;
 
+  async function abrirDetalhesConsulta(item) {
+    setSelectedConsulta(item);
+    setLoadingDiag(true);
+    setDiagnostico("");
+
+    const result = await buscarDiagnostico(token, item.idAppointment);
+
+    if (result.success) {
+      setDiagnostico(result.diagnostic);
+    } else {
+      setDiagnostico(result.diagnostic); // já vem com mensagem de erro
+    }
+
+    setLoadingDiag(false);
+  }
+
+
+
   return (
     <div className={Style.container}>
       <h2>Área do Médico</h2>
@@ -278,7 +301,7 @@ export default function MedicoArea() {
                         onClick={() => setShowCustomPopup(true)}
                         className={Style.saveBtn}
                       >
-                        + Adicionar Campo Personalizado
+                        + Adicionar Campo
                       </button>
 
                       {customFieldsList.length > 0 && (
@@ -343,7 +366,14 @@ export default function MedicoArea() {
                               <p><strong>Médico:</strong> {item.nameM || "-"}</p>
                               <p><strong>Clínica:</strong> {item.nameC || "-"}</p>
                               <p><strong>Especialidade:</strong> {item.specialty || "-"}</p>
+                              <button
+                                className={Style.detailBtn}
+                                onClick={() => abrirDetalhesConsulta(item)}
+                              >
+                                Ver Detalhes
+                              </button>
                             </div>
+
                           ))}
                         </div>
                       ) : <p>Nenhum atendimento encontrado.</p>}
@@ -368,8 +398,38 @@ export default function MedicoArea() {
             </div>
           )}
 
+
         </section>
       </div>
+      {selectedConsulta && (
+        <div className={Style.overlay}>
+          <div className={Style.popupCard}>
+            <h3>Detalhes da Consulta</h3>
+
+            <p><strong>Médico:</strong> {selectedConsulta.nameM || "-"}</p>
+            <p><strong>Clínica:</strong> {selectedConsulta.nameC || "-"}</p>
+            <p><strong>Especialidade:</strong> {selectedConsulta.specialty || "-"}</p>
+            <p><strong>Data de Conclusão:</strong> {formatarDataHora(selectedConsulta.dateEnd)}</p>
+
+            <hr />
+            <h4>Diagnóstico:</h4>
+            {loadingDiag ? (
+              <p>Carregando diagnóstico...</p>
+            ) : (
+              <textarea
+                readOnly
+                value={diagnostico}
+                className={Style.textAreaDiag}
+              />
+            )}
+
+            <div className={Style.buttonsRow}>
+              <button onClick={() => setSelectedConsulta(null)}>Fechar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

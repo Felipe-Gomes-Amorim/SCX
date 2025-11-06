@@ -96,3 +96,32 @@ export async function encerrarAtendimento(token, patientShouldReturn) {
     };
   }
 }
+// 🔹 Busca o diagnóstico de uma consulta específica (via query param)
+export async function buscarDiagnostico(token, idAppointment) {
+  try {
+    const response = await axios.get(
+      `${API_URL}/prontuario/getDiagnostic?id=${idAppointment}`, // 👈 Envia como query param
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      }
+    );
+
+    console.log("🧾 Diagnóstico retornado:", response.data);
+
+    return {
+      success: true,
+      data: response.data,
+      diagnostic: response.data?.diagnostic || "Sem diagnóstico registrado.",
+    };
+  } catch (error) {
+    console.error("❌ Erro ao buscar diagnóstico:", error);
+
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+      diagnostic: "Erro ao carregar diagnóstico.",
+    };
+  }
+}
