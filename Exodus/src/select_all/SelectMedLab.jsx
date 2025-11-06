@@ -3,7 +3,7 @@ import Style from "./SelectMedLab.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
-import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
+import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
 
 export default function SelectMedLab({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -82,13 +82,13 @@ export default function SelectMedLab({ limit = null }) {
 
   return (
     <div className={Style.container}>
-      {/* 🟦 Abas */}
-
-      <h2 className={Style.sectionTitle}>Área do Administrador</h2>
-      <p className={Style.infoText}>
-        <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
-      </p>
-      <div className={Style.subsection}>
+          <h2>Área do Administrador</h2>
+          <p>
+            <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
+          </p>
+    
+          <div className={Style.subsection}>
+    
       <div className={Style.tabHeader}>
         <h3
           className={`${Style.title} ${abaAtiva === "doctor" ? Style.activeTab : ""

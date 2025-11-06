@@ -69,13 +69,11 @@ export default function SelectClinics() {
             <div key={i} className={Style.card}>
               <div>
                 <strong>{clinica.name}</strong>
-                {clinicaAtiva?.name === clinica.name && (
-                  <span className={Style.activeTag}>Ativa</span>
-                )}
+                
               </div>
               <button
                 className={`${Style.button} ${
-                  clinicaAtiva?.name === clinica.name ? Style.disabled : ""
+                  clinicaAtiva?.name === clinica.name ? Style.ativo : ""
                 }`}
                 onClick={() => handleAtivarClinica(clinica)}
                 disabled={clinicaAtiva?.name === clinica.name}
