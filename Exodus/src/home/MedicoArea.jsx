@@ -278,7 +278,7 @@ export default function MedicoArea() {
                         onClick={() => setShowCustomPopup(true)}
                         className={Style.saveBtn}
                       >
-                        + Adicionar Campo Personalizado
+                        + Adicionar Campo
                       </button>
 
                       {customFieldsList.length > 0 && (

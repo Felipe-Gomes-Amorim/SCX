@@ -56,9 +56,9 @@
 .btn,
 .rightPanel .btn,
 .saveBtn {
- 
+
   padding: 1rem 1rem;
-  
+
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
@@ -68,8 +68,22 @@
 }
 
 .edit_btn {
+  width: 10rem;
+  padding: 1rem 0;
   border: 2px solid #777;
+  background: transparent;
   color: #777;
+  border-radius: 8px;
+}
+
+.btn {
+
+  width: 10rem;
+  padding: 1rem 0;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
 }
 
 .edit_btn:hover {
@@ -79,8 +93,12 @@
 
 .logout_btn {
   margin-top: 1rem;
+  width: 10rem;
+  padding: 1rem 0;
   border: 2px solid #c53b3b;
+  background: transparent;
   color: #c53b3b;
+  border-radius: 8px;
 }
 
 .logout_btn:hover {
@@ -103,10 +121,16 @@
 
 .saveBtn {
   margin-top: 1rem;
+  width: 10rem;
+  padding: 1rem 0;
   border: 2px solid #28a745;
+  background: transparent;
   color: #28a745;
-  font-size: 1rem;
-  align-self: flex-start;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .saveBtn:hover {
@@ -575,7 +599,7 @@
   gap: 1rem;
   max-height: 400px;
   overflow-y: auto;
-  
+
   scrollbar-width: thin;
   scrollbar-color: #007bff #f0f0f0;
 }
