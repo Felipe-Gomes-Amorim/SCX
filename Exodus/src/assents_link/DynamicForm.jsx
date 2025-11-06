@@ -150,7 +150,8 @@ export default function DynamicForm({
           success={
             buttonText === "Enviado" ||
             buttonText === "Cadastrado" ||
-            buttonText === "Verificado"
+            buttonText === "Verificado" ||
+            buttonText === "Ativa"
           }
         />
       </div>

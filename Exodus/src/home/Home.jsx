@@ -23,6 +23,7 @@ import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
 import SelectMedLab from "../select_all/SelectMedLab.jsx";
 import PatientList from "../select_all/PatientDoctorList.jsx";
 import ProfileCard from "../login/Profile.jsx"; // ✅ Novo import
+import ExamsRequests from "../select_all/ExamsRequest.jsx";
 
 export default function Home() {
   const [userData, setUserData] = useState({
@@ -186,10 +187,10 @@ export default function Home() {
                     <SuporteArea />
                   ) : (
                     <>
-                      {userData.roles?.some(role => role.name === "Doctor") && <><MedicoArea /><ExamsReturn /></>}
+                      {userData.roles?.some(role => role.name === "Doctor") && <><MedicoArea /></>}
                       {userData.roles?.some(role => role.name === "Patient") && <><ExamsReturnPacList /></>}
                       {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /></>}
-                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <LabArea />}
+                      {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <ExamsRequests/>}
                     </>
                   )}
                 </div>

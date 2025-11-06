@@ -100,3 +100,11 @@
   color: #c53b3b;
   font-weight: 600;
 }
+.ativo {
+  -webkit-text-fill-color: white;
+  border-color: rgb(255, 255, 255) !important;
+  
+  background-color: #28a745 !important; /* Verde */
+  cursor: default;
+}
+

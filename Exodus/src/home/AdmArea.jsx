@@ -4,6 +4,7 @@ import Redirect from "../assents_link/Redirect.jsx";
 import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
 
 export default function AdmArea() {
+ 
   const [instituicao, setInstituicao] = useState(null);
 
   useEffect(() => {
