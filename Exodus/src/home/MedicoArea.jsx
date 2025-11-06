@@ -163,7 +163,7 @@ export default function MedicoArea() {
 
   return (
     <div className={Style.container}>
-      <h2>Área do Administrador</h2>
+      <h2>Área do Médico</h2>
       <div className={Style.subsection}>
         <section className={Style.prontuarioSection}>
           {consultaAtual && (

@@ -4,6 +4,7 @@ import Style from "./Notifications.module.css"; // Você pode criar um CSS espec
 import { mostrar_todos } from "../js/mostrar_todos.js"; // Reutilizando a função existente
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
+import { marcarComoLida } from "../js/marcarNotific.js";
 
 export default function Notifications() {
   const [notificacoes, setNotificacoes] = useState([]);
@@ -43,6 +44,27 @@ export default function Notifications() {
     );
   });
 
+  async function handleMarcarComoLida(id) {
+    const token = localStorage.getItem("token");
+    try {
+      await marcarComoLida(id, token);
+
+      // Atualiza o estado local (opcional, mas deixa a UI imediata)
+      setNotificacoes((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, readFile: true } : n))
+      );
+
+      
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 500); 
+    } catch (err) {
+      console.error("Erro ao marcar como lida:", err);
+      window.location.href = window.location.href;
+    }
+  }
+
+
   return (
     <>
       <ExodusTop />
@@ -81,12 +103,25 @@ export default function Notifications() {
                     <label className={Style.label}>Mensagem:</label>
                     <span className={Style.data}>{notificacao.message || "-"}</span>
                   </div>
+                  
+                  
                   <div className={Style.field}>
-                    <span className={Style.data}>{notificacao.readFile ? "Não lida" : "Lida"}</span>
+                    <span className={Style.data}>
+                      {notificacao.readFile ? "Lida" : "Não lida"}
+                    </span>
                   </div>
                 </div>
-                {/* Aqui você pode adicionar ações, como marcar como lida, se necessário */}
+
+
+                <button
+                  className={Style.markReadBtn}
+                  onClick={() => handleMarcarComoLida(notificacao.id)}
+                >
+                  Marcar como lida
+                </button>
+
               </div>
+
             ))}
           </div>
         )}
