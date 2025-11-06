@@ -46,7 +46,7 @@ export default function PatientDoctorList({ limit = null }) {
         const endpoint = abaAtiva === "pacientes" ? "patient" : "doctorAval";
         const data = await mostrar_todos(endpoint, token);
         if (data && data.length > 0) setDados(data);
-        else setErro("Nenhum registro encontrado.");
+        else setErro("Nenhum registro encontrado ou disponível.");
       } catch (err) {
         console.error(err);
         setErro("Erro ao buscar dados.");
