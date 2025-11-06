@@ -18,7 +18,8 @@ export default function MedicoArea() {
   const [expanded, setExpanded] = useState(null);
   const [showAnamnese, setShowAnamnese] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showCustomPopup, setShowCustomPopup] = useState(false); // popup de campo personalizado
+  const [showEndPopup, setShowEndPopup] = useState(false); // popup de encerramento
   const [loading, setLoading] = useState(true);
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [tempoDecorrido, setTempoDecorrido] = useState(0);
@@ -68,7 +69,7 @@ export default function MedicoArea() {
 
   // 🔹 Encerrar consulta
   async function confirmarEncerramento(patientShouldReturn) {
-    setShowPopup(false);
+    setShowEndPopup(false);
     const result = await encerrarAtendimento(token, patientShouldReturn);
     if (result.success) {
       setConsultaAtual(null);
@@ -120,7 +121,7 @@ export default function MedicoArea() {
     if (!customName || !customValue) return alert("Preencha nome e valor!");
     setCustomFieldsList(prev => [...prev, { fieldName: customName, fieldValue: customValue }]);
     setCustomName(""); setCustomValue("");
-    if (!window.confirm("Deseja criar outro campo personalizado?")) setShowPopup(false);
+    if (!window.confirm("Deseja criar outro campo personalizado?")) setShowCustomPopup(false);
   };
 
   // 📋 Histórico
@@ -184,7 +185,7 @@ export default function MedicoArea() {
                   <div className={Style.menuButtons}>
                     {consultaAbertaPorMedico && <div className={Style.timerDisplay}>{formatarTempo(tempoDecorrido)}</div>}
                     {!consultaAbertaPorMedico && <button onClick={iniciarNovaConsulta}>Abrir Consulta</button>}
-                    {consultaAbertaPorMedico && <button onClick={() => setShowPopup(true)}>Encerrar Atendimento</button>}
+                    <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
                     <button className={Style.closeBtn} onClick={() => setShowMenu(false)}>Voltar</button>
                   </div>
                 </div>
@@ -272,26 +273,60 @@ export default function MedicoArea() {
                           </>
                         )}
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowCustomPopup(true)}
+                        className={Style.saveBtn}
+                      >
+                        + Adicionar Campo Personalizado
+                      </button>
+
+                      {customFieldsList.length > 0 && (
+                        <div className={Style.customFieldsList}>
+                          <h5>Campos Personalizados Criados:</h5>
+                          <ul>
+                            {customFieldsList.map((field, i) => (
+                              <li key={i}>
+                                <strong>{field.fieldName}:</strong> {field.fieldValue}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+
 
                       <button type="submit" className={Style.saveBtn}>Salvar Anamnese</button>
                     </form>
 
                     {/* Popup para criar campo customizado */}
-                    {showPopup && (
+                    {showCustomPopup && (
                       <div className={Style.overlay}>
                         <div className={Style.popupCard}>
                           <h3>Criar Campo Personalizado</h3>
+
                           <label>Nome do campo</label>
-                          <input value={customName} onChange={e => setCustomName(e.target.value)} placeholder="Ex: Pressão arterial" />
+                          <input
+                            value={customName}
+                            onChange={e => setCustomName(e.target.value)}
+                            placeholder="Ex: Pressão arterial"
+                          />
+
                           <label>Valor</label>
-                          <input value={customValue} onChange={e => setCustomValue(e.target.value)} placeholder="Ex: 12/8" />
+                          <input
+                            value={customValue}
+                            onChange={e => setCustomValue(e.target.value)}
+                            placeholder="Ex: 12/8"
+                          />
+
                           <div className={Style.buttonsRow}>
                             <button onClick={handleCreateCustomField}>Salvar Campo</button>
-                            <button onClick={() => setShowPopup(false)}>Cancelar</button>
+                            <button onClick={() => setShowCustomPopup(false)}>Cancelar</button>
                           </div>
                         </div>
                       </div>
                     )}
+
                   </div>
                 ) : (
                   // 🧾 Histórico do paciente
@@ -318,19 +353,21 @@ export default function MedicoArea() {
             </div>
           )}
 
-          {showPopup && (
+          {showEndPopup && (
             <div className={Style.popupOverlay}>
               <div className={Style.popupBox}>
                 <h3>Deseja que o paciente retorne?</h3>
                 <p>Essa ação encerrará a consulta atual.</p>
+
                 <div className={Style.popupButtons}>
                   <button onClick={() => confirmarEncerramento(true)}>Sim, ele deve voltar</button>
                   <button onClick={() => confirmarEncerramento(false)}>Não, encerrar normalmente</button>
-                  <button className={Style.cancelBtn} onClick={() => setShowPopup(false)}>Cancelar</button>
+                  <button className={Style.cancelBtn} onClick={() => setShowEndPopup(false)}>Cancelar</button>
                 </div>
               </div>
             </div>
           )}
+
         </section>
       </div>
     </div>

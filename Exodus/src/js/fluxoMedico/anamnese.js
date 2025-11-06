@@ -5,7 +5,7 @@ import API_URL from "../apiConfig.js";
 export async function salvarAnamneseAPI(token, anamneseData) {
   try {
     const response = await axios.post(
-      `${API_URL}/anamnese`,
+      `${API_URL}/doctor/registerAnamnese`,
       anamneseData,
       {
         headers: {
@@ -33,7 +33,7 @@ export async function enviarCustomFieldsAPI(token, customFields) {
 
   try {
     const response = await axios.post(
-      `${API_URL}/anamnese/custom-fields`,
+      `${API_URL}/doctor/createCustomField`,
       customFields,
       {
         headers: {

@@ -56,8 +56,9 @@
 .btn,
 .rightPanel .btn,
 .saveBtn {
-  width: 10rem;
-  padding: 1rem 0;
+ 
+  padding: 1rem 1rem;
+  
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
