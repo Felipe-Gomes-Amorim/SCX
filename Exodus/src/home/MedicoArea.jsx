@@ -5,7 +5,11 @@ import Style from "./home.module.css";
 import { buscarAtendimentoAtual, verificarConsultaAtiva, encerrarAtendimento, abrirConsulta, buscarDiagnostico } from "../js/fluxoMedico/consultas.js";
 import { getAppointmentsPat } from "../js/fluxoMedico/getAppointmentsPat.js";
 import { salvarAnamneseAPI, enviarCustomFieldsAPI } from "../js/fluxoMedico/anamnese.js";
+import ConsultaMenu from "../components/AreaMedico/ConsultaMenu";
 
+import HistoricoConsultas from "../components/AreaMedico/HistoricoConsultas.jsx";
+import ConsultaDetalhesModal from "../components/AreaMedico/ConsultaDetalhesModal.jsx";
+import EncerrarAtendimentoPopup from "../components/AreaMedico/EncerrarAtendimentoPopup.jsx";
 
 export default function MedicoArea() {
   const navigate = useNavigate();
@@ -197,237 +201,58 @@ export default function MedicoArea() {
           )}
 
           {showMenu && (
-            <div className={Style.menuOverlay}>
-              <div className={Style.menuBox}>
-                <div className={Style.menuHeader}>
-                  <div>
-                    <h3>Paciente: {consultaAtual?.name}</h3>
-                    <p><strong>Início:</strong> {consultaAtual?.localTime}</p>
-                  </div>
-
-                  <div className={Style.menuButtons}>
-                    {consultaAbertaPorMedico && <div className={Style.timerDisplay}>{formatarTempo(tempoDecorrido)}</div>}
-                    {!consultaAbertaPorMedico && <button onClick={iniciarNovaConsulta}>Abrir Consulta</button>}
-                    <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
-                    <button className={Style.closeBtn} onClick={() => setShowMenu(false)}>Voltar</button>
-                  </div>
-                </div>
-
-                {showAnamnese ? (
-                  <div className={Style.anamneseBox}>
-                    <h4>Anamnese</h4>
-
-                    {/* Abas */}
-                    <div className={Style.tabHeader}>
-                      {["Queixa e Doença Atual", "Hábitos e Estilo de Vida", "Exame Físico", "Observações e Tratamento"]
-                        .map((tab, idx) => (
-                          <button key={idx} className={`${Style.tabButton} ${expanded === idx ? Style.activeTab : ""}`}
-                            onClick={() => setExpanded(idx)}>{tab}</button>
-                        ))}
-                    </div>
-
-                    <form onSubmit={e => { e.preventDefault(); salvarAnamnese(); }}>
-                      <div className={Style.formGrid}>
-                        {/* Seções 1–4 */}
-                        {expanded === 0 && (
-                          <>
-                            <label>Queixa Principal:
-                              <textarea value={anamneseData.mainComplaint} onChange={e => setAnamneseData({ ...anamneseData, mainComplaint: e.target.value })} />
-                            </label>
-                            <label>História da Doença Atual:
-                              <textarea value={anamneseData.historyOfCurrentIllness} onChange={e => setAnamneseData({ ...anamneseData, historyOfCurrentIllness: e.target.value })} />
-                            </label>
-                            <label>História Médica Pessoal:
-                              <textarea value={anamneseData.personalMedicalHistory} onChange={e => setAnamneseData({ ...anamneseData, personalMedicalHistory: e.target.value })} />
-                            </label>
-                            <label>História Familiar:
-                              <textarea value={anamneseData.familyHistory} onChange={e => setAnamneseData({ ...anamneseData, familyHistory: e.target.value })} />
-                            </label>
-                            <label>Alergias:
-                              <input value={anamneseData.allergies} onChange={e => setAnamneseData({ ...anamneseData, allergies: e.target.value })} />
-                            </label>
-                          </>
-                        )}
-
-                        {expanded === 1 && (
-                          <>
-                            <label>Dieta:
-                              <input value={anamneseData.diet} onChange={e => setAnamneseData({ ...anamneseData, diet: e.target.value })} />
-                            </label>
-                            <label>Atividade Física:
-                              <input value={anamneseData.physicalActivity} onChange={e => setAnamneseData({ ...anamneseData, physicalActivity: e.target.value })} />
-                            </label>
-                            <label>Fumante:
-                              <input type="checkbox" checked={anamneseData.smoking} onChange={e => setAnamneseData({ ...anamneseData, smoking: e.target.checked })} />
-                            </label>
-                            <label>Alcoolismo:
-                              <input type="checkbox" checked={anamneseData.alcoholism} onChange={e => setAnamneseData({ ...anamneseData, alcoholism: e.target.checked })} />
-                            </label>
-                          </>
-                        )}
-
-                        {expanded === 2 && (
-                          <>
-                            <label>Peso:
-                              <input type="number" step="0.1" value={anamneseData.weight}
-                                onChange={e => { const v = e.target.value; setAnamneseData({ ...anamneseData, weight: v }); atualizarIMC(v, anamneseData.height); }} />
-                            </label>
-                            <label>Altura:
-                              <input type="number" step="0.01" value={anamneseData.height}
-                                onChange={e => { const v = e.target.value; setAnamneseData({ ...anamneseData, height: v }); atualizarIMC(anamneseData.weight, v); }} />
-                            </label>
-                            <label>IMC:
-                              <input readOnly value={anamneseData.bmi} />
-                            </label>
-                          </>
-                        )}
-
-                        {expanded === 3 && (
-                          <>
-                            <label>Observações:
-                              <textarea value={anamneseData.observations} onChange={e => setAnamneseData({ ...anamneseData, observations: e.target.value })} />
-                            </label>
-                            <label>Hipótese Diagnóstica:
-                              <textarea value={anamneseData.diagnosticHypothesis} onChange={e => setAnamneseData({ ...anamneseData, diagnosticHypothesis: e.target.value })} />
-                            </label>
-                            <label>Plano de Tratamento:
-                              <textarea value={anamneseData.treatmentPlan} onChange={e => setAnamneseData({ ...anamneseData, treatmentPlan: e.target.value })} />
-                            </label>
-                          </>
-                        )}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setShowCustomPopup(true)}
-                        className={Style.saveBtn}
-                      >
-                        + Adicionar Campo
-                      </button>
-
-                      {customFieldsList.length > 0 && (
-                        <div className={Style.customFieldsList}>
-                          <h5>Campos Personalizados Criados:</h5>
-                          <ul>
-                            {customFieldsList.map((field, i) => (
-                              <li key={i}>
-                                <strong>{field.fieldName}:</strong> {field.fieldValue}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-
-
-                      <button type="submit" className={Style.saveBtn}>Salvar Anamnese</button>
-                    </form>
-
-                    {/* Popup para criar campo customizado */}
-                    {showCustomPopup && (
-                      <div className={Style.overlay}>
-                        <div className={Style.popupCard}>
-                          <h3>Criar Campo Personalizado</h3>
-
-                          <label>Nome do campo</label>
-                          <input
-                            value={customName}
-                            onChange={e => setCustomName(e.target.value)}
-                            placeholder="Ex: Pressão arterial"
-                          />
-
-                          <label>Valor</label>
-                          <input
-                            value={customValue}
-                            onChange={e => setCustomValue(e.target.value)}
-                            placeholder="Ex: 12/8"
-                          />
-
-                          <div className={Style.buttonsRow}>
-                            <button onClick={handleCreateCustomField}>Salvar Campo</button>
-                            <button onClick={() => setShowCustomPopup(false)}>Cancelar</button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                  </div>
-                ) : (
-                  // 🧾 Histórico do paciente
-                  <div className={Style.historicoBox}>
-                    <h4>Prontuário do Paciente</h4>
-                    <input className={Style.searchInput} placeholder="Pesquisar por médico, clínica, especialidade ou ID..."
-                      value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                    {loadingHistorico ? <p>Carregando histórico...</p> :
-                      filteredHistorico.length > 0 ? (
-                        <div className={Style.listContainer}>
-                          {filteredHistorico.map((item, i) => (
-                            <div key={i} className={Style.card}>
-                              <p><strong>Conclusão:</strong> {formatarDataHora(item.dateEnd)}</p>
-                              <p><strong>Médico:</strong> {item.nameM || "-"}</p>
-                              <p><strong>Clínica:</strong> {item.nameC || "-"}</p>
-                              <p><strong>Especialidade:</strong> {item.specialty || "-"}</p>
-                              <button
-                                className={Style.detailBtn}
-                                onClick={() => abrirDetalhesConsulta(item)}
-                              >
-                                Ver Detalhes
-                              </button>
-                            </div>
-
-                          ))}
-                        </div>
-                      ) : <p>Nenhum atendimento encontrado.</p>}
-                  </div>
-                )}
-              </div>
-            </div>
+            <ConsultaMenu
+              consultaAtual={consultaAtual}
+              consultaAbertaPorMedico={consultaAbertaPorMedico}
+              tempoDecorrido={tempoDecorrido}
+              formatarTempo={formatarTempo}
+              iniciarNovaConsulta={iniciarNovaConsulta}
+              setShowEndPopup={setShowEndPopup}
+              setShowMenu={setShowMenu}
+              showAnamnese={showAnamnese}
+              expanded={expanded}
+              setExpanded={setExpanded}
+              anamneseData={anamneseData}
+              setAnamneseData={setAnamneseData}
+              atualizarIMC={atualizarIMC}
+              salvarAnamnese={salvarAnamnese}
+              showCustomPopup={showCustomPopup}
+              setShowCustomPopup={setShowCustomPopup}
+              customName={customName}
+              setCustomName={setCustomName}
+              customValue={customValue}
+              setCustomValue={setCustomValue}
+              handleCreateCustomField={handleCreateCustomField}
+              customFieldsList={customFieldsList}
+              
+              historico={historico}
+              loadingHistorico={loadingHistorico}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              abrirDetalhesConsulta={abrirDetalhesConsulta}
+              formatarDataHora={formatarDataHora}
+            />
           )}
+         
 
           {showEndPopup && (
-            <div className={Style.popupOverlay}>
-              <div className={Style.popupBox}>
-                <h3>Deseja que o paciente retorne?</h3>
-                <p>Essa ação encerrará a consulta atual.</p>
-
-                <div className={Style.popupButtons}>
-                  <button onClick={() => confirmarEncerramento(true)}>Sim, ele deve voltar</button>
-                  <button onClick={() => confirmarEncerramento(false)}>Não, encerrar normalmente</button>
-                  <button className={Style.cancelBtn} onClick={() => setShowEndPopup(false)}>Cancelar</button>
-                </div>
-              </div>
-            </div>
+            <EncerrarAtendimentoPopup
+              confirmarEncerramento={confirmarEncerramento}
+              setShowEndPopup={setShowEndPopup}
+            />
           )}
 
 
         </section>
       </div>
       {selectedConsulta && (
-        <div className={Style.overlay}>
-          <div className={Style.popupCard}>
-            <h3>Detalhes da Consulta</h3>
-
-            <p><strong>Médico:</strong> {selectedConsulta.nameM || "-"}</p>
-            <p><strong>Clínica:</strong> {selectedConsulta.nameC || "-"}</p>
-            <p><strong>Especialidade:</strong> {selectedConsulta.specialty || "-"}</p>
-            <p><strong>Data de Conclusão:</strong> {formatarDataHora(selectedConsulta.dateEnd)}</p>
-
-            <hr />
-            <h4>Diagnóstico:</h4>
-            {loadingDiag ? (
-              <p>Carregando diagnóstico...</p>
-            ) : (
-              <textarea
-                readOnly
-                value={diagnostico}
-                className={Style.textAreaDiag}
-              />
-            )}
-
-            <div className={Style.buttonsRow}>
-              <button onClick={() => setSelectedConsulta(null)}>Fechar</button>
-            </div>
-          </div>
-        </div>
+        <ConsultaDetalhesModal
+          selectedConsulta={selectedConsulta}
+          diagnostico={diagnostico}
+          loadingDiag={loadingDiag}
+          formatarDataHora={formatarDataHora}
+          setSelectedConsulta={setSelectedConsulta}
+        />
       )}
 
     </div>
