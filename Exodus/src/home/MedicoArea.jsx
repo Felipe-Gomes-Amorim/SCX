@@ -29,9 +29,11 @@ export default function MedicoArea() {
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [tempoDecorrido, setTempoDecorrido] = useState(0);
   const [consultaAbertaPorMedico, setConsultaAbertaPorMedico] = useState(false);
+  const [diagnostico, setDiagnostico] = useState("");
+  const [prescricao, setPrescricao] = useState("");
 
   const [selectedConsulta, setSelectedConsulta] = useState(null);
-  const [diagnostico, setDiagnostico] = useState("");
+
   const [loadingDiag, setLoadingDiag] = useState(false);
 
   const [customName, setCustomName] = useState("");
@@ -79,13 +81,27 @@ export default function MedicoArea() {
   // 🔹 Encerrar consulta
   async function confirmarEncerramento(patientShouldReturn) {
     setShowEndPopup(false);
-    const result = await encerrarAtendimento(token, patientShouldReturn);
+
+    // cria o objeto com todos os dados do encerramento
+
+
+
+    console.log("🧠 Diagnóstico:", diagnostico);
+    console.log("💊 Prescrição:", prescricao);
+    // envia tudo de uma vez
+    const result = await encerrarAtendimento(token, diagnostico,
+      prescricao,
+      patientShouldReturn);
+
     if (result.success) {
       setConsultaAtual(null);
       setConsultaAbertaPorMedico(false);
       setShowAnamnese(false);
       setShowMenu(false);
-    } else alert("Erro ao encerrar consulta.");
+      
+    } else {
+      alert("Erro ao encerrar consulta: " + result.message);
+    }
   }
 
   // 🔹 Abrir nova consulta
@@ -130,7 +146,7 @@ export default function MedicoArea() {
     if (!customName || !customValue) return alert("Preencha nome e valor!");
     setCustomFieldsList(prev => [...prev, { fieldName: customName, fieldValue: customValue }]);
     setCustomName(""); setCustomValue("");
-    if (!window.confirm("Deseja criar outro campo personalizado?")) setShowCustomPopup(false);
+    setShowCustomPopup(false);
   };
 
   // 📋 Histórico
@@ -224,16 +240,21 @@ export default function MedicoArea() {
               setCustomValue={setCustomValue}
               handleCreateCustomField={handleCreateCustomField}
               customFieldsList={customFieldsList}
-              
+
               historico={historico}
               loadingHistorico={loadingHistorico}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               abrirDetalhesConsulta={abrirDetalhesConsulta}
               formatarDataHora={formatarDataHora}
+
+              diagnostico={diagnostico}
+              setDiagnostico={setDiagnostico}
+              prescricao={prescricao}
+              setPrescricao={setPrescricao}
             />
           )}
-         
+
 
           {showEndPopup && (
             <EncerrarAtendimentoPopup

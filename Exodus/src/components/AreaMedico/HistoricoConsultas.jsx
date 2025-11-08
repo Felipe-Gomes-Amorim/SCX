@@ -47,7 +47,7 @@ export default function HistoricoConsultas({
                 <strong>Especialidade:</strong> {item.specialty || "-"}
               </p>
               <button
-                className={Style.detailBtn}
+                className={Style.btn}
                 onClick={() => abrirDetalhesConsulta(item)}
               >
                 Ver Detalhes

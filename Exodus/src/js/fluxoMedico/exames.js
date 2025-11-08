@@ -1,12 +1,12 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-const API_BASE = `${API_URL}/doctor`;
+const API_BASE = `${API_URL}`;
 
 export async function buscarLaboratorios() {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.get(`${API_BASE}/getLabDocCli`, {
+    const response = await axios.get(`${API_BASE}/doctor/getLabDocCli`, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
     });
 
@@ -23,7 +23,7 @@ export async function buscarLaboratorios() {
 export async function buscarTiposExame() {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.get(`${API_BASE}/getExamsType`, {
+    const response = await axios.get(`${API_BASE}/doctor/getExamsType`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -41,7 +41,7 @@ export async function buscarTiposExame() {
 export async function cadastrarRequisicaoExame(exameData) {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${API_BASE}/requestExm`, exameData, {
+    const response = await axios.post(`${API_BASE}/doctor/requestExm`, exameData, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
     });
 
@@ -52,5 +52,26 @@ export async function cadastrarRequisicaoExame(exameData) {
       success: false,
       message: error.response?.data?.error || "Erro no servidor.",
     };
+  }
+}
+
+export async function PDFExame(exameData) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `${API_BASE}/files/examsRequestPDF`,
+      exameData,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+        responseType: "arraybuffer",
+      }
+    );
+
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao gerar PDF:", error.response || error);
+    return { success: false, message: "Erro ao gerar PDF" };
   }
 }

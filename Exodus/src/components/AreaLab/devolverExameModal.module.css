@@ -1,0 +1,50 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btnFull {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 0.6rem;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnFull:hover {
+  background-color: #0056b3;
+}
+
+.btnClose {
+  margin-top: 1rem;
+  background: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+}
+
+.message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}

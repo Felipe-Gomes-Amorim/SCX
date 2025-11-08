@@ -48,7 +48,7 @@ export default function ExamsRequests({ limit = null }) {
 
   return (
     <div className={Style.container}>
-          <h2>Área da Secretária</h2>
+          <h2>Área do Laboratório</h2>
           
     
           <div className={Style.subsection}>

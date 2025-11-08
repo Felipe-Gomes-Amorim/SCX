@@ -2,32 +2,39 @@
 .login_page {
   background-image: url("../assets/fundo-login2.png");
   background-size: cover;
-  min-height: 120vh; /* Mantém vh para altura mínima baseada na viewport */
+  min-height: 120vh;
+  /* Mantém vh para altura mínima baseada na viewport */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.user_icon{
+
+.user_icon {
   justify-content: right;
 }
 
 .user_icon img {
-  width: 4rem; /* De px para rem (escala com zoom) */
+  width: 4rem;
+  /* De px para rem (escala com zoom) */
   height: 4rem;
   object-fit: cover;
   border-radius: 50%;
-  border: 0.1rem solid #A7A7A7; /* De px para rem */
+  border: 0.1rem solid #A7A7A7;
+  /* De px para rem */
   transition: all 0.3s ease;
 }
+
 .user_icon img:hover {
-  box-shadow: 0 0 1rem rgba(0, 123, 255, 0.8); /* De px para rem */
+  box-shadow: 0 0 1rem rgba(0, 123, 255, 0.8);
+  /* De px para rem */
   transform: scale(1.1);
 }
 
 /* Logo */
 .login_header {
   width: 100%;
-  padding: 0.9375rem 2.5rem; /* De 15px/40px para rem (15/16=0.9375, 40/16=2.5) */
+  padding: 0.9375rem 2.5rem;
+  /* De 15px/40px para rem (15/16=0.9375, 40/16=2.5) */
   background: linear-gradient(to right, #007bff, #0046b3);
   font-style: italic;
   display: flex;
@@ -41,28 +48,36 @@
 
 .login_header h1 {
   color: white;
-  font-size: 3rem; /* Já é rem, bom para zoom */
+  font-size: 3rem;
+  /* Já é rem, bom para zoom */
   font-weight: bold;
   text-decoration: none;
 }
 
 /* Card de login */
 .login_card {
-  top: 10vh; /* Mantém vh */
+  top: 10vh;
+  /* Mantém vh */
   display: flex;
   background: white;
-  margin-top: 2.5rem; /* De 40px para rem */
-  border-radius: 0.625rem; /* De 10px para rem */
-  width: 90vw; /* De 160vh (erro?) para 90% da largura da viewport - ajusta automaticamente */
-  max-width: 1200px; /* Limita largura máxima para telas grandes */
+  margin-top: 2.5rem;
+  /* De 40px para rem */
+  border-radius: 0.625rem;
+  /* De 10px para rem */
+  width: 90vw;
+  /* De 160vh (erro?) para 90% da largura da viewport - ajusta automaticamente */
+  max-width: 1200px;
+  /* Limita largura máxima para telas grandes */
   position: relative;
-  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.15); /* De px para rem */
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+  /* De px para rem */
 }
 
 /* Coluna esquerda */
 .login_left {
   flex: 1;
-  padding: 2.5rem; /* De 40px para rem */
+  padding: 2.5rem;
+  /* De 40px para rem */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,13 +86,15 @@
 }
 
 .login_left h2 {
-  font-size: 2.25rem; /* De 36px para rem */
+  font-size: 2.25rem;
+  /* De 36px para rem */
   font-weight: bold;
   margin-bottom: 2rem;
 }
 
 .login_left .subtitle {
-  font-size: 0.875rem; /* De 14px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
   margin-bottom: 0.6rem;
   color: #6c757d;
   font-style: italic;
@@ -85,18 +102,24 @@
 
 
 .login_left .subtitle2 {
-  font-size: 0.75rem; /* De 12px para rem */
+  font-size: 0.75rem;
+  /* De 12px para rem */
   margin-top: 1rem;
   color: #6c757d;
 }
 
 .login_left input {
   width: 100%;
-  border: 0.0625rem solid #ccc; /* De 1px para rem */
-  border-radius: 0.5rem; /* De 8px para rem */
-  margin-bottom: 1.25rem; /* De 20px para rem */
-  font-size: 0.875rem; /* De 14px para rem */
-  padding-right: 3.375rem; /* De 54px para rem (aprox.) */
+  border: 0.0625rem solid #ccc;
+  /* De 1px para rem */
+  border-radius: 0.5rem;
+  /* De 8px para rem */
+  margin-bottom: 1.25rem;
+  /* De 20px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
+  padding-right: 3.375rem;
+  /* De 54px para rem (aprox.) */
   text-align: left;
 }
 
@@ -109,27 +132,34 @@
 .login_left input:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 0 0.0625rem rgb(0, 123, 255); /* De 1px para rem */
+  box-shadow: 0 0 0 0.0625rem rgb(0, 123, 255);
+  /* De 1px para rem */
 }
 
 .login_left .btn {
-  padding: 0.625rem; /* De 10px para rem */
-  border: 0.125rem solid #007bff; /* De 2px para rem */
+  padding: 0.625rem;
+  /* De 10px para rem */
+  border: 0.125rem solid #007bff;
+  /* De 2px para rem */
   background: transparent;
   color: #007bff;
-  border-radius: 0.5rem; /* De 8px para rem */
+  border-radius: 0.5rem;
+  /* De 8px para rem */
   cursor: pointer;
-  font-size: 0.9375rem; /* De 15px para rem */
+  font-size: 0.9375rem;
+  /* De 15px para rem */
   text-transform: uppercase;
   font-weight: 600;
-  letter-spacing: 0.125rem; /* De 2px para rem */
+  letter-spacing: 0.125rem;
+  /* De 2px para rem */
   transition: all 0.2s ease-in;
 }
 
 .login_left .btn:hover {
   background: #007bff;
   color: white;
-  box-shadow: 0 0 1.875rem 0.3125rem rgba(12, 126, 255, 0.815); /* De px para rem */
+  box-shadow: 0 0 1.875rem 0.3125rem rgba(12, 126, 255, 0.815);
+  /* De px para rem */
   transition: all 0.2s ease-out;
 }
 
@@ -137,26 +167,31 @@
 .login_right {
   flex: 1;
   -webkit-text-fill-color: #ddd;
-  padding: 1.375rem; /* De 22px para rem */
+  padding: 1.375rem;
+  /* De 22px para rem */
   display: flex;
   text-align: right;
   flex-direction: column;
   justify-content: center;
-  border-radius: 0 0.625rem 0.625rem 0; /* De 10px para rem */
+  border-radius: 0 0.625rem 0.625rem 0;
+  /* De 10px para rem */
   position: relative;
   background: linear-gradient(to right, #007bff, #003b99);
   z-index: 2;
 }
 
 .login_right h2 {
-  font-size: 2rem; /* De 32px para rem */
-  margin-bottom: 0.9375rem; /* De 15px para rem */
+  font-size: 2rem;
+  /* De 32px para rem */
+  margin-bottom: 0.9375rem;
+  /* De 15px para rem */
   margin-right: 1rem;
 }
 
 .login_right p {
-  font-size: 0.75rem; /* De 12px para rem */
-  
+  font-size: 0.75rem;
+  /* De 12px para rem */
+
   direction: ltr;
   text-justify: inter-ideograph;
   font-weight: 200;
@@ -168,7 +203,8 @@
 /* Dropdown Wrapper */
 .dropdownWrapper {
   position: relative;
-  margin-bottom: 1.25rem; /* De 20px para rem */
+  margin-bottom: 1.25rem;
+  /* De 20px para rem */
   width: 72.5%;
   color: #007bff;
 }
@@ -176,10 +212,14 @@
 /* Botão principal do dropdown */
 .dropdownBtn {
   width: 100%;
-  padding: 0.75rem; /* De 12px para rem */
-  border: 0.0625rem solid #ccc; /* De 1px para rem */
-  border-radius: 0.5rem; /* De 8px para rem */
-  font-size: 0.875rem; /* De 14px para rem */
+  padding: 0.75rem;
+  /* De 12px para rem */
+  border: 0.0625rem solid #ccc;
+  /* De 1px para rem */
+  border-radius: 0.5rem;
+  /* De 8px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
   background: #fff;
   cursor: pointer;
   display: flex;
@@ -188,11 +228,15 @@
 }
 
 /* Setinhas do botão */
-.arrowDown, .arrowUp {
-  margin-left: 0.5rem; /* De 8px para rem */
-  font-size: 0.75rem; /* De 12px para rem */
+.arrowDown,
+.arrowUp {
+  margin-left: 0.5rem;
+  /* De 8px para rem */
+  font-size: 0.75rem;
+  /* De 12px para rem */
   transition: transform 0.25s ease;
 }
+
 .arrowUp {
   transform: rotate(180deg);
 }
@@ -200,14 +244,19 @@
 /* Dropdown */
 .dropdown {
   position: relative;
-  margin-bottom: 1.25rem; /* De 20px para rem */
+  margin-bottom: 1.25rem;
+  /* De 20px para rem */
 }
 
 .dropdownHeader {
-  padding: 0.75rem; /* De 12px para rem */
-  border: 0.0625rem solid #007bff; /* De 1px para rem */
-  border-radius: 0.5rem; /* De 8px para rem */
-  font-size: 0.875rem; /* De 14px para rem */
+  padding: 0.75rem;
+  /* De 12px para rem */
+  border: 0.0625rem solid #007bff;
+  /* De 1px para rem */
+  border-radius: 0.5rem;
+  /* De 8px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
   cursor: pointer;
   background: white;
   color: #333;
@@ -216,7 +265,8 @@
 
 .dropdownHeader:hover {
   border-color: #0056b3;
-  box-shadow: 0 0 0 0.125rem rgba(0, 123, 255, 0.2); /* De 2px para rem */
+  box-shadow: 0 0 0 0.125rem rgba(0, 123, 255, 0.2);
+  /* De 2px para rem */
 }
 
 .dropdownMenu {
@@ -225,19 +275,26 @@
   left: 0;
   width: 100%;
   background: white;
-  border: 0.0625rem solid #007bff; /* De 1px para rem */
-  border-radius: 0.5rem; /* De 8px para rem */
+  border: 0.0625rem solid #007bff;
+  /* De 1px para rem */
+  border-radius: 0.5rem;
+  /* De 8px para rem */
   list-style: none;
-  margin: 0.25rem 0 0 0; /* De 4px para rem */
-  padding: 0.375rem 0; /* De 6px para rem */
-  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.12); /* De px para rem */
+  margin: 0.25rem 0 0 0;
+  /* De 4px para rem */
+  padding: 0.375rem 0;
+  /* De 6px para rem */
+  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.12);
+  /* De px para rem */
   z-index: 9999;
 }
 
 .dropdownMenu li {
-  padding: 0.625rem 0.875rem; /* De 10px/14px para rem */
+  padding: 0.625rem 0.875rem;
+  /* De 10px/14px para rem */
   cursor: pointer;
-  font-size: 0.875rem; /* De 14px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
   transition: background 0.2s ease;
 }
 
@@ -253,8 +310,10 @@
 
 .formError {
   color: red !important;
-  font-size: 0.875rem; /* De 14px para rem */
-  margin: 0.5rem 0; /* De 8px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
+  margin: 0.5rem 0;
+  /* De 8px para rem */
   display: block;
 }
 
@@ -268,9 +327,11 @@
   background-color: transparent;
   border: none;
   border-radius: 50%;
-  width: 2.8125rem; /* De 45px para rem */
+  width: 2.8125rem;
+  /* De 45px para rem */
   height: 2.8125rem;
-  margin: 0 0.3125rem; /* De 5px para rem */
+  margin: 0 0.3125rem;
+  /* De 5px para rem */
   transition: all 0.3s ease;
 }
 
@@ -283,7 +344,8 @@
   background-color: transparent;
   border: none;
   border-radius: 50%;
-  width: 2.8125rem; /* De 45px para rem */
+  width: 2.8125rem;
+  /* De 45px para rem */
   height: 2.8125rem;
   transition: all 0.3s ease;
 }
@@ -291,35 +353,43 @@
 .addButton:hover {
   background-color: rgba(57, 152, 255, 0.8);
   color: #fff;
-  box-shadow: 0 0 0.9375rem rgba(57, 152, 255, 0.8); /* De 15px para rem */
+  box-shadow: 0 0 0.9375rem rgba(57, 152, 255, 0.8);
+  /* De 15px para rem */
   transform: scale(1.1);
 }
 
 .addButton2:hover {
   background-color: #007bff;
   color: #fff;
-  box-shadow: 0 0 0.9375rem rgba(0, 123, 255, 0.8); /* De 15px para rem */
+  box-shadow: 0 0 0.9375rem rgba(0, 123, 255, 0.8);
+  /* De 15px para rem */
   transform: scale(1.1);
 }
 
 /* Wrapper do botão + (para posicionar o menu) */
 .addButtonWrapper {
   position: relative;
-  
+
 }
 
 /* Menu suspenso */
 .addMenu {
   position: absolute;
-  top: 4rem; /* Já é rem */
+  top: 4rem;
+  /* Já é rem */
   right: 0;
   background: white;
-  border: 0.125rem solid #007bff; /* De 2px para rem */
-  border-radius: 0.625rem; /* De 10px para rem */
-  box-shadow: 0 -0.25rem #007bff; /* De -4px para rem */
+  border: 0.125rem solid #007bff;
+  /* De 2px para rem */
+  border-radius: 0.625rem;
+  /* De 10px para rem */
+  box-shadow: 0 -0.25rem #007bff;
+  /* De -4px para rem */
   z-index: 999;
-  min-width: 11.25rem; /* De 180px para rem */
-  padding: 0.625rem 0; /* De 10px para rem */
+  min-width: 11.25rem;
+  /* De 180px para rem */
+  padding: 0.625rem 0;
+  /* De 10px para rem */
   animation: fadeIn 0.2s ease-in-out;
 }
 
@@ -327,8 +397,10 @@
 .addMenu p {
   text-decoration: underline;
   margin: 0;
-  padding: 0.625rem 0.9375rem; /* De 10px/15px para rem */
-  font-size: 0.9375rem; /* De 15px para rem */
+  padding: 0.625rem 0.9375rem;
+  /* De 10px/15px para rem */
+  font-size: 0.9375rem;
+  /* De 15px para rem */
   color: #007bff;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
@@ -352,8 +424,10 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-0.3125rem); /* De -5px para rem */
+    transform: translateY(-0.3125rem);
+    /* De -5px para rem */
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -361,50 +435,76 @@
 }
 
 /* Media Queries para Responsividade */
-@media (max-width: 768px) { /* Telas pequenas (mobile) */
+@media (max-width: 768px) {
+
+  /* Telas pequenas (mobile) */
   .login_header {
-    padding: 0.75rem 1.25rem; /* Padding menor */
+    padding: 0.75rem 1.25rem;
+    /* Padding menor */
   }
+
   .login_header h1 {
-    font-size: 2rem; /* Logo menor */
+    font-size: 2rem;
+    /* Logo menor */
   }
+
   .login_card {
-    width: 95vw; /* Mais estreito */
-    flex-direction: column; /* Empilha colunas verticalmente */
+    width: 95vw;
+    /* Mais estreito */
+    flex-direction: column;
+    /* Empilha colunas verticalmente */
   }
-  .login_left, .login_right {
-    padding: 1.5rem; /* Padding menor */
+
+  .login_left,
+  .login_right {
+    padding: 1.5rem;
+    /* Padding menor */
   }
+
   .login_left h2 {
     font-size: 1.75rem;
   }
+
   .login_right h2 {
     font-size: 1.5rem;
   }
-  .addButton, .addButton2 {
-    width: 2.5rem; /* Botões menores */
+
+  .addButton,
+  .addButton2 {
+    width: 2.5rem;
+    /* Botões menores */
     height: 2.5rem;
   }
+
   .addMenu {
-    min-width: 10rem; /* Menu menor */
+    min-width: 10rem;
+    /* Menu menor */
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) { /* Telas médias (tablet) */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Telas médias (tablet) */
   .login_card {
-    width: 85vw; /* Ajuste intermediário */
+    width: 85vw;
+    /* Ajuste intermediário */
   }
+
   .login_left h2 {
     font-size: 2rem;
   }
+
   .login_right h2 {
     font-size: 1.75rem;
   }
 }
 
-@media (min-width: 1025px) { /* Telas grandes (desktop) */
+@media (min-width: 1025px) {
+
+  /* Telas grandes (desktop) */
   .login_card {
-    width: 80vw; /* Limita largura para não ficar excessivo */
+    width: 80vw;
+    /* Limita largura para não ficar excessivo */
   }
 }
 
@@ -414,7 +514,8 @@
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 0.9375rem; /* Espaço entre botões */
+  gap: 0.9375rem;
+  /* Espaço entre botões */
   position: relative;
 }
 
@@ -430,10 +531,12 @@
 /* Media Queries para Responsividade (ajuste se necessário) */
 @media (max-width: 768px) {
   .headerLeft {
-    gap: 0.5rem; /* Espaço menor em mobile */
+    gap: 0.5rem;
+    /* Espaço menor em mobile */
   }
-  
+
 }
+
 .cepButton {
   padding: 10px 6.1vh;
   border: 2px solid #007bff;
@@ -446,10 +549,10 @@
   font-weight: 600;
   letter-spacing: 2px;
   font-size: 15px;
- -webkit-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
-  margin-bottom: 1.3rem ;
+  margin-bottom: 1.3rem;
 }
 
 .cepButton:hover {
@@ -469,12 +572,52 @@
   padding: 2rem;
   max-width: 500px;
   margin: auto;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .subtitle {
-  font-size: 0.875rem; /* De 14px para rem */
+  font-size: 0.875rem;
+  /* De 14px para rem */
   margin-bottom: 0.6rem;
   color: #6c757d;
   font-style: italic;
+}
+
+/* === MODAL === */
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+}
+
+.modal_content {
+  position: fixed;
+  top: 20vh;
+  left: 30vw;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+
+  max-width: 480px;
+  z-index: 1001;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal_content h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.modal_content input,
+.modal_content select,
+.modal_content textarea {
+  margin-bottom: 1rem;
+  width: 100%;
 }

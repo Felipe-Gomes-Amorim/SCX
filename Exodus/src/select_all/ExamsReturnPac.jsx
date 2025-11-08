@@ -18,13 +18,25 @@ export default function ExamsReturnPacList({ limit = null }) {
       try {
         const endpoint =
           abaAtiva === "devolvidos" ? "examsReturnPac" : "pendingExams";
-
         const data = await mostrar_todos(endpoint, token);
-        console.log(data)
-        if (data && data.length > 0) setDados(data);
-        else setErro("Nenhum exame encontrado.");
-      } catch (err) {
-        console.error(err);
+
+        console.log("📡 Endpoint chamado:", endpoint);
+        console.log("🔑 Token:", token?.slice(0, 15) + "...");
+        console.log("📦 Dados recebidos:", data);
+        console.log(
+          "📊 Tipo de data:",
+          typeof data,
+          "| É array?",
+          Array.isArray(data),
+          "| Tamanho:",
+          data?.length
+        );
+        if (Array.isArray(data) && data.length > 0)
+          console.log("🧱 Primeiro item:", data[0]);
+
+        setDados(data || []);
+        if (!data?.length) setErro("Nenhum exame encontrado.");
+      } catch {
         setErro("Erro ao buscar exames.");
       } finally {
         setCarregando(false);
@@ -32,23 +44,24 @@ export default function ExamsReturnPacList({ limit = null }) {
     }
 
     carregarExames();
-  }, [token, abaAtiva]); // 👈 refaz a busca ao trocar a aba
+  }, [token, abaAtiva]);
 
   // 🔍 Filtra os exames
   const filteredData = dados.filter((item) => {
     const termo = searchTerm.toLowerCase();
+
     if (abaAtiva === "devolvidos") {
-      return (
-        item.cid?.toLowerCase().includes(termo) ||
-        item.observation?.toLowerCase().includes(termo) ||
-        item.result_value?.toLowerCase().includes(termo)
-      );
+      // pesquisa pelo nome do arquivo
+      return item.fileName?.toLowerCase().includes(termo);
     } else {
+      // pesquisa pelos campos de exames pendentes
       return (
-        item.exam_type?.toLowerCase().includes(termo) ||
-        item.sample_type?.toLowerCase().includes(termo) ||
-        item.complement?.toLowerCase().includes(termo) ||
-        item.name?.toLowerCase().includes(termo)
+        item.nameD?.toLowerCase().includes(termo) ||
+        item.nameC?.toLowerCase().includes(termo) ||
+        item.nameL?.toLowerCase().includes(termo) ||
+        item.typeEx?.toLowerCase().includes(termo) ||
+        item.typeAm?.toLowerCase().includes(termo) ||
+        item.complement?.toLowerCase().includes(termo)
       );
     }
   });
@@ -57,101 +70,108 @@ export default function ExamsReturnPacList({ limit = null }) {
 
   return (
     <div className={Style.container}>
-
       <h2>Área do Paciente</h2>
+
       <div className={Style.subsection}>
-      {/* 🟦 Títulos clicáveis */}
-      <div className={Style.tabHeader}>
-        <h3
-          className={`${Style.title} ${
-            abaAtiva === "devolvidos" ? Style.activeTab : ""
-          }`}
-          onClick={() => setAbaAtiva("devolvidos")}
-        >
-          Meus Exames Devolvidos
-        </h3>
-        <h3
-          className={`${Style.title} ${
-            abaAtiva === "pendentes" ? Style.activeTab : ""
-          }`}
-          onClick={() => setAbaAtiva("pendentes")}
-        >
-          Exames Pendentes
-        </h3>
-      </div>
+        {/* 🟦 Abas */}
+        <div className={Style.tabHeader}>
+          <h3
+            className={`${Style.title} ${abaAtiva === "devolvidos" ? Style.activeTab : ""
+              }`}
+            onClick={() => setAbaAtiva("devolvidos")}
+          >
+            Meus Exames Devolvidos
+          </h3>
+          <h3
+            className={`${Style.title} ${abaAtiva === "pendentes" ? Style.activeTab : ""
+              }`}
+            onClick={() => setAbaAtiva("pendentes")}
+          >
+            Exames Pendentes
+          </h3>
+        </div>
 
-      {/* 🔍 Caixa de pesquisa */}
-      <div className={Style.searchBox}>
-        <input
-          type="text"
-          placeholder={
-            abaAtiva === "devolvidos"
-              ? "Pesquisar por CID, resultado ou observação..."
-              : "Pesquisar por tipo, amostra, nome ou complemento..."
-          }
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={Style.searchInput}
-        />
-      </div>
+        {/* 🔍 Busca */}
+        <div className={Style.searchBox}>
+          <input
+            type="text"
+            placeholder={
+              abaAtiva === "devolvidos"
+                ? "Pesquisar por nome do arquivo..."
+                : "Pesquisar por tipo, amostra, paciente ou complemento..."
+            }
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={Style.searchInput}
+          />
+        </div>
 
-      {/* Conteúdo */}
-      {carregando ? (
-        <p className={Style.info}>Carregando exames...</p>
-      ) : erro ? (
-        <p className={Style.error}>{erro}</p>
-      ) : displayedData.length === 0 ? (
-        <p className={Style.info}>Nenhum resultado encontrado.</p>
-      ) : (
-        <div
-          className={Style.listContainer}
-          style={{ maxHeight: "500px", overflowY: "auto" }}
-        >
-          {abaAtiva === "devolvidos"
-            ? displayedData.map((item) => (
-                <div key={item.id} className={Style.card}>
+        {/* Conteúdo */}
+        {carregando ? (
+          <p className={Style.info}>Carregando exames...</p>
+        ) : erro ? (
+          <p className={Style.error}>{erro}</p>
+        ) : displayedData.length === 0 ? (
+          <p className={Style.info}>Nenhum resultado encontrado.</p>
+        ) : (
+          <div
+            className={Style.listContainer}
+            style={{ maxHeight: "500px", overflowY: "auto" }}
+          >
+            {/* --- DEDEVOLVIDOS --- */}
+            {abaAtiva === "devolvidos"
+              ? displayedData.map((item, index) => (
+                <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
-                    <span>
-                      <strong>CID:</strong> {item.cid || "-"}
-                    </span>
-                    <span>
-                      <strong>Valor:</strong> {item.result_value || "-"}
-                    </span>
-                    <span>
-                      <strong>Observação:</strong> {item.observation || "-"}
-                    </span>
+                    <p>
+                      <strong>Arquivo:</strong> {item.fileName || "-"}
+                    </p>
                   </div>
-                  {item.result_file_url && (
-                    <a
-                      href={item.result_file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={Style.downloadBtn}
-                    >
-                      📄 Ver Resultado
-                    </a>
-                  )}
+                  <button
+                    className={Style.downloadBtn}
+                    onClick={() => {
+                      // Chama a rota de preview do backend
+                      window.open(`http://localhost:8080/files/preview/${item.fileName}`, "_blank");
+                    }}
+                  >
+                    📄 Ver PDF
+                  </button>
                 </div>
               ))
-            : displayedData.map((item) => (
-                <div key={item.id} className={Style.card}>
+              : /* --- PENDENTES --- */
+              displayedData.map((item, index) => (
+                <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
-                    <span>
+                    <p>
+                      <strong>Paciente:</strong> {item.nameD || "-"}
+                    </p>
+                    <p>
+                      <strong>Convênio:</strong> {item.nameC || "-"}
+                    </p>
+                    <p>
+                      <strong>Laboratório:</strong> {item.nameL || "-"}
+                    </p>
+                    <p>
                       <strong>Tipo de Exame:</strong> {item.typeEx || "-"}
-                    </span>
-                    <span>
+                    </p>
+                    <p>
                       <strong>Tipo de Amostra:</strong> {item.typeAm || "-"}
-                    </span>
-                    <span>
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {item.status || "-"}
+                    </p>
+                    <p>
                       <strong>Complemento:</strong> {item.complement || "-"}
-                    </span>
-                    
+                    </p>
+                    <p>
+                      <strong>Data:</strong> {item.dateTime || "-"}
+                    </p>
                   </div>
                 </div>
               ))}
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

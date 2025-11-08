@@ -44,7 +44,7 @@ export async function cadastrarConsulta(consulta, tokenParam) {
   } catch (error) {
     console.error("Erro ao cadastrar consulta:", error.response || error);
     console.log(error.response.data.error)
-    let message = "Erro desconhecido ao cadastrar consulta";
+    let message = "CPF do paciente incorreto";
 
     if (error.response?.data?.error) {
       const backendError = error.response.data?.message;

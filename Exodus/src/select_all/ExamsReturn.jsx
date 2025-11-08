@@ -64,11 +64,9 @@ export default function ExamsReturn({ limit = null }) {
       ) : (
         <div className={Style.listContainer}>
           {displayedData.map((item) => (
-            <div key={item.id} className={Style.card}>
+            <div key={item.fileName} className={Style.card}>
               <div className={Style.infoArea}>
-                <span><strong>CID:</strong> {item.cid || "-"}</span>
-                <span><strong>Valor:</strong> {item.result_value || "-"}</span>
-                <span><strong>Observação:</strong> {item.observation || "-"}</span>
+                <span><strong>CID:</strong> {item.fileName || "-"}</span>
               </div>
 
               {item.result_file_url && (

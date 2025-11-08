@@ -197,16 +197,22 @@
 }
 
 .markReadBtn {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+   width: 10rem;
+  padding: 1rem 0;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 8px;
+  padding: .5rem .5rem;
+  margin: 0.2rem 0 1rem 1rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.2s;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease-in;
+  
 }
 
 .markReadBtn:hover {
-  background: #43a047;
+  background: #007bff;
+  color: white;
 }

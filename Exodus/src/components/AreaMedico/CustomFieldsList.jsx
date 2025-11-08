@@ -5,8 +5,8 @@ export default function CustomFieldsList({ customFieldsList }) {
   if (!customFieldsList.length) return null;
 
   return (
-    <div className={Style.customFieldsList}>
-      <h5>Campos Personalizados Criados:</h5>
+    <div className={Style.ListCustom}>
+      <h4>Campos Personalizados Criados:</h4>
       <ul>
         {customFieldsList.map((field, i) => (
           <li key={i}>

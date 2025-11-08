@@ -23,7 +23,6 @@ export default function AnamneseForm({
 }) {
   return (
     <div className={Style.anamneseBox}>
-      <h4>Anamnese</h4>
 
       {/* Abas */}
       <AnamneseTabs expanded={expanded} setExpanded={setExpanded} />
@@ -41,7 +40,7 @@ export default function AnamneseForm({
         <button
           type="button"
           onClick={() => setShowCustomPopup(true)}
-          className={Style.saveBtn}
+          className={Style.btn2}
         >
           + Adicionar Campo
         </button>
@@ -56,12 +55,13 @@ export default function AnamneseForm({
       {/* Popup Campo Customizado */}
       {showCustomPopup && (
         <CustomFieldPopup
+          showCustomPopup={showCustomPopup}
+          setShowCustomPopup={setShowCustomPopup}
           customName={customName}
           setCustomName={setCustomName}
           customValue={customValue}
           setCustomValue={setCustomValue}
           handleCreateCustomField={handleCreateCustomField}
-          setShowCustomPopup={setShowCustomPopup}
         />
       )}
     </div>
