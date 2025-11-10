@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Style from "./home.module.css";
 import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
 
 export default function AdmArea() {
   const [instituicao, setInstituicao] = useState(null);
