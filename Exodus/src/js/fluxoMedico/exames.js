@@ -73,7 +73,7 @@ export async function PDFExame(exameData) {
     const token = localStorage.getItem("token");
     const response = await axios.post(
       `${API_BASE}/files/examsRequestPDF`,
-      exameData,
+      { exameData },
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,

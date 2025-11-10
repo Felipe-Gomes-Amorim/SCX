@@ -123,7 +123,7 @@ export default function ConsultaMenu({
                   setPrescricao={setPrescricao}
                 />
               ) : (
-                <PedidoExame consultaAtual={consultaAtual} /> // ⬅️ nova aba
+                <PedidoExame consultaAtual={consultaAtual} /> 
               )}
             </div>
 
