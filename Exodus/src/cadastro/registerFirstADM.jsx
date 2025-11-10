@@ -6,7 +6,7 @@ import Footer from "../Footer.jsx";
 import Header from "../Header.jsx"
 import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
-import { useToast } from "./context/ToastProvider.jsx"; 
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
