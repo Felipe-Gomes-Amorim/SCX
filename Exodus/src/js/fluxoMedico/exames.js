@@ -55,7 +55,7 @@ export async function cadastrarRequisicaoExame() {
 export async function criarExames(payload) {
   try {
     const token = localStorage.getItem("token");
-    console.log("token passado para criar:", to);
+    console.log("token passado para criar:", token);
     console.log("payload passado para criar:", payload);
     const response = await axios.post(`${API_BASE}/doctor/createExams`, payload, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
