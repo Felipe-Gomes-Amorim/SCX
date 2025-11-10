@@ -6,7 +6,7 @@ import Header from "../Header.jsx";
 import { useNavigate } from "react-router-dom";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { firstLogin } from "../js/login e home/firstLogin.js";
-import { useToast } from "../context/ToastProvider.jsx"; // ✅ Import do novo sistema
+import { useToast } from "../context/ToastProvider.jsx";
 
 export default function FirstLogin() {
   const [loading, setLoading] = useState(false);

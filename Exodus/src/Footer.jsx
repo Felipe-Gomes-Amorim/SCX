@@ -1,19 +1,20 @@
 import Style from './Footer.module.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API_URL from './js/apiConfig.js'; // 🔹 Ajuste o caminho conforme seu projeto
+import API_URL from './js/apiConfig.js';
+import { useToast } from "./context/ToastProvider.jsx";
 
 function About() {
   const navigate = useNavigate();
-
+  const { showToast } = useToast();
   const handleSuporteClick = async () => {
     try {
       const response = await axios.post(`${API_URL}/adminSystem/registerUser`);
       console.log("✅ Rota chamada com sucesso:", response.data);
-      alert("Rota /adminSystem/registerUser chamada com sucesso!");
+      showToast("Rota /adminSystem/registerUser chamada com sucesso!");
     } catch (error) {
       console.error("❌ Erro ao chamar a rota:", error);
-      alert("Erro ao chamar a rota do back-end!");
+      showToast("Erro ao chamar a rota do back-end!");
     }
   };
 
@@ -32,8 +33,8 @@ function About() {
             <li><a href="#">Início</a></li>
             <li><a href="#">Sobre nós</a></li>
             <li>
-              <button 
-                className={Style.linkButton} 
+              <button
+                className={Style.linkButton}
                 onClick={handleSuporteClick}
               >
                 Suporte

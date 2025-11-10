@@ -8,6 +8,7 @@ import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarhome } from "../js/login e home/home.js";
 import { motion, AnimatePresence } from "framer-motion";
+import { useToast } from "./context/ToastProvider.jsx";
 
 import ExamsReturn from "../select_all/ExamsReturn.jsx";
 import AdmArea from "./AdmArea.jsx";
@@ -44,7 +45,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [showProfile, setShowProfile] = useState(false);
-
+  const { showToast } = useToast();
 
 
   const token = localStorage.getItem("token");
@@ -104,7 +105,7 @@ export default function Home() {
     if (result.success) {
       navigate("/");
     } else {
-      alert("Erro ao fazer logout: " + result.message);
+      showToast("Erro ao fazer logout: " + result.message);
     }
   };
 
@@ -210,7 +211,7 @@ export default function Home() {
                       {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /></>}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <><LabArea></LabArea></>}
                       {userData.roles?.some(role => role.name === "LaboratoryUser") && <LabAreaUser></LabAreaUser>}
-                      {userData.roles?.some(role => role.name === "AdminSystem") && <><AdmArea/><ClinicsList></ClinicsList></>}
+                      {userData.roles?.some(role => role.name === "AdminSystem") && <><AdmArea /><ClinicsList></ClinicsList></>}
                     </>
                   )}
                 </div>

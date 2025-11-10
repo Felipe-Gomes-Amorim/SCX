@@ -1,19 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./Header.module.css";
-import profilePic from "./assets/user-icon.png"; // ícone padrão
-import Avatar from "./assets/avatar.png"; // avatar do usuário
+import profilePic from "./assets/user-icon.png";
+import Avatar from "./assets/avatar.png";
 import { logoutUsuario } from "./js/login e home/logout.js";
+import { useToast } from "./context/ToastProvider.jsx";
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const userId = localStorage.getItem("id");
-    const role = localStorage.getItem("role"); // pega a role do usuário
+    const role = localStorage.getItem("role");
     setIsLogged(!!userId);
     setUserRole(role);
   }, []);
@@ -30,7 +32,7 @@ function Header() {
       // redireciona pra tela inicial
       navigate("/");
     } else {
-      alert("Erro ao fazer logout: " + result.message);
+      showToast("Erro ao fazer logout: " + result.message);
     }
   };
 

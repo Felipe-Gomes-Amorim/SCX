@@ -8,6 +8,7 @@ import Footer from "../Footer.jsx";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
 import testePDF from "../assets/teste.pdf";
+import { useToast } from "./context/ToastProvider.jsx";
 
 export default function SelectAll() {
   const { role } = useParams();
@@ -35,6 +36,7 @@ export default function SelectAll() {
     adm: "Administradores",
     history: "Histórico de Atividades",
   };
+  const { showToast } = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -74,7 +76,7 @@ export default function SelectAll() {
   }, [role]);
 
   const handleExcluir = (item) => {
-    alert(`Excluir ${item.name || item.nome}`);
+    showToast(`Excluir ${item.name || item.nome}`);
   };
 
   const handleAtivarClinica = async (clinica) => {
@@ -82,9 +84,9 @@ export default function SelectAll() {
     if (response.success) {
       setClinicaAtiva(clinica);
       localStorage.setItem("activeClinic", JSON.stringify(clinica));
-      alert(`Clínica "${clinica.name}" ativada com sucesso!`);
+      showToast(`Clínica "${clinica.name}" ativada com sucesso!`);
     } else {
-      alert(`Erro: ${response.message}`);
+      showToast(`Erro: ${response.message}`);
     }
   };
 
@@ -145,7 +147,7 @@ export default function SelectAll() {
               hoverBackground="transparent"
             />
           )}
-          
+
           {role === "lab" && (
             <Redirect
               place="/checkLab"
@@ -191,43 +193,43 @@ export default function SelectAll() {
                         <span className={Style.data}>{item.crm || "-"}</span>
                       </>
                     ) :
-                     role === "lab" ? (
-                      // Ordem personalizada para laboratorio
-                      <>
-                        <span className={Style.data}>{item.name || "-"}</span>
-                        <span className={Style.data}>{item.cnpj || "-"}</span>
-                      </>
-                    ):
-                     role === "tickets" ? (
-                      // Ordem personalizada para suporte
-                      <>
-                        <span className={Style.data}>{item.subject || "-"}</span>
-                        <span className={Style.data}>{item.message || "-"}</span>
-                      </>
-                    ) : role === "myTickets" ? (
-                      // Ordem personalizada para suporte
-                      <>
-                        
-                        <span className={Style.data}>{item.subject || "-"}</span>
-                        <span className={Style.data}>{item.message || "-"}</span>
-                        
-                        <span className={Style.data}>{item.response || "-"}</span>
-                      </>
-                    ): role === "clinics" ? (
-                      // Ordem personalizada para suporte
-                      <>
-                        
-                        <span className={Style.data}>{item.name || "-"}</span>
-                        
-                      </>
-                    ): (
-                      // Ordem padrão para outros roles
-                      Object.entries(item).map(([key, value], i) => (
-                        <span key={i} className={Style.data}>
-                          {value || "-"}
-                        </span>
-                      ))
-                    )}
+                      role === "lab" ? (
+                        // Ordem personalizada para laboratorio
+                        <>
+                          <span className={Style.data}>{item.name || "-"}</span>
+                          <span className={Style.data}>{item.cnpj || "-"}</span>
+                        </>
+                      ) :
+                        role === "tickets" ? (
+                          // Ordem personalizada para suporte
+                          <>
+                            <span className={Style.data}>{item.subject || "-"}</span>
+                            <span className={Style.data}>{item.message || "-"}</span>
+                          </>
+                        ) : role === "myTickets" ? (
+                          // Ordem personalizada para suporte
+                          <>
+
+                            <span className={Style.data}>{item.subject || "-"}</span>
+                            <span className={Style.data}>{item.message || "-"}</span>
+
+                            <span className={Style.data}>{item.response || "-"}</span>
+                          </>
+                        ) : role === "clinics" ? (
+                          // Ordem personalizada para suporte
+                          <>
+
+                            <span className={Style.data}>{item.name || "-"}</span>
+
+                          </>
+                        ) : (
+                          // Ordem padrão para outros roles
+                          Object.entries(item).map(([key, value], i) => (
+                            <span key={i} className={Style.data}>
+                              {value || "-"}
+                            </span>
+                          ))
+                        )}
 
                   </div>
 

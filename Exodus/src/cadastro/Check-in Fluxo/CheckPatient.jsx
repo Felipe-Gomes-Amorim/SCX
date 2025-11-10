@@ -14,7 +14,7 @@ export default function CheckPatient() {
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { showToast } = useToast(); // ✅ Usa o toast global
+  const { showToast } = useToast(); 
 
   const [formdata, setformdata] = useState({
     cpf: "",

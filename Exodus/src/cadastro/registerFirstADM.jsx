@@ -6,11 +6,13 @@ import Footer from "../Footer.jsx";
 import Header from "../Header.jsx"
 import { cadastrarAdm } from "../js/registros/cadastrate_adm.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { useToast } from "./context/ToastProvider.jsx"; 
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+    const { showToast } = useToast(); 
 
   // Campos que o formulário vai renderizar dinamicamente
   const fields = [
@@ -36,7 +38,7 @@ export default function Register() {
       const result = await cadastrarAdm(pacienteData);
 
       if (result.success) {
-        alert("ADM cadastrado com sucesso!");
+        showToast("ADM cadastrado com sucesso!");
         navigate("/"); // Redireciona para login
       } else {
         setErrorMessage(result.message || "Erro desconhecido ao cadastrar");

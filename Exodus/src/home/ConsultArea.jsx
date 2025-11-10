@@ -9,6 +9,7 @@ export default function ConsultArea() {
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { showToast } = useToast();
 
   useEffect(() => {
     async function carregarConsultaAtual() {
@@ -32,7 +33,7 @@ export default function ConsultArea() {
       setMostrarMenu(false);
       navigate("/home");
     } else {
-      alert("Erro ao encerrar consulta.");
+      showToast("Erro ao encerrar consulta.");
     }
   }
 

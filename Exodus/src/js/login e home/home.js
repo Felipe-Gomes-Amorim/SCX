@@ -45,12 +45,12 @@ export async function carregarhome(token) {
       console.log(exames)
     } catch (error) {
       console.error('Erro ao carregar exames:', error.response?.data || error.message);
-      alert('Erro ao carregar exames.');
+      showToast('Erro ao carregar exames.');
     
 
   } catch (error) {
     console.error('Erro ao carregar home:', error.response?.data || error.message);
-    alert('Erro ao carregar o home.');
+    showToast('Erro ao carregar o home.');
   }
 }
 */

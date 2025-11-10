@@ -7,7 +7,7 @@ import ExodusTop from "../ExodusTop.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
 import { formatCRM } from "../js/formatters.js";
-import { useToast } from "../context/ToastProvider.jsx"; // 👈 importa o hook do toaster
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function RegisterDoctor() {
   const [loading, setLoading] = useState(false);

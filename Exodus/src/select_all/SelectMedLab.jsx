@@ -16,7 +16,7 @@ export default function SelectMedLab({ limit = null }) {
   const [instituicao, setInstituicao] = useState(null);
   const token = localStorage.getItem("token");
 
-  const { showToast } = useToast(); // 👈 hook do toast
+  const { showToast } = useToast(); 
 
   // 🔍 Busca dados da instituição
   useEffect(() => {

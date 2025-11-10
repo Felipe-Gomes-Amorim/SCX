@@ -16,8 +16,7 @@ export default function RegisterAtendimento({ selectedDoctor = null, onClose }) 
     email: selectedDoctor?.email || "",
   });
   const navigate = useNavigate();
-  const { showToast } = useToast(); // ✅ Hook do toast
-
+  const { showToast } = useToast();
   useEffect(() => {
     // Só busca médicos se nenhum tiver sido passado
     if (!selectedDoctor) {

@@ -14,7 +14,7 @@ export default function RegisterPaciente() {
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { showToast } = useToast(); // ✅ Hook do toast
+  const { showToast } = useToast();
 
   const cpfFromUrl = new URLSearchParams(location.search).get("cpf");
 

@@ -3,6 +3,7 @@ import Style from "../home/selectClinics.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import { ativarClinica, buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "./context/ToastProvider.jsx";
 
 export default function SelectClinics() {
   const [clinicas, setClinicas] = useState([]);
@@ -48,9 +49,10 @@ export default function SelectClinics() {
       localStorage.setItem("activeClinic", JSON.stringify(clinica));
       navigate("/home");
     } else {
-      alert(`Erro: ${response.message}`);
+      showToast(`Erro: ${response.message}`);
     }
   };
+  const { showToast } = useToast();
 
   return (
     <div className={Style.container}>
@@ -69,12 +71,11 @@ export default function SelectClinics() {
             <div key={i} className={Style.card}>
               <div>
                 <strong>{clinica.name}</strong>
-                
+
               </div>
               <button
-                className={`${Style.button} ${
-                  clinicaAtiva?.name === clinica.name ? Style.ativo : ""
-                }`}
+                className={`${Style.button} ${clinicaAtiva?.name === clinica.name ? Style.ativo : ""
+                  }`}
                 onClick={() => handleAtivarClinica(clinica)}
                 disabled={clinicaAtiva?.name === clinica.name}
               >

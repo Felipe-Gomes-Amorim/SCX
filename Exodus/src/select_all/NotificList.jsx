@@ -5,7 +5,7 @@ import { mostrar_todos } from "../js/mostrar_todos.js";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import { marcarComoLida } from "../js/marcarNotific.js";
-import { useToast } from "../context/ToastProvider.jsx"; // 👈 importa o toast
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function Notifications() {
   const [notificacoes, setNotificacoes] = useState([]);

@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
-import { cadastrarAdm } from "../js/cadastrate_adm.js"; 
+import { cadastrarAdm } from "../js/cadastrate_adm.js";
 import ActionButton from "../assents_link/ActionButton.jsx";
+import { useToast } from "./context/ToastProvider.jsx";
 
 export default function RegisterAdm() {
   const [name, setNome] = useState("");
@@ -14,26 +15,27 @@ export default function RegisterAdm() {
   const [password_key, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { showToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
-    const admData = {email};
+    const admData = { email };
 
     //const token = localStorage.getItem("token"); 
 
-    const result = await cadastrarAdm(admData); 
-  
+    const result = await cadastrarAdm(admData);
+
 
     setLoading(false);
 
     if (!result.success) {
       setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
     }
-    else{
-      alert("Administrador cadastrado com sucesso!");
+    else {
+      showToast("Administrador cadastrado com sucesso!");
     }
   };
 
@@ -43,9 +45,9 @@ export default function RegisterAdm() {
         <ExodusTop />
 
         <div className={Style.login_card}>
-          
 
-          
+
+
 
           <motion.div className={Style.login_right}>
             <motion.h2
@@ -115,9 +117,9 @@ export default function RegisterAdm() {
               )}
 
               <ActionButton
-                  text="Cadastrar"
-                  loading={loading}
-                  disabled={
+                text="Cadastrar"
+                loading={loading}
+                disabled={
                   name.trim() === "" ||
                   email.trim() === "" ||
                   cpf.trim() === "" ||

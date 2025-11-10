@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Style from "./home.module.css";
-import Redirect from "../assents_link/Redirect.jsx";
 import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
@@ -68,7 +67,7 @@ export default function AdmArea() {
             <h3 className={Style.chartTitle}>Resumo do Sistema</h3>
 
             {/* Cards de resumo */}
-            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "2rem", marginLeft: "4rem", }}>
               {dashboardData.map((item) => (
                 <div
                   key={item.name}
@@ -95,9 +94,15 @@ export default function AdmArea() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="total" fill="#4f46e5" />
+                <Bar dataKey="total">
+                  {dashboardData.map((entry, index) => {
+                    const colors = ["#4f46e5", "#10b981", "#f59e0b"]; // Roxo, Verde, Amarelo
+                    return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
+                  })}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
+
           </div>
         ) : (
           <p>Carregando dados do dashboard...</p>

@@ -6,7 +6,7 @@ import { logoutUsuario } from "./js/login e home/logout.js";
 import { carregarhome } from "./js/login e home/home.js";
 import { mostrar_todos } from "./js/mostrar_todos.js";
 import Sidebar from "./home/SideBar.jsx";
-
+import { useToast } from "./context/ToastProvider.jsx";
 
 
 function ExodusTop() {
@@ -16,6 +16,7 @@ function ExodusTop() {
   const [hasUnread, setHasUnread] = useState(false); // 🆕 novo estado
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -64,7 +65,7 @@ function ExodusTop() {
   const handleLogout = async () => {
     const result = await logoutUsuario();
     if (result.success) navigate("/");
-    else alert("Erro ao fazer logout: " + result.message);
+    else showToast("Erro ao fazer logout: " + result.message);
   };
 
   // Itens fixos do menu

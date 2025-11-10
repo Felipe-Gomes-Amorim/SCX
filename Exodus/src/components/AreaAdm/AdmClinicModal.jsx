@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { admClinicAction } from "../../js/fluxoAdmSis/admClinicActions";
 import Style from "./DisableAdmModal.module.css";
+import { useToast } from "./context/ToastProvider.jsx";
 
 export default function AdmClinicModal({ token, show, onClose, action }) {
   const [admEmail, setAdmEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
 
   const isEnable = action === "enable";
   const title = isEnable
@@ -14,15 +16,15 @@ export default function AdmClinicModal({ token, show, onClose, action }) {
   const buttonText = loading
     ? "Processando..."
     : isEnable
-    ? "Ativar"
-    : "Desativar";
+      ? "Ativar"
+      : "Desativar";
 
   async function handleSubmit() {
-    if (!admEmail.trim()) return alert("Digite o e-mail do administrador.");
+    if (!admEmail.trim()) return showToast("Digite o e-mail do administrador.");
     setLoading(true);
 
     const result = await admClinicAction(admEmail, action, token);
-    alert(result.message);
+    showToast(result.message);
 
     if (result.success) {
       setAdmEmail("");
@@ -67,9 +69,8 @@ export default function AdmClinicModal({ token, show, onClose, action }) {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`${Style.confirmBtn} ${
-                  isEnable ? Style.enable : Style.disable
-                }`}
+                className={`${Style.confirmBtn} ${isEnable ? Style.enable : Style.disable
+                  }`}
               >
                 {buttonText}
               </button>

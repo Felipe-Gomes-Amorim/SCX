@@ -7,7 +7,7 @@ import DynamicForm from "../../assents_link/DynamicForm.jsx";
 import Style from "../register.module.css";
 import ExodusTop from "../../ExodusTop.jsx";
 import Footer from "../../Footer.jsx";
-import { useToast } from "../../context/ToastProvider.jsx"; // 👈 importa o hook do toaster
+import { useToast } from "../../context/ToastProvider.jsx"; 
 
 export default function CheckDoctor() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export default function CheckDoctor() {
   const [success, setSuccess] = useState(false);
   const [formdata, setformdata] = useState({ crm: "" });
   const navigate = useNavigate();
-  const { showToast } = useToast(); // 👈 agora pode exibir toasts
+  const { showToast } = useToast(); 
 
   const fields = [
     {
