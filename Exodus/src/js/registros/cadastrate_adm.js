@@ -1,16 +1,22 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
+const authToken = localStorage.getItem("token");
+
 //metodo principal ( data vai vir do registerADM.jsx / token tá armazenado no localStorage )
 export async function cadastrarAdm(admData, token) {
   console.log("chegou antes do try")
-  try {  
+  try {
     console.log("chegou dentro do try")                            //ver rotas do médico no AdminController (Back-End)      
-    const response = await axios.post(`${API_URL}/clinic/firstAdm`, admData, {
-      
-      
-    });
-    
+    const response = await axios.post(`${API_URL}/clinic/firstAdm`, admData,
+      {
+        headers: {
+          Authorization: authToken ? `Bearer ${authToken}` : undefined,
+        },
+      }
+
+    );
+
     //print pra teste com o body do exame
     console.log("Resposta do servidor:", response.data);
 
