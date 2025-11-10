@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { admClinicAction } from "../../js/fluxoAdmSis/admClinicActions";
 import Style from "./DisableAdmModal.module.css";
-import { useToast } from "./context/ToastProvider.jsx";
+import { useToast } from "../../context/ToastProvider.jsx";
 
 export default function AdmClinicModal({ token, show, onClose, action }) {
   const [admEmail, setAdmEmail] = useState("");

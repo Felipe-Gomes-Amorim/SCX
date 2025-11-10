@@ -8,7 +8,7 @@ import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarhome } from "../js/login e home/home.js";
 import { motion, AnimatePresence } from "framer-motion";
-import { useToast } from "./context/ToastProvider.jsx";
+import { useToast } from "../context/ToastProvider.jsx";
 
 import ExamsReturn from "../select_all/ExamsReturn.jsx";
 import AdmArea from "./AdmArea.jsx";

@@ -3,7 +3,7 @@ import Style from "../home/selectClinics.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import { ativarClinica, buscarClinicaAtiva } from "../js/fluxoMedico/clinica_ativa.js";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "./context/ToastProvider.jsx";
+import { useToast } from "../context/ToastProvider.jsx";
 
 export default function SelectClinics() {
   const [clinicas, setClinicas] = useState([]);

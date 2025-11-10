@@ -5,7 +5,7 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarAdm } from "../js/cadastrate_adm.js";
 import ActionButton from "../assents_link/ActionButton.jsx";
-import { useToast } from "./context/ToastProvider.jsx";
+import { useToast } from "../context/ToastProvider.jsx";
 
 export default function RegisterAdm() {
   const [name, setNome] = useState("");
