@@ -3,15 +3,16 @@ import { motion } from "framer-motion";
 import Style from "./register.module.css";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { cadastrarUsuarioLab } from "../js/registros/cadastrar_usuario_lab.js";
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function RegisterLabUserModal({ onClose }) {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false);
   const [formdata, setformdata] = useState({
     name: "",
     email: "",
   });
+
+  const { showToast } = useToast(); // <-- inicializa o hook do Toast
 
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
@@ -20,21 +21,19 @@ export default function RegisterLabUserModal({ onClose }) {
 
   const handleSubmit = async (formdata) => {
     setLoading(true);
-    setErrorMessage("");
-    setSuccess(false);
 
     try {
       const token = localStorage.getItem("token");
       const result = await cadastrarUsuarioLab(formdata, token);
 
       if (result.success) {
-        setSuccess(true);
+        showToast("Usuário cadastrado com sucesso!", "success");
         setTimeout(() => onClose(), 1500);
       } else {
-        setErrorMessage(result.message || "Erro ao cadastrar usuário");
+        showToast(result.message || "Erro ao cadastrar usuário", "error");
       }
     } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+      showToast("Falha ao se conectar ao servidor.", "error");
     }
 
     setLoading(false);
@@ -58,7 +57,7 @@ export default function RegisterLabUserModal({ onClose }) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        <h2>Cadastrar de Usuário do Laboratório</h2>
+        <h2>Cadastrar Usuário do Laboratório</h2>
         <p className={Style.subtitle}>Preencha com os dados</p>
 
         <DynamicForm
@@ -66,12 +65,9 @@ export default function RegisterLabUserModal({ onClose }) {
           values={formdata}
           onChangeValues={setformdata}
           onSubmit={handleSubmit}
-          buttonText={success ? "Cadastrado" : "Confirmar"}
+          buttonText={loading ? "Enviando..." : "Confirmar"}
           loading={loading}
-          buttonSuccess={success}
         />
-
-        {errorMessage && <p className={Style.error}>{errorMessage}</p>}
       </motion.div>
     </>
   );

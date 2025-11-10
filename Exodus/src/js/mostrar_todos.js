@@ -17,6 +17,8 @@ export async function mostrar_todos(role, token) {
     patient: "/secretary/getPatientsCli",
     lab: "/admin/getLabCli",
     clinics: "/doctor/clinicsDoctor",
+    allClinics: "/adminSystem/getAllCli",
+    secretary: "/admin/getSecretary",
   };
 
   const path = endpoints[role];

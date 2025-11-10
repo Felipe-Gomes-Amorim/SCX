@@ -2,6 +2,7 @@ import React from "react";
 import Style from "../../home/home.module.css";
 
 export default function DiagnosticoPrescricao({
+    
     diagnostico,
     setDiagnostico,
     prescricao,
@@ -32,11 +33,7 @@ export default function DiagnosticoPrescricao({
                 </label>
             </div>
 
-            <div className={Style.buttonsRow}>
-                <button className={Style.saveBtn} onClick={salvarDiagnosticoPrescricao}>
-                    Salvar Diagnóstico e Prescrição
-                </button>
-            </div>
+         
         </div>
     );
 }

@@ -22,9 +22,13 @@ import ClinicaList from "../select_all/SelectClinics.jsx";
 import ExamsReturnPacList from "../select_all/ExamsReturnPac.jsx";
 import SelectMedLab from "../select_all/SelectMedLab.jsx";
 import PatientList from "../select_all/PatientDoctorList.jsx";
-import ProfileCard from "../login/Profile.jsx"; 
+import ProfileCard from "../login/Profile.jsx";
 import ExamsRequests from "../select_all/ExamsRequest.jsx";
 import LabAreaUser from "./LabAreaUser.jsx";
+import ClinicsList from "../select_all/ClinicsList.jsx";
+
+import ProfileModal from "../login/Profile.jsx";
+import { getProfileByRole } from "../js/profiles/getProfileByRole.js";
 
 export default function Home() {
   const [userData, setUserData] = useState({
@@ -39,7 +43,9 @@ export default function Home() {
 
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
-  const [showProfile, setShowProfile] = useState(false); // ✅ controla exibição do perfil
+  const [showProfile, setShowProfile] = useState(false);
+
+
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -58,7 +64,26 @@ export default function Home() {
           ...data,
           roles: data.roles || [],
         });
-        console.log("Dados do usuário:", data);
+
+        // 🚀 Depois de carregar o usuário, checa os dados do perfil
+        if (data.roles && data.roles.length > 0) {
+          const roleName = data.roles[0].name;
+          const profileData = await getProfileByRole(roleName);
+
+          if (profileData) {
+            const missingFields = Object.entries(profileData)
+              .filter(([_, value]) => !value || value === "")
+              .map(([key]) => key);
+
+            console.log("Campos faltando:", missingFields);
+
+            // 🔍 Se tiver campos faltando, abre o modal automaticamente
+            if (missingFields.length > 0) {
+              setShowProfile(true);
+            }
+          }
+        }
+
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -71,6 +96,7 @@ export default function Home() {
 
     fetchhome();
   }, [token, navigate]);
+
 
   // Logout
   const handleLogout = async () => {
@@ -120,52 +146,43 @@ export default function Home() {
             <h3>{userData.nome}</h3>
             <p>{userData.email}</p>
 
-            {/* ✅ Exibe o perfil acima do botão */}
+
             <AnimatePresence>
               {showProfile && userData.roles?.[0]?.name && (
                 <motion.div
-                  key="profile-card"
-                  initial={{ y: "-12%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  exit={{ y: "-18%", opacity: 0 }}  // 🔹 animação ao fechar
-                  transition={{
-                    y: { duration: 1.2, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
-                    opacity: { duration: 0.5, ease: "easeOut" },   
-                       // 🔹 suaviza o fade-in
-                  }}
-                  className={Style.profileBox}
+                  key="profile-modal"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <ProfileCard role={userData.roles[0].name} />
-
-                  {/* Botão para editar dados */}
-                  <button
-                    className={Style.btn}
-                    onClick={handleEditProfile}
-                  >
-                    Editar meus dados
-                  </button>
+                  <ProfileModal
+                    role={userData.roles[0].name}
+                    onClose={() => setShowProfile(false)}
+                  />
                 </motion.div>
               )}
-              </AnimatePresence>
+            </AnimatePresence>
+
             <AnimatePresence>
 
-            <motion.div 
-            key="profile-card"
-            initial={{ y: "-10%", opacity: 0 }}
-            animate={{ y: "0%", opacity: 1 }}
-            
-            transition={{
-              y: { duration: 0.4, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
-              opacity: { duration: 0.5, ease: "easeOut" },         // 🔹 suaviza o fade-in
-            }}>
-            <button className={Style.edit_btn} onClick={handleViewProfile}>
-              {showProfile ? "Fechar meus dados" : "Ver meus dados"}
-            </button>
+              <motion.div
+                key="profile-card"
+                initial={{ y: "-10%", opacity: 0 }}
+                animate={{ y: "0%", opacity: 1 }}
 
-            <button className={Style.logout_btn} onClick={handleLogout}>
-              Logout
-            </button>
-            </motion.div>
+                transition={{
+                  y: { duration: 0.4, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
+                  opacity: { duration: 0.5, ease: "easeOut" },         // 🔹 suaviza o fade-in
+                }}>
+                <button className={Style.edit_btn} onClick={handleViewProfile}>
+                  {showProfile ? "Fechar meus dados" : "Ver meus dados"}
+                </button>
+
+                <button className={Style.logout_btn} onClick={handleLogout}>
+                  Logout
+                </button>
+              </motion.div>
             </AnimatePresence>
 
           </aside>
@@ -180,7 +197,7 @@ export default function Home() {
                   {userData.roles?.some((role) => role.name === "Admin") ? (
                     <>
                       <SelectMedLab />
-                      
+
                     </>
                   ) : userData.roles?.some(
                     (role) => role.name === "Support"
@@ -193,6 +210,7 @@ export default function Home() {
                       {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /></>}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <><LabArea></LabArea></>}
                       {userData.roles?.some(role => role.name === "LaboratoryUser") && <LabAreaUser></LabAreaUser>}
+                      {userData.roles?.some(role => role.name === "AdminSystem") && <ClinicsList></ClinicsList>}
                     </>
                   )}
                 </div>

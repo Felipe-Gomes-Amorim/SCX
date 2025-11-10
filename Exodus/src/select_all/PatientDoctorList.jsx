@@ -3,7 +3,7 @@ import Style from "./ExamsReturn.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
-import RegisterAtendimento from "../cadastro/registerAtendimento.jsx"; // ✅ importa o container do formulário
+import RegisterAtendimento from "../cadastro/registerAtendimento.jsx";
 import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
 
 export default function PatientDoctorList({ limit = null }) {
@@ -16,7 +16,6 @@ export default function PatientDoctorList({ limit = null }) {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const token = localStorage.getItem("token");
   const [instituicao, setInstituicao] = useState(null);
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,25 +37,27 @@ export default function PatientDoctorList({ limit = null }) {
     };
   }, []);
 
-  useEffect(() => {
-    async function carregarDados() {
-      setCarregando(true);
-      setErro(null);
-      try {
-        const endpoint = abaAtiva === "pacientes" ? "patient" : "doctorAval";
-        const data = await mostrar_todos(endpoint, token);
-        if (data && data.length > 0) setDados(data);
-        else setErro("Nenhum registro encontrado ou disponível.");
-      } catch (err) {
-        console.error(err);
-        setErro("Erro ao buscar dados.");
-      } finally {
-        setCarregando(false);
-      }
+  // 🟩 Torna carregarDados reutilizável
+  const carregarDados = async () => {
+    setCarregando(true);
+    setErro(null);
+    try {
+      const endpoint = abaAtiva === "pacientes" ? "patient" : "doctorAval";
+      const data = await mostrar_todos(endpoint, token);
+      console.log(data);
+      if (data && data.length > 0) setDados(data);
+      else setErro("Nenhum registro encontrado ou disponível.");
+    } catch (err) {
+      console.error(err);
+      setErro("Erro ao buscar dados.");
+    } finally {
+      setCarregando(false);
     }
+  };
 
+  useEffect(() => {
     carregarDados();
-  }, [token, abaAtiva]);
+  }, [token, abaAtiva]); // chama sempre que muda a aba
 
   // 🔍 Filtro de busca
   const filteredData = dados.filter((item) => {
@@ -77,10 +78,15 @@ export default function PatientDoctorList({ limit = null }) {
 
   const displayedData = limit ? filteredData.slice(0, limit) : filteredData;
 
-  // 📋 Função para abrir o formulário com o médico selecionado
   const handleStartConsulta = (doctor) => {
     setSelectedDoctor(doctor);
     setShowConsultaForm(true);
+  };
+
+  // 🟦 Nova função que fecha e atualiza a tela
+  const handleCloseAndReload = async () => {
+    setShowConsultaForm(false);
+    await carregarDados(); // 🔄 recarrega os dados
   };
 
   return (
@@ -91,28 +97,23 @@ export default function PatientDoctorList({ limit = null }) {
       </p>
 
       <div className={Style.subsection}>
-
-
-
-        {/* 🟦 Abas clicáveis */}
+        {/* 🟦 Abas */}
         <div className={Style.tabHeader}>
           <h3
-            className={`${Style.title} ${abaAtiva === "pacientes" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${abaAtiva === "pacientes" ? Style.activeTab : ""}`}
             onClick={() => setAbaAtiva("pacientes")}
           >
             Pacientes
           </h3>
           <h3
-            className={`${Style.title} ${abaAtiva === "medicos" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${abaAtiva === "medicos" ? Style.activeTab : ""}`}
             onClick={() => setAbaAtiva("medicos")}
           >
             Médicos Disponíveis
           </h3>
         </div>
 
-        {/* 🔍 Barra de pesquisa com botão "+" à direita */}
+        {/* 🔍 Busca */}
         <div className={Style.searchHeader}>
           <div className={Style.searchBox}>
             <input
@@ -149,44 +150,32 @@ export default function PatientDoctorList({ limit = null }) {
           <div className={Style.listContainer}>
             {abaAtiva === "pacientes"
               ? displayedData.map((item, index) => (
-                <div key={index} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <span>
-                      <strong>Nome:</strong> {item.name || "-"}
-                    </span>
-                    <span>
-                      <strong>Telefone:</strong> {item.telephone || "-"}
-                    </span>
-                    <span>
-                      <strong>Email:</strong> {item.email || "-"}
-                    </span>
+                  <div key={index} className={Style.card}>
+                    <div className={Style.infoArea}>
+                      <span><strong>Nome:</strong> {item.name || "-"}</span>
+                      <span><strong>Telefone:</strong> {item.telephone || "-"}</span>
+                      <span><strong>Status:</strong> {item.status || "-"}</span>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
               : displayedData.map((item, index) => (
-                <div key={index} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <span>
-                      <strong>Nome:</strong> {item.name || "-"}
-                    </span>
-                    <span>
-                      <strong>Email:</strong> {item.email || "-"}
-                    </span>
+                  <div key={index} className={Style.card}>
+                    <div className={Style.infoArea}>
+                      <span><strong>Nome:</strong> {item.name || "-"}</span>
+                      <span><strong>Email:</strong> {item.email || "-"}</span>
+                    </div>
+                    <button
+                      className={Style.startButton}
+                      onClick={() => handleStartConsulta(item)}
+                    >
+                      Iniciar atendimento
+                    </button>
                   </div>
-
-                  {/* ✅ Botão de iniciar atendimento */}
-                  <button
-                    className={Style.startButton}
-                    onClick={() => handleStartConsulta(item)}
-                  >
-                    Iniciar atendimento
-                  </button>
-                </div>
-              ))}
+                ))}
           </div>
         )}
 
-        {/* ⚡ Modal do formulário de consulta */}
+        {/* Modal */}
         {showConsultaForm && (
           <div className={Style.overlay}>
             <div className={Style.modal}>
@@ -196,7 +185,10 @@ export default function PatientDoctorList({ limit = null }) {
               >
                 ✕
               </button>
-              <RegisterAtendimento selectedDoctor={selectedDoctor} />
+              <RegisterAtendimento
+                selectedDoctor={selectedDoctor}
+                onClose={handleCloseAndReload}
+              />
             </div>
           </div>
         )}

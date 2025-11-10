@@ -91,10 +91,8 @@ export async function buscarDiagnostico(token, idAppointment) {
     return { success: false, message: error.response?.data?.message || error.message, diagnostic: "Erro ao carregar diagnóstico." };
   }
 }
-
 // 🔹 🔹 NOVO: Busca exames de uma consulta
 export async function buscarExamesConsulta(token, idAppointment) {
-  
   try {
     const response = await axios.get(`${API_URL}/prontuario/getExams`, {
       params: { id: idAppointment },
@@ -102,10 +100,51 @@ export async function buscarExamesConsulta(token, idAppointment) {
     });
 
     console.log("📦 Exames retornados:", response.data);
-    // Espera-se que response.data tenha examsFile: [{ fileName }]
-    return { success: true, data: response.data?.ExamsResults || [] };
+
+    const data = response.data?.ExamsResults;
+
+    // Se não há resultados ou está nulo, retorna um array vazio com mensagem padrão
+    if (!data || data.length === 0) {
+      return {
+        success: true,
+        data: [],
+        message: "Nenhum exame foi solicitado para esta consulta.",
+      };
+    }
+
+    return { success: true, data };
   } catch (error) {
     console.error("❌ Erro ao buscar exames:", error);
-    return { success: false, message: error.response?.data?.message || error.message, data: [] };
+
+    // Trata erro 500 (NullPointerException do backend)
+    if (error.response?.status === 500) {
+      return {
+        success: true, // ainda tratamos como sucesso “vazio”
+        data: [],
+        message: "Nenhum exame foi solicitado para esta consulta.",
+      };
+    }
+
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+      data: [],
+    };
+  }
+}
+
+// 🔹 Novo: busca anamnese da consulta
+export async function buscarAnamneseConsulta(token, idAppointment) {
+  try {
+    const response = await axios.get(`${API_URL}/prontuario/getAnamneseConsult`, {
+      params: { id: idAppointment },
+      headers: { Authorization: token ? `Bearer ${token}` : undefined },
+    });
+
+    console.log("📋 Anamnese retornada:", response.data);
+    return { success: true, data: response.data || {} };
+  } catch (error) {
+    console.error("❌ Erro ao buscar anamnese:", error);
+    return { success: false, message: error.response?.data?.message || error.message, data: {} };
   }
 }

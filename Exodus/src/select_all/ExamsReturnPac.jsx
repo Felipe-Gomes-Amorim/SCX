@@ -68,6 +68,10 @@ export default function ExamsReturnPacList({ limit = null }) {
 
   const displayedData = limit ? filteredData.slice(0, limit) : filteredData;
 
+  // 🧩 Gera nomes amigáveis: "Arquivo", "Arquivo (1)", "Arquivo (2)"
+  const gerarNomeAmigavel = (index) =>
+    index === 0 ? "Arquivo" : `Arquivo (${index})`;
+
   return (
     <div className={Style.container}>
       <h2>Área do Paciente</h2>
@@ -76,15 +80,17 @@ export default function ExamsReturnPacList({ limit = null }) {
         {/* 🟦 Abas */}
         <div className={Style.tabHeader}>
           <h3
-            className={`${Style.title} ${abaAtiva === "devolvidos" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${
+              abaAtiva === "devolvidos" ? Style.activeTab : ""
+            }`}
             onClick={() => setAbaAtiva("devolvidos")}
           >
             Meus Exames Devolvidos
           </h3>
           <h3
-            className={`${Style.title} ${abaAtiva === "pendentes" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${
+              abaAtiva === "pendentes" ? Style.activeTab : ""
+            }`}
             onClick={() => setAbaAtiva("pendentes")}
           >
             Exames Pendentes
@@ -118,57 +124,41 @@ export default function ExamsReturnPacList({ limit = null }) {
             className={Style.listContainer}
             style={{ maxHeight: "500px", overflowY: "auto" }}
           >
-            {/* --- DEDEVOLVIDOS --- */}
+            {/* --- DEVOLVIDOS --- */}
             {abaAtiva === "devolvidos"
               ? displayedData.map((item, index) => (
-                <div key={index} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <p>
-                      <strong>Arquivo:</strong> {item.fileName || "-"}
-                    </p>
+                  <div key={index} className={Style.card}>
+                    <div className={Style.infoArea}>
+                      <p>
+                        <strong>Arquivo:</strong> {gerarNomeAmigavel(index)}
+                      </p>
+                    </div>
+                    <button
+                      className={Style.startButton}
+                      onClick={() => {
+                        window.open(
+                          `http://localhost:8080/files/preview/${item.fileName}`,
+                          "_blank"
+                        );
+                      }}
+                    >
+                      Ver PDF
+                    </button>
                   </div>
-                  <button
-                    className={Style.downloadBtn}
-                    onClick={() => {
-                      // Chama a rota de preview do backend
-                      window.open(`http://localhost:8080/files/preview/${item.fileName}`, "_blank");
-                    }}
-                  >
-                    📄 Ver PDF
-                  </button>
-                </div>
-              ))
+                ))
               : /* --- PENDENTES --- */
-              displayedData.map((item, index) => (
-                <div key={index} className={Style.card}>
-                  <div className={Style.infoArea}>
-                    <p>
-                      <strong>Paciente:</strong> {item.nameD || "-"}
-                    </p>
-                    <p>
-                      <strong>Convênio:</strong> {item.nameC || "-"}
-                    </p>
-                    <p>
-                      <strong>Laboratório:</strong> {item.nameL || "-"}
-                    </p>
-                    <p>
-                      <strong>Tipo de Exame:</strong> {item.typeEx || "-"}
-                    </p>
-                    <p>
-                      <strong>Tipo de Amostra:</strong> {item.typeAm || "-"}
-                    </p>
-                    <p>
-                      <strong>Status:</strong> {item.status || "-"}
-                    </p>
-                    <p>
-                      <strong>Complemento:</strong> {item.complement || "-"}
-                    </p>
-                    <p>
-                      <strong>Data:</strong> {item.dateTime || "-"}
-                    </p>
+                displayedData.map((item, index) => (
+                  <div key={index} className={Style.card}>
+                    <div className={Style.infoArea}>
+                      <p>
+                        <strong>Clínica:</strong> {item.nameC || "-"}
+                      </p>
+                      <p>
+                        <strong>Data:</strong> {item.dateTime || "-"}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         )}
       </div>

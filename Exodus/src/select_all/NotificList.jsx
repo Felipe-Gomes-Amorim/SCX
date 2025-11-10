@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Style from "./Notifications.module.css"; // Você pode criar um CSS específico ou reutilizar SelectAll.module.css
-import { mostrar_todos } from "../js/mostrar_todos.js"; // Reutilizando a função existente
+import Style from "./Notifications.module.css";
+import { mostrar_todos } from "../js/mostrar_todos.js";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import { marcarComoLida } from "../js/marcarNotific.js";
+import { useToast } from "../context/ToastProvider.jsx"; // 👈 importa o toast
 
 export default function Notifications() {
   const [notificacoes, setNotificacoes] = useState([]);
   const [erro, setErro] = useState(null);
   const [carregando, setCarregando] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // Novo estado para busca
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loadingMarcarTodas, setLoadingMarcarTodas] = useState(false);
+  const { showToast } = useToast(); // 👈 inicializa o toast
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +21,8 @@ export default function Notifications() {
 
     async function carregarNotificacoes() {
       try {
-        const response = await mostrar_todos("notific", token); // Usando mostrar_todos com role="notific"
+        const response = await mostrar_todos("notific", token);
+        console.table(response, ["id", "title", "readFile", "read", "isRead"]);
         if (response && response.length > 0) {
           setNotificacoes(response);
         } else {
@@ -35,7 +39,7 @@ export default function Notifications() {
     carregarNotificacoes();
   }, []);
 
-  // 🔍 Filtro da busca baseado em title e message
+  // 🔍 Filtro da busca
   const filteredNotificacoes = notificacoes.filter((notificacao) => {
     const termo = searchTerm.toLowerCase();
     return (
@@ -44,26 +48,50 @@ export default function Notifications() {
     );
   });
 
+  // 🔹 Marca uma notificação individual como lida
   async function handleMarcarComoLida(id) {
     const token = localStorage.getItem("token");
     try {
       await marcarComoLida(id, token);
-
-      // Atualiza o estado local (opcional, mas deixa a UI imediata)
       setNotificacoes((prev) =>
         prev.map((n) => (n.id === id ? { ...n, readFile: true } : n))
       );
-
-      
-      setTimeout(() => {
-        window.location.href = window.location.href;
-      }, 500); 
+      showToast("Notificação marcada como lida", "success");
     } catch (err) {
       console.error("Erro ao marcar como lida:", err);
-      window.location.href = window.location.href;
+      showToast("Erro ao marcar como lida", "error");
     }
   }
 
+  // 🔹 Marca todas as notificações como lidas
+  async function handleMarcarTodasComoLidas() {
+    const token = localStorage.getItem("token");
+    setLoadingMarcarTodas(true);
+    window.location.reload();
+    try {
+      const naoLidas = notificacoes.filter(
+        (n) =>
+          n.readFile === false ||
+          n.read === false ||
+          n.isRead === false ||
+          (typeof n.readFile === "string" && n.readFile.toLowerCase().includes("não"))
+      );
+      if (naoLidas.length === 0) {
+        showToast("Todas as notificações já estão lidas ", "info");
+        return;
+      }
+
+      await Promise.all(naoLidas.map((n) => marcarComoLida(n.id, token)));
+
+      setNotificacoes((prev) => prev.map((n) => ({ ...n, readFile: true })));
+      showToast("Todas as notificações foram marcadas como lidas", "success");
+    } catch (err) {
+      console.error("Erro ao marcar todas como lidas:", err);
+      showToast("Erro ao marcar todas como lidas", "error");
+    } finally {
+      setLoadingMarcarTodas(false);
+    }
+  }
 
   return (
     <>
@@ -71,7 +99,19 @@ export default function Notifications() {
 
       <section className={Style.container}>
         <div className={Style.header}>
-          <h2>Notificações Não Lidas</h2>
+          <h2>Notificações</h2>
+
+          {notificacoes.length > 0 && (
+            <button
+              className={Style.markReadBtn}
+              onClick={handleMarcarTodasComoLidas}
+              disabled={loadingMarcarTodas}
+            >
+              {loadingMarcarTodas
+                ? "Marcando todas..."
+                : "Marcar todas como lidas"}
+            </button>
+          )}
         </div>
 
         {/* Barra de pesquisa */}
@@ -97,14 +137,18 @@ export default function Notifications() {
               <div key={index} className={Style.card}>
                 <div className={Style.cardContent}>
                   <div className={Style.field}>
-                    <span className={`${Style.data} ${Style.titleData}`}>{notificacao.title || "-"}</span>
+                    <span
+                      className={`${Style.data} ${Style.titleData}`}
+                    >
+                      {notificacao.title || "-"}
+                    </span>
                   </div>
                   <div className={Style.field}>
                     <label className={Style.label}>Mensagem:</label>
-                    <span className={Style.data}>{notificacao.message || "-"}</span>
+                    <span className={Style.data}>
+                      {notificacao.message || "-"}
+                    </span>
                   </div>
-                  
-                  
                   <div className={Style.field}>
                     <span className={Style.data}>
                       {notificacao.readFile ? "Lida" : "Não lida"}
@@ -121,7 +165,6 @@ export default function Notifications() {
                 </button>
 
               </div>
-
             ))}
           </div>
         )}

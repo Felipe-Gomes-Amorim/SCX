@@ -6,27 +6,28 @@ import Footer from "../Footer.jsx";
 import ExodusTop from "../ExodusTop.jsx";
 import { cadastrarSecretaria } from "../js/registros/cadastrar_secretaria.js";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function RegisterSecretaria() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false); // ✅ controle do sucesso
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const { showToast } = useToast(); // ✅ hook para exibir os toasts
+
   const [formdata, setformdata] = useState({
     name: "",
     cpf: "",
     email: "",
   });
 
-  // ✅ Campos do formulário (secretária)
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
-    { name: "cpf", type: "text", placeholder: "CPF", required: true, defaultValue: formdata.cpf },
+    { name: "cpf", type: "text", placeholder: "CPF", required: true },
     { name: "email", type: "email", placeholder: "E-mail", required: true },
   ];
 
-  // ✅ Envio dos dados
-  const handleSubmit = async (formdata) => {  // <-- agora recebe formData diretamente
+  const handleSubmit = async (formdata) => {
     setLoading(true);
     setErrorMessage("");
     setSuccess(false);
@@ -34,28 +35,30 @@ export default function RegisterSecretaria() {
     try {
       const secretariaData = {
         name: formdata.name,
-        cpf: formdata.cpf,       // já vai vir com máscara ou limpa se usar unmask
-        email: formdata.email,   // digitação direta
+        cpf: formdata.cpf,
+        email: formdata.email,
       };
 
       const token = localStorage.getItem("token");
       const result = await cadastrarSecretaria(secretariaData, token);
 
       if (result.success) {
-        setSuccess(true); // ✅ ativa o botão verde
-        setTimeout(() => {
-          navigate("/home"); // redireciona após 2s
-        }, 2000);
+        setSuccess(true);
+        showToast("Secretária cadastrada com sucesso!", "success");
+        setTimeout(() => navigate("/home"), 2000);
       } else {
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+        const message = result.message || "Erro desconhecido ao cadastrar.";
+        setErrorMessage(message);
+        showToast(message, "error");
       }
     } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+      const msg = "Falha ao se conectar ao servidor.";
+      setErrorMessage(msg);
+      showToast(msg, "error");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
-
 
   return (
     <>
@@ -63,8 +66,6 @@ export default function RegisterSecretaria() {
         <ExodusTop />
 
         <div className={Style.login_card}>
-          {/* Lado direito - boas-vindas */}
-          {/* Lado esquerdo - formulário */}
           <motion.div
             className={Style.login_left}
             initial={{ x: "100%", opacity: 0 }}
@@ -82,9 +83,10 @@ export default function RegisterSecretaria() {
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
               buttonSuccess={success}
+              errorMessage={errorMessage}
             />
           </motion.div>
-          
+
           <motion.div
             className={Style.login_right}
             initial={{ x: "-100%", opacity: 0 }}
@@ -95,11 +97,7 @@ export default function RegisterSecretaria() {
             <motion.p>
               Preencha os dados necessários para cadastrar a secretária no sistema e habilitar o acesso às funções operacionais da clínica.
             </motion.p>
-
           </motion.div>
-
-      
-
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import Header from "../Header.jsx";
 import { useNavigate } from "react-router-dom";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { firstLogin } from "../js/login e home/firstLogin.js";
+import { useToast } from "../context/ToastProvider.jsx"; // ✅ Import do novo sistema
 
 export default function FirstLogin() {
   const [loading, setLoading] = useState(false);
@@ -17,24 +18,25 @@ export default function FirstLogin() {
     confirm_password: "",
   });
 
-  
+  const { showToast } = useToast(); // ✅ Hook global
+
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])(?=.{8,})/;
 
   const handleSubmit = async (formValues) => {
     const { password_key, confirm_password } = formValues;
 
-    
     if (!passwordPattern.test(password_key)) {
       setErrorMessage(
         "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial."
       );
+      showToast("Senha inválida: não atende aos requisitos.", "error");
       return;
     }
 
-    // 🔒 Validação: senhas precisam coincidir
     if (password_key !== confirm_password) {
       setErrorMessage("As senhas não coincidem.");
+      showToast("As senhas não coincidem.", "error");
       return;
     }
 
@@ -46,15 +48,14 @@ export default function FirstLogin() {
 
     if (result.success) {
       setSuccess(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      showToast("Senha definida com sucesso!", "success");
+      setTimeout(() => navigate("/"), 1000);
     } else {
       setErrorMessage("Erro no login: " + result.message);
+      showToast("Erro no login: " + result.message, "error");
     }
   };
 
-  // 🔧 Campos do formulário
   const fields = [
     {
       name: "password_key",
@@ -85,7 +86,6 @@ export default function FirstLogin() {
             <h2>Ative sua conta</h2>
             <p className={Style.subtitle}>Digite e confirme sua nova senha</p>
 
-            {/* Mensagem de erro acima do campo */}
             {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
 
             <DynamicForm

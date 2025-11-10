@@ -4,8 +4,9 @@ import Style from "./register.module.css";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { cadastrarConsulta, buscarMedicosDisponiveis } from "../js/registros/cadastrar_consulta.js";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../context/ToastProvider.jsx";
 
-export default function RegisterAtendimento({ selectedDoctor = null }) {
+export default function RegisterAtendimento({ selectedDoctor = null, onClose }) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [medicos, setMedicos] = useState([]);
@@ -15,27 +16,38 @@ export default function RegisterAtendimento({ selectedDoctor = null }) {
     email: selectedDoctor?.email || "",
   });
   const navigate = useNavigate();
+  const { showToast } = useToast(); // ✅ Hook do toast
 
   useEffect(() => {
     // Só busca médicos se nenhum tiver sido passado
     if (!selectedDoctor) {
       async function carregarMedicos() {
-        const response = await buscarMedicosDisponiveis();
-        if (response.success) setMedicos(response.data);
-        else setErrorMessage("Erro ao buscar médicos disponíveis");
+        try {
+          const response = await buscarMedicosDisponiveis();
+          if (response.success) {
+            setMedicos(response.data);
+          } else {
+            setErrorMessage("Erro ao buscar médicos disponíveis");
+            showToast("Erro ao buscar médicos disponíveis", "error");
+          }
+        } catch (err) {
+          console.error("Erro ao buscar médicos:", err);
+          setErrorMessage("Falha na conexão ao buscar médicos.");
+          showToast("Falha ao conectar ao servidor.", "error");
+        }
       }
       carregarMedicos();
     }
-  }, [selectedDoctor]);
+  }, [selectedDoctor, showToast]);
 
   // 🧩 Campos dinâmicos — o campo de médico só aparece se não tiver um selecionado
   const fields = [
-    { 
-      name: "cpf", 
-      type: "text", 
-      placeholder: "CPF do paciente", 
-      required: true, 
-      defaultValue: formdata.cpf 
+    {
+      name: "cpf",
+      type: "text",
+      placeholder: "CPF do paciente",
+      required: true,
+      defaultValue: formdata.cpf,
     },
     !selectedDoctor && {
       name: "email",
@@ -53,7 +65,7 @@ export default function RegisterAtendimento({ selectedDoctor = null }) {
     try {
       const consultaData = {
         cpf: formValues.cpf,
-        email: selectedDoctor?.email || formValues.email, // usa o médico selecionado automaticamente
+        email: selectedDoctor?.email || formValues.email,
       };
 
       const result = await cadastrarConsulta(consultaData);
@@ -61,18 +73,26 @@ export default function RegisterAtendimento({ selectedDoctor = null }) {
 
       if (result.success) {
         setSuccess(true);
-        setTimeout(() => navigate("/home"), 1500);
+        showToast("Atendimento iniciado com sucesso!", "success");
+
+        // ✅ Fecha o modal automaticamente após 2 segundos
+        setTimeout(() => {
+          if (onClose) onClose(); // fecha o modal no componente pai
+          navigate("/home");
+        }, 2000);
       } else {
-        setErrorMessage(result.message || "CPF do paciente incorreto");
+        const msg = result.message || "CPF do paciente incorreto.";
+        setErrorMessage(msg);
+        showToast(msg, "error");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Erro ao cadastrar consulta:", err);
       setErrorMessage("Falha ao se conectar ao servidor.");
+      showToast("Falha ao se conectar ao servidor.", "error");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}

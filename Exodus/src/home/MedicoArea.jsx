@@ -2,18 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "./home.module.css";
 
-import { buscarAtendimentoAtual, verificarConsultaAtiva, encerrarAtendimento, abrirConsulta, buscarDiagnostico } from "../js/fluxoMedico/consultas.js";
+import {
+  buscarAtendimentoAtual,
+  verificarConsultaAtiva,
+  encerrarAtendimento,
+  abrirConsulta,
+  buscarDiagnostico,
+} from "../js/fluxoMedico/consultas.js";
 import { getAppointmentsPat } from "../js/fluxoMedico/getAppointmentsPat.js";
-import { salvarAnamneseAPI, enviarCustomFieldsAPI } from "../js/fluxoMedico/anamnese.js";
-import ConsultaMenu from "../components/AreaMedico/ConsultaMenu";
+import {
+  salvarAnamneseAPI,
+  enviarCustomFieldsAPI,
+} from "../js/fluxoMedico/anamnese.js";
 
+import ConsultaMenu from "../components/AreaMedico/ConsultaMenu";
 import HistoricoConsultas from "../components/AreaMedico/HistoricoConsultas.jsx";
 import ConsultaDetalhesModal from "../components/AreaMedico/ConsultaDetalhesModal.jsx";
 import EncerrarAtendimentoPopup from "../components/AreaMedico/EncerrarAtendimentoPopup.jsx";
 
+import { useToast } from "../context/ToastProvider.jsx"; // 🔹 Import do toast
+
 export default function MedicoArea() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { showToast } = useToast();
 
   const [clinicaAtiva, setClinicaAtiva] = useState(null);
   const [consultaAtual, setConsultaAtual] = useState(null);
@@ -23,29 +35,42 @@ export default function MedicoArea() {
   const [expanded, setExpanded] = useState(null);
   const [showAnamnese, setShowAnamnese] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [showCustomPopup, setShowCustomPopup] = useState(false); // popup de campo personalizado
-  const [showEndPopup, setShowEndPopup] = useState(false); // popup de encerramento
+  const [showCustomPopup, setShowCustomPopup] = useState(false);
+  const [showEndPopup, setShowEndPopup] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingHistorico, setLoadingHistorico] = useState(false);
   const [tempoDecorrido, setTempoDecorrido] = useState(0);
   const [consultaAbertaPorMedico, setConsultaAbertaPorMedico] = useState(false);
   const [diagnostico, setDiagnostico] = useState("");
   const [prescricao, setPrescricao] = useState("");
-
   const [selectedConsulta, setSelectedConsulta] = useState(null);
-
   const [loadingDiag, setLoadingDiag] = useState(false);
-
   const [customName, setCustomName] = useState("");
   const [customValue, setCustomValue] = useState("");
 
   const [anamneseData, setAnamneseData] = useState({
-    mainComplaint: "", historyOfCurrentIllness: "", personalMedicalHistory: "",
-    familyHistory: "", allergies: "", useMedications: "", previousHospitalizations: "",
-    previousSurgeries: "", diet: "", sleep: "", physicalActivity: "",
-    smoking: false, alcoholism: false, bloodPressure: "", heartRate: "",
-    temperature: "", weight: "", height: "", bmi: "", observations: "",
-    diagnosticHypothesis: "", treatmentPlan: ""
+    mainComplaint: "",
+    historyOfCurrentIllness: "",
+    personalMedicalHistory: "",
+    familyHistory: "",
+    allergies: "",
+    useMedications: "",
+    previousHospitalizations: "",
+    previousSurgeries: "",
+    diet: "",
+    sleep: "",
+    physicalActivity: "",
+    smoking: false,
+    alcoholism: false,
+    bloodPressure: "",
+    heartRate: "",
+    temperature: "",
+    weight: "",
+    height: "",
+    bmi: "",
+    observations: "",
+    diagnosticHypothesis: "",
+    treatmentPlan: "",
   });
 
   // 🔹 Carrega atendimento e consulta ativa
@@ -65,6 +90,7 @@ export default function MedicoArea() {
         }
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
+        showToast("Erro ao carregar dados da consulta.", "error");
       } finally {
         setLoading(false);
       }
@@ -73,41 +99,63 @@ export default function MedicoArea() {
 
   // ⏱️ Timer
   useEffect(() => {
-    if (!consultaAbertaPorMedico || !consultaAtual) return;
-    const interval = setInterval(() => setTempoDecorrido(prev => prev + 1), 1000);
+    if (!consultaAbertaPorMedico) return;
+
+    // tenta obter o horário salvo
+    let startTime = localStorage.getItem("consultaStartTime");
+
+    // se não tiver salvo ainda, cria um baseado na hora atual
+    if (!startTime && consultaAtual?.localTime) {
+      const hoje = new Date();
+      const [h, m, s] = consultaAtual.localTime.split(":").map(Number);
+      hoje.setHours(h, m, s, 0);
+      startTime = hoje.toISOString();
+      localStorage.setItem("consultaStartTime", startTime);
+    }
+
+    const updateTimer = () => {
+      const now = new Date();
+      const diffInSeconds = Math.floor((now - new Date(startTime)) / 1000);
+      setTempoDecorrido(diffInSeconds > 0 ? diffInSeconds : 0);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [consultaAbertaPorMedico, consultaAtual]);
+
+
 
   // 🔹 Encerrar consulta
   async function confirmarEncerramento(patientShouldReturn) {
     setShowEndPopup(false);
+    try {
+      const result = await encerrarAtendimento(token, patientShouldReturn, diagnostico, prescricao);
 
-    // cria o objeto com todos os dados do encerramento
-
-
-
-    console.log("🧠 Diagnóstico:", diagnostico);
-    console.log("💊 Prescrição:", prescricao);
-    // envia tudo de uma vez
-    const result = await encerrarAtendimento(token, diagnostico,
-      prescricao,
-      patientShouldReturn);
-
-    if (result.success) {
-      setConsultaAtual(null);
-      setConsultaAbertaPorMedico(false);
-      setShowAnamnese(false);
-      setShowMenu(false);
-      
-    } else {
-      alert("Erro ao encerrar consulta: " + result.message);
+      if (result.success) {
+        localStorage.removeItem("consultaStartTime"); // 🧹 limpa o timer salvo
+        setConsultaAtual(null);
+        setConsultaAbertaPorMedico(false);
+        setShowAnamnese(false);
+        setShowMenu(false);
+        showToast("Consulta encerrada com sucesso!", "success");
+      } else {
+        showToast("Erro ao encerrar consulta: " + result.message, "error");
+      }
+    } catch (error) {
+      console.error(error);
+      showToast("Erro inesperado ao encerrar consulta.", "error");
     }
   }
 
+
   // 🔹 Abrir nova consulta
   async function iniciarNovaConsulta() {
-    if (consultaAbertaPorMedico && consultaAtual)
-      return alert("Já existe uma consulta aberta.");
+    if (consultaAbertaPorMedico && consultaAtual) {
+      showToast("Já existe uma consulta aberta.", "warning");
+      localStorage.setItem("consultaStartTime", agora.toISOString());
+      return;
+    }
 
     const result = await abrirConsulta(token);
     if (result.success) {
@@ -116,26 +164,37 @@ export default function MedicoArea() {
       setShowAnamnese(true);
       const consultaResp = await buscarAtendimentoAtual(token);
       if (consultaResp?.success) setConsultaAtual(consultaResp.data);
-    } else alert("Erro ao abrir consulta.");
+      showToast("Nova consulta iniciada!", "success");
+      setDiagnostico("");
+      setPrescricao("");
+    } else {
+      showToast("Erro ao abrir consulta.", "error");
+    }
   }
 
   // 🩺 Salvar anamnese + campos extras
   async function salvarAnamnese() {
     const resultAnamnese = await salvarAnamneseAPI(token, anamneseData);
-    if (!resultAnamnese.success)
-      return alert("Erro ao salvar anamnese: " + resultAnamnese.message);
+    if (!resultAnamnese.success) {
+      showToast("Erro ao salvar anamnese: " + resultAnamnese.message, "error");
+      return;
+    }
 
-    const camposExtras = customFieldsList.map(c => ({
-      fieldName: c.fieldName, fieldValue: c.fieldValue
+    const camposExtras = customFieldsList.map((c) => ({
+      fieldName: c.fieldName,
+      fieldValue: c.fieldValue,
     }));
 
     if (camposExtras.length > 0) {
       const resultCampos = await enviarCustomFieldsAPI(token, camposExtras);
-      alert(resultCampos.success
-        ? "Anamnese e campos extras salvos com sucesso!"
-        : "Anamnese salva, mas erro ao enviar campos extras: " + resultCampos.message
-      );
-    } else alert("Anamnese salva com sucesso!");
+      if (resultCampos.success) {
+        showToast("Anamnese e campos extras salvos com sucesso!", "success");
+      } else {
+        showToast("Anamnese salva, mas erro ao enviar campos extras: " + resultCampos.message, "warning");
+      }
+    } else {
+      showToast("Anamnese salva com sucesso!", "success");
+    }
 
     setExpanded(null);
     setCustomFieldsList([]);
@@ -143,10 +202,18 @@ export default function MedicoArea() {
 
   // ➕ Adicionar campo customizado
   const handleCreateCustomField = () => {
-    if (!customName || !customValue) return alert("Preencha nome e valor!");
-    setCustomFieldsList(prev => [...prev, { fieldName: customName, fieldValue: customValue }]);
-    setCustomName(""); setCustomValue("");
+    if (!customName || !customValue) {
+      showToast("Preencha nome e valor!", "warning");
+      return;
+    }
+    setCustomFieldsList((prev) => [
+      ...prev,
+      { fieldName: customName, fieldValue: customValue },
+    ]);
+    setCustomName("");
+    setCustomValue("");
     setShowCustomPopup(false);
+    showToast("Campo personalizado adicionado!", "success");
   };
 
   // 📋 Histórico
@@ -157,31 +224,40 @@ export default function MedicoArea() {
     const historicoResp = await getAppointmentsPat(token);
     setHistorico(Array.isArray(historicoResp) ? historicoResp : []);
     setLoadingHistorico(false);
+    console.log(historicoResp);
   }
 
-  const filteredHistorico = historico.filter(item => {
+  const filteredHistorico = historico.filter((item) => {
     const termo = searchTerm.toLowerCase();
-    return ["nameM", "nameC", "specialty", "idAppointment"]
-      .some(key => item[key]?.toLowerCase().includes(termo));
+    return ["nameM", "nameC", "specialty", "idAppointment"].some((key) =>
+      item[key]?.toLowerCase().includes(termo)
+    );
   });
 
-  // Helpers
-  const formatarTempo = s => {
+  const formatarTempo = (s) => {
     const h = String(Math.floor(s / 3600)).padStart(2, "0");
     const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
     const sec = String(s % 60).padStart(2, "0");
     return `${h}:${m}:${sec}`;
   };
 
-  const formatarDataHora = iso => {
+  const formatarDataHora = (iso) => {
     if (!iso) return "-";
     const d = new Date(iso);
-    return `${d.toLocaleDateString()} às ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+    return `${d.toLocaleDateString()} às ${d.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })}`;
   };
 
   const atualizarIMC = (peso, altura) => {
-    const p = parseFloat(peso), a = parseFloat(altura);
-    if (p > 0 && a > 0) setAnamneseData(prev => ({ ...prev, bmi: (p / (a * a)).toFixed(2) }));
+    const p = parseFloat(peso),
+      a = parseFloat(altura);
+    if (p > 0 && a > 0)
+      setAnamneseData((prev) => ({
+        ...prev,
+        bmi: (p / (a * a)).toFixed(2),
+      }));
   };
 
   if (loading) return <p>Carregando consulta...</p>;
@@ -192,17 +268,12 @@ export default function MedicoArea() {
     setDiagnostico("");
 
     const result = await buscarDiagnostico(token, item.idAppointment);
+    setPrescricao(result.data?.prescription);
 
-    if (result.success) {
-      setDiagnostico(result.diagnostic);
-    } else {
-      setDiagnostico(result.diagnostic); // já vem com mensagem de erro
-    }
+    setDiagnostico(result.diagnostic);
 
     setLoadingDiag(false);
   }
-
-
 
   return (
     <div className={Style.container}>
@@ -211,8 +282,13 @@ export default function MedicoArea() {
         <section className={Style.prontuarioSection}>
           {consultaAtual && (
             <div className={Style.activeConsultBox}>
-              <p>Atendimento ativo: <u className={Style.sublinhado}>{consultaAtual.name}</u></p>
-              <button className={Style.btn} onClick={abrirMenuDetalhes}>Expandir detalhes</button>
+              <p>
+                Atendimento ativo:{" "}
+                <u className={Style.sublinhado}>{consultaAtual.name}</u>
+              </p>
+              <button className={Style.btn} onClick={abrirMenuDetalhes}>
+                Expandir detalhes
+              </button>
             </div>
           )}
 
@@ -240,14 +316,12 @@ export default function MedicoArea() {
               setCustomValue={setCustomValue}
               handleCreateCustomField={handleCreateCustomField}
               customFieldsList={customFieldsList}
-
               historico={historico}
               loadingHistorico={loadingHistorico}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               abrirDetalhesConsulta={abrirDetalhesConsulta}
               formatarDataHora={formatarDataHora}
-
               diagnostico={diagnostico}
               setDiagnostico={setDiagnostico}
               prescricao={prescricao}
@@ -255,27 +329,26 @@ export default function MedicoArea() {
             />
           )}
 
-
           {showEndPopup && (
             <EncerrarAtendimentoPopup
               confirmarEncerramento={confirmarEncerramento}
               setShowEndPopup={setShowEndPopup}
             />
           )}
-
-
         </section>
       </div>
+
       {selectedConsulta && (
         <ConsultaDetalhesModal
           selectedConsulta={selectedConsulta}
           diagnostico={diagnostico}
+          prescricao={prescricao}
           loadingDiag={loadingDiag}
+          token={token}
           formatarDataHora={formatarDataHora}
           setSelectedConsulta={setSelectedConsulta}
         />
       )}
-
     </div>
   );
 }

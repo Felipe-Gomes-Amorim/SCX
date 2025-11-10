@@ -58,15 +58,18 @@ export default function ConsultaMenu({
           </div>
 
           <div className={Style.menuActions}>
-            {consultaAbertaPorMedico && (
-              <span className={Style.timerDisplay}>{formatarTempo(tempoDecorrido)}</span>
-            )}
-            {!consultaAbertaPorMedico && (
+            {consultaAbertaPorMedico ? (
+              <>
+                <span className={Style.timerDisplay}>{formatarTempo(tempoDecorrido)}</span>
+                <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
+              </>
+            ) : (
               <button onClick={iniciarNovaConsulta}>Abrir Consulta</button>
             )}
-            <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
+
             <button className={Style.closeBtn} onClick={() => setShowMenu(false)}>Voltar</button>
           </div>
+
         </div>
 
 

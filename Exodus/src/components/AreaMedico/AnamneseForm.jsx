@@ -39,7 +39,11 @@ export default function AnamneseForm({
 
         <button
           type="button"
-          onClick={() => setShowCustomPopup(true)}
+          onClick={() => {
+            console.log("Botão clicado, showCustomPopup antes:", showCustomPopup);
+            setShowCustomPopup(true);
+            console.log("showCustomPopup depois:", showCustomPopup);  // Isso pode ainda mostrar false devido ao async do React
+          }}
           className={Style.btn2}
         >
           + Adicionar Campo

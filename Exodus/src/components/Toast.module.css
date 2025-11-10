@@ -1,0 +1,67 @@
+.toast {
+    position: fixed;
+    top: 0;
+    /* Colar no topo */
+    left: 0;
+    width: 100%;
+    /* Ocupa toda a tela */
+    background: #fff;
+    color: #333;
+    border-radius: 0 0 10px 10px;
+    /* Cantos inferiores arredondados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    padding: 16px 20px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centraliza o texto */
+    z-index: 5000;
+    overflow: hidden;
+    text-align: center;
+}
+
+.toast p {
+    margin: 0;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.progress {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Cores de tipo */
+.info {
+    border-bottom: 5px solid #2196f3;
+}
+
+.info .progress {
+    background: #2196f3;
+}
+
+.success {
+    border-bottom: 5px solid #4caf50;
+}
+
+.success .progress {
+    background: #4caf50;
+}
+
+.error {
+    border-bottom: 5px solid #f44336;
+}
+
+.error .progress {
+    background: #f44336;
+}
+
+.warning {
+    border-bottom: 5px solid #ff9800;
+}
+
+.warning .progress {
+    background: #ff9800;
+}

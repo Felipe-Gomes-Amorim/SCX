@@ -3,176 +3,221 @@ import Style from "../../home/home.module.css";
 import {
     cadastrarRequisicaoExame,
     buscarTiposExame,
+    criarExames,
     PDFExame,
 } from "../../js/fluxoMedico/exames.js";
+import { useToast } from "../../context/ToastProvider.jsx";
 
 export default function PedidoExame({ consultaAtual }) {
-    const [exam_type, setExamType] = useState("");
-    const [sample_type, setSampleType] = useState("");
-    const [complement, setComplement] = useState("");
-    const [name, setName] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [mensagem, setMensagem] = useState("");
+    const [exames, setExames] = useState([
+        { id: Date.now(), examType: "", cid: "", justify: "" },
+    ]);
     const [tiposExame, setTiposExame] = useState([]);
     const [loadingTipos, setLoadingTipos] = useState(true);
-    const [exameId, setExameId] = useState(null); // novo estado para guardar o ID do exame
+    const [loadingEnvio, setLoadingEnvio] = useState(false);
     const [loadingPDF, setLoadingPDF] = useState(false);
+    const [exameIds, setExameIds] = useState([]);
+    const { showToast } = useToast();
 
+    // 🔹 Buscar tipos de exame ao montar
     useEffect(() => {
         const carregarTipos = async () => {
             try {
-                const token = localStorage.getItem("token");
-                const lista = await buscarTiposExame(token);
+                const lista = await buscarTiposExame();
                 setTiposExame(lista.data || []);
             } catch (err) {
                 console.error("Erro ao buscar tipos de exame:", err);
-                setMensagem("❌ Não foi possível carregar os tipos de exame.");
+                showToast("Erro ao buscar tipos de exame", "error");
             } finally {
                 setLoadingTipos(false);
             }
         };
-
         carregarTipos();
-    }, []);
+    }, [showToast]);
 
+    // 🔹 Atualizar um campo dentro de um exame específico
+    const handleChange = (index, field, value) => {
+        const novosExames = [...exames];
+        novosExames[index][field] = value;
+        setExames(novosExames);
+    };
+
+    // 🔹 Adicionar um novo pedido de exame vazio com ID único
+    const adicionarExame = () => {
+        setExames([
+            ...exames,
+            { id: Date.now() + Math.random(), examType: "", cid: "", justify: "" },
+        ]);
+    };
+
+    // 🔹 Remover um exame da lista
+    const removerExame = (index) => {
+        setExames(exames.filter((_, i) => i !== index));
+    };
+
+    // 🔹 Enviar todos os exames
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        setMensagem("");
-        setExameId(null);
+        setLoadingEnvio(true);
 
         try {
-            const response = await cadastrarRequisicaoExame({
-                exam_type,
-                sample_type,
-                complement,
-                name,
-                patient_id: consultaAtual?.patient_id,
-            });
+            // 1️⃣ Cria requisição vazia
+            const requisicao = await cadastrarRequisicaoExame();
+            if (!requisicao.success) throw new Error("Falha ao criar requisição de exame.");
+            console.log("Requisição criada:", requisicao);
+            setExameIds([requisicao.data.id]);
 
-            console.log("Resposta do cadastro:", response);
+            // 2️⃣ Envia lista de exames
+            const payload = exames.map((ex) => ({
+                examType: ex.examType,
+                justify: ex.justify,
+                cid: ex.cid,
+            }));
 
-            if (response.success && response.data?.id) {
-                setExameId(response.data.id); // salva o ID do exame recém-criado
-                setMensagem("Pedido de exame enviado com sucesso!");
-                setExamType("");
-                setSampleType("");
-                setComplement("");
-                setName("");
+            const criacao = await criarExames(payload);
+            console.log("Retorno da criação:", criacao);
+
+            if (criacao.success) {
+                showToast("Exames criados com sucesso!", "success");
+
+                // Agora definimos o ID retornado corretamente
+
+
+                // Resetar os campos
+                setExames([{ id: Date.now(), examType: "", cid: "", justify: "" }]);
             } else {
-                setMensagem("O servidor não retornou um ID válido para o exame.");
+                showToast("Erro ao criar exames.", "error");
             }
         } catch (error) {
-            console.error(error);
-            setMensagem("Erro ao enviar o pedido de exame.");
+            console.error("Erro ao enviar exames:", error);
+            showToast("Erro ao processar exames.", "error");
         } finally {
-            setLoading(false);
+            setLoadingEnvio(false);
         }
     };
 
+
+    // 🔹 Gerar PDFs
     const handleImprimir = async () => {
-        if (!exameId) {
-            setMensagem("Nenhum exame encontrado para imprimir.");
+        if (!exameIds.length) {
+            showToast("Nenhum exame disponível para imprimir.", "warning");
             return;
         }
-
         setLoadingPDF(true);
-        setMensagem("");
-
         try {
-            const response = await PDFExame({ id: exameId });
-            console.log("Resposta do PDF:", response);
-
-            if (response.success && response.data) {
-                const blob = new Blob([response.data], { type: "application/pdf" });
-                const url = URL.createObjectURL(blob);
-                window.open(url, "_blank");
-                setMensagem("PDF do exame gerado com sucesso!");
-            } else {
-                setMensagem("Falha ao gerar o PDF do exame.");
+            for (const id of exameIds) {
+                console.log(id);
+                const response = await PDFExame({ id });
+                if (response.success && response.data) {
+                    const blob = new Blob([response.data], { type: "application/pdf" });
+                    const url = URL.createObjectURL(blob);
+                    window.open(url, "_blank");
+                }
             }
+            showToast("PDFs gerados com sucesso!", "success");
         } catch (error) {
-            console.error("Erro ao gerar PDF:", error);
-            setMensagem("❌ Erro ao gerar o PDF do exame.");
+            console.error("Erro ao gerar PDFs:", error);
+            showToast("Erro ao gerar PDFs dos exames.", "error");
         } finally {
             setLoadingPDF(false);
         }
     };
 
-
-
     return (
         <div className={`${Style.section} ${Style.diagnosticoContainer}`}>
             <form onSubmit={handleSubmit} className={Style.formGrid}>
-                <label>
-                    Tipo de Exame
-                    {loadingTipos ? (
-                        <p>Carregando tipos de exame...</p>
-                    ) : (
-                        <select
-                            value={exam_type}
-                            onChange={(e) => setExamType(e.target.value)}
-                            required
-                        >
-                            <option value="">Selecione um tipo de exame</option>
-                            {tiposExame.map((tipo) => (
-                                <option key={tipo.id || tipo.name} value={tipo.name}>
-                                    {tipo.name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </label>
+                {exames.map((exame, index) => (
+                    <div key={exame.id} className={Style.exameItem}>
+                        <h4>Exame {index + 1}</h4>
 
-                <label>
-                    Tipo de Amostra
-                    <input
-                        type="text"
-                        value={sample_type}
-                        onChange={(e) => setSampleType(e.target.value)}
-                        placeholder="Ex: Sangue, Urina, Saliva..."
-                        required
-                    />
-                </label>
+                        <label>
+                            Tipo de Exame
+                            {loadingTipos ? (
+                                <p>Carregando...</p>
+                            ) : (
+                                <select
+                                    value={exame.examType}
+                                    onChange={(e) =>
+                                        handleChange(index, "examType", e.target.value)
+                                    }
+                                    required
+                                >
+                                    <option value="">Selecione</option>
+                                    {tiposExame.map((tipo) => (
+                                        <option key={tipo.name} value={tipo.name}>
+                                            {tipo.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </label>
 
-                <label>
-                    Complemento / Observações
-                    <textarea
-                        value={complement}
-                        onChange={(e) => setComplement(e.target.value)}
-                        placeholder="Observações adicionais sobre o exame..."
-                    />
-                </label>
+                        <label>
+                            CID
+                            <input
+                                type="text"
+                                value={exame.cid}
+                                onChange={(e) =>
+                                    handleChange(index, "cid", e.target.value)
+                                }
+                                placeholder="Código CID (ex: A00)"
+                                required
+                            />
+                        </label>
 
-                <label>
-                    Nome do Laboratório
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Ex: Unidade 01"
-                        required
-                    />
-                </label>
+                        <label>
+                            Justificativa
+                            <textarea
+                                value={exame.justify}
+                                onChange={(e) =>
+                                    handleChange(index, "justify", e.target.value)
+                                }
+                                placeholder="Motivo do exame..."
+                                required
+                            />
+                        </label>
 
-                <button type="submit" className={Style.saveBtn} disabled={loading}>
-                    {loading ? "Enviando..." : "Pedir Exame"}
+                        {exames.length > 1 && (
+                            <button
+                                type="button"
+                                className={Style.logout_btn}
+                                onClick={() => removerExame(index)}
+                            >
+                                Remover
+                            </button>
+                        )}
+                        <hr />
+                    </div>
+                ))}
+
+                <button
+                    type="button"
+                    onClick={adicionarExame}
+                    className={Style.btn2}
+                    style={{ marginBottom: "1rem" }}
+                >
+                    + Adicionar Outro Exame
+                </button>
+
+                <button
+                    type="submit"
+                    className={Style.saveBtn}
+                    disabled={loadingEnvio}
+                >
+                    {loadingEnvio ? "Enviando..." : "Enviar Todos os Pedidos"}
                 </button>
             </form>
 
-            {/* Botão extra só aparece após criar o exame */}
-            {exameId && (
+            {exameIds.length > 0 && (
                 <button
                     onClick={handleImprimir}
                     className={Style.btn2}
                     disabled={loadingPDF}
                     style={{ marginTop: "1rem" }}
                 >
-                    {loadingPDF ? "Gerando PDF..." : "Imprimir Exame"}
+                    {loadingPDF ? "Gerando PDFs..." : "Imprimir Todos os Exames"}
                 </button>
             )}
-
-            {mensagem && <p>{mensagem}</p>}
         </div>
     );
 }

@@ -8,6 +8,7 @@ import Style from "../register.module.css";
 import ExodusTop from "../../ExodusTop.jsx";
 import Footer from "../../Footer.jsx";
 import { validarCnpj } from "../../js/validarCNPJ/validarCnpj.js";
+import { useToast } from "../../context/ToastProvider.jsx"; // 👈 hook do toaster
 
 export default function CheckLaboratory() {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ export default function CheckLaboratory() {
   const [formData, setFormData] = useState({ cnpj: "" });
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const { showToast } = useToast(); // 👈 habilita os toasts
 
   const fields = [
     {
@@ -36,40 +38,43 @@ export default function CheckLaboratory() {
 
       if (!cnpjValido || !cnpjValido.valido) {
         setErrorMessage("CNPJ inválido ou inexistente.");
+        showToast("CNPJ inválido ou inexistente.", "error");
         setLoading(false);
         return;
       }
 
       const token = localStorage.getItem("token");
       const result = await verificarLaboratorio(cnpjLimpo, token);
-      
 
       if (result.status === "jaCadastrado") {
         setSuccess(true);
-        alert("Laboratório já está cadastrado na clínica!");
-
-        setTimeout(()=>{navigate("/home");},1500);
+        showToast("Laboratório já está cadastrado na clínica!", "info");
+        setTimeout(() => navigate("/home"), 1500);
       } else if (result.status === "transferivel") {
         setSuccess(true);
-        alert("Laboratório existe, mas não está vinculado à clínica. Transferindo...");
+        showToast("Laboratório encontrado! Transferindo para sua clínica...", "info");
         const result2 = await transferirLaboratorio(formData);
         if (result2.success) {
-          setSuccess(true);
-          alert("Transferido com sucesso!");
-          setTimeout(()=>{navigate("/home");},1500)
+          showToast("Transferido com sucesso!", "success");
+          setTimeout(() => navigate("/home"), 1500);
         } else {
-          setErrorMessage(result.message || "Erro ao cadastrar laboratório.");
+          const msg = result2.message || "Erro ao cadastrar laboratório.";
+          setErrorMessage(msg);
+          showToast(msg, "error");
         }
       } else if (result.status === "novo") {
         setSuccess(true);
-        alert("Laboratório não encontrado. Prossiga para o cadastro completo!");
-        setTimeout(()=>{navigate(`/registerLaboratory?cnpj=${formData.cnpj}`);},1500);
+        showToast("Laboratório não encontrado. Redirecionando para cadastro...", "info");
+        setTimeout(() => navigate(`/registerLaboratory?cnpj=${formData.cnpj}`), 1500);
       } else {
-        setErrorMessage(result.message || "Erro ao verificar o CNPJ.");
+        const msg = result.message || "Erro ao verificar o CNPJ.";
+        setErrorMessage(msg);
+        showToast(msg, "error");
       }
     } catch (error) {
       console.error("Erro no processo de verificação:", error);
       setErrorMessage("Ocorreu um erro ao validar o CNPJ. Tente novamente.");
+      showToast("Erro ao validar CNPJ. Tente novamente.", "error");
     } finally {
       setLoading(false);
     }
@@ -79,7 +84,6 @@ export default function CheckLaboratory() {
     <>
       <div className={Style.login_page}>
         <ExodusTop />
-
         <div className={Style.login_card}>
           <motion.div
             className={Style.login_left}
@@ -89,11 +93,8 @@ export default function CheckLaboratory() {
           >
             <h2>Verificar Laboratório</h2>
             <p className={Style.subtitle}>Informe o CNPJ para verificar o cadastro</p>
-            {errorMessage && (
-              <p style={{ color: "red", marginBottom: "10px" }}>
-                {errorMessage}
-              </p>
-            )}
+
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
             <DynamicForm
               fields={fields}
@@ -120,7 +121,6 @@ export default function CheckLaboratory() {
           </motion.div>
         </div>
       </div>
-
       <Footer />
     </>
   );

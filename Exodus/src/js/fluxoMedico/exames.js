@@ -9,10 +9,9 @@ export async function buscarLaboratorios() {
     const response = await axios.get(`${API_BASE}/doctor/getLabDocCli`, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
     });
-
     return {
       success: true,
-      data: response.data.map(lab => ({ name: lab.name })), // adapta para o DynamicForm
+      data: response.data.map(lab => ({ name: lab.name })),
     };
   } catch (error) {
     console.error("Erro ao buscar laboratórios:", error);
@@ -26,11 +25,9 @@ export async function buscarTiposExame() {
     const response = await axios.get(`${API_BASE}/doctor/getExamsType`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
-
     return {
       success: true,
-      data: response.data.map(exam => ({ name: exam.name })), // garante compatibilidade
+      data: response.data.map(exam => ({ name: exam.name })),
     };
   } catch (error) {
     console.error("Erro ao buscar tipos de exame:", error);
@@ -38,19 +35,35 @@ export async function buscarTiposExame() {
   }
 }
 
-export async function cadastrarRequisicaoExame(exameData) {
+export async function cadastrarRequisicaoExame() {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${API_BASE}/doctor/requestExm`, exameData, {
+    const response = await axios.post(`${API_BASE}/doctor/requestExm`, {}, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
     });
-
     return { success: true, data: response.data };
   } catch (error) {
-    console.error("Erro ao cadastrar requisição de exame:", error.response || error);
+    console.error("Erro ao chamar requestExm:", error.response || error);
     return {
       success: false,
       message: error.response?.data?.error || "Erro no servidor.",
+    };
+  }
+}
+
+// 🆕 Nova rota: createExams
+export async function criarExames(payload) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(`${API_BASE}/doctor/createExams`, payload, {
+      headers: { Authorization: token ? `Bearer ${token}` : undefined },
+    });
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao criar exames:", error.response || error);
+    return {
+      success: false,
+      message: error.response?.data?.error || "Erro no servidor ao criar exames.",
     };
   }
 }

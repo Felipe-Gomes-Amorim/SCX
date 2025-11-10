@@ -141,6 +141,10 @@
   color: white;
 }
 
+.btn2{
+  margin-top: 1rem;
+}
+
 .saveBtn {
   margin-top: 1rem;
   width: 10rem;
@@ -457,6 +461,7 @@
 
 .menuBox {
   max-width: 1200px;
+  min-height:90vh;
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -627,7 +632,7 @@
   gap: 1rem;
   max-height: 400px;
   overflow-y: auto;
-
+  min-height: 55vh;
   scrollbar-width: thin;
   scrollbar-color: #007bff #f0f0f0;
 }
@@ -741,13 +746,21 @@
   padding: 20px;
   border-radius: 12px;
   width: 90%;
-  height: 90vh;
+  max-height: 90vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 3000;
+  
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f0f0f0;
 }
+
+.popupContent {
+  flex: 1; 
+  overflow-y: auto; 
+  padding-right: 10px;
+}
+
+
 
 .ListCustom {
   margin-top: 1.5rem;
@@ -759,9 +772,13 @@
 }
 
 .buttonsRow {
+  margin-top: 12px;
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  justify-content: flex-start;
+  background: white; 
+  padding-top: 10px;
+  position: sticky; 
+  bottom: 0;
 }
 
 .confirmButton,
@@ -988,4 +1005,189 @@
   .horizontalSection {
     flex-direction: column;
   }
+}
+
+
+/* ========================= */
+/* 🔹 CustomFieldPopup Style */
+/* ========================= */
+
+.customPopupCard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem;
+  width: 420px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: slideUpFade 0.35s ease forwards;
+  position: relative;
+  z-index: 5000;
+}
+
+.popupTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.popupLabel {
+  font-weight: 600;
+  color: #444;
+}
+
+.popupInput {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.popupInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+.popupButtonsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.btnBlue {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btnBlue:hover {
+  background: #005fcc;
+}
+
+.btnGray {
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btnGray:hover {
+  background: #ccc;
+}
+
+.uploadWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.uploadRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fileName {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+/* --- Ajustes visuais para o container geral --- */
+.diagnosticoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #f8faff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #e9f0ff;
+}
+
+/* --- Bloco individual de exame --- */
+.exameItem {
+  background: #ffffff;
+  
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.exameItem:hover {
+  box-shadow: 0 2px 12px rgba(0, 123, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* --- Título de cada exame --- */
+.exameItem h4 {
+  margin-bottom: 0.5rem;
+  color: #1e40af;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* --- Rótulos e campos --- */
+.exameItem label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.exameItem input,
+.exameItem select,
+.exameItem textarea {
+  font-size: 0.95rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.exameItem input:focus,
+.exameItem select:focus,
+.exameItem textarea:focus {
+  border-color: #007bff;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+
+/* --- Separador visual --- */
+.exameItem hr {
+  border: none;
+  border-top: 1px dashed #d1d5db;
+  margin-top: 1rem;
 }

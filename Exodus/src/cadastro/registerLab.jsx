@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Style from "./register.module.css";
@@ -10,18 +10,20 @@ import { cadastrarAdmLaboratorio } from "../js/registros/cadastrar_adm_laborator
 import { formatCNPJ, unmask } from "../js/formatters.js";
 import { buscarCep } from "../js/checarCep/buscarCep.js";
 import { validarCnpj } from "../js/validarCNPJ/validarCnpj.js";
-export default function Register() {
+import { useToast } from "../context/ToastProvider.jsx"; // 👈 hook do toaster
+
+export default function RegisterLaboratory() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const { showToast } = useToast(); // 👈 habilita toasts
 
   const cnpjFromUrl = new URLSearchParams(window.location.search).get("cnpj");
 
-  // Estado do formulário
   const [formdata, setformdata] = useState({
     name: "",
-    cnpj: cnpjFromUrl ? formatCNPJ(cnpjFromUrl) : "", // aplica máscara já aqui
+    cnpj: cnpjFromUrl ? formatCNPJ(cnpjFromUrl) : "",
     cep: "",
     address: "",
     telephone: "",
@@ -29,7 +31,6 @@ export default function Register() {
     email: "",
   });
 
-  // Campos do formulário
   const fields = [
     { name: "name", type: "text", placeholder: "Nome", required: true },
     { name: "cnpj", type: "text", placeholder: "CNPJ", required: true, defaultValue: formdata.cnpj },
@@ -40,18 +41,18 @@ export default function Register() {
     { name: "email", type: "email", placeholder: "Email", required: true },
   ];
 
-  // Submissão do formulário
-
   const handleSubmit = async (formValues) => {
     setLoading(true);
     setErrorMessage("");
     setSuccess(false);
 
-    const cnpjLimpo = unmask(formValues.cnpj); // remove máscara
+    const cnpjLimpo = unmask(formValues.cnpj);
     const cnpjStatus = await validarCnpj(cnpjLimpo);
 
     if (!cnpjStatus.valido) {
-      setErrorMessage(`CNPJ inválido ou inativo`);
+      const msg = "CNPJ inválido ou inativo.";
+      setErrorMessage(msg);
+      showToast(msg, "error");
       setLoading(false);
       return;
     }
@@ -74,25 +75,29 @@ export default function Register() {
       const token = localStorage.getItem("token");
 
       const result = await cadastrarLaboratorio(labData, token);
-
-      if (result.success) {
-      } else {
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar");
+      if (!result.success) {
+        const msg = result.message || "Erro ao cadastrar laboratório.";
+        setErrorMessage(msg);
+        showToast(msg, "error");
       }
 
       const result2 = await cadastrarAdmLaboratorio(admLabData, token);
-
       if (result2.success) {
         setSuccess(true);
-        setTimeout(() => navigate("/home"), 2000)
+        showToast("Laboratório cadastrado com sucesso!", "success");
+        setTimeout(() => navigate("/home"), 2000);
       } else {
-        setErrorMessage(result2.message || "Erro desconhecido ao cadastrar");
+        const msg = result2.message || "Erro ao cadastrar administrador do laboratório.";
+        setErrorMessage(msg);
+        showToast(msg, "error");
       }
     } catch (err) {
-      setErrorMessage("Falha ao se conectar ao servidor.");
+      const msg = "Falha ao se conectar ao servidor.";
+      setErrorMessage(msg);
+      showToast(msg, "error");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -100,36 +105,31 @@ export default function Register() {
       <div className={Style.login_page}>
         <ExodusTop />
         <div className={Style.login_card}>
-
-
-
-
-          <motion.div className={Style.login_left} initial={{ x: "100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
+          <motion.div
+            className={Style.login_left}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9 }}
+          >
             <h2>Cadastro de Laboratório</h2>
             <p className={Style.subtitle}>Preencha com os dados</p>
 
             <DynamicForm
-
               fields={fields.map((field) => {
                 if (field.name === "cep") {
                   return {
                     ...field,
                     render: ({ value, onChange, name, placeholder, type }) => (
                       <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                        <input
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                          placeholder={placeholder}
-                          type={type}
-                        />
+                        <input value={value} onChange={onChange} name={name} placeholder={placeholder} type={type} />
                         <button
                           type="button"
                           className={Style.cepButton}
                           onClick={async () => {
-                            const data = await buscarCep(unmask(value)); // usa o value atual
+                            const data = await buscarCep(unmask(value));
                             if (data) {
-                              setformdata(prev => ({
+                              showToast("CEP confirmado!", "success");
+                              setformdata((prev) => ({
                                 ...prev,
                                 cep: data.cep,
                                 address: data.logradouro,
@@ -139,35 +139,38 @@ export default function Register() {
                                 complemento: data.complemento,
                               }));
                             } else {
-                              alert("CEP não encontrado.");
+                              showToast("CEP não encontrado.", "warning");
                             }
                           }}
                         >
                           Confirmar CEP
                         </button>
                       </div>
-                    )
-
+                    ),
                   };
                 }
                 return field;
               })}
-              values={formdata}                    // ✅ envia dados atuais
-              onChangeValues={setformdata}          // ✅ recebe alterações
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
               buttonSuccess={success}
-
-
             />
-
           </motion.div>
-          <motion.div className={Style.login_right} initial={{ x: "-100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
+
+          <motion.div
+            className={Style.login_right}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9 }}
+          >
             <motion.h2>Integração do Laboratório ao Sistema</motion.h2>
-            <motion.p>Cadastre o laboratório no sistema para garantir sua identificação e autenticação dentro da plataforma.
+            <motion.p>
+              Cadastre o laboratório no sistema para garantir sua identificação e autenticação dentro da plataforma. 
               O registro armazena informações essenciais como endereço, telefone e responsável técnico, permitindo que o laboratório realize operações com segurança e confiabilidade.
-              Esse processo assegura a integridade dos dados e facilita futuras integrações com clínicas e unidades parceiras.</motion.p>
+            </motion.p>
           </motion.div>
         </div>
       </div>

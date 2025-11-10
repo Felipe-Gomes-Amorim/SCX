@@ -7,26 +7,28 @@ import ExodusTop from "../ExodusTop.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { cadastrarMedico } from "../js/registros/cadastrar_medico.js";
 import { formatCRM } from "../js/formatters.js";
+import { useToast } from "../context/ToastProvider.jsx"; // 👈 importa o hook do toaster
 
 export default function RegisterDoctor() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false); // ✅ controle do sucesso
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast(); // 👈 agora você pode chamar o toast daqui
+
   const crmFromUrl = new URLSearchParams(location.search).get("crm");
   const [formdata, setformdata] = useState({
-      name: "",
-      crm:  crmFromUrl ? formatCRM(crmFromUrl) : "",
-      email: "",
+    name: "",
+    crm: crmFromUrl ? formatCRM(crmFromUrl) : "",
+    email: "",
   });
 
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },
-    { name: "speciality", type: "text", placeholder: "Especialidade do Médico", required: true },
+    { name: "specialty", type: "text", placeholder: "Especialidade do Médico", required: true },
     { name: "crm", type: "text", placeholder: "CRM", required: true, defaultValue: crmFromUrl },
     { name: "email", type: "email", placeholder: "E-mail", required: true },
-    
   ];
 
   const handleSubmit = async (formValues) => {
@@ -39,17 +41,30 @@ export default function RegisterDoctor() {
       const result = await cadastrarMedico(formValues, token);
 
       if (result.success) {
-        setSuccess(true); 
+        setSuccess(true);
+        showToast("Médico cadastrado com sucesso!", "success");
+
         setTimeout(() => {
-          navigate("/home"); 
-        }, 1500);
+          navigate("/home");
+        }, 2000);
       } else {
-        setErrorMessage(result.message || "Erro desconhecido ao cadastrar médico.");
+        let message = result.message || "Erro desconhecido ao cadastrar médico.";
+
+      
+        if (message.includes("duplicar valor da chave") || message.includes("username_key")) {
+          message = "Este e-mail já está cadastrado. Tente outro endereço.";
+        }
+
+        setErrorMessage(message);
+        
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage("Falha ao se conectar ao servidor.");
+      const message = "Falha ao se conectar ao servidor.";
+      setErrorMessage(message);
+      showToast(message, "error");
     }
+
 
     setLoading(false);
   };
@@ -73,14 +88,15 @@ export default function RegisterDoctor() {
 
             <DynamicForm
               fields={fields}
-              values={formdata}                    
-              onChangeValues={setformdata} 
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
               buttonText={success ? "Cadastrado" : "Confirmar"}
               loading={loading}
               buttonSuccess={success}
             />
           </motion.div>
+
           <motion.div
             className={Style.login_right}
             initial={{ x: "-100%", opacity: 0 }}
@@ -89,7 +105,9 @@ export default function RegisterDoctor() {
           >
             <motion.h2>Bem-vindo!</motion.h2>
             <motion.p>
-              Cadastre as informações do médico para integrá-lo ao sistema da clínica. O registro garante acesso aos módulos operacionais e permite o gerenciamento seguro de suas atividades.
+              Cadastre as informações do médico para integrá-lo ao sistema da
+              clínica. O registro garante acesso aos módulos operacionais e
+              permite o gerenciamento seguro de suas atividades.
             </motion.p>
           </motion.div>
         </div>

@@ -5,7 +5,9 @@ import { profilePatient } from "../js/profiles/profile_paciente.js";
 import { profileSecretary } from "../js/profiles/profile_secretaria.js";
 import Style from "./Profile.module.css";
 
-export default function ProfileCard({ role }) {
+import { motion } from "framer-motion";
+
+export default function ProfileModal({ role, onClose }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,45 +48,117 @@ export default function ProfileCard({ role }) {
     getProfile();
   }, [role]);
 
-  if (loading) return <p>Carregando dados do perfil...</p>;
-  if (!profile) return <p>Não foi possível carregar os dados do perfil.</p>;
+  if (loading)
+    return (
+      <div className={Style.backdrop}>
+        <div className={Style.modal}>
+          <p>Carregando dados do perfil...</p>
+        </div>
+      </div>
+    );
+
+  if (!profile)
+    return (
+      <div className={Style.backdrop}>
+        <div className={Style.modal}>
+          <p>Não foi possível carregar os dados do perfil.</p>
+          <button className={Style.closeBtn} onClick={onClose}>
+            Fechar
+          </button>
+        </div>
+      </div>
+    );
 
   return (
-    <div className={Style.profileCard}>
-      <h3>Dados do Usuário</h3>
-      {role === "Admin" && (
-        <>
-          
-          <p><strong>CPF:</strong> {profile.cpf}</p>
-          <p><strong>Telefone:</strong> {profile.telephone}</p>
-          <p><strong>Clínica:</strong> {profile.clinicN}</p>
-          
-        </>
-      )}
-      {role === "Doctor" && (
-        <>
-          <p><strong>CRM:</strong> {profile.crm}</p>
-          <p><strong>Telefone:</strong> {profile.telephone}</p>
-        </>
-      )}
-      {role === "Patient" && (
-        <>
-          
-          <p><strong>Data de Nascimento:</strong> {profile.dateBirth}</p>
-          <p><strong>CPF:</strong> {profile.cpf}</p>
-          <p><strong>Telefone:</strong> {profile.telephone}</p>
-          
-        </>
-      )}
-      {role === "Secretary" && (
-        <>
-          
-          <p><strong>CPF:</strong> {profile.cpf}</p>
-          <p><strong>Telefone:</strong> {profile.telephone}</p>
-          <p><strong>Clínica:</strong> {profile.clinicN}</p>
-         
-        </>
-      )}
-    </div>
+    <motion.div
+      className={Style.backdrop}
+      onClick={onClose}
+      initial={{ backdropFilter: "blur(0px)", backgroundColor: "rgba(0,0,0,0)" }}
+      animate={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.3)" }}
+      exit={{ backdropFilter: "blur(0px)", backgroundColor: "rgba(0,0,0,0)" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+    >
+      <motion.div
+        className={Style.modal}
+        onClick={(e) => e.stopPropagation()}
+        initial={{ y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 80, opacity: 0 }}
+        transition={{ duration: 0.5, ease: [0.25, 0.8, 0.25, 1] }}
+      >
+        <h3>Dados do Usuário</h3>
+
+        {role === "Admin" && (
+          <>
+            <p>
+              <strong>CPF:</strong>{" "}
+              {profile.cpf ? profile.cpf : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Telefone:</strong>{" "}
+              {profile.telephone ? profile.telephone : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Clínica:</strong>{" "}
+              {profile.clinicN ? profile.clinicN : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+          </>
+        )}
+
+        {role === "Doctor" && (
+          <>
+            <p>
+              <strong>CRM:</strong>{" "}
+              {profile.crm ? profile.crm : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Telefone:</strong>{" "}
+              {profile.telephone ? profile.telephone : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+          </>
+        )}
+
+        {role === "Patient" && (
+          <>
+            <p>
+              <strong>Data de Nascimento:</strong>{" "}
+              {profile.dateBirth ? profile.dateBirth : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>CPF:</strong>{" "}
+              {profile.cpf ? profile.cpf : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Telefone:</strong>{" "}
+              {profile.telephone ? profile.telephone : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+          </>
+        )}
+
+        {role === "Secretary" && (
+          <>
+            <p>
+              <strong>CPF:</strong>{" "}
+              {profile.cpf ? profile.cpf : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Telefone:</strong>{" "}
+              {profile.telephone ? profile.telephone : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+            <p>
+              <strong>Clínica:</strong>{" "}
+              {profile.clinicN ? profile.clinicN : <i style={{ color: "#888" }}>Não informado</i>}
+            </p>
+          </>
+        )}
+
+
+        <button className={Style.closeBtn} onClick={onClose}>
+          Fechar
+        </button>
+
+
+      </motion.div>
+    </motion.div >
   );
 }

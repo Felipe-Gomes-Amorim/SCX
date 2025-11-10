@@ -56,7 +56,8 @@
 
 /* Card de login */
 .login_card {
-  top: 10vh;
+  top: 1vh;
+   margin-bottom: 7rem;
   /* Mantém vh */
   display: flex;
   background: white;
@@ -71,6 +72,7 @@
   position: relative;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
   /* De px para rem */
+ 
 }
 
 /* Coluna esquerda */

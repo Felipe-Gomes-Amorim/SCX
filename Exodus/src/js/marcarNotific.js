@@ -1,25 +1,25 @@
+import axios from "axios";
 import API_URL from "./apiConfig.js";
 
 export async function marcarComoLida(notificacaoId, token) {
   try {
-    const response = await fetch(`${API_URL}/notification/markRead`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ id: notificacaoId}),
-    });
+    const response = await axios.patch(
+      `${API_URL}/notification/markRead`,
+      { id: notificacaoId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Erro ao marcar como lida: ${errorText}`);
-    }
-
-    const data = await response.json();
-    return data;
+    return { success: true, data: response.data };
   } catch (err) {
     console.error("Erro na função marcarComoLida:", err);
-    throw err;
+    return {
+      success: false,
+      message: err.response?.data?.message || err.message,
+    };
   }
 }

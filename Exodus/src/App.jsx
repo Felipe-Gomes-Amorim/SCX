@@ -8,16 +8,19 @@ import ExodusTop from './ExodusTop.jsx'
 
 
 
+
 function App() {
 
 
   return (
-   <>
-   <Header></Header>  
-   <Hero></Hero>
-   <About></About>
-   <Footer></Footer>
-   </>
+    <>
+      
+        <Header></Header>
+        <Hero></Hero>
+        <About></About>
+        <Footer></Footer>
+     
+    </>
   )
 }
 
