@@ -210,7 +210,7 @@ export default function Home() {
                       {userData.roles?.some(role => role.name === "Secretary") && <><PatientList /></>}
                       {userData.roles?.some(role => role.name === "LaboratoryAdmin") && <><LabArea></LabArea></>}
                       {userData.roles?.some(role => role.name === "LaboratoryUser") && <LabAreaUser></LabAreaUser>}
-                      {userData.roles?.some(role => role.name === "AdminSystem") && <ClinicsList></ClinicsList>}
+                      {userData.roles?.some(role => role.name === "AdminSystem") && <><AdmArea/><ClinicsList></ClinicsList></>}
                     </>
                   )}
                 </div>
