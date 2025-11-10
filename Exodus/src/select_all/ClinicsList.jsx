@@ -62,19 +62,24 @@ export default function ClinicsList({ limit = null }) {
                         background="transparent"
                     />
 
-                    <button
-                        className={Style.disableAdmBtn}
-                        onClick={() => setShowDisableModal(true)}
-                    >
-                        Desativar Adm de Clínica
-                    </button>
+                    <div className={Style.toggleContainer}>
+                        <button
+                            className={`${Style.toggleButton} ${Style.leftButton}`}
+                            onClick={() => setShowDisableModal(true)}
+                        >
+                            Desativar Adm de Clínica
+                        </button>
 
-                    <button
-                        className={Style.enableAdmBtn}
-                        onClick={() => setShowEnableModal(true)}
-                    >
-                        Ativar Adm de Clínica
-                    </button>
+                        <button
+                            className={`${Style.toggleButton} ${Style.rightButton}`}
+                            onClick={() => setShowEnableModal(true)}
+                        >
+                            Ativar Adm de Clínica
+                        </button>
+
+                        <div className={Style.highlight}></div>
+                    </div>
+
                 </div>
             </div>
 

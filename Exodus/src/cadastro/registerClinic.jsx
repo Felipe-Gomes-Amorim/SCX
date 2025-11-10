@@ -17,7 +17,7 @@ export default function RegisterClinic() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Hook global do toast
+
   const { showToast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -83,7 +83,7 @@ export default function RegisterClinic() {
         const result2 = await cadastrarAdm(admClinicaData, token);
         if (result2.success) {
           showToast("Administrador cadastrado com sucesso!", "success", 2500);
-          navigate("/");
+          navigate("/home");
         } else {
           showToast("Erro ao cadastrar administrador.", "error", 2500);
         }

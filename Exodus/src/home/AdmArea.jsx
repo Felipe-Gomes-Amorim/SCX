@@ -57,9 +57,7 @@ export default function AdmArea() {
     <section className={Style.section}>
       <h2 className={Style.sectionTitle}>Área do Administrador</h2>
 
-      <p className={Style.infoText}>
-        <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
-      </p>
+    
 
       <div className={Style.subsection}>
         {dashboardData ? (
@@ -67,7 +65,7 @@ export default function AdmArea() {
             <h3 className={Style.chartTitle}>Resumo do Sistema</h3>
 
             {/* Cards de resumo */}
-            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "2rem", marginLeft: "4rem", }}>
+            <div style={{ display: "flex", gap: "2rem", justifyContent: "center", marginBottom: "2rem", marginLeft: "3.5rem", }}>
               {dashboardData.map((item) => (
                 <div
                   key={item.name}
