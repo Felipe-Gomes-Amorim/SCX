@@ -2,6 +2,9 @@ import axios from "axios";
 import API_URL from "./apiConfig.js";
 
 export async function marcarComoLida(notificacaoId, token) {
+  if(token === null || token === undefined) {
+    token = localStorage.getItem("token");
+  }
   try {
     const response = await axios.patch(
       `${API_URL}/notification/markRead`,

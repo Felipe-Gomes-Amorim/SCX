@@ -4,7 +4,9 @@ import API_URL from "../apiConfig.js";
 export async function verificarLaboratorio(cnpj, token) {
   try {
     // 1️⃣ Verifica se o laboratório existe no sistema
-    const response = await axios.post(`${API_URL}/admin/verificLabExists`, { cnpj });
+    const response = await axios.post(`${API_URL}/admin/verificLabExists`, { cnpj },
+      { headers: { Authorization: token ? `Bearer ${token}` : undefined } }
+    );
     console.log(response.data)
     if (response.data === true) {
       // 2️⃣ Verifica se já está vinculado à clínica
