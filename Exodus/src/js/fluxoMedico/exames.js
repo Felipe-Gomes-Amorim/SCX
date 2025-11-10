@@ -55,11 +55,15 @@ export async function cadastrarRequisicaoExame() {
 export async function criarExames(payload) {
   try {
     const token = localStorage.getItem("token");
+    console.log("token passado para criar:", to);
+    console.log("payload passado para criar:", payload);
     const response = await axios.post(`${API_BASE}/doctor/createExams`, payload, {
       headers: { Authorization: token ? `Bearer ${token}` : undefined },
     });
+    console.log(response);
     return { success: true, data: response.data };
   } catch (error) {
+    console.log(error)
     console.error("Erro ao criar exames:", error.response || error);
     return {
       success: false,
@@ -71,6 +75,8 @@ export async function criarExames(payload) {
 export async function PDFExame(exameData) {
   try {
     const token = localStorage.getItem("token");
+    console.log("Dados do exame para gerar PDF:", exameData);
+    console.log("Token para gerar PDF:", token);
     const response = await axios.post(
       `${API_BASE}/files/examsRequestPDF`,
       { exameData },
@@ -81,9 +87,10 @@ export async function PDFExame(exameData) {
         responseType: "arraybuffer",
       }
     );
-
+    console.log("Resposta do PDFExame:", response);
     return { success: true, data: response.data };
   } catch (error) {
+    console.log(error)
     console.error("Erro ao gerar PDF:", error.response || error);
     return { success: false, message: "Erro ao gerar PDF" };
   }
