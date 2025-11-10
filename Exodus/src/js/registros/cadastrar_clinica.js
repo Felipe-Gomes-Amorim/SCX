@@ -1,5 +1,6 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
+const authToken = localStorage.getItem("token");
 
 /**
  * Cadastra uma nova clínica no sistema.
