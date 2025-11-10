@@ -27,9 +27,9 @@ export default function AdmArea() {
         const headers = { Authorization: `Bearer ${localStorage.getItem("token")}` };
 
         const [labRes, cliRes, patRes] = await Promise.all([
-          fetch("http://localhost:8080/adminSystem/getCountLab", { headers }),
-          fetch("http://localhost:8080/adminSystem/getCountCli", { headers }),
-          fetch("http://localhost:8080/adminSystem/getCountPat", { headers }),
+          fetch("https://controledeexame.onrender.com/adminSystem/getCountLab", { headers }),
+          fetch("https://controledeexame.onrender.com/adminSystem/getCountCli", { headers }),
+          fetch("https://controledeexame.onrender.com/adminSystem/getCountPat", { headers }),
         ]);
 
         const lab = await labRes.json();
