@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Style from "./Header.module.css";
 import profilePic from "./assets/user-icon.png";
-import Avatar from "./assets/avatar.png";
+import Avatar from "./assets/user-icon.png";
 import { logoutUsuario } from "./js/login e home/logout.js";
 import { useToast } from "./context/ToastProvider.jsx";
 

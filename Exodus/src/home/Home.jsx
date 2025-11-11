@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Style from "./home.module.css";
 import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
-import Avatar from "../assets/avatar.png";
+import Avatar from "../assets/user-icon.png";
 import axios from "axios";
 import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";

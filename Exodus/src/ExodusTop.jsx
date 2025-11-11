@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "./login/Login.module.css";
-import Avatar from "./assets/avatar.png";
+import Avatar from "./assets/user-icon.png";
 import { logoutUsuario } from "./js/login e home/logout.js";
 import { carregarhome } from "./js/login e home/home.js";
 import { mostrar_todos } from "./js/mostrar_todos.js";
