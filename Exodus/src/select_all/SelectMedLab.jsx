@@ -5,6 +5,8 @@ import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
 import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
 import { toggleStatus } from "../js/ativar_desativar.js";
+import axios from "axios";
+import API_URL from "../js/apiConfig.js";
 import { useToast } from "../context/ToastProvider.jsx";
 
 export default function SelectMedLab({ limit = null }) {
@@ -16,7 +18,7 @@ export default function SelectMedLab({ limit = null }) {
   const [instituicao, setInstituicao] = useState(null);
   const token = localStorage.getItem("token");
 
-  const { showToast } = useToast(); 
+  const { showToast } = useToast();
 
   // 🔍 Busca dados da instituição
   useEffect(() => {
@@ -56,8 +58,8 @@ export default function SelectMedLab({ limit = null }) {
             abaAtiva === "doctor"
               ? "Nenhum médico encontrado."
               : abaAtiva === "lab"
-                ? "Nenhum laboratório encontrado."
-                : "Nenhuma secretária encontrada.";
+              ? "Nenhum laboratório encontrado."
+              : "Nenhuma secretária encontrada.";
           setErro(msg);
         }
       } catch (err) {
@@ -71,7 +73,7 @@ export default function SelectMedLab({ limit = null }) {
     carregarDados();
   }, [token, abaAtiva]);
 
-  // 🔎 Filtro por aba
+  // 🔎 Filtro
   const filteredData = dados.filter((item) => {
     const termo = searchTerm.toLowerCase();
     if (abaAtiva === "doctor") {
@@ -98,25 +100,24 @@ export default function SelectMedLab({ limit = null }) {
     abaAtiva === "doctor"
       ? "/checkDoctor"
       : abaAtiva === "lab"
-        ? "/checkLab"
-        : "/registerSecretaria";
+      ? "/checkLab"
+      : "/registerSecretaria";
 
-
-  async function handleToggleStatus(identificador, status) {
+  // 🧩 Desativar secretária
+  async function handleToggleStatus(email, status) {
     try {
-      await toggleStatus(abaAtiva, identificador, status, token);
+      await toggleStatus("secretary", email, status, token);
 
       setDados((prev) =>
-        prev.map((item) => {
-          const chaveId = abaAtiva === "lab" ? "cnpj" : abaAtiva === "secretary" ? "email" : "id";
-          return item[chaveId] === identificador
+        prev.map((item) =>
+          item.email === email
             ? { ...item, status: status === "Ativo" ? "Inativo" : "Ativo" }
-            : item;
-        })
+            : item
+        )
       );
 
       showToast(
-        `Status ${status === "Ativo" ? "desativado" : "ativado"} com sucesso.`,
+        `Secretária ${status === "Ativo" ? "desativada" : "ativada"} com sucesso.`,
         "success"
       );
     } catch (error) {
@@ -125,6 +126,26 @@ export default function SelectMedLab({ limit = null }) {
     }
   }
 
+  // 🧪 Desvincular laboratório
+  async function handleDisableLab(cnpj) {
+    try {
+      
+      const response = await axios.patch(
+        `${API_URL}/admin/disableLaboratory`,
+        { cnpj },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Atualiza o estado local removendo o laboratório
+      setDados((prev) => prev.filter((lab) => lab.cnpj !== cnpj));
+
+      showToast("Laboratório desvinculado com sucesso!", "success");
+      console.log("✅ Laboratório desvinculado:", response.data);
+    } catch (error) {
+      console.error("❌ Erro ao desvincular laboratório:", error.response?.data || error.message);
+      showToast("Erro ao desvincular laboratório. Tente novamente.", "error");
+    }
+  }
 
   return (
     <div className={Style.container}>
@@ -162,8 +183,8 @@ export default function SelectMedLab({ limit = null }) {
               abaAtiva === "doctor"
                 ? "Pesquisar por nome ou CRM..."
                 : abaAtiva === "lab"
-                  ? "Pesquisar por nome ou CNPJ..."
-                  : "Pesquisar por nome ou e-mail..."
+                ? "Pesquisar por nome ou CNPJ..."
+                : "Pesquisar por nome ou e-mail..."
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -185,8 +206,8 @@ export default function SelectMedLab({ limit = null }) {
             {abaAtiva === "doctor"
               ? "médicos..."
               : abaAtiva === "lab"
-                ? "laboratórios..."
-                : "secretárias..."}
+              ? "laboratórios..."
+              : "secretárias..."}
           </p>
         ) : erro ? (
           <p className={Style.error}>{erro}</p>
@@ -213,6 +234,14 @@ export default function SelectMedLab({ limit = null }) {
                       <span>
                         <strong>Estado:</strong> {item.status || "-"}
                       </span>
+
+                      {/* 🔘 Novo botão de desvincular laboratório */}
+                      <button
+                        className={`${Style.statusButton} ${Style.disable}`}
+                        onClick={() => handleDisableLab(item.cnpj)}
+                      >
+                        Desvincular laboratório
+                      </button>
                     </>
                   ) : (
                     <>
@@ -222,28 +251,18 @@ export default function SelectMedLab({ limit = null }) {
                       <span>
                         <strong>Estado:</strong> {item.status || "-"}
                       </span>
+
+                      <button
+                        className={`${Style.statusButton} ${
+                          item.status === "Ativo" ? Style.disable : Style.enable
+                        }`}
+                        onClick={() => handleToggleStatus(item.email, item.status)}
+                      >
+                        {item.status === "Ativo" ? "Desativar" : "Ativar"}
+                      </button>
                     </>
                   )}
                 </div>
-
-                {(abaAtiva === "lab" || abaAtiva === "secretary") && (
-                  <button
-                    className={`${Style.statusButton} ${item.status === "Ativo" ? Style.disable : Style.enable
-                      }`}
-                    onClick={() =>
-                      handleToggleStatus(
-                        abaAtiva === "lab"
-                          ? item.cnpj
-                          : abaAtiva === "secretary"
-                            ? item.email
-                            : item.id,
-                        item.status
-                      )
-                    }
-                  >
-                    {item.status === "Ativo" ? "Desativar" : "Ativar"}
-                  </button>
-                )}
               </div>
             ))}
           </div>

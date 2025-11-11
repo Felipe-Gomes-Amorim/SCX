@@ -10,7 +10,7 @@ import Header from "../Header.jsx";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState(""); // ⚡ estado para exibir mensagem de erro
+  const [loginError, setLoginError] = useState(""); 
   const [formdata, setformdata] = useState({
     usernameKey: "",
     password_key: ""
@@ -20,7 +20,7 @@ export default function Login() {
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
-    setLoginError(""); // limpa erro anterior
+    setLoginError(""); 
     const { usernameKey, password_key } = formValues;
 
     const result = await loginUsuario({ usernameKey, password_key });

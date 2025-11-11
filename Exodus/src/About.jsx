@@ -4,7 +4,7 @@ import RegisterTicket from './cadastro/registerTicket';
 function About() {
 return (
     <section className={Style.about_section}>
-        <div className={Style.about_inside} ><RegisterTicket></RegisterTicket>
+        <div className={Style.about_inside} >
         <motion.div 
         initial={{ x: "50%", opacity: 0 }}
         animate={{ x: "0%", opacity: 1 }}
@@ -12,7 +12,7 @@ return (
         className={Style.about_content}>
             <h2>Suporte SCX à Sua Disposição</h2>
             <p>
-                Tem alguma dúvida sobre a gestão de exames ou precisa de auxílio em um processo específico? Nossa equipe de suporte está pronta para ajudar. Mande um Ticket e entre em contato conosco para garantir que sua operação clínica funcione com a máxima eficiência.
+                Tem alguma dúvida sobre a gestão de exames ou precisa de auxílio em um processo específico? Nossa equipe de suporte está pronta para ajudar. Mande um email para <strong>scxservices@gmail.com</strong> e entre em contato conosco para garantir que sua operação clínica funcione com a máxima eficiência.
             </p>
         </motion.div>
         </div>

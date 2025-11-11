@@ -7,6 +7,7 @@ import {
     PDFExame,
 } from "../../js/fluxoMedico/exames.js";
 import { useToast } from "../../context/ToastProvider.jsx";
+import { formatCID } from "../../js/formatters.js" 
 
 export default function PedidoExame({ consultaAtual }) {
     const [exames, setExames] = useState([
@@ -158,12 +159,13 @@ export default function PedidoExame({ consultaAtual }) {
                                 type="text"
                                 value={exame.cid}
                                 onChange={(e) =>
-                                    handleChange(index, "cid", e.target.value)
+                                    handleChange(index, "cid", formatCID(e.target.value))
                                 }
                                 placeholder="Código CID (ex: A00)"
                                 required
                             />
                         </label>
+
 
                         <label>
                             Justificativa
@@ -180,7 +182,7 @@ export default function PedidoExame({ consultaAtual }) {
                         {exames.length > 1 && (
                             <button
                                 type="button"
-                                className={Style.logout_btn}
+                                className={Style.logout_btn2}
                                 onClick={() => removerExame(index)}
                             >
                                 Remover
@@ -193,10 +195,10 @@ export default function PedidoExame({ consultaAtual }) {
                 <button
                     type="button"
                     onClick={adicionarExame}
-                    className={Style.btn2}
+                    className={Style.btn3}
                     style={{ marginBottom: "1rem" }}
                 >
-                    + Adicionar Outro Exame
+                    +
                 </button>
 
                 <button

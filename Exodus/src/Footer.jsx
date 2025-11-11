@@ -33,12 +33,7 @@ function About() {
             <li><a href="#">Início</a></li>
             <li><a href="#">Sobre nós</a></li>
             <li>
-              <button
-                className={Style.linkButton}
-                onClick={handleSuporteClick}
-              >
-                Suporte
-              </button>
+              <a href="/sobre">Suporte</a>
             </li>
             <li><a href="#">Contato</a></li>
           </ul>

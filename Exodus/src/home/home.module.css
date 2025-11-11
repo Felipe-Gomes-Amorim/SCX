@@ -53,9 +53,11 @@
 /* Botões Gerais */
 .edit_btn,
 .logout_btn,
+.logout_btn2,
 .btn,
 .exam_btn,
 .btn2,
+.btn3,
 .btnFull,
 .rightPanel .btn,
 .saveBtn {
@@ -69,6 +71,12 @@
   background: transparent;
 }
 
+
+.btn100{
+  width: 100% ;
+}
+
+
 .edit_btn {
   width: 10rem;
   padding: 1rem 0;
@@ -78,7 +86,7 @@
   border-radius: 8px;
 }
 
-.btn, .btn2, .exam_btn{
+.btn, .btn2,.btn3, .exam_btn{
 
   width: 10rem;
   padding: 1rem 0;
@@ -119,8 +127,19 @@
   color: #c53b3b;
   border-radius: 8px;
 }
+.logout_btn2 {
+  margin-top: 1rem;
+  
+  padding: 1rem 0;
+  border: 2px solid #c53b3b;
+  background: transparent;
+  color: #c53b3b;
+  border-radius: 8px;
+}
 
-.logout_btn:hover {
+
+.logout_btn:hover,
+.logout_btn2:hover {
   background: #ff0000;
   border-color: #ff0000;
   color: white;
@@ -134,6 +153,7 @@
 
 .btn:hover,
 .btn2:hover,
+.btn3:hover,
 .btnFull:hover,
 .exam_btn:hover,
 .rightPanel .btn:hover {
@@ -143,6 +163,10 @@
 
 .btn2{
   margin-top: 1rem;
+}
+
+.btn3{
+  width: 100%;
 }
 
 .saveBtn {
@@ -185,6 +209,7 @@
 .section p {
   font-size: 1rem;
   color: #333;
+  margin-bottom: 1rem;
 }
 
 .laudos {
@@ -420,7 +445,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 300px;
   align-self: flex-start;
 }
 
@@ -1191,4 +1215,88 @@
   border: none;
   border-top: 1px dashed #d1d5db;
   margin-top: 1rem;
+}
+
+.anamneseContainer {
+  position: relative;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+.anamneseContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: fadeInUp 0.4s ease-in-out;
+}
+
+.anamneseContent label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+}
+
+.anamneseContent textarea,
+.anamneseContent input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.anamneseContent textarea:focus,
+.anamneseContent input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+
+.customFieldsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customCardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.customCard {
+  background: #e6f0ff; /* azul clarinho */
+  border: 1px solid #007bff;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.2);
+}
+
+.removeFileBtn {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;       /* pequeno espaço do texto anterior */
+  padding: 0.4rem 0.8rem;   /* menor que os botões grandes */
+  border: 2px solid #c53b3b;
+  background: transparent;
+  color: #c53b3b;
+  border-radius: 6px;       /* levemente arredondado */
+  cursor: pointer;
+  font-size: 12px;           /* menor que os botões principais */
+  font-weight: 600;
+  transition: all 0.2s ease-in;
+}
+
+.removeFileBtn:hover {
+  background: #ff0000;
+  border-color: #ff0000;
+  color: white;
 }

@@ -63,17 +63,12 @@ export const formatCRM = (value) => {
 export const formatCID = (value) => {
   if (!value) return "";
 
-  // Remove tudo que não seja letra ou número
   let cleaned = value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  if (cleaned.length <= 3) return cleaned; // A00, B12
 
-  // Pega a primeira letra
-  const letter = cleaned.slice(0, 1).replace(/[^A-Z]/g, "");
-
-  // Pega os próximos dois dígitos
-  const digits = cleaned.slice(1, 3).replace(/\D/g, "");
-
-  return letter + digits;
+  return cleaned.slice(0, 3) + "." + cleaned.slice(3, 4); // ex: A001 -> A00.1
 };
+
 export const formatCEP = (value) => {
   if (!value) return "";
 

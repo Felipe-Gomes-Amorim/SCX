@@ -1,5 +1,5 @@
 import React from "react";
-import Style from "../../home/home.module.css";
+import Style from "./AnamneseTabs.module.css";
 
 export default function AnamneseTabs({ expanded, setExpanded }) {
   const tabs = [
@@ -7,14 +7,25 @@ export default function AnamneseTabs({ expanded, setExpanded }) {
     "Hábitos e Estilo de Vida",
     "Exame Físico",
     "Observações e Tratamento",
+    "Campos Personalizados" 
   ];
 
+
   return (
-    <div className={Style.tabHeader}>
+    <div className={Style.toggleContainer}>
+      <div
+        className={`${Style.highlight}`}
+        style={{
+          width: `${100 / tabs.length}%`,
+          transform: `translateX(${expanded * 100}%)`,
+        }}
+      ></div>
+
       {tabs.map((tab, idx) => (
         <button
           key={idx}
-          className={`${Style.tabButton} ${expanded === idx ? Style.activeTab : ""}`}
+          className={`${Style.toggleButton} ${expanded === idx ? Style.activeBtn : ""
+            }`}
           onClick={() => setExpanded(idx)}
         >
           {tab}

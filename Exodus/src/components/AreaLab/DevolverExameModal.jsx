@@ -1,21 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import Style from "../../home/home.module.css";
 import { devolverExame } from "../../js/fluxoLaboratorio/devolverExame.js";
 import { useToast } from "../../context/ToastProvider.jsx"; 
 
 export default function DevolverExameModal({ onClose }) {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]); // agora é lista
   const [examCode, setExamCode] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
   const { showToast } = useToast(); 
 
+  // Adiciona arquivos à lista
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    setSelectedFiles(prev => [...prev, ...files]);
   };
 
   const handleBrowseClick = () => {
     fileInputRef.current.click();
+  };
+
+  // Remove um arquivo da lista
+  const handleRemoveFile = (index) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async () => {
@@ -24,8 +31,8 @@ export default function DevolverExameModal({ onClose }) {
       return;
     }
 
-    if (!selectedFile) {
-      showToast("Selecione um arquivo para enviar.", "error");
+    if (!selectedFiles.length) {
+      showToast("Selecione pelo menos um arquivo para enviar.", "error");
       return;
     }
 
@@ -33,17 +40,18 @@ export default function DevolverExameModal({ onClose }) {
 
     try {
       const token = localStorage.getItem("token");
-      const result = await devolverExame(selectedFile, examCode.trim(), token);
+      const result = await devolverExame(selectedFiles, examCode.trim(), token);
 
       if (result.success) {
-        showToast("Exame devolvido com sucesso!", "success");
-        setSelectedFile(null);
+        showToast("Exames devolvidos com sucesso!", "success");
+        window.location.reload();
+        setSelectedFiles([]);
         setExamCode("");
       } else {
-        showToast(`Erro: ${result.message || "Falha ao enviar exame."}`, "error");
+        showToast(`Erro: ${result.message || "Falha ao enviar exames."}`, "error");
       }
     } catch (err) {
-      showToast("Erro inesperado ao enviar o exame.", "error");
+      showToast("Erro inesperado ao enviar os exames.", "error");
     } finally {
       setLoading(false);
     }
@@ -52,7 +60,7 @@ export default function DevolverExameModal({ onClose }) {
   return (
     <div className={Style.overlay}>
       <div className={Style.customPopupCard}>
-        <h3 className={Style.popupTitle}>Devolver Exame</h3>
+        <h3 className={Style.popupTitle}>Devolver Exames</h3>
 
         <div className={Style.formGrid}>
           <label>
@@ -67,26 +75,42 @@ export default function DevolverExameModal({ onClose }) {
           </label>
 
           <div className={Style.uploadWrapper}>
-            <label>Arquivo do exame:</label>
+            <label>Arquivos do exame:</label>
             <div className={Style.uploadRow}>
               <button
                 type="button"
                 className={Style.saveBtn}
                 onClick={handleBrowseClick}
               >
-                Selecionar arquivo
+                Selecionar arquivos
               </button>
-              <span className={Style.fileName}>
-                {selectedFile ? selectedFile.name : "Nenhum arquivo selecionado"}
-              </span>
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                accept=".pdf,.jpg,.png"
+                style={{ display: "none" }}
+              />
             </div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              onChange={handleFileChange}
-              accept=".pdf,.jpg,.png"
-              style={{ display: "none" }}
-            />
+
+            {/* Lista de arquivos adicionados */}
+            {selectedFiles.length > 0 && (
+              <ul className={Style.fileList}>
+                {selectedFiles.map((file, index) => (
+                  <li key={index} className={Style.fileItem}>
+                    {file.name}
+                    <button
+                      type="button"
+                      className={Style.removeFileBtn}
+                      onClick={() => handleRemoveFile(index)}
+                    >
+                      Remover
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

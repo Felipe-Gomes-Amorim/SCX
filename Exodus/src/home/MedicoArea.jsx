@@ -32,7 +32,7 @@ export default function MedicoArea() {
   const [historico, setHistorico] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [customFieldsList, setCustomFieldsList] = useState([]);
-  const [expanded, setExpanded] = useState(null);
+  const [expanded, setExpanded] = useState(0);
   const [showAnamnese, setShowAnamnese] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showCustomPopup, setShowCustomPopup] = useState(false);
@@ -196,7 +196,7 @@ export default function MedicoArea() {
       showToast("Anamnese salva com sucesso!", "success");
     }
 
-    setExpanded(null);
+    
     setCustomFieldsList([]);
   }
 

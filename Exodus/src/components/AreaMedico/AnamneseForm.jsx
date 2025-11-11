@@ -34,22 +34,15 @@ export default function AnamneseForm({
             anamneseData={anamneseData}
             setAnamneseData={setAnamneseData}
             atualizarIMC={atualizarIMC}
+            showCustomPopup={showCustomPopup}
+            setShowCustomPopup={setShowCustomPopup}
+            customFieldsList={customFieldsList}
           />
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            console.log("Botão clicado, showCustomPopup antes:", showCustomPopup);
-            setShowCustomPopup(true);
-            console.log("showCustomPopup depois:", showCustomPopup);  // Isso pode ainda mostrar false devido ao async do React
-          }}
-          className={Style.btn2}
-        >
-          + Adicionar Campo
-        </button>
+        
 
-        <CustomFieldsList customFieldsList={customFieldsList} />
+        
 
         <button type="submit" className={Style.saveBtn}>
           Salvar Anamnese

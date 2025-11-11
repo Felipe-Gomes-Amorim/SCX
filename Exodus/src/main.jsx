@@ -16,8 +16,8 @@ import SelectClinics from './select_all/SelectClinics.jsx';
 import CheckDoctor from './cadastro/Check-in Fluxo/CheckDoctor.jsx';
 import CheckLaboratory from './cadastro/Check-in Fluxo/CheckLab.jsx';
 import Home from './home/Home.jsx';
-import ResetSenha from './login/ResetSenha.jsx';
-import FirstLogin from './login/FirstLogin.jsx';
+import ResetSenha from './login/EmailResetSenha.jsx';
+import ResetPassword from './login/FirstLogin.jsx';
 import Notifications from './select_all/NotificList.jsx';
 import CheckPatient from './cadastro/Check-in Fluxo/CheckPatient.jsx';
 import SelectAll from './select_all/SelectAll.jsx';
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
   { path: "/registerLaboratory", element: <RegisterLaboratory /> },
   { path: "/registerMedico", element: <RegisterDoctor /> },
   { path: "/home", element: <Home /> },
-  { path: "/resetSenha", element: <ResetSenha /> },
-  { path: "/firstLogin/:token?", element: <FirstLogin /> },
+  { path: "/emailresetSenha", element: <ResetSenha /> },
+  { path: "/resetpassword/:token?", element: <ResetPassword /> },
   { path: "/checkDoctor", element: <CheckDoctor /> },
   { path: "/checkLab", element: <CheckLaboratory /> },
   { path: "/checkPatient", element: <CheckPatient /> },

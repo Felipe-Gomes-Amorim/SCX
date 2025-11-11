@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import Style from "./ResetSenha.module.css";
-import axios from "axios";
 import { motion } from "framer-motion";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Style from "./ResetSenha.module.css";
 
+import Header from "../Header.jsx";
 import Footer from "../Footer.jsx";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
-import Header from "../Header.jsx";
+import API_URL from "../js/apiConfig.js";
 
 export default function ResetSenha() {
+  const [formData, setFormData] = useState({ email: "" }); 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
 
-  // Campos do formulário dinâmico
   const fields = [
-    { type: "email", name: "email", placeholder: "Digite seu e-mail", required: true },
-    { type: "password", name: "newPassword", placeholder: "Nova senha", required: true },
-    { type: "password", name: "confirmPassword", placeholder: "Confirmar nova senha", required: true },
+    {
+      type: "email",
+      name: "email",
+      placeholder: "Digite seu e-mail",
+      required: true,
+    },
   ];
 
-  const handleReset = async (formData) => {
-    const { email, newPassword, confirmPassword } = formData;
+  const handleRequestReset = async (data) => {
+    const { email } = data;
 
-    if (newPassword !== confirmPassword) {
-      setMessage("As senhas não coincidem.");
+    if (!email) {
+      setMessage("Por favor, insira seu e-mail.");
       return;
     }
 
@@ -33,19 +36,18 @@ export default function ResetSenha() {
     setMessage("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:3333/resetSenha", {
-        email,
-        novaSenha: newPassword,
-      });
+      console.log("Solicitando redefinição de senha para:", email);
+      const response = await axios.patch(`${API_URL}/resetPassword/generateToken`, { email });
 
       if (response.status === 200) {
-        setMessage("Senha redefinida com sucesso! Redirecionando...");
-        setTimeout(() => navigate("/login"), 2000);
+        setMessage("Um e-mail com instruções para redefinir sua senha foi enviado! Ele expirará em 6 minutos.");
+        setTimeout(() => navigate("/login"), 4000);
       }
     } catch (error) {
+      console.error("Erro ao solicitar redefinição:", error);
       setMessage(
         error.response?.data?.message ||
-          "Erro ao redefinir senha. Tente novamente."
+          "Erro ao enviar o e-mail de redefinição. Tente novamente."
       );
     } finally {
       setLoading(false);
@@ -63,13 +65,16 @@ export default function ResetSenha() {
           transition={{ duration: 0.6 }}
           className={Style.reset_card}
         >
-          <h2>Redefinir Senha</h2>
-          <p>Insira seu e-mail e a nova senha abaixo:</p>
+          <h2>Recuperar Acesso</h2>
+          <p>Digite seu e-mail para receber o link de redefinição de senha:</p>
 
+          {/* ✅ Passamos values e onChangeValues */}
           <DynamicForm
             fields={fields}
-            onSubmit={handleReset}
-            buttonText="Redefinir Senha"
+            values={formData}
+            onChangeValues={setFormData}
+            onSubmit={handleRequestReset}
+            buttonText="Enviar E-mail"
             loading={loading}
           />
 

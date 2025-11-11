@@ -13,7 +13,7 @@ export default function Notifications() {
   const [carregando, setCarregando] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [loadingMarcarTodas, setLoadingMarcarTodas] = useState(false);
-  const { showToast } = useToast(); // 👈 inicializa o toast
+  const { showToast } = useToast(); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +57,7 @@ export default function Notifications() {
         prev.map((n) => (n.id === id ? { ...n, readFile: true } : n))
       );
       showToast("Notificação marcada como lida", "success");
+      window.location.reload();
     } catch (err) {
       console.error("Erro ao marcar como lida:", err);
       showToast("Erro ao marcar como lida", "error");

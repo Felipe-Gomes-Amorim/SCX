@@ -15,7 +15,7 @@ export default function HistoricoConsultas({
       item[key]?.toLowerCase().includes(termo)
     );
   });
-  
+
 
   return (
     <div className={Style.historicoBox}>
@@ -32,32 +32,36 @@ export default function HistoricoConsultas({
         <p>Carregando histórico...</p>
       ) : filteredHistorico.length > 0 ? (
         <div className={Style.listContainer}>
-          {filteredHistorico.map((item, i) => (
-            <div key={i} className={Style.card}>
-              <p>
-                <strong>Conclusão:</strong> {formatarDataHora(item.dateEnd)}
-              </p>
-              <p>
-                <strong>Médico:</strong> {item.nameM || "-"}
-              </p>
-              <p>
-                <strong>Clínica:</strong> {item.nameC || "-"}
-              </p>
-              <p>
-                <strong>Especialidade:</strong> {item.specialty || "-"}
-              </p>
-              <button
-                className={Style.btn}
-                onClick={() => abrirDetalhesConsulta(item)}
-              >
-                Ver Detalhes
-              </button>
-            </div>
-          ))}
+          {filteredHistorico
+            .slice() // cria uma cópia
+            .reverse() // inverte a ordem
+            .map((item, i) => (
+              <div key={i} className={Style.card}>
+                <p>
+                  <strong>Conclusão:</strong> {formatarDataHora(item.dateEnd)}
+                </p>
+                <p>
+                  <strong>Médico:</strong> {item.nameM || "-"}
+                </p>
+                <p>
+                  <strong>Clínica:</strong> {item.nameC || "-"}
+                </p>
+                <p>
+                  <strong>Especialidade:</strong> {item.specialty || "-"}
+                </p>
+                <button
+                  className={Style.btn}
+                  onClick={() => abrirDetalhesConsulta(item)}
+                >
+                  Ver Detalhes
+                </button>
+              </div>
+            ))}
         </div>
       ) : (
         <p>Nenhum atendimento encontrado.</p>
       )}
+
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function Login() {
   
 
   return (
-    <Link to="/resetSenha" className={Style.text}>
+    <Link to="/emailresetSenha" className={Style.text}>
     Esqueceu sua senha?
     </Link>
   );

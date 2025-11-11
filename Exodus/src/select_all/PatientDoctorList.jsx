@@ -37,7 +37,7 @@ export default function PatientDoctorList({ limit = null }) {
     };
   }, []);
 
-  // 🟩 Torna carregarDados reutilizável
+  //  Torna carregarDados reutilizável
   const carregarDados = async () => {
     setCarregando(true);
     setErro(null);
@@ -59,7 +59,7 @@ export default function PatientDoctorList({ limit = null }) {
     carregarDados();
   }, [token, abaAtiva]); // chama sempre que muda a aba
 
-  // 🔍 Filtro de busca
+  // Filtro de busca
   const filteredData = dados.filter((item) => {
     const termo = searchTerm.toLowerCase();
     if (abaAtiva === "pacientes") {
@@ -83,7 +83,7 @@ export default function PatientDoctorList({ limit = null }) {
     setShowConsultaForm(true);
   };
 
-  // 🟦 Nova função que fecha e atualiza a tela
+  //  Nova função que fecha e atualiza a tela
   const handleCloseAndReload = async () => {
     setShowConsultaForm(false);
     await carregarDados(); // 🔄 recarrega os dados
@@ -97,7 +97,7 @@ export default function PatientDoctorList({ limit = null }) {
       </p>
 
       <div className={Style.subsection}>
-        {/* 🟦 Abas */}
+        {/*  Abas */}
         <div className={Style.tabHeader}>
           <h3
             className={`${Style.title} ${abaAtiva === "pacientes" ? Style.activeTab : ""}`}
@@ -162,7 +162,7 @@ export default function PatientDoctorList({ limit = null }) {
                   <div key={index} className={Style.card}>
                     <div className={Style.infoArea}>
                       <span><strong>Nome:</strong> {item.name || "-"}</span>
-                      <span><strong>Email:</strong> {item.email || "-"}</span>
+                      <span><strong>Especialidade:</strong> {item.specialty || "-"}</span>
                     </div>
                     <button
                       className={Style.startButton}
@@ -179,16 +179,17 @@ export default function PatientDoctorList({ limit = null }) {
         {showConsultaForm && (
           <div className={Style.overlay}>
             <div className={Style.modal}>
-              <button
-                className={Style.closeButton}
-                onClick={() => setShowConsultaForm(false)}
-              >
-                ✕
-              </button>
+              
               <RegisterAtendimento
                 selectedDoctor={selectedDoctor}
                 onClose={handleCloseAndReload}
               />
+              <button
+                className={Style.closeButton}
+                onClick={() => setShowConsultaForm(false)}
+              >
+                Retornar
+              </button>
             </div>
           </div>
         )}

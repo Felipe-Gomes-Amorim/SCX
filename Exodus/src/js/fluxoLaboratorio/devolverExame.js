@@ -1,10 +1,10 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-export async function devolverExame(file, examId, token) {
+export async function devolverExame(files, examId, token) {
   try {
     const formData = new FormData();
-    formData.append("file", file);
+    files.forEach((file) => formData.append("file", file)); 
     formData.append("examsReqId", examId);
 
     const response = await axios.post(`${API_URL}/laboratory/uploadExam`, formData, {
@@ -23,3 +23,4 @@ export async function devolverExame(file, examId, token) {
     };
   }
 }
+

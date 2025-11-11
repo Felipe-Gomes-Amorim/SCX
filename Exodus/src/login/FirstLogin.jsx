@@ -5,10 +5,10 @@ import Footer from "../Footer.jsx";
 import Header from "../Header.jsx";
 import { useNavigate } from "react-router-dom";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
-import { firstLogin } from "../js/login e home/firstLogin.js";
+import { resetPassword } from "../js/login e home/firstLogin.js";
 import { useToast } from "../context/ToastProvider.jsx";
 
-export default function FirstLogin() {
+export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -18,7 +18,7 @@ export default function FirstLogin() {
     confirm_password: "",
   });
 
-  const { showToast } = useToast(); // ✅ Hook global
+  const { showToast } = useToast();
 
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])(?=.{8,})/;
@@ -43,16 +43,16 @@ export default function FirstLogin() {
     setLoading(true);
     setErrorMessage("");
 
-    const result = await firstLogin({ password_key });
+    const result = await resetPassword({ password_key });
     setLoading(false);
 
     if (result.success) {
       setSuccess(true);
-      showToast("Senha definida com sucesso!", "success");
-      setTimeout(() => navigate("/"), 1000);
+      showToast("Senha redefinida com sucesso!", "success");
+      setTimeout(() => navigate("/login"), 1500);
     } else {
-      setErrorMessage("Erro no login: " + result.message);
-      showToast("Erro no login: " + result.message, "error");
+      setErrorMessage("Erro ao redefinir senha: " + result.message);
+      showToast("Erro ao redefinir senha: " + result.message, "error");
     }
   };
 
@@ -66,7 +66,7 @@ export default function FirstLogin() {
     {
       name: "confirm_password",
       type: "password",
-      placeholder: "Confirmar Senha",
+      placeholder: "Confirmar Nova Senha",
       required: true,
     },
   ];
@@ -83,8 +83,10 @@ export default function FirstLogin() {
             transition={{ duration: 0.9 }}
             className={Style.login_left}
           >
-            <h2>Ative sua conta</h2>
-            <p className={Style.subtitle}>Digite e confirme sua nova senha</p>
+            <h2>Redefinir Senha</h2>
+            <p className={Style.subtitle}>
+              Crie uma nova senha para acessar sua conta
+            </p>
 
             {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
 
@@ -93,7 +95,7 @@ export default function FirstLogin() {
               values={formdata}
               onChangeValues={setformdata}
               onSubmit={handleSubmit}
-              buttonText={success ? "Cadastrado" : "Confirmar"}
+              buttonText={success ? "Redefinida" : "Confirmar Redefinição"}
               loading={loading}
               buttonSuccess={success}
             />
@@ -105,15 +107,15 @@ export default function FirstLogin() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9 }}
             >
-              Bem-vindo!
+              Nova Senha
             </motion.h2>
             <motion.p
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9 }}
             >
-              Para completar seu login você precisa definir uma senha para sua
-              conta. Lembre-se de escolher uma senha segura.
+              Digite e confirme sua nova senha abaixo. 
+              Após redefinir, use-a para fazer login novamente.
             </motion.p>
           </motion.div>
         </div>

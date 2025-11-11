@@ -54,7 +54,7 @@ export default function ConsultaDetalhesModal({
 
         setAnamnese(result.data);
       } catch (err) {
-   
+
         const msg = err?.message?.includes("null")
           ? "Nenhuma anamnese registrada para esta consulta."
           : "Erro ao carregar anamnese.";
@@ -117,8 +117,8 @@ export default function ConsultaDetalhesModal({
     ];
 
     const renderGrupo = (titulo, campos) => (
-      <>
-        <h3 style={{ marginTop: "1rem", marginLeft: "0.5rem" }}>{titulo}</h3>
+      <div style={{ marginBottom: "1.5rem" }}> {/* Espaço entre os grupos */}
+        <h3 style={{ marginBottom: "0.5rem", marginLeft: "0.5rem" }}>{titulo}</h3>
         <div style={{ marginLeft: "1rem" }}>
           {campos.map((campo) => {
             const valor = data[campo];
@@ -130,15 +130,16 @@ export default function ConsultaDetalhesModal({
             )
               return null;
             return (
-              <p key={campo}>
-                {traducaoCampos[campo] || campo}:{" "}
+              <p key={campo} style={{ marginBottom: "0.3rem" }}> {/* Espaço entre cada campo */}
+                <strong>{traducaoCampos[campo] || campo}:</strong>{" "}
                 {typeof valor === "boolean" ? (valor ? "Sim" : "Não") : valor}
               </p>
             );
           })}
         </div>
-      </>
+      </div>
     );
+
 
     return (
       <div style={{ maxHeight: "350px", overflowY: "auto", scrollbarWidth: 'thin', backgroundColor: '#e7e7e7ff' }}>
@@ -268,11 +269,11 @@ export default function ConsultaDetalhesModal({
               </div>
             </div>
 
-            <div className={Style.buttonsRow}>
-              <button className={Style.logout_btn} onClick={() => setSelectedConsulta(null)}>
-                Fechar
-              </button>
-            </div>
+
+            <button className={Style.logout_btn} onClick={() => setSelectedConsulta(null)}>
+              Fechar
+            </button>
+
           </motion.div>
         </motion.div>
       )}

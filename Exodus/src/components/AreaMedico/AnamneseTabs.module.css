@@ -1,0 +1,56 @@
+.toggleContainer {
+  display: flex;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 45px;
+  background: white;
+  position: relative;
+  width: 100%;
+  
+  margin: 0 auto 0 auto;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.toggleButton {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s ease, transform 0.2s ease;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.toggleButton:hover {
+  color: #0056b3;
+}
+
+.highlight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #007bff;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.activeBtn {
+  color: white !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

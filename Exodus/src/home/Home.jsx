@@ -4,6 +4,10 @@ import ExodusTop from "../ExodusTop.jsx";
 import Footer from "../Footer.jsx";
 import Avatar from "../assets/user-icon.png";
 import axios from "axios";
+import API_URL from "../js/apiConfig.js";
+
+import { verificarStatusInstituicao } from "../js/verificarStatusInstituicao.js";
+
 import { logoutUsuario } from "../js/login e home/logout.js";
 import { useNavigate } from "react-router-dom";
 import { carregarhome } from "../js/login e home/home.js";
@@ -66,19 +70,25 @@ export default function Home() {
           roles: data.roles || [],
         });
 
-        // 🚀 Depois de carregar o usuário, checa os dados do perfil
-        if (data.roles && data.roles.length > 0) {
-          const roleName = data.roles[0].name;
-          const profileData = await getProfileByRole(roleName);
+        const roleName = data.roles?.[0]?.name;
 
+        // ✅ Nova verificação simplificada
+        const ativo = await verificarStatusInstituicao(roleName, token);
+        if (!ativo) {
+          await logoutUsuario();
+          showToast("A instituição vinculada à sua conta está desativada.");
+          navigate("/login");
+          return;
+        }
+
+        // 🚀 Depois de verificar ativação, checa os dados do perfil
+        if (data.roles && data.roles.length > 0) {
+          const profileData = await getProfileByRole(roleName);
           if (profileData) {
             const missingFields = Object.entries(profileData)
               .filter(([_, value]) => !value || value === "")
               .map(([key]) => key);
 
-            console.log("Campos faltando:", missingFields);
-
-            // 🔍 Se tiver campos faltando, abre o modal automaticamente
             if (missingFields.length > 0) {
               setShowProfile(true);
             }
@@ -97,6 +107,7 @@ export default function Home() {
 
     fetchhome();
   }, [token, navigate]);
+
 
 
   // Logout

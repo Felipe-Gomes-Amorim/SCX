@@ -22,17 +22,25 @@ export async function toggleClinicStatus(cnpj, action, token, setLoadingId, setD
       route,
       { cnpj },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     console.log(`✅ Clínica ${action === "enable" ? "ativada" : "desativada"}:`, response.data);
 
-    // Atualiza a lista local, se passado
+    // Atualiza a lista local instantaneamente
     if (setDados) {
-      setDados((prev) =>
-        prev.map((item) =>
-          item.cnpj === cnpj ? { ...item, active: action === "enable" } : item
+      setDados((prevClinicas) =>
+        prevClinicas.map((clinica) =>
+          clinica.cnpj === cnpj
+            ? {
+                ...clinica,
+                status: action === "enable" ? "Ativo" : "Inativo",
+              }
+            : clinica
         )
       );
     }

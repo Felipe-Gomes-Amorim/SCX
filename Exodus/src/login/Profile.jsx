@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { IMaskInput } from "react-imask";
 import Style from "./Profile.module.css";
 import { updateProfile } from "../js/profiles/updateProfile.js";
+import { deactivateAccount } from "../js/profiles/deactivateAccount.js"; // 🔥 Novo arquivo JS
 
 import { profileAdm } from "../js/profiles/profile_adm.js";
 import { profileDoctor } from "../js/profiles/profile_medico.js";
@@ -28,7 +29,7 @@ const profileFields = {
     { label: "Telefone", key: "telephone", editable: true },
   ],
   Patient: [
-    { label: "Data de Nascimento", key: "dateBirth", editable: false },
+    { label: "Data de Nascimento", key: "dateBirth", editable: (profile) => !profile?.dateBirth },
     { label: "CPF", key: "cpf", editable: false },
     { label: "Telefone", key: "telephone", editable: true },
   ],
@@ -44,7 +45,8 @@ export default function ProfileModal({ role, onClose }) {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [missingData, setMissingData] = useState(false); // ← Novo estado
+  const [missingData, setMissingData] = useState(false);
+  const [showDeactivateModal, setShowDeactivateModal] = useState(false); 
 
   const token = localStorage.getItem("token");
   const { showToast } = useToast();
@@ -64,14 +66,11 @@ export default function ProfileModal({ role, onClose }) {
           const userData = data.data;
           setProfile(userData);
 
-          // ← Verifica se tem campos obrigatórios não preenchidos
           const fields = profileFields[role] || [];
           const hasMissing = fields.some(
             ({ key }) => !userData[key] || userData[key].toString().trim() === ""
           );
           setMissingData(hasMissing);
-
-          // Se tiver campos faltando, já habilita edição automaticamente
           if (hasMissing) setEditing(true);
         } else {
           console.error("Erro: formato de dados inesperado", data);
@@ -93,11 +92,11 @@ export default function ProfileModal({ role, onClose }) {
   const handleSave = async () => {
     setSaving(true);
 
-    // remove formatação antes de enviar
     const cleanProfile = {
       ...profile,
       cpf: profile.cpf?.replace(/\D/g, ""),
       telephone: profile.telephone?.replace(/\D/g, ""),
+      birth: profile.dateBirth,
     };
 
     const result = await updateProfile(role, cleanProfile, token);
@@ -105,10 +104,21 @@ export default function ProfileModal({ role, onClose }) {
 
     if (result.success) {
       setEditing(false);
-      setMissingData(false); // ← depois de salvar, remove alerta
+      setMissingData(false);
       showToast("Perfil atualizado com sucesso!");
     } else {
       showToast("" + result.message);
+    }
+  };
+
+  const handleDeactivate = async () => {
+    const result = await deactivateAccount(role, token);
+    if (result.success) {
+      showToast("Conta desativada com sucesso!", "success");
+      localStorage.clear();
+      setTimeout(() => window.location.href = "/", 1500);
+    } else {
+      showToast("Erro ao desativar conta: " + result.message, "error");
     }
   };
 
@@ -116,13 +126,15 @@ export default function ProfileModal({ role, onClose }) {
     const fields = profileFields[role] || [];
     return fields.map(({ label, key, editable }) => {
       const value = profile[key] || "";
+      const canEdit = typeof editable === "function" ? editable(profile) : editable;
       const isCPF = key === "cpf";
       const isPhone = key === "telephone";
+      const isDate = key === "dateBirth";
 
       return (
         <p key={key}>
           <strong>{label}:</strong>{" "}
-          {editing && editable ? (
+          {editing && canEdit ? (
             isCPF ? (
               <IMaskInput
                 mask="000.000.000-00"
@@ -135,6 +147,13 @@ export default function ProfileModal({ role, onClose }) {
                 mask="(00) 00000-0000"
                 value={value}
                 onAccept={(v) => handleChange(key, v)}
+                className={Style.inputField}
+              />
+            ) : isDate ? (
+              <input
+                type="date"
+                value={value}
+                onChange={(e) => handleChange(key, e.target.value)}
                 className={Style.inputField}
               />
             ) : (
@@ -195,7 +214,6 @@ export default function ProfileModal({ role, onClose }) {
       >
         <h3>Dados do Usuário</h3>
 
-        {/* ⚠️ Nova mensagem de alerta se tiver dados faltando */}
         {missingData && (
           <p style={{ color: "#c0392b", fontWeight: "bold", marginBottom: "10px" }}>
             Alguns dados estão incompletos. Por favor, preencha as informações restantes abaixo.
@@ -214,10 +232,63 @@ export default function ProfileModal({ role, onClose }) {
           </button>
         )}
 
+        {/* 🔥 Botão de desativar conta (só para médico e paciente) */}
+        {(role === "Doctor" || role === "Patient") && (
+          <button
+            className={Style.logout_btn}
+            onClick={() => setShowDeactivateModal(true)}
+          >
+            Desativar Conta
+          </button>
+        )}
+
         <button className={Style.closeBtn} onClick={onClose}>
           Fechar
         </button>
       </motion.div>
+
+      {/* 🔥 Modal de confirmação de desativação */}
+      <AnimatePresence>
+        {showDeactivateModal && (
+          <motion.div
+            className={Style.deactivateBackdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className={Style.deactivateModal}
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -50, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <h3>Desativar Conta</h3>
+              <p>
+                Tem certeza de que deseja desativar sua conta? <br />
+                Seus dados permanecerão anonimizados por <strong>6 meses</strong> e
+                depois serão excluídos permanentemente. <br />
+                <strong>Essa ação é irreversível.</strong>
+              </p>
+              <div className={Style.deactivateActions}>
+                <button
+                  className={Style.deactivateBtnConfirm}
+                  onClick={handleDeactivate}
+                >
+                  Sim, desativar
+                </button>
+                <button
+                  className={Style.deactivateBtnCancel}
+                  onClick={() => setShowDeactivateModal(false)}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

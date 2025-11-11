@@ -7,13 +7,13 @@ export default function CustomFieldsList({ customFieldsList }) {
   return (
     <div className={Style.ListCustom}>
       <h4>Campos Personalizados Criados:</h4>
-      <ul>
+      <div className={Style.customCardsContainer}>
         {customFieldsList.map((field, i) => (
-          <li key={i}>
+          <div key={i} className={Style.customCard}>
             <strong>{field.fieldName}:</strong> {field.fieldValue}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

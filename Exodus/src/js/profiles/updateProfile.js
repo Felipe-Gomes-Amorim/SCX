@@ -19,9 +19,10 @@ export async function updateProfile(role, data, token) {
   if (!route) {
     throw new Error(`Rota não encontrada para o papel: ${role}`);
   }
+  
   console.log(role, data, token)
   try {
-    const response = await axios.patch(route, data, {
+    const response = await axios.patch(route,  data  , {
       headers: {
         Authorization: `Bearer ${token}`,
       },
