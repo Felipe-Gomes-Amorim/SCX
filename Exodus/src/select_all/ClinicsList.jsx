@@ -14,6 +14,9 @@ export default function ClinicsList({ limit = null }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [loadingId, setLoadingId] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [hovered, setHovered] = useState("left");
+    const [active, setActive] = useState("left");
+
 
     const [showDisableModal, setShowDisableModal] = useState(false);
     const [showEnableModal, setShowEnableModal] = useState(false);
@@ -63,22 +66,35 @@ export default function ClinicsList({ limit = null }) {
                     />
 
                     <div className={Style.toggleContainer}>
+                        <div
+                            className={`${Style.highlight} ${active === "right" ? Style.moveRight : Style.moveLeft
+                                }`}
+                        ></div>
+
                         <button
-                            className={`${Style.toggleButton} ${Style.leftButton}`}
-                            onClick={() => setShowDisableModal(true)}
+                            className={`${Style.toggleButton} ${active === "left" ? Style.activeBtn : ""
+                                }`}
+                            onClick={() => {
+                                setActive("left");
+                                setShowDisableModal(true);
+                            }}
                         >
                             Desativar Adm de Clínica
                         </button>
 
                         <button
-                            className={`${Style.toggleButton} ${Style.rightButton}`}
-                            onClick={() => setShowEnableModal(true)}
+                            className={`${Style.toggleButton} ${active === "right" ? Style.activeBtn : ""
+                                }`}
+                            onClick={() => {
+                                setActive("right");
+                                setShowEnableModal(true);
+                            }}
                         >
                             Ativar Adm de Clínica
                         </button>
-
-                        <div className={Style.highlight}></div>
                     </div>
+
+
 
                 </div>
             </div>
@@ -104,9 +120,15 @@ export default function ClinicsList({ limit = null }) {
                     {displayedData.map((item) => (
                         <div
                             key={item.cnpj}
-                            className={`${Style.card} ${item.active ? Style.activeCard : Style.inactiveCard
-                                }`}
+                            className={`${Style.card} ${item.active ? Style.activeCard : Style.inactiveCard}`}
                         >
+                            {/* Badge de status */}
+                            <div
+                                className={`${Style.statusBadge} ${item.active ? Style.badgeActive : Style.badgeInactive}`}
+                            >
+                                {item.active ? "Ativa" : "Desativada"}
+                            </div>
+
                             <div className={Style.infoArea}>
                                 <span>
                                     <strong>Nome:</strong> {item.name || "-"}
@@ -117,23 +139,29 @@ export default function ClinicsList({ limit = null }) {
                             </div>
 
                             <button
-                                className={`${Style.toggleBtn} ${item.status ? Style.disableBtn : Style.enableBtn
-                                    }`}
+                                className={`${Style.toggleBtn} ${item.active ? Style.disableBtn : Style.enableBtn}`}
                                 onClick={() =>
-                                    toggleClinicStatus(item.cnpj, item.status, token, setLoadingId, setDados)
+                                    toggleClinicStatus(
+                                        item.cnpj,
+                                        item.active ? "disable" : "enable",
+                                        token,
+                                        setLoadingId,
+                                        setDados
+                                    )
                                 }
+
                                 disabled={loadingId === item.cnpj}
                             >
                                 {loadingId === item.cnpj
                                     ? "Processando..."
-                                    : item.status
+                                    : item.active
                                         ? "Desativar"
                                         : "Ativar"}
                             </button>
-
                         </div>
                     ))}
                 </div>
+
             )}
 
             {/* Modal separado */}

@@ -114,10 +114,6 @@ export default function Home() {
     setShowProfile(!showProfile);
   };
 
-  // Redireciona para página de edição
-  const handleEditProfile = () => {
-
-  };
 
   if (loading) {
     return (
@@ -165,26 +161,22 @@ export default function Home() {
               )}
             </AnimatePresence>
 
-            <AnimatePresence>
 
-              <motion.div
-                key="profile-card"
-                initial={{ y: "-10%", opacity: 0 }}
-                animate={{ y: "0%", opacity: 1 }}
 
-                transition={{
-                  y: { duration: 0.4, ease: [0.25, 0.5, 0.25, 1] },   // 🔹 mais lenta ao abrir
-                  opacity: { duration: 0.5, ease: "easeOut" },         // 🔹 suaviza o fade-in
-                }}>
+            {/* Só mostra o botão "Ver meus dados" se NÃO for AdminSystem, LaboratoryUser ou LaboratoryAdmin */}
+            {!userData.roles?.some((role) =>
+              ["AdminSystem", "LaboratoryUser", "LaboratoryAdmin"].includes(role.name)
+            ) && (
                 <button className={Style.edit_btn} onClick={handleViewProfile}>
-                  {showProfile ? "Fechar meus dados" : "Ver meus dados"}
+                  Ver meus dados
                 </button>
+              )}
 
-                <button className={Style.logout_btn} onClick={handleLogout}>
-                  Logout
-                </button>
-              </motion.div>
-            </AnimatePresence>
+            <button className={Style.logout_btn} onClick={handleLogout}>
+              Logout
+            </button>
+
+
 
           </aside>
 

@@ -14,7 +14,7 @@ export async function toggleClinicStatus(cnpj, action, token, setLoadingId, setD
     action === "enable"
       ? `${API_URL}/adminSystem/enableClinic`
       : `${API_URL}/adminSystem/disableClinic`;
- console.log(route)
+
   try {
     if (setLoadingId) setLoadingId(cnpj);
 
@@ -26,7 +26,7 @@ export async function toggleClinicStatus(cnpj, action, token, setLoadingId, setD
       }
     );
 
-    console.log(`Clínica ${action === "enable" ? "ativada" : "desativada"}:`, response.data);
+    console.log(`✅ Clínica ${action === "enable" ? "ativada" : "desativada"}:`, response.data);
 
     // Atualiza a lista local, se passado
     if (setDados) {
@@ -45,7 +45,7 @@ export async function toggleClinicStatus(cnpj, action, token, setLoadingId, setD
           : "Clínica desativada com sucesso!",
     };
   } catch (error) {
-    console.error(`Erro ao ${action} clínica:`, error.response?.data || error.message);
+    console.error(`❌ Erro ao ${action} clínica:`, error.response?.data || error.message);
     return {
       success: false,
       message:
