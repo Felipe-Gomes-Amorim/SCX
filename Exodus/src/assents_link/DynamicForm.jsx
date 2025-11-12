@@ -24,6 +24,7 @@ export default function DynamicForm({
 }) {
   const [showPassword, setShowPassword] = useState({});
 
+  // 🎨 Formata campos automaticamente conforme o nome
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -38,6 +39,7 @@ export default function DynamicForm({
     onChangeValues((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
+  // 🚀 Limpa máscaras antes do envio
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -61,7 +63,7 @@ export default function DynamicForm({
     <form onSubmit={handleSubmit} className={Style.form}>
       <div className={Style.FitObj}>
         {fields.map((field, index) => {
-          // Campo de seleção
+          // 🟢 Campo de seleção
           if (field.type === "select") {
             return (
               <select
@@ -83,7 +85,7 @@ export default function DynamicForm({
             );
           }
 
-          // Campo customizado (ex: CEP com botão)
+          // 🟣 Campo customizado (ex: CEP com botão extra)
           if (field.render) {
             return (
               <div key={index}>
@@ -101,7 +103,7 @@ export default function DynamicForm({
             );
           }
 
-          // Campo de senha com botão de olho 👁️
+          // 🔐 Campo de senha com botão "olho"
           if (field.type === "password") {
             return (
               <div key={index} className={Style.passwordContainer}>
@@ -112,11 +114,14 @@ export default function DynamicForm({
                   required={field.required}
                   value={values[field.name]}
                   onChange={handleChange}
+                  maxLength={field.maxLength}
+                  minLength={field.minLength}
                 />
                 <button
                   type="button"
                   onClick={() => togglePassword(field.name)}
                   className={Style.eyeButton}
+                  title={showPassword[field.name] ? "Ocultar senha" : "Mostrar senha"}
                 >
                   {showPassword[field.name] ? (
                     <EyeOff size={18} />
@@ -128,7 +133,7 @@ export default function DynamicForm({
             );
           }
 
-          // Campo padrão
+          // 🔤 Campo padrão
           return (
             <input
               key={index}
@@ -138,6 +143,8 @@ export default function DynamicForm({
               required={field.required}
               value={values[field.name]}
               onChange={handleChange}
+              maxLength={field.maxLength}
+              minLength={field.minLength}
             />
           );
         })}
@@ -153,6 +160,7 @@ export default function DynamicForm({
             buttonText === "Verificado" ||
             buttonText === "Ativa"
           }
+          style={buttonStyle}
         />
       </div>
     </form>

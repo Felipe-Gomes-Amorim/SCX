@@ -1,20 +1,32 @@
 import React, { useState, useRef } from "react";
 import Style from "../../home/home.module.css";
 import { devolverExame } from "../../js/fluxoLaboratorio/devolverExame.js";
-import { useToast } from "../../context/ToastProvider.jsx"; 
+import { useToast } from "../../context/ToastProvider.jsx";
 
 export default function DevolverExameModal({ onClose }) {
   const [selectedFiles, setSelectedFiles] = useState([]); // agora é lista
   const [examCode, setExamCode] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
-  const { showToast } = useToast(); 
+  const { showToast } = useToast();
 
-  // Adiciona arquivos à lista
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    setSelectedFiles(prev => [...prev, ...files]);
+
+    // Filtra apenas arquivos PDF
+    const pdfFiles = files.filter(file => file.type === "application/pdf");
+
+    if (pdfFiles.length !== files.length) {
+      showToast("Apenas arquivos PDF são permitidos.", "error");
+    }
+
+    // Adiciona só os válidos
+    setSelectedFiles(prev => [...prev, ...pdfFiles]);
+
+    // Limpa o input pra permitir reenvio do mesmo arquivo se deletado
+    e.target.value = null;
   };
+
 
   const handleBrowseClick = () => {
     fileInputRef.current.click();
@@ -89,7 +101,7 @@ export default function DevolverExameModal({ onClose }) {
                 type="file"
                 multiple
                 onChange={handleFileChange}
-                accept=".pdf,.jpg,.png"
+                accept=".pdf"
                 style={{ display: "none" }}
               />
             </div>

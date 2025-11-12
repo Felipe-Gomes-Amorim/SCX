@@ -10,7 +10,7 @@ import Header from "../Header.jsx";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState(""); 
+  const [loginError, setLoginError] = useState("");
   const [formdata, setformdata] = useState({
     usernameKey: "",
     password_key: ""
@@ -20,14 +20,14 @@ export default function Login() {
 
   const handleSubmit = async (formValues) => {
     setLoading(true);
-    setLoginError(""); 
+    setLoginError("");
     const { usernameKey, password_key } = formValues;
 
     const result = await loginUsuario({ usernameKey, password_key });
     setLoading(false);
 
     if (result.success) {
-      
+
       window.open("/home", "_blank");
       window.close();
     } else {
@@ -38,7 +38,11 @@ export default function Login() {
 
   const fields = [
     { name: "usernameKey", type: "text", placeholder: "Email", required: true },
-    { name: "password_key", type: "password", placeholder: "Senha", required: true },
+    {
+      name: "password_key", type: "password", placeholder: "Senha", required: true,
+      minLength: 6,   
+      maxLength: 12   
+    },
   ];
 
   return (
@@ -61,8 +65,8 @@ export default function Login() {
 
             <DynamicForm
               fields={fields}
-              values={formdata}                
-              onChangeValues={setformdata}     
+              values={formdata}
+              onChangeValues={setformdata}
               onSubmit={handleSubmit}
               buttonText="Entrar"
               loading={loading}

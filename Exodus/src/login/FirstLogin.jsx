@@ -62,12 +62,16 @@ export default function ResetPassword() {
       type: "password",
       placeholder: "Nova Senha",
       required: true,
+      minLength: 6,   
+      maxLength: 12   
     },
     {
       name: "confirm_password",
       type: "password",
       placeholder: "Confirmar Nova Senha",
       required: true,
+      minLength: 6,   
+      maxLength: 12   
     },
   ];
 
@@ -98,6 +102,7 @@ export default function ResetPassword() {
               buttonText={success ? "Redefinida" : "Confirmar Redefinição"}
               loading={loading}
               buttonSuccess={success}
+              
             />
           </motion.div>
 

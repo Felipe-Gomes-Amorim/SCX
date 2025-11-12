@@ -40,6 +40,11 @@ export default function SelectMedLab({ limit = null }) {
     };
   }, [token]);
 
+  function anonimizarEmail(email) {
+    if (!email || email.length < 7) return "******"; // segurança para e-mails muito curtos
+    return "******" + email.slice(6);
+  }
+
   // 🔁 Busca médicos, labs ou secretárias
   useEffect(() => {
     async function carregarDados() {
@@ -58,8 +63,8 @@ export default function SelectMedLab({ limit = null }) {
             abaAtiva === "doctor"
               ? "Nenhum médico encontrado."
               : abaAtiva === "lab"
-              ? "Nenhum laboratório encontrado."
-              : "Nenhuma secretária encontrada.";
+                ? "Nenhum laboratório encontrado."
+                : "Nenhuma secretária encontrada.";
           setErro(msg);
         }
       } catch (err) {
@@ -100,8 +105,8 @@ export default function SelectMedLab({ limit = null }) {
     abaAtiva === "doctor"
       ? "/checkDoctor"
       : abaAtiva === "lab"
-      ? "/checkLab"
-      : "/registerSecretaria";
+        ? "/checkLab"
+        : "/registerSecretaria";
 
   // 🧩 Desativar secretária
   async function handleToggleStatus(email, status) {
@@ -129,7 +134,7 @@ export default function SelectMedLab({ limit = null }) {
   // 🧪 Desvincular laboratório
   async function handleDisableLab(cnpj) {
     try {
-      
+
       const response = await axios.patch(
         `${API_URL}/admin/disableLaboratory`,
         { cnpj },
@@ -183,8 +188,8 @@ export default function SelectMedLab({ limit = null }) {
               abaAtiva === "doctor"
                 ? "Pesquisar por nome ou CRM..."
                 : abaAtiva === "lab"
-                ? "Pesquisar por nome ou CNPJ..."
-                : "Pesquisar por nome ou e-mail..."
+                  ? "Pesquisar por nome ou CNPJ..."
+                  : "Pesquisar por nome ou e-mail..."
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -206,8 +211,8 @@ export default function SelectMedLab({ limit = null }) {
             {abaAtiva === "doctor"
               ? "médicos..."
               : abaAtiva === "lab"
-              ? "laboratórios..."
-              : "secretárias..."}
+                ? "laboratórios..."
+                : "secretárias..."}
           </p>
         ) : erro ? (
           <p className={Style.error}>{erro}</p>
@@ -246,16 +251,15 @@ export default function SelectMedLab({ limit = null }) {
                   ) : (
                     <>
                       <span>
-                        <strong>E-mail:</strong> {item.email || "-"}
+                        <strong>E-mail:</strong> {anonimizarEmail(item.email) || "-"}
                       </span>
                       <span>
                         <strong>Estado:</strong> {item.status || "-"}
                       </span>
 
                       <button
-                        className={`${Style.statusButton} ${
-                          item.status === "Ativo" ? Style.disable : Style.enable
-                        }`}
+                        className={`${Style.statusButton} ${item.status === "Ativo" ? Style.disable : Style.enable
+                          }`}
                         onClick={() => handleToggleStatus(item.email, item.status)}
                       >
                         {item.status === "Ativo" ? "Desativar" : "Ativar"}

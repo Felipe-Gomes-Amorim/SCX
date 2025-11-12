@@ -71,7 +71,6 @@ function ExodusTop() {
   // Itens fixos do menu
   const fixedMenuItems = [
     { label: "Início", onClick: (navigate) => navigate("/home") },
-    { label: "Ver Tickets", onClick: (navigate) => navigate("/selectAll/myTickets") },
     { label: "Fazer Logout", onClick: () => handleLogout() },
   ];
 

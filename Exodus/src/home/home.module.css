@@ -6,11 +6,13 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease-in-out;
   margin-bottom: 2rem;
+
 }
 
 /* Layout Geral */
 .home_page {
-  background: #e0e0e0;
+  background-image: url("../assets/Fundo.png");
+  background-size: cover;
   min-height: 95vh;
   display: flex;
   flex-direction: column;
@@ -446,6 +448,7 @@
   flex-direction: column;
   gap: 1.5rem;
   align-self: flex-start;
+  max-width: 18rem;
 }
 
 .profileBox {

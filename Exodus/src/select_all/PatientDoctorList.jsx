@@ -120,8 +120,8 @@ export default function PatientDoctorList({ limit = null }) {
               type="text"
               placeholder={
                 abaAtiva === "pacientes"
-                  ? "Pesquisar por nome, telefone ou email..."
-                  : "Pesquisar por nome ou email..."
+                  ? "Pesquisar por nome ou telefone..."
+                  : "Pesquisar por nome ou especialidade..."
               }
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
