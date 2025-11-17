@@ -161,7 +161,7 @@ export default function ExamsReturnPacList({ limit = null }) {
                     className={Style.startButton}
                     onClick={() => {
                       window.open(
-                        `https://scx-sistema-de-controle-de-exames.onrender.com/files/preview/${item.fileName}`,
+                        `https://controledeexame.onrender.com/files/preview/${item.fileName}`,
                         "_blank"
                       );
                     }}
