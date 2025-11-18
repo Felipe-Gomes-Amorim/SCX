@@ -58,7 +58,7 @@ const router = createBrowserRouter([
   { path: "/selectAll/clinics", element: <SelectClinics /> },
   { path: "/profile/:role?", element: <Profile /> },
   { path: "/notification", element: <Notifications /> },
-  { path: "/PoliticasPrivacidade", element: <Notifications /> },
+  { path: "/PoliticasPrivacidade", element: <PoliticaPrivacidade /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
