@@ -30,6 +30,7 @@ import RegisterRequisicaoExame from './cadastro/registerRequisicaoExame.jsx';
 import RegisterTicket from './cadastro/registerTicket.jsx';
 import ResponseTicket from './cadastro/registerTicketResponse.jsx';
 import { ToastProvider } from './context/ToastProvider.jsx';
+import PoliticaPrivacidade from './PoliticaPrivacidade.jsx';
 
 // ROTAS
 const router = createBrowserRouter([
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
   { path: "/selectAll/clinics", element: <SelectClinics /> },
   { path: "/profile/:role?", element: <Profile /> },
   { path: "/notification", element: <Notifications /> },
+  { path: "/PoliticasPrivacidade", element: <Notifications /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
