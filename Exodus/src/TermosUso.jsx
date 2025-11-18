@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Style from "./Termos.module.css";
+import Style from "./PoliticaPrivacidade.module.css";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 
