@@ -52,7 +52,7 @@ function Header() {
         <Link to="/" className={Style.navLink}>Início</Link>
         <Link to="/sobre" className={Style.navLink}>Sobre nós</Link>
         <Link to="/" className={Style.navLink}>Suporte</Link>
-        <Link to="/" className={Style.navLink}>Contato</Link>
+        <Link to="/" className={Style.navLink}>Políticas de Privacidade</Link>
       </nav>
 
       {/* Seção direita: Menu do usuário (expanda aqui se necessário) */}
