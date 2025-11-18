@@ -31,6 +31,7 @@ import RegisterTicket from './cadastro/registerTicket.jsx';
 import ResponseTicket from './cadastro/registerTicketResponse.jsx';
 import { ToastProvider } from './context/ToastProvider.jsx';
 import PoliticaPrivacidade from './PoliticaPrivacidade.jsx';
+import TermosUso from './TermosUso.jsx';
 
 // ROTAS
 const router = createBrowserRouter([
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
   { path: "/profile/:role?", element: <Profile /> },
   { path: "/notification", element: <Notifications /> },
   { path: "/PoliticasPrivacidade", element: <PoliticaPrivacidade /> },
+  { path: "/TermosDeUso", element: <TermosUso /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
