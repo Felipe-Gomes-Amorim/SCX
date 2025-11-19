@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Style from "./ExamsReturn.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
+import API_URL from "../js/apiConfig.js";
+
 
 export default function ExamsReturnPacList({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -161,7 +163,7 @@ export default function ExamsReturnPacList({ limit = null }) {
                     className={Style.startButton}
                     onClick={() => {
                       window.open(
-                        `https://controledeexame.onrender.com/files/preview/${item.fileName}`,
+                        `${API_URL}/files/preview/${item.fileName}`,
                         "_blank"
                       );
                     }}

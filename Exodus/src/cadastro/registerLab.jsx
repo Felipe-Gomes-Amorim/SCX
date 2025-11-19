@@ -10,14 +10,14 @@ import { cadastrarAdmLaboratorio } from "../js/registros/cadastrar_adm_laborator
 import { formatCNPJ, unmask } from "../js/formatters.js";
 import { buscarCep } from "../js/checarCep/buscarCep.js";
 import { validarCnpj } from "../js/validarCNPJ/validarCnpj.js";
-import { useToast } from "../context/ToastProvider.jsx"; // 👈 hook do toaster
+import { useToast } from "../context/ToastProvider.jsx"; 
 
 export default function RegisterLaboratory() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { showToast } = useToast(); // 👈 habilita toasts
+  const { showToast } = useToast();
 
   const cnpjFromUrl = new URLSearchParams(window.location.search).get("cnpj");
 

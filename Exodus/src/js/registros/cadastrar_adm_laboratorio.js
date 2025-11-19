@@ -1,34 +1,65 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
-//metodo principal ( data vai vir do registerLab.jsx / token tá armazenado no localStorage )
+
 export async function cadastrarAdmLaboratorio(admData, token) {
-  try {                              //ver rotas do médico no AdminController (Back-End)      
-    const response = await axios.post(`${API_URL}/laboratory/register/Adm`, admData, {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : undefined,
-      },
-    });
-    //print pra teste com o body do exame
-    console.log("Resposta do servidor:", response.data);
+  try {
+    console.info(
+      "%c🧑‍💼 Cadastrando administrador do laboratório...",
+      "color: #4DD0E1; font-weight: bold;"
+    );
 
+    const response = await axios.post(
+      `${API_URL}/laboratory/register/Adm`,
+      admData,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        }
+      }
+    );
 
-    //quiser adicionar qlqr coisa no processo é aqui
-
-
-    return {
-      success: true,
-      //ele vai retornar os dados do adm
-      data: response.data,
-    };
-  } catch (error) {
-    console.error(
-      "Erro ao cadastrar ADM:",
-      error.response?.data || error.message
+    console.info(
+      "%c✅ Administrador cadastrado com sucesso:",
+      "color: #81C784;",
+      response.data
     );
 
     return {
+      success: true,
+      message: "Administrador do laboratório cadastrado com sucesso.",
+      data: response.data,
+    };
+
+  } catch (error) {
+    console.error(
+      "%c❌ Erro ao cadastrar ADM do laboratório:",
+      "color: #E57373; font-weight: bold;",
+      error
+    );
+
+    let message = "Erro inesperado ao cadastrar o administrador.";
+
+    if (error.response?.data) {
+      const backendMessage = error.response.data.toString().toLowerCase();
+
+    
+      if (backendMessage.includes("email") && backendMessage.includes("cadastrado")) {
+        message = "Este e-mail já está cadastrado para outro administrador.";
+      }
+
+      if (backendMessage.includes("nome") && backendMessage.includes("inválido")) {
+        message = "O nome informado é inválido.";
+      }
+    }
+
+    if (error.response?.status === 409) {
+      message = message || "Dados já cadastrados no sistema.";
+    }
+
+    return {
       success: false,
-      message: error.response?.data?.message || error.message,
+      message,
+      error,
     };
   }
 }

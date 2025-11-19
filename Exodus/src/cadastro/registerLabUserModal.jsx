@@ -12,7 +12,7 @@ export default function RegisterLabUserModal({ onClose }) {
     email: "",
   });
 
-  const { showToast } = useToast(); // <-- inicializa o hook do Toast
+  const { showToast } = useToast(); 
 
   const fields = [
     { name: "name", type: "text", placeholder: "Nome completo", required: true },

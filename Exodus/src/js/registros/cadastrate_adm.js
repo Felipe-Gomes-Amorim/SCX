@@ -1,44 +1,57 @@
 import axios from "axios";
 import API_URL from "../apiConfig.js";
 
-const authToken = localStorage.getItem("token");
-
-//metodo principal ( data vai vir do registerADM.jsx / token tá armazenado no localStorage )
-export async function cadastrarAdm(admData, token) {
-  console.log("chegou antes do try")
+export async function cadastrarAdm(admData) {
   try {
-    console.log("chegou dentro do try")                            //ver rotas do médico no AdminController (Back-End)      
-    const response = await axios.post(`${API_URL}/clinic/firstAdm`, admData,
+    const token = localStorage.getItem("token");
+
+    const response = await axios.post(
+      `${API_URL}/clinic/firstAdm`,
+      admData,
       {
         headers: {
-          Authorization: authToken ? `Bearer ${authToken}` : undefined,
+          Authorization: token ? `Bearer ${token}` : undefined,
         },
       }
-
     );
 
-    //print pra teste com o body do exame
-    console.log("Resposta do servidor:", response.data);
-
-
-    //quiser adicionar qlqr coisa no processo é aqui
-
+    console.log("Resposta do servidor (ADM):", response.data);
 
     return {
       success: true,
-      //ele vai retornar os dados do adm
       data: response.data,
     };
+
   } catch (error) {
-    console.log(error)
     console.error(
       "Erro ao cadastrar ADM:",
       error.response?.data || error.message
     );
 
+    let message = "Erro inesperado ao cadastrar administrador.";
+
+    if (error.response?.data) {
+      const backendMessage = error.response.data.toString().toLowerCase();
+
+    
+      if (backendMessage.includes("email") && backendMessage.includes("cadastrado")) {
+        message = "Este e-mail já está cadastrado no sistema.";
+      }
+
+     
+      if (backendMessage.includes("cnpj") && backendMessage.includes("cadastrado")) {
+        message = "Este CNPJ já possui um administrador cadastrado.";
+      }
+    }
+
+    if (error.response?.status === 409) {
+      message = message || "Dados já cadastrados no sistema.";
+    }
+
     return {
       success: false,
-      message: error.response?.data?.message || error.message,
+      message,
+      error,
     };
   }
 }

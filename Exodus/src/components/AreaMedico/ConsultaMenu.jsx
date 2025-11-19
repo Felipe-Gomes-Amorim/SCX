@@ -60,7 +60,7 @@ export default function ConsultaMenu({
           <div className={Style.menuActions}>
             {consultaAbertaPorMedico ? (
               <>
-                <span className={Style.timerDisplay}>{formatarTempo(tempoDecorrido)}</span>
+               
                 <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
               </>
             ) : (

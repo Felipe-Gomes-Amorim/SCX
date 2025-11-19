@@ -5,9 +5,10 @@ import Footer from "./Footer.jsx"
 
 export default function Sobre() {
   return (
-    
+    <>
+    <Header/>
     <div className={Style.sobre_page}>
-      <Header/>
+      
     
       <main className={Style.main_area}>
         <h1>Sobre Nós</h1>
@@ -42,7 +43,9 @@ export default function Sobre() {
         </section>
       </main>
 
-      <Footer/>
+      
     </div>
+    <Footer/>
+    </>
   );
 }

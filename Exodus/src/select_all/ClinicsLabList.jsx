@@ -1,33 +1,53 @@
 import React, { useEffect, useState } from "react";
-import Style from "./LabsList.module.css";
+import Style from "./ExamsRequests.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
+import API_URL from "../js/apiConfig.js";
 
-export default function ClinicsLabList({ limit = null }) {
-  const [dados, setDados] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+export default function ClinicsLabList() {
+  const [abaAtiva, setAbaAtiva] = useState("clinics"); // clinics | exams
+
+  const [dadosClinicas, setDadosClinicas] = useState([]);
+  const [dadosExames, setDadosExames] = useState([]);
+
+  const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   const token = localStorage.getItem("token");
 
+  // ============================
+  // 🔁 Carregar dados conforme a aba
+  // ============================
   useEffect(() => {
-    async function carregarClinicas() {
+    async function carregar() {
+      setCarregando(true);
+      setErro(null);
+
       try {
-        const data = await mostrar_todos("allClinicsLab", token);
-        if (data && data.length > 0) setDados(data);
-        else setErro("Nenhuma clínica vinculada encontrada.");
+        if (abaAtiva === "clinics") {
+          const data = await mostrar_todos("allClinicsLab", token);
+          setDadosClinicas(data || []);
+        } else {
+          const data = await mostrar_todos("examsLab", token);
+          console.log(data);
+          setDadosExames(data || []);
+        }
       } catch (err) {
         console.error(err);
-        setErro("Erro ao buscar clínicas vinculadas.");
+        setErro("Erro ao buscar dados.");
       } finally {
         setCarregando(false);
       }
     }
 
-    carregarClinicas();
-  }, [token]);
+    carregar();
+  }, [abaAtiva, token]);
 
-  const filteredData = dados.filter((item) => {
+  // ============================
+  // 🔎 Filtros
+  // ============================
+
+  const filteredClinics = dadosClinicas.filter((item) => {
     const termo = searchTerm.toLowerCase();
     return (
       item.name?.toLowerCase().includes(termo) ||
@@ -35,46 +55,111 @@ export default function ClinicsLabList({ limit = null }) {
     );
   });
 
-  const displayedData = limit ? filteredData.slice(0, limit) : filteredData;
+  const filteredExams = dadosExames.filter((item) => {
+    const termo = searchTerm.toLowerCase();
+    return (
+      item.fileName?.toLowerCase().includes(termo)
+    );
+  });
+
 
   return (
-    <div className={Style.container}>
-      <div className={Style.header}>
-        <h3 className={Style.title}>Clínicas Vinculadas</h3>
+    <>
+
+
+      {/* ============================ 
+           ABAS 
+      ============================ */}
+      <div className={Style.tabHeader}>
+        <h3
+          className={`${Style.title} ${abaAtiva === "clinics" ? Style.activeTab : ""}`}
+          onClick={() => setAbaAtiva("clinics")}
+        >
+          Clínicas vinculadas
+        </h3>
+
+        <h3
+          className={`${Style.title} ${abaAtiva === "exams" ? Style.activeTab : ""}`}
+          onClick={() => setAbaAtiva("exams")}
+        >
+          Exames devolvidos
+        </h3>
       </div>
 
+      {/* ============================ 
+           BUSCA 
+      ============================ */}
       <div className={Style.searchBox}>
         <input
           type="text"
-          placeholder="Pesquisar por nome ou CNPJ..."
+          placeholder={
+            abaAtiva === "clinics"
+              ? "Pesquisar por nome ou CNPJ..."
+              : "Pesquisar por paciente, exame ou ID..."
+          }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className={Style.searchInput}
         />
       </div>
 
+      {/* ============================ 
+           CONTEÚDO 
+      ============================ */}
       {carregando ? (
-        <p className={Style.info}>Carregando clínicas...</p>
+        <p className={Style.info}>Carregando...</p>
       ) : erro ? (
         <p className={Style.error}>{erro}</p>
-      ) : displayedData.length === 0 ? (
-        <p className={Style.info}>Nenhuma clínica encontrada.</p>
+      ) : abaAtiva === "clinics" ? (
+        // ============================
+        // LISTA DE CLÍNICAS
+        // ============================
+        filteredClinics.length > 0 ? (
+          <div className={Style.listContainer}>
+            {filteredClinics.map((item) => (
+              <div key={item.id} className={Style.card}>
+                <span><strong>Nome: -</strong>{item.name}</span>
+                <span><strong> - CNPJ:</strong> {item.cnpj}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className={Style.info}>Nenhuma clínica encontrada.</p>
+        )
       ) : (
-        <div className={Style.listContainer}>
-          {displayedData.map((item) => (
-            <div key={item.id} className={Style.card}>
-              <div className={Style.infoArea}>
+        // ============================
+        // LISTA DE EXAMES DEVOLVIDOS
+        // ============================
+        filteredExams.length > 0 ? (
+          <div className={Style.listContainer}>
+            {filteredExams.map((item, index) => (
+              <div key={index} className={Style.card}>
                 <span>
-                  <strong>Nome:</strong> {item.name || "-"}
+                  <strong>Arquivo:</strong>{" "}
+                  {item.fileName ? item.fileName : "Nome não disponível"}
                 </span>
+
                 <span>
-                  <strong>CNPJ:</strong> {item.cnpj || "-"}
+                  <strong>Visualizar:</strong>{" "}
+                  <a
+                    href={`${API_URL}/files/preview/${item.fileName}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={Style.downloadBtn}
+                  >
+                    Abrir 
+                  </a>
                 </span>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className={Style.info}>Nenhum exame encontrado.</p>
+        )
+
+
+
       )}
-    </div>
+    </>
   );
 }
