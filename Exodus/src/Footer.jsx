@@ -1,5 +1,5 @@
 import Style from './Footer.module.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from './js/apiConfig.js';
 import { useToast } from "./context/ToastProvider.jsx";
@@ -7,6 +7,7 @@ import { useToast } from "./context/ToastProvider.jsx";
 function About() {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  
   const handleSuporteClick = async () => {
     try {
       const response = await axios.post(`${API_URL}/adminSystem/registerUser`);
@@ -30,12 +31,20 @@ function About() {
         <div className={Style.footer_col}>
           <h3>Links Rápidos</h3>
           <ul>
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Sobre nós</a></li>
+            <li><Link to="/">Início</Link></li>
+            <li><Link to="/sobre">Sobre nós</Link></li>
+            <li><Link to="/TermosDeUso">Termos de Uso</Link></li>
+            <li><Link to="/PoliticasPrivacidade">Políticas de Privacidade</Link></li>
+
+            {/* Suporte opcional */}
             <li>
-              <a href="/sobre">Suporte</a>
+              <button
+                onClick={handleSuporteClick}
+                className={Style.supportButton}
+              >
+                Suporte
+              </button>
             </li>
-            <li><a href="#">Contato</a></li>
           </ul>
         </div>
 
