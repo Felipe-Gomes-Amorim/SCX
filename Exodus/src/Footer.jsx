@@ -36,15 +36,6 @@ function About() {
             <li><Link to="/TermosDeUso">Termos de Uso</Link></li>
             <li><Link to="/PoliticasPrivacidade">Políticas de Privacidade</Link></li>
 
-            {/* Suporte opcional */}
-            <li>
-              <button
-                onClick={handleSuporteClick}
-                className={Style.supportButton}
-              >
-                Suporte
-              </button>
-            </li>
           </ul>
         </div>
 
