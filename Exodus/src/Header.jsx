@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Style from "./Header.module.css";
 
 
 function Header() {
+  const [isLogged, setIsLogged] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+
+ 
 
   useEffect(() => {
     const userId = localStorage.getItem("id");
