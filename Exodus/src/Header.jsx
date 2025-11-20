@@ -31,7 +31,7 @@ function Header() {
       <nav className={Style.nav}>
         <Link to="/" className={Style.navLink}>Início</Link>
         <Link to="/sobre" className={Style.navLink}>Sobre nós</Link>
-        <Link to="/TermosDeUso" className={Style.navLink}></Link>
+        <Link to="/TermosDeUso" className={Style.navLink}>Termos de Uso</Link>
         <Link to="/PoliticasPrivacidade" className={Style.navLink}>Políticas de Privacidade</Link>
       </nav>
 
