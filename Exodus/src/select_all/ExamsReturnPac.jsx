@@ -156,7 +156,7 @@ export default function ExamsReturnPacList({ limit = null }) {
                 <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
                     <p>
-                      <strong>Arquivo:</strong> {gerarNomeAmigavel(index)}
+                      <strong>Arquivo:</strong> {item.fileName || "-"}
                     </p>
                   </div>
                   <button

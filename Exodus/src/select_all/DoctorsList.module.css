@@ -326,7 +326,7 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 0.5rem;
 }
@@ -341,13 +341,13 @@
 }
 
 .tabHeader h3:hover {
-  color: #fff;
+  color: #007bff;
   transform: translateY(-2px);
 }
 
 /* Aba ativa */
 .activeTab {
-  color: #00c3ff !important;
+  color:#0056b3;
 }
 
 .activeTab::after {
