@@ -150,11 +150,7 @@ export default function Notifications() {
                       {notificacao.message || "-"}
                     </span>
                   </div>
-                  <div className={Style.field}>
-                    <span className={Style.data}>
-                      {notificacao.readFile ? "Lida" : "Não lida"}
-                    </span>
-                  </div>
+                  
                 </div>
 
 
