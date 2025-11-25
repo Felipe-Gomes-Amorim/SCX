@@ -108,13 +108,16 @@ export default function ResetPassword() {
 
           <DynamicForm
             fields={fields}
-            buttonText={loading ? "Processando..." : "Redefinir Senha"}
+            values={formdata}
+            onChangeValues={setformdata}
             onSubmit={(values) => {
               setformdata(values);
               handleSubmit(values);
             }}
+            buttonText={loading ? "Processando..." : "Redefinir Senha"}
             disabled={loading}
           />
+
         </motion.div>
       </div>
 
