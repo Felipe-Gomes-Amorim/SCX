@@ -57,7 +57,7 @@ export default function Notifications() {
         prev.map((n) => (n.id === id ? { ...n, readFile: true } : n))
       );
       showToast("Notificação marcada como lida", "success");
-      window.location.reload();
+      
     } catch (err) {
       console.error("Erro ao marcar como lida:", err);
       showToast("Erro ao marcar como lida", "error");
@@ -68,7 +68,7 @@ export default function Notifications() {
   async function handleMarcarTodasComoLidas() {
     const token = localStorage.getItem("token");
     setLoadingMarcarTodas(true);
-    window.location.reload();
+  
     try {
       const naoLidas = notificacoes.filter(
         (n) =>
