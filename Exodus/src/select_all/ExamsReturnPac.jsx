@@ -157,7 +157,7 @@ export default function ExamsReturnPacList({ limit = null }) {
                   <div className={Style.infoArea}>
                     <p>
                       <strong>Arquivo:</strong>
-                      {getBaseName(item.fileName)} ({item.fileName.slice(-6)})
+                      (item.fileName) ({item.fileName.slice(-6)})
                     </p>
 
                   </div>
