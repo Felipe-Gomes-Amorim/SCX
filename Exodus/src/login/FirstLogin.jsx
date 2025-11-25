@@ -7,48 +7,53 @@ import { useNavigate } from "react-router-dom";
 import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { resetPassword } from "../js/login e home/firstLogin.js";
 import { useToast } from "../context/ToastProvider.jsx";
-
 import TermsModal from "../components/TermsModal.jsx";
 
 export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [showTerms, setShowTerms] = useState(false); // <--- controla modal
-  const navigate = useNavigate();
-
+  const [showTerms, setShowTerms] = useState(false);
   const [formdata, setformdata] = useState({
     password_key: "",
     confirm_password: "",
   });
 
+  const navigate = useNavigate();
   const { showToast } = useToast();
 
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])(?=.{8,})/;
 
-  const handleSubmit = async (formValues) => {
-    const { password_key, confirm_password } = formValues;
+  const handleSubmitValidation = (values) => {
+    const { password_key, confirm_password } = values;
 
     if (!passwordPattern.test(password_key)) {
       setErrorMessage(
         "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial."
       );
       showToast("Senha inválida: não atende aos requisitos.", "error");
-      return;
+      return false;
     }
 
     if (password_key !== confirm_password) {
       setErrorMessage("As senhas não coincidem.");
       showToast("As senhas não coincidem.", "error");
-      return;
+      return false;
     }
 
-    // Antes de enviar → abrir modal de termos
+    return true;
+  };
+
+  const handleSubmit = (values) => {
+    setformdata(values);
+
+    if (!handleSubmitValidation(values)) return;
+
+    // Primeiro exibe os termos
     setShowTerms(true);
   };
 
-  // Quando o usuário aceita os termos
   const confirmTerms = async () => {
     setShowTerms(false);
     setLoading(true);
@@ -91,34 +96,57 @@ export default function ResetPassword() {
 
   return (
     <>
-      <Header />
+      <div className={Style.login_page}>
+        <Header />
 
-      <div className={Style.containerLogin}>
-        <motion.div
-          className={Style.box}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <h2>Redefinir Senha</h2>
+        <div className={Style.login_card}>
+          {/* Lado esquerdo (form) */}
+          <motion.div
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.9 }}
+            className={Style.login_left}
+          >
+            <h2>Redefinir Senha</h2>
+            <p className={Style.subtitle}>
+              Crie uma nova senha para acessar sua conta
+            </p>
 
-          {errorMessage && (
-            <p className={Style.errorMessage}>{errorMessage}</p>
-          )}
+            {errorMessage && (
+              <p className={Style.formError}>{errorMessage}</p>
+            )}
 
-          <DynamicForm
-            fields={fields}
-            values={formdata}
-            onChangeValues={setformdata}
-            onSubmit={(values) => {
-              setformdata(values);
-              handleSubmit(values);
-            }}
-            buttonText={loading ? "Processando..." : "Redefinir Senha"}
-            disabled={loading}
-          />
+            <DynamicForm
+              fields={fields}
+              values={formdata}
+              onChangeValues={setformdata}
+              onSubmit={handleSubmit}
+              buttonText={loading ? "Processando..." : success ? "Redefinida" : "Confirmar Redefinição"}
+              loading={loading}
+              buttonSuccess={success}
+            />
+          </motion.div>
 
-        </motion.div>
+          {/* Lado direito (texto) */}
+          <motion.div className={Style.login_right}>
+            <motion.h2
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.9 }}
+            >
+              Nova Senha
+            </motion.h2>
+
+            <motion.p
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.9 }}
+            >
+              Digite e confirme sua nova senha abaixo.
+              Após redefinir, use-a para fazer login novamente.
+            </motion.p>
+          </motion.div>
+        </div>
       </div>
 
       <Footer />
