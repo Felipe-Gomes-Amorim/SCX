@@ -111,7 +111,7 @@ export default function ExamsReturnPacList({ limit = null }) {
               }`}
             onClick={() => setAbaAtiva("pendentes")}
           >
-            Exames Pendentes
+            Meus Exames Pendentes
           </h3>
           <h3
             className={`${Style.title} ${abaAtiva === "clinicas" ? Style.activeTab : ""
@@ -156,8 +156,10 @@ export default function ExamsReturnPacList({ limit = null }) {
                 <div key={index} className={Style.card}>
                   <div className={Style.infoArea}>
                     <p>
-                      <strong>Arquivo:</strong> {item.fileName || "-"}
+                      <strong>Arquivo:</strong>
+                      {getBaseName(item.fileName)} ({item.fileName.slice(-6)})
                     </p>
+
                   </div>
                   <button
                     className={Style.startButton}
