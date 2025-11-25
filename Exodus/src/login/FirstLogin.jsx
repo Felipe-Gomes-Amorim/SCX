@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Style from "./Login.module.css";
 import Footer from "../Footer.jsx";
 import Header from "../Header.jsx";
@@ -8,11 +8,15 @@ import DynamicForm from "../assents_link/DynamicForm.jsx";
 import { resetPassword } from "../js/login e home/firstLogin.js";
 import { useToast } from "../context/ToastProvider.jsx";
 
+import TermsModal from "../components/TermsModal.jsx";
+
 export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [showTerms, setShowTerms] = useState(false); // <--- controla modal
   const navigate = useNavigate();
+
   const [formdata, setformdata] = useState({
     password_key: "",
     confirm_password: "",
@@ -40,10 +44,20 @@ export default function ResetPassword() {
       return;
     }
 
+    // Antes de enviar → abrir modal de termos
+    setShowTerms(true);
+  };
+
+  // Quando o usuário aceita os termos
+  const confirmTerms = async () => {
+    setShowTerms(false);
     setLoading(true);
     setErrorMessage("");
 
-    const result = await resetPassword({ password_key });
+    const result = await resetPassword({
+      password_key: formdata.password_key,
+    });
+
     setLoading(false);
 
     if (result.success) {
@@ -62,71 +76,59 @@ export default function ResetPassword() {
       type: "password",
       placeholder: "Nova Senha",
       required: true,
-      minLength: 6,   
-      maxLength: 12   
+      minLength: 6,
+      maxLength: 12,
     },
     {
       name: "confirm_password",
       type: "password",
       placeholder: "Confirmar Nova Senha",
       required: true,
-      minLength: 6,   
-      maxLength: 12   
+      minLength: 6,
+      maxLength: 12,
     },
   ];
 
   return (
     <>
-      <div className={Style.login_page}>
-        <Header />
+      <Header />
 
-        <div className={Style.login_card}>
-          <motion.div
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.9 }}
-            className={Style.login_left}
-          >
-            <h2>Redefinir Senha</h2>
-            <p className={Style.subtitle}>
-              Crie uma nova senha para acessar sua conta
-            </p>
+      <div className={Style.containerLogin}>
+        <motion.div
+          className={Style.box}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h2>Redefinir Senha</h2>
 
-            {errorMessage && <p className={Style.formError}>{errorMessage}</p>}
+          {errorMessage && (
+            <p className={Style.errorMessage}>{errorMessage}</p>
+          )}
 
-            <DynamicForm
-              fields={fields}
-              values={formdata}
-              onChangeValues={setformdata}
-              onSubmit={handleSubmit}
-              buttonText={success ? "Redefinida" : "Confirmar Redefinição"}
-              loading={loading}
-              buttonSuccess={success}
-              
-            />
-          </motion.div>
-
-          <motion.div className={Style.login_right}>
-            <motion.h2
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.9 }}
-            >
-              Nova Senha
-            </motion.h2>
-            <motion.p
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.9 }}
-            >
-              Digite e confirme sua nova senha abaixo. 
-              Após redefinir, use-a para fazer login novamente.
-            </motion.p>
-          </motion.div>
-        </div>
+          <DynamicForm
+            fields={fields}
+            buttonText={loading ? "Processando..." : "Redefinir Senha"}
+            onSubmit={(values) => {
+              setformdata(values);
+              handleSubmit(values);
+            }}
+            disabled={loading}
+          />
+        </motion.div>
       </div>
 
       <Footer />
+
+      {/* Modal de Termos */}
+      <AnimatePresence>
+        {showTerms && (
+          <TermsModal
+            onConfirm={confirmTerms}
+            onCancel={() => setShowTerms(false)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
