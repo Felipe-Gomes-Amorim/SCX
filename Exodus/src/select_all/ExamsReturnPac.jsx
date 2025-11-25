@@ -11,6 +11,8 @@ export default function ExamsReturnPacList({ limit = null }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [abaAtiva, setAbaAtiva] = useState("devolvidos");
   const token = localStorage.getItem("token");
+  const getBaseName = (fileName) => fileName.split("_")[0];
+
 
   useEffect(() => {
     async function carregarExames() {
@@ -157,8 +159,9 @@ export default function ExamsReturnPacList({ limit = null }) {
                   <div className={Style.infoArea}>
                     <p>
                       <strong>Arquivo:</strong>
-                      {(item.fileName)} ({item.fileName.slice(-6)})
+                      {getBaseName(item.fileName)} ({item.fileName.slice(-6)})
                     </p>
+
 
                   </div>
                   <button
