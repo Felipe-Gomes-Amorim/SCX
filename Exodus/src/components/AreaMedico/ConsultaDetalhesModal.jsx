@@ -19,7 +19,26 @@ export default function ConsultaDetalhesModal({
   const [loadingAnamnese, setLoadingAnamnese] = useState(false);
   const [erroArquivos, setErroArquivos] = useState("");
   const [erroAnamnese, setErroAnamnese] = useState("");
-  const getBaseName = (fileName) => fileName.split("_")[0];
+  // Extrai a parte antes do primeiro "_"
+  const getBaseName = (fileName) => {
+    if (!fileName) return "";
+    return fileName.split("_")[0];
+  };
+
+  // Extrai 6 caracteres do meio do hash (última parte sem o .pdf)
+  const getSafeHash = (fileName) => {
+    if (!fileName) return "";
+
+    const parts = fileName.split("_");
+    const lastPart = parts[parts.length - 1];
+    const hash = lastPart.replace(".pdf", "");
+
+    if (hash.length <= 6) return hash;
+
+    const midStart = Math.floor((hash.length - 6) / 2);
+    return hash.substring(midStart, midStart + 6);
+  };
+
 
   useEffect(() => {
     if (!selectedConsulta) return;
