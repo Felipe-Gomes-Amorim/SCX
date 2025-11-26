@@ -19,6 +19,7 @@ export default function ConsultaDetalhesModal({
   const [loadingAnamnese, setLoadingAnamnese] = useState(false);
   const [erroArquivos, setErroArquivos] = useState("");
   const [erroAnamnese, setErroAnamnese] = useState("");
+  const getBaseName = (fileName) => fileName.split("_")[0];
 
   useEffect(() => {
     if (!selectedConsulta) return;
