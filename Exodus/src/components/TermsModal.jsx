@@ -25,7 +25,7 @@ export default function TermsModal({ onClose, onConfirm }) {
           <p className={Style.text}>
             Ao redefinir sua senha, você automaticamente concorda com os{" "}
             <a
-              href="/termos"
+              href="/TermosDeUso"
               className={Style.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export default function TermsModal({ onClose, onConfirm }) {
             </a>{" "}
             e com a{" "}
             <a
-              href="/privacidade"
+              href="/PoliticasPrivacidade"
               className={Style.link}
               target="_blank"
               rel="noopener noreferrer"
