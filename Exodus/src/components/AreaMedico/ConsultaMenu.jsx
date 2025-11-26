@@ -17,6 +17,7 @@ export default function ConsultaMenu({
   setShowEndPopup,
   setShowMenu,
   showAnamnese,
+  setShowAnamnese,
   expanded,
   setExpanded,
   anamneseData,

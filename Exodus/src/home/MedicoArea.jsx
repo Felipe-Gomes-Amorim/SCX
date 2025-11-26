@@ -326,6 +326,7 @@ export default function MedicoArea() {
               setDiagnostico={setDiagnostico}
               prescricao={prescricao}
               setPrescricao={setPrescricao}
+              setShowAnamnese={setShowAnamnese}
             />
           )}
 
