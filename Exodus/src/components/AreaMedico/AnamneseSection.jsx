@@ -163,7 +163,7 @@ export default function AnamneseSection({
                 onClick={() => setShowCustomPopup(true)}
                 className={Style.btn3}
               >
-                + 
+                Adicionar campo personalizado
               </button>
             </div>
           )}
