@@ -140,6 +140,27 @@ export default function ConsultaDetalhesModal({
       </div>
     );
 
+    // Extrai a parte antes do primeiro "_"
+    const getBaseName = (fileName) => {
+      if (!fileName) return "";
+      return fileName.split("_")[0];
+    };
+
+
+    const getSafeHash = (fileName) => {
+      if (!fileName) return "";
+
+      const parts = fileName.split("_");
+      const lastPart = parts[parts.length - 1];
+      const hash = lastPart.replace(".pdf", "");
+
+      if (hash.length <= 6) return hash;
+
+      const midStart = Math.floor((hash.length - 6) / 2);
+      return hash.substring(midStart, midStart + 6);
+    };
+
+
 
     return (
       <div style={{ maxHeight: "350px", overflowY: "auto", scrollbarWidth: 'thin', backgroundColor: '#e7e7e7ff' }}>
@@ -244,7 +265,7 @@ export default function ConsultaDetalhesModal({
                             <div key={item.fileName} className={Style.card}>
                               <span>
                                 <strong>{nomeAmigavel}:</strong>{" "}
-                                {item.fileName.split("_").pop()}
+                                {`${getBaseName(item.fileName)} (${getSafeHash(item.fileName)})`}
                               </span>
                               <button
                                 className={Style.saveBtn}
