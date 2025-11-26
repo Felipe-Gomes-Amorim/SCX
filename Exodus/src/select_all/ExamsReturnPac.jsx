@@ -113,7 +113,7 @@ export default function ExamsReturnPacList({ limit = null }) {
               }`}
             onClick={() => setAbaAtiva("pendentes")}
           >
-            Meus Exames Pendentes
+            Minhas Requisições Pendentes
           </h3>
           <h3
             className={`${Style.title} ${abaAtiva === "clinicas" ? Style.activeTab : ""

@@ -156,7 +156,7 @@ export default function ResetPassword() {
         {showTerms && (
           <TermsModal
             onConfirm={confirmTerms}
-            onCancel={() => setShowTerms(false)}
+            onClose={() => setShowTerms(false)}
           />
         )}
       </AnimatePresence>

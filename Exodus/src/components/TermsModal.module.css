@@ -49,8 +49,8 @@
 }
 
 .confirmBtn {
-  background: #28a745;
-  color: white;
+  background: transparent;
+  color: #28a745;
   border: none;
   padding: 0.8rem;
   border-radius: 10px;
@@ -60,7 +60,8 @@
 }
 
 .confirmBtn:hover {
-  background: #218838;
+  background: #28a745;
+  color: white;
 }
 
 .cancelBtn {
