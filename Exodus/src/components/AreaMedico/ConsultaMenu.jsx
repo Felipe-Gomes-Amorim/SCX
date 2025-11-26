@@ -52,6 +52,24 @@ export default function ConsultaMenu({
     <div className={Style.menuOverlay}>
       <div className={Style.menuBox}>
         <div className={Style.menuHeaderCompact}>
+          <div className={Style.backArrowContainer}>
+            {showAnamnese ? (
+              <button
+                className={Style.backArrow}
+                onClick={() => setShowAnamnese(false)}
+              >
+                ←
+              </button>
+            ) : (
+              <button
+                className={Style.backArrow}
+                onClick={() => setShowAnamnese(true)}
+              >
+                →
+              </button>
+            )}
+          </div>
+
           <div className={Style.pacienteInfo}>
             <h3>Paciente: {consultaAtual?.name}</h3>
             <p><strong>Início:</strong> {consultaAtual?.localTime}</p>
@@ -60,7 +78,7 @@ export default function ConsultaMenu({
           <div className={Style.menuActions}>
             {consultaAbertaPorMedico ? (
               <>
-               
+
                 <button onClick={() => setShowEndPopup(true)}>Encerrar Atendimento</button>
               </>
             ) : (
@@ -123,7 +141,7 @@ export default function ConsultaMenu({
                   setPrescricao={setPrescricao}
                 />
               ) : (
-                <PedidoExame consultaAtual={consultaAtual} /> 
+                <PedidoExame consultaAtual={consultaAtual} />
               )}
             </div>
 

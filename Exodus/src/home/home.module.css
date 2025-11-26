@@ -1303,3 +1303,24 @@
   border-color: #ff0000;
   color: white;
 }
+
+
+.backArrowContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.backArrow {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: 0.2s ease;
+  color: var(--primary-text, #333);
+}
+
+.backArrow:hover {
+  transform: scale(1.2);
+}
