@@ -15,6 +15,9 @@ export default function ClinicsLabList() {
 
   const token = localStorage.getItem("token");
 
+  const getBaseName = (fileName) => fileName.split("_")[0];
+
+
   // ============================
   // 🔁 Carregar dados conforme a aba
   // ============================
@@ -61,6 +64,21 @@ export default function ClinicsLabList() {
       item.fileName?.toLowerCase().includes(termo)
     );
   });
+
+
+  const getSafeHash = (fileName) => {
+    if (!fileName) return "";
+    const parts = fileName.split("_");
+    if (parts.length < 2) return "";
+
+    const lastPart = parts[parts.length - 1];
+    const hash = lastPart.replace(".pdf", "");
+
+    if (hash.length <= 6) return hash;
+
+    const midStart = Math.floor((hash.length - 6) / 2);
+    return hash.substring(midStart, midStart + 6);
+  };
 
 
   return (
@@ -118,8 +136,12 @@ export default function ClinicsLabList() {
           <div className={Style.listContainer}>
             {filteredClinics.map((item) => (
               <div key={item.id} className={Style.card}>
-                <span><strong>Nome: -</strong>{item.name}</span>
-                <span><strong> - CNPJ:</strong> {item.cnpj}</span>
+                <p>
+                  <strong>Nome:</strong> {item.name}
+                </p>
+                <p>
+                  <strong>CNPJ:</strong> {item.cnpj}
+                </p>
               </div>
             ))}
           </div>
@@ -136,8 +158,11 @@ export default function ClinicsLabList() {
               <div key={index} className={Style.card}>
                 <span>
                   <strong>Arquivo:</strong>{" "}
-                  {item.fileName ? item.fileName : "Nome não disponível"}
+                  {item.fileName
+                    ? `${item.fileName.split("_")[0]} (${getSafeHash(item.fileName)})`
+                    : "Nome não disponível"}
                 </span>
+
 
                 <span>
                   <strong>Visualizar:</strong>{" "}
@@ -147,7 +172,7 @@ export default function ClinicsLabList() {
                     rel="noreferrer"
                     className={Style.downloadBtn}
                   >
-                    Abrir 
+                    Abrir
                   </a>
                 </span>
               </div>

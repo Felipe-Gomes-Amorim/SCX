@@ -7,7 +7,7 @@ import {
     PDFExame,
 } from "../../js/fluxoMedico/exames.js";
 import { useToast } from "../../context/ToastProvider.jsx";
-import { formatCID } from "../../js/formatters.js" 
+import { formatCID } from "../../js/formatters.js"
 
 export default function PedidoExame({ consultaAtual }) {
     const [exames, setExames] = useState([
@@ -82,7 +82,7 @@ export default function PedidoExame({ consultaAtual }) {
                 showToast("Exames criados com sucesso!", "success");
 
                 // Agora definimos o ID retornado corretamente
-
+                await handleImprimir();
 
                 // Resetar os campos
                 setExames([{ id: Date.now(), examType: "", cid: "", justify: "" }]);
@@ -201,11 +201,7 @@ export default function PedidoExame({ consultaAtual }) {
                     +
                 </button>
 
-                <button
-                    type="submit"
-                    className={Style.saveBtn}
-                    disabled={loadingEnvio}
-                >
+                <button type="submit" className={Style.saveBtn}>
                     {loadingEnvio ? "Enviando..." : "Enviar Todos os Pedidos"}
                 </button>
             </form>

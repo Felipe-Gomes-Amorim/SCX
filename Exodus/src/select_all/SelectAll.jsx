@@ -58,10 +58,9 @@ export default function SelectAll() {
             {dados.map((item, index) => (
               <div key={index} className={Style.card}>
                 <div className={Style.cardContent}>
-                  {/* Exibe todos os campos do registro */}
                   {Object.entries(item).map(([key, value], i) => (
                     <span key={i} className={Style.data}>
-                      <strong>{key}:</strong> {String(value)}
+                      {String(value)}
                     </span>
                   ))}
                 </div>

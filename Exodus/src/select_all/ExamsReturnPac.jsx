@@ -94,6 +94,21 @@ export default function ExamsReturnPacList({ limit = null }) {
     return apenasNumeros.replace(/(\d{5})(\d{3})/, "$1-$2");
   };
 
+  const getSafeHash = (fileName) => {
+    if (!fileName) return "";
+    const parts = fileName.split("_");
+    if (parts.length < 2) return "";
+
+    const lastPart = parts[parts.length - 1]; // pega parte com hash + extensão
+    const hash = lastPart.replace(".pdf", ""); // remove .pdf
+
+    if (hash.length <= 6) return hash; // se for curto
+
+    const midStart = Math.floor((hash.length - 6) / 2);
+    return hash.substring(midStart, midStart + 6);
+  };
+
+
   return (
     <div className={Style.container}>
       <h2>Área do Paciente</h2>
@@ -159,7 +174,7 @@ export default function ExamsReturnPacList({ limit = null }) {
                   <div className={Style.infoArea}>
                     <p>
                       <strong>Arquivo: </strong>
-                      {getBaseName(item.fileName)} ({item.fileName.slice(-6)})
+                      {getBaseName(item.fileName)} ({getSafeHash(item.fileName)})
                     </p>
 
 

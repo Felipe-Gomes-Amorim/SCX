@@ -80,7 +80,7 @@ export default function AnamneseSection({
                 />
               </label>
               <label>
-                Fumante:
+                Fuma? :
                 <input
                   type="checkbox"
                   style={{ marginLeft: "8px", verticalAlign: "middle", transform: "translateY(1px)" }}
@@ -88,7 +88,7 @@ export default function AnamneseSection({
                   onChange={(e) => setAnamneseData({ ...anamneseData, smoking: e.target.checked })}
                 />
               </label>
-              <label>Alcoolismo:
+              <label>Consome álcool? :
                 <input
                   type="checkbox"
                   style={{ marginLeft: "8px", verticalAlign: "middle", transform: "translateY(1px)" }}
