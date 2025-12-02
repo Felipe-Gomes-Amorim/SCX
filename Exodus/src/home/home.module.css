@@ -1324,3 +1324,25 @@
 .backArrow:hover {
   transform: scale(1.2);
 }
+
+
+.dropdownCID {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 4px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dropdownItem {
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdownItem:hover {
+    background: #f0f0f0;
+}

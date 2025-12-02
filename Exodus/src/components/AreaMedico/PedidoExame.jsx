@@ -19,6 +19,37 @@ export default function PedidoExame({ consultaAtual }) {
     const [loadingPDF, setLoadingPDF] = useState(false);
     const [exameIds, setExameIds] = useState([]);
     const { showToast } = useToast();
+    const [resultadosCID, setResultadosCID] = useState({});
+    const [loadingCID, setLoadingCID] = useState(false);
+
+
+    const pesquisarCID = async (index) => {
+        const termo = exames[index].cid.trim();
+        if (!termo) {
+            showToast("Digite uma doença para pesquisar CID.", "warning");
+            return;
+        }
+
+        setLoadingCID(true);
+        try {
+            const response = await buscarCIDporDoenca(termo);
+            if (response.success) {
+                // Salva resultados apenas para o exame correto
+                setResultadosCID((prev) => ({
+                    ...prev,
+                    [index]: response.data
+                }));
+            } else {
+                showToast("Nenhum CID encontrado.", "info");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro ao pesquisar CID.", "error");
+        } finally {
+            setLoadingCID(false);
+        }
+    };
+
 
     // 🔹 Buscar tipos de exame ao montar
     useEffect(() => {
@@ -124,6 +155,15 @@ export default function PedidoExame({ consultaAtual }) {
         }
     };
 
+    const selecionarCID = (index, item) => {
+        handleChange(index, "cid", item.cid);
+        setResultadosCID((prev) => ({
+            ...prev,
+            [index]: [] // fecha dropdown
+        }));
+    };
+
+
     return (
         <div className={`${Style.section} ${Style.diagnosticoContainer}`}>
             <form onSubmit={handleSubmit} className={Style.formGrid}>
@@ -154,17 +194,46 @@ export default function PedidoExame({ consultaAtual }) {
                         </label>
 
                         <label>
-                            CID
-                            <input
-                                type="text"
-                                value={exame.cid}
-                                onChange={(e) =>
-                                    handleChange(index, "cid", formatCID(e.target.value))
-                                }
-                                placeholder="Código CID (ex: A00)"
-                                required
-                            />
+                            CID / Doença
+                            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                                <input
+                                    type="text"
+                                    value={exame.cid}
+                                    onChange={(e) => {
+                                        handleChange(index, "cid", e.target.value);
+                                        setResultadosCID((prev) => ({ ...prev, [index]: [] }));
+                                    }}
+                                    placeholder="Digite o nome da doença"
+                                    required
+                                    style={{ flex: 1 }}
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={() => pesquisarCID(index)}
+                                    className={Style.btn3}
+                                    style={{ padding: "0.4rem 0.6rem" }}
+                                >
+                                    {loadingCID ? "..." : "🔎"}
+                                </button>
+                            </div>
+
+                            {/* DROPDOWN DE RESULTADOS */}
+                            {resultadosCID[index] && resultadosCID[index].length > 0 && (
+                                <div className={Style.dropdownCID}>
+                                    {resultadosCID[index].map((item, i) => (
+                                        <div
+                                            key={i}
+                                            className={Style.dropdownItem}
+                                            onClick={() => selecionarCID(index, item)}
+                                        >
+                                            <strong>{item.cid}</strong> — {item.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </label>
+
 
 
                         <label>

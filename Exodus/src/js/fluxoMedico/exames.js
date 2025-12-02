@@ -95,3 +95,8 @@ export async function PDFExame(exameData) {
     return { success: false, message: "Erro ao gerar PDF" };
   }
 }
+
+export async function buscarCIDporDoenca(query) {
+    const res = await fetch(`${API_URL}/cid/search?query=${encodeURIComponent(query)}`);
+    return await res.json();
+}
