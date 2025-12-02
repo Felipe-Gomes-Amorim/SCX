@@ -140,7 +140,7 @@ export default function ClinicsLabList() {
                   <strong>Nome:</strong> {item.name}
                 </p>
                 <p>
-                  <strong>CNPJ:</strong> {item.cnpj}
+                  <strong> - CNPJ:</strong> {item.cnpj} -
                 </p>
               </div>
             ))}

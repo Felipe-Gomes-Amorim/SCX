@@ -209,14 +209,14 @@ export default function PedidoExame({ consultaAtual }) {
                                     }}
                                     placeholder="Digite o nome da doença"
                                     required
-                                    style={{ flex: 1 }}
+                                    style={{ flex: 1, width: "5rem" }}
                                 />
 
                                 <button
                                     type="button"
                                     onClick={() => pesquisarCID(index)}
                                     className={Style.btn3}
-                                    style={{ padding: "0.4rem 0.6rem" }}
+                                    
                                 >
                                     {loadingCID ? "..." : "🔎"}
                                 </button>
