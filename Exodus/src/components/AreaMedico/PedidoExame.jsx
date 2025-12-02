@@ -5,6 +5,7 @@ import {
     buscarTiposExame,
     criarExames,
     PDFExame,
+    buscarCIDporDoenca
 } from "../../js/fluxoMedico/exames.js";
 import { useToast } from "../../context/ToastProvider.jsx";
 import { formatCID } from "../../js/formatters.js"
@@ -33,11 +34,14 @@ export default function PedidoExame({ consultaAtual }) {
         setLoadingCID(true);
         try {
             const response = await buscarCIDporDoenca(termo);
-            if (response.success) {
-                // Salva resultados apenas para o exame correto
+
+            if (response.success && response.data.length > 0) {
                 setResultadosCID((prev) => ({
                     ...prev,
-                    [index]: response.data
+                    [index]: response.data.map(item => ({
+                        name: item.descricao,
+                        cid: item.codigo
+                    }))
                 }));
             } else {
                 showToast("Nenhum CID encontrado.", "info");

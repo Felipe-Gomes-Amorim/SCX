@@ -96,7 +96,21 @@ export async function PDFExame(exameData) {
   }
 }
 
-export async function buscarCIDporDoenca(query) {
-    const res = await fetch(`${API_URL}/cid/search?query=${encodeURIComponent(query)}`);
-    return await res.json();
+export async function buscarCIDporDoenca(disease) {
+    try {
+        const response = await axios.post(`${API_URL}/API_CID/requestAPI`, {
+            disease: disease
+        });
+
+        return {
+            success: true,
+            data: response.data 
+        };
+    } catch (error) {
+        console.error("Erro ao buscar CID:", error);
+        return {
+            success: false,
+            data: []
+        };
+    }
 }
