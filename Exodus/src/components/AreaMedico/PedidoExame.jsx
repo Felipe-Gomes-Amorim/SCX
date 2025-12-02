@@ -24,6 +24,8 @@ export default function PedidoExame({ consultaAtual }) {
     const [loadingCID, setLoadingCID] = useState(false);
 
 
+    // Pesquisar CID por doença
+
     const pesquisarCID = async (index) => {
         const termo = exames[index].cid.trim();
         if (!termo) {
@@ -209,7 +211,7 @@ export default function PedidoExame({ consultaAtual }) {
                                     }}
                                     placeholder="Digite o nome da doença"
                                     required
-                                    style={{ flex: 1, width: "5rem" }}
+                                    style={{ flex: 1, width: "10rem" }}
                                 />
 
                                 <button
@@ -218,7 +220,7 @@ export default function PedidoExame({ consultaAtual }) {
                                     className={Style.btn3}
                                     
                                 >
-                                    {loadingCID ? "..." : "🔎"}
+                                    {loadingCID ? "..." : "Pesquisar CID"}
                                 </button>
                             </div>
 
