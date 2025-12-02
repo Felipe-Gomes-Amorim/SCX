@@ -97,20 +97,23 @@ export async function PDFExame(exameData) {
 }
 
 export async function buscarCIDporDoenca(disease) {
-    try {
-        const response = await axios.post(`${API_URL}/API_CID/requestAPI`, {
-            disease: disease
-        });
+  try {
+    const response = await axios.post(`${API_URL}/API_CID/requestAPI`, {
+      disease: disease
+    });
+    console.log(response);
 
-        return {
-            success: true,
-            data: response.data 
-        };
-    } catch (error) {
-        console.error("Erro ao buscar CID:", error);
-        return {
-            success: false,
-            data: []
-        };
-    }
+    return {
+      success: true,
+      data: response.data
+    };
+
+  } catch (error) {
+    console.error("Erro ao buscar CID:", error);
+    return {
+      success: false,
+      data: []
+    };
+  }
+
 }

@@ -12,7 +12,14 @@ import { formatCID } from "../../js/formatters.js"
 
 export default function PedidoExame({ consultaAtual }) {
     const [exames, setExames] = useState([
-        { id: Date.now(), examType: "", cid: "", justify: "" },
+        {
+            id: Date.now(),
+            examType: "",
+            disease: "",
+            cid: "",
+            justify: ""
+        },
+
     ]);
     const [tiposExame, setTiposExame] = useState([]);
     const [loadingTipos, setLoadingTipos] = useState(true);
@@ -24,38 +31,42 @@ export default function PedidoExame({ consultaAtual }) {
     const [loadingCID, setLoadingCID] = useState(false);
 
 
-    // Pesquisar CID por doença
-
+    // === PESQUISAR CID ===
     const pesquisarCID = async (index) => {
-        const termo = exames[index].cid.trim();
-        if (!termo) {
-            showToast("Digite uma doença para pesquisar CID.", "warning");
+        const cidDigitado = exames[index].disease?.trim() || "";
+
+
+        if (cidDigitado.length < 2) {
             return;
         }
 
-        setLoadingCID(true);
         try {
-            const response = await buscarCIDporDoenca(termo);
+            const response = await buscarCIDporDoenca(cidDigitado);
 
-            if (response.success && response.data.length > 0) {
+            if (response.success && Array.isArray(response.data)) {
                 setResultadosCID((prev) => ({
                     ...prev,
                     [index]: response.data.map(item => ({
-                        name: item.descricao,
-                        cid: item.codigo
+                        name: item.name,   // correto
+                        code: item.code    // correto
                     }))
                 }));
             } else {
-                showToast("Nenhum CID encontrado.", "info");
+                setResultadosCID((prev) => ({ ...prev, [index]: [] }));
             }
-        } catch (err) {
-            console.error(err);
-            showToast("Erro ao pesquisar CID.", "error");
-        } finally {
-            setLoadingCID(false);
+
+        } catch (error) {
+            console.error("Erro ao buscar CID:", error);
+            setResultadosCID((prev) => ({ ...prev, [index]: [] }));
         }
     };
 
+    // === SELECIONAR CID DO DROPDOWN ===
+    const selecionarCID = (index, item) => {
+        handleChange(index, "cid", item.code);        // seta o código escolhido
+        handleChange(index, "disease", item.name);    // seta o nome da doença
+        setResultadosCID((prev) => ({ ...prev, [index]: [] })); // fecha dropdown
+    };
 
     // 🔹 Buscar tipos de exame ao montar
     useEffect(() => {
@@ -80,13 +91,20 @@ export default function PedidoExame({ consultaAtual }) {
         setExames(novosExames);
     };
 
-    // 🔹 Adicionar um novo pedido de exame vazio com ID único
+    // === ADICIONAR EXAME ===
     const adicionarExame = () => {
         setExames([
             ...exames,
-            { id: Date.now() + Math.random(), examType: "", cid: "", justify: "" },
+            {
+                id: Date.now() + Math.random(),
+                examType: "",
+                disease: "",
+                cid: "",
+                justify: ""
+            }
         ]);
     };
+
 
     // 🔹 Remover um exame da lista
     const removerExame = (index) => {
@@ -161,13 +179,8 @@ export default function PedidoExame({ consultaAtual }) {
         }
     };
 
-    const selecionarCID = (index, item) => {
-        handleChange(index, "cid", item.cid);
-        setResultadosCID((prev) => ({
-            ...prev,
-            [index]: [] // fecha dropdown
-        }));
-    };
+
+
 
 
     return (
@@ -204,24 +217,22 @@ export default function PedidoExame({ consultaAtual }) {
                             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                                 <input
                                     type="text"
-                                    value={exame.cid}
-                                    onChange={(e) => {
-                                        handleChange(index, "cid", e.target.value);
-                                        setResultadosCID((prev) => ({ ...prev, [index]: [] }));
-                                    }}
-                                    placeholder="Digite o nome da doença"
-                                    required
-                                    style={{ flex: 1, width: "10rem" }}
+                                    placeholder="CID"
+                                    value={exames[index].cid}
+                                    onChange={(e) => handleChange(index, "cid", e.target.value)}
                                 />
 
-                                <button
-                                    type="button"
-                                    onClick={() => pesquisarCID(index)}
-                                    className={Style.btn3}
-                                    
-                                >
-                                    {loadingCID ? "..." : "Pesquisar CID"}
+                                <input
+                                    type="text"
+                                    placeholder="Nome da doença"
+                                    value={exames[index].disease}
+                                    onChange={(e) => handleChange(index, "disease", e.target.value)}
+                                />
+
+                                <button onClick={() => pesquisarCID(index)} type="button" className={Style.btn3}>
+                                    Pesquisar CID
                                 </button>
+
                             </div>
 
                             {/* DROPDOWN DE RESULTADOS */}
@@ -233,11 +244,13 @@ export default function PedidoExame({ consultaAtual }) {
                                             className={Style.dropdownItem}
                                             onClick={() => selecionarCID(index, item)}
                                         >
-                                            <strong>{item.cid}</strong> — {item.name}
+                                            <strong>{item.code}</strong> — {item.name}
                                         </div>
                                     ))}
                                 </div>
                             )}
+
+
                         </label>
 
 

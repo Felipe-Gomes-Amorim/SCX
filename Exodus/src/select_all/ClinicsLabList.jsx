@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import Style from "./ExamsRequests.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import API_URL from "../js/apiConfig.js";
+import { updateExamRequest } from "../js/fluxoLaboratorio/editarExames.js";
+import { useToast } from "../context/ToastProvider.jsx";
+
+import SelecionarTipoExameModal from "../components/AreaLab/SelecionarTipoExame.jsx";
+
+
+// modalData = { file, fileName, examType }
 
 export default function ClinicsLabList() {
   const [abaAtiva, setAbaAtiva] = useState("clinics"); // clinics | exams
@@ -16,6 +23,26 @@ export default function ClinicsLabList() {
   const token = localStorage.getItem("token");
 
   const getBaseName = (fileName) => fileName.split("_")[0];
+
+  const { showToast } = useToast();
+  const [modalData, setModalData] = useState(null);
+
+  async function handleFileEdit(file, fileName, examType) {
+    if (!file) return;
+
+    try {
+      showToast("Atualizando arquivo...", "info");
+      await updateExamRequest(token, file, fileName, examType);
+      showToast("Arquivo atualizado com sucesso!", "success");
+
+      // Recarregar automaticamente
+      setAbaAtiva("exams");
+    } catch (err) {
+      console.error(err);
+      showToast("Erro ao atualizar exame.", "error");
+    }
+  }
+
 
 
   // ============================
@@ -140,7 +167,7 @@ export default function ClinicsLabList() {
                   <strong>Nome:</strong> {item.name}
                 </p>
                 <p>
-                  <strong> - CNPJ:</strong> {item.cnpj} -
+                  <strong>CNPJ:</strong> {item.cnpj} 
                 </p>
               </div>
             ))}
@@ -156,6 +183,8 @@ export default function ClinicsLabList() {
           <div className={Style.listContainer}>
             {filteredExams.map((item, index) => (
               <div key={index} className={Style.card}>
+
+                {/* ESQUERDA (nome do arquivo) */}
                 <span>
                   <strong>Arquivo:</strong>{" "}
                   {item.fileName
@@ -163,9 +192,36 @@ export default function ClinicsLabList() {
                     : "Nome não disponível"}
                 </span>
 
+                {/* DIREITA (botões) */}
+                <div className={Style.actions}>
 
-                <span>
-                  <strong>Visualizar:</strong>{" "}
+                  {/* Botão editar */}
+                  <button
+                    className={Style.editBtn}
+                    onClick={() => document.getElementById(`fileInput-${index}`).click()}
+                  >
+                    Editar arquivo
+                  </button>
+
+                  {/* Input invisível */}
+                  <input
+                    id={`fileInput-${index}`}
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (!file) return;
+
+                      // Abre o modal pedindo o tipo
+                      setModalData({
+                        file,
+                        fileName: item.fileName,
+                      });
+                    }}
+
+                  />
+
+                  {/* Botão abrir */}
                   <a
                     href={`${API_URL}/files/preview/${item.fileName}`}
                     target="_blank"
@@ -174,9 +230,13 @@ export default function ClinicsLabList() {
                   >
                     Abrir
                   </a>
-                </span>
+
+                </div>
+
               </div>
+
             ))}
+
           </div>
         ) : (
           <p className={Style.info}>Nenhum exame encontrado.</p>
@@ -185,6 +245,22 @@ export default function ClinicsLabList() {
 
 
       )}
+
+      {modalData && (
+        <SelecionarTipoExameModal
+          file={modalData.file}
+          onClose={() => setModalData(null)}
+          onConfirm={(tipoSelecionado) => {
+            handleFileEdit(
+              modalData.file,
+              modalData.fileName,
+              tipoSelecionado
+            );
+            setModalData(null);
+          }}
+        />
+      )}
+
     </>
   );
 }

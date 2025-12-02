@@ -268,3 +268,95 @@
   border-color: #ff0000;
   color: white;
 }
+
+
+/* ---------- Modal Card ---------- */
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Título */
+.modalTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Select do tipo do exame */
+.modalInput {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.modalInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+/* Botões lado a lado */
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+/* Botão confirmar */
+.confirmButton {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.confirmButton:disabled {
+  background: #8fbaf8;
+  cursor: not-allowed;
+}
+
+.confirmButton:hover:not(:disabled) {
+  background: #005fcc;
+}
+
+/* Botão cancelar */
+.cancelButton {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #c53b3b;
+  background: transparent;
+  color: #c53b3b;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: #ff0000;
+  border-color: #ff0000;
+  color: white;
+}
