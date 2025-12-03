@@ -7,7 +7,7 @@ import Footer from "./Footer.jsx";
 export default function TermosUso() {
   return (
     <div className={Style.termos_page}>
-      <Header/>
+      <Header />
 
       <main className={Style.main_area}>
         <h1>Termos e Condições de Uso</h1>
@@ -176,9 +176,21 @@ export default function TermosUso() {
           </p>
         </motion.section>
 
+        <motion.section className={Style.section}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2>Seção 13 – Políticas de Retenção</h2>
+          <p>
+            Informamos que os dados pessoais e dados sensíveis fornecidos pelo paciente, incluindo informações clínicas e resultados de exames, serão armazenados e retidos pelo sistema pelo período necessário para cumprimento de obrigações legais, preservação do histórico de exames e garantia da disponibilidade futura dos resultados, em conformidade com a Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018).
+          </p>
+        </motion.section>
+
       </main>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 }
