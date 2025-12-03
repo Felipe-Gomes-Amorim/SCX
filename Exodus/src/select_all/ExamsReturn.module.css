@@ -33,7 +33,7 @@
   align-items: center;
   margin-bottom: 1rem;
   flex-wrap: wrap;
-  /* Para telas pequenas */
+ 
 }
 
 .tabWithButton {
@@ -360,3 +360,10 @@
   border-color: #ff0000;
   color: white;
 }
+
+.startButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+

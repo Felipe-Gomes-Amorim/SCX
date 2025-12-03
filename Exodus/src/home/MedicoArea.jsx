@@ -20,7 +20,19 @@ import HistoricoConsultas from "../components/AreaMedico/HistoricoConsultas.jsx"
 import ConsultaDetalhesModal from "../components/AreaMedico/ConsultaDetalhesModal.jsx";
 import EncerrarAtendimentoPopup from "../components/AreaMedico/EncerrarAtendimentoPopup.jsx";
 
-import { useToast } from "../context/ToastProvider.jsx"; // 🔹 Import do toast
+import { useToast } from "../context/ToastProvider.jsx"; //  Import do toast
+
+import {
+  FaPlay,
+  FaStop,
+  FaFolderOpen,
+  FaHistory,
+  FaNotesMedical,
+  FaPlus,
+  FaEye,
+  FaUserMd,
+} from "react-icons/fa";
+
 
 export default function MedicoArea() {
   const navigate = useNavigate();
@@ -97,7 +109,7 @@ export default function MedicoArea() {
     })();
   }, [token]);
 
-  // ⏱️ Timer
+  // ⏱ Timer
   useEffect(() => {
     if (!consultaAbertaPorMedico) return;
 
@@ -126,7 +138,7 @@ export default function MedicoArea() {
 
 
 
-  // 🔹 Encerrar consulta
+  //  Encerrar consulta
   async function confirmarEncerramento(patientShouldReturn) {
     setShowEndPopup(false);
     try {
@@ -149,7 +161,7 @@ export default function MedicoArea() {
   }
 
 
-  // 🔹 Abrir nova consulta
+  //  Abrir nova consulta
   async function iniciarNovaConsulta() {
     if (consultaAbertaPorMedico && consultaAtual) {
       showToast("Já existe uma consulta aberta.", "warning");
@@ -172,7 +184,7 @@ export default function MedicoArea() {
     }
   }
 
-  // 🩺 Salvar anamnese + campos extras
+  //  Salvar anamnese + campos extras
   async function salvarAnamnese() {
     const resultAnamnese = await salvarAnamneseAPI(token, anamneseData);
     if (!resultAnamnese.success) {
@@ -196,11 +208,11 @@ export default function MedicoArea() {
       showToast("Anamnese salva com sucesso!", "success");
     }
 
-    
+
     setCustomFieldsList([]);
   }
 
-  // ➕ Adicionar campo customizado
+  // Adicionar campo customizado
   const handleCreateCustomField = () => {
     if (!customName || !customValue) {
       showToast("Preencha nome e valor!", "warning");
@@ -216,7 +228,7 @@ export default function MedicoArea() {
     showToast("Campo personalizado adicionado!", "success");
   };
 
-  // 📋 Histórico
+  //  Histórico
   async function abrirMenuDetalhes() {
     setShowMenu(true);
     if (!consultaAtual) return;
@@ -277,7 +289,11 @@ export default function MedicoArea() {
 
   return (
     <div className={Style.container}>
-      <h2>Área do Médico</h2>
+      <h2>
+        <FaUserMd style={{ marginRight: 8 }} />
+        Área do Médico
+      </h2>
+
       <div className={Style.subsection}>
         <section className={Style.prontuarioSection}>
           {consultaAtual && (
@@ -287,8 +303,11 @@ export default function MedicoArea() {
                 <u className={Style.sublinhado}>{consultaAtual.name}</u>
               </p>
               <button className={Style.btn} onClick={abrirMenuDetalhes}>
+                <FaFolderOpen style={{ marginRight: 6 }} />
                 Expandir detalhes
               </button>
+
+
             </div>
           )}
 

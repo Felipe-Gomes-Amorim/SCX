@@ -14,7 +14,7 @@ export default function ClinicsAndLabsList({ limit = null }) {
     const [loadingId, setLoadingId] = useState(null);
     const [showDisableModal, setShowDisableModal] = useState(false);
     const [showEnableModal, setShowEnableModal] = useState(false);
-    const [abaAtiva, setAbaAtiva] = useState("clinicas"); // 🔄 Alternância
+    const [abaAtiva, setAbaAtiva] = useState("clinicas"); 
     const token = localStorage.getItem("token");
     const [active, setActive] = useState("left");
 
@@ -61,7 +61,7 @@ export default function ClinicsAndLabsList({ limit = null }) {
             <div className={Style.header}>
 
 
-                {/* 🔄 Abas de alternância */}
+                {/* Abas de alternância */}
                 <div className={Style.tabHeader}>
                     <h3
                         className={`${Style.title} ${abaAtiva === "clinicas" ? Style.activeTab : ""
@@ -122,7 +122,7 @@ export default function ClinicsAndLabsList({ limit = null }) {
                 )}
             </div>
 
-            {/* 🔍 Busca */}
+            {/*  Busca */}
             <div className={Style.searchBox}>
                 <input
                     type="text"
@@ -133,7 +133,7 @@ export default function ClinicsAndLabsList({ limit = null }) {
                 />
             </div>
 
-            {/* 🧭 Conteúdo */}
+            {/*  Conteúdo */}
             {carregando ? (
                 <p className={Style.info}>Carregando dados...</p>
             ) : erro ? (

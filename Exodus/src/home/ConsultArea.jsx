@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Style from "./home.module.css";
 import { buscarAtendimentoAtual, encerrarAtendimento } from "../js/fluxoMedico/consultas.js";
 import { useNavigate } from "react-router-dom";
+import { FaStop } from "react-icons/fa";
 
 export default function ConsultArea() {
   const [consultaAtual, setConsultaAtual] = useState(null);
@@ -69,9 +70,11 @@ export default function ConsultArea() {
               <button onClick={() => navigate("/requisitarExame")}>
                 Requisitar Exame
               </button>
-              <button onClick={handleEncerrarConsulta}>
-                Encerrar Consulta
+              <button className="confirm">
+                <FaStop style={{ marginRight: 6 }} />
+                Encerrar consulta
               </button>
+
               <button
                 className={Style.cancelBtn}
                 onClick={() => setMostrarMenu(false)}

@@ -68,7 +68,7 @@ export default function PedidoExame({ consultaAtual }) {
         setResultadosCID((prev) => ({ ...prev, [index]: [] })); // fecha dropdown
     };
 
-    // 🔹 Buscar tipos de exame ao montar
+    //Buscar tipos de exame ao montar
     useEffect(() => {
         const carregarTipos = async () => {
             try {
@@ -84,7 +84,7 @@ export default function PedidoExame({ consultaAtual }) {
         carregarTipos();
     }, [showToast]);
 
-    // 🔹 Atualizar um campo dentro de um exame específico
+    //Atualizar um campo dentro de um exame específico
     const handleChange = (index, field, value) => {
         const novosExames = [...exames];
         novosExames[index][field] = value;
@@ -106,24 +106,24 @@ export default function PedidoExame({ consultaAtual }) {
     };
 
 
-    // 🔹 Remover um exame da lista
+    //Remover um exame da lista
     const removerExame = (index) => {
         setExames(exames.filter((_, i) => i !== index));
     };
 
-    // 🔹 Enviar todos os exames
+    //Enviar todos os exames
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoadingEnvio(true);
 
         try {
-            // 1️⃣ Cria requisição vazia
+            //Cria requisição vazia
             const requisicao = await cadastrarRequisicaoExame();
             if (!requisicao.success) throw new Error("Falha ao criar requisição de exame.");
-            console.log("Requisição criada:", requisicao);
-            setExameIds([requisicao.data.id]);
 
-            // 2️⃣ Envia lista de exames
+            setExameIds([requisicao.data.id]); // mantém isso para mostrar o botão de imprimir
+
+            //Envia lista de exames
             const payload = exames.map((ex) => ({
                 examType: ex.examType,
                 justify: ex.justify,
@@ -131,15 +131,12 @@ export default function PedidoExame({ consultaAtual }) {
             }));
 
             const criacao = await criarExames(payload);
-            console.log("Retorno da criação:", criacao);
 
             if (criacao.success) {
                 showToast("Exames criados com sucesso!", "success");
 
-                // Agora definimos o ID retornado corretamente
-                await handleImprimir();
-
-                // Resetar os campos
+               
+                //Apenas reseta os campos
                 setExames([{ id: Date.now(), examType: "", cid: "", justify: "" }]);
             } else {
                 showToast("Erro ao criar exames.", "error");
@@ -153,7 +150,8 @@ export default function PedidoExame({ consultaAtual }) {
     };
 
 
-    // 🔹 Gerar PDFs
+
+    //Gerar PDFs
     const handleImprimir = async () => {
         if (!exameIds.length) {
             showToast("Nenhum exame disponível para imprimir.", "warning");
@@ -286,11 +284,11 @@ export default function PedidoExame({ consultaAtual }) {
                     className={Style.btn3}
                     style={{ marginBottom: "1rem" }}
                 >
-                    +
+                    Adicionar Pedido de Exame
                 </button>
 
                 <button type="submit" className={Style.saveBtn}>
-                    {loadingEnvio ? "Enviando..." : "Enviar Todos os Pedidos"}
+                    {loadingEnvio ? "Enviando..." : "Salvar Pedidos de Exames"}
                 </button>
             </form>
 

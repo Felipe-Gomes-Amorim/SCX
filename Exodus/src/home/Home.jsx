@@ -224,8 +224,13 @@ export default function Home() {
                   {userData.roles?.some((role) => role.name === "Doctor") && (
                     <ClinicaList />
                   )}
-                  <HistoricoAtividade />
+
+                  {/* Não mostrar histórico se for Patient */}
+                  {!userData.roles?.some((role) => role.name === "Patient") && (
+                    <HistoricoAtividade />
+                  )}
                 </div>
+
               </div>
             )}
           </main>

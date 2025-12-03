@@ -3,6 +3,8 @@ import Style from "./home.module.css";
 import Redirect from "../assents_link/Redirect.jsx";
 import { checarClinica } from "../js/checarClinica/check_clinicaADM.js";
 
+
+
 export default function PacienteArea() {
 
 

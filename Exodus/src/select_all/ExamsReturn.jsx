@@ -76,7 +76,7 @@ export default function ExamsReturn({ limit = null }) {
                   rel="noopener noreferrer"
                   className={Style.downloadBtn}
                 >
-                  📄 Ver Resultado
+                Ver Resultado
                 </a>
               )}
             </div>

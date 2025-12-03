@@ -74,3 +74,13 @@
   -webkit-text-fill-color: #ddd;
 }
 
+.socials a {
+  color: #fff;       /* deixa branco */
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  color: #00aaff;    /* muda a cor no hover */
+}
+

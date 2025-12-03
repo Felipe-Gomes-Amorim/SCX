@@ -207,6 +207,7 @@ export default function ClinicsLabList() {
                   <input
                     id={`fileInput-${index}`}
                     type="file"
+                    accept=".pdf"
                     style={{ display: "none" }}
                     onChange={(e) => {
                       const file = e.target.files[0];

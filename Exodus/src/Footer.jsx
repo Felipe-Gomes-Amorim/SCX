@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from './js/apiConfig.js';
 import { useToast } from "./context/ToastProvider.jsx";
+import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
+
 
 function About() {
   const navigate = useNavigate();
   const { showToast } = useToast();
-  
+
   const handleSuporteClick = async () => {
     try {
       const response = await axios.post(`${API_URL}/adminSystem/registerUser`);
@@ -24,7 +26,7 @@ function About() {
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.8.9</h2>
+          <h2>SCX v1.9.0</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 
@@ -41,17 +43,21 @@ function About() {
 
         <div className={Style.footer_col}>
           <h3>Contato</h3>
-          <p>Email: <a href="mailto:emailteste@gmail.com.br">emailteste@gmail.com.br</a></p>
-          <p>Telefone: (11) 4444-4444</p>
+          <p>Email: <a href="mailto:felipegomespessoa@gmail.com.br">felipegomespessoal@gmail.com.br</a></p>
+          <p>Telefone: (11) 95049-3923</p>
           <p>Endereço: Rua Teste de endereço, 777<br />Vila Teste - Belo Horizonte / MG</p>
         </div>
 
         <div className={Style.footer_col}>
           <h3>Siga-nos</h3>
           <div className={Style.socials}>
-            <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
-            <a href="#"><img src="img/linkedin.png" alt="LinkedIn" /></a>
-            <a href="#"><img src="img/github.png" alt="GitHub" /></a>
+
+            <a href="https://www.linkedin.com/in/felipe-gomes-amorim/">
+              <FaLinkedin size={28} />
+            </a>
+            <a href="https://github.com/Felipe-Gomes-Amorim/SCX">
+              <FaGithub size={28} />
+            </a>
           </div>
         </div>
       </div>

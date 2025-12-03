@@ -3,6 +3,18 @@ import Style from "./ExamsReturn.module.css";
 import { mostrar_todos } from "../js/mostrar_todos.js";
 import API_URL from "../js/apiConfig.js";
 
+import {
+  FiFileText,
+  FiClipboard,
+
+  FiSearch,
+  FiEye
+} from "react-icons/fi";
+
+
+
+import { FaHospital} from "react-icons/fa";
+import { IoPerson } from "react-icons/io5";
 
 export default function ExamsReturnPacList({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -111,35 +123,39 @@ export default function ExamsReturnPacList({ limit = null }) {
 
   return (
     <div className={Style.container}>
-      <h2>Área do Paciente</h2>
+      <h2>
+        <IoPerson style={{ marginRight: 8 }} />
+        Área do Paciente
+      </h2>
+
 
       <div className={Style.subsection}>
         {/* 🟦 Abas */}
         <div className={Style.tabHeader}>
           <h3
-            className={`${Style.title} ${abaAtiva === "devolvidos" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${abaAtiva === "devolvidos" ? Style.activeTab : ""}`}
             onClick={() => setAbaAtiva("devolvidos")}
           >
-            Meus Exames Devolvidos
+            <FiFileText size={18} /> Meus Exames Devolvidos
           </h3>
+
           <h3
-            className={`${Style.title} ${abaAtiva === "pendentes" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${abaAtiva === "pendentes" ? Style.activeTab : ""}`}
             onClick={() => setAbaAtiva("pendentes")}
           >
-            Minhas Requisições Pendentes
+            <FiClipboard size={18} /> Minhas Requisições Pendentes
           </h3>
+
           <h3
-            className={`${Style.title} ${abaAtiva === "clinicas" ? Style.activeTab : ""
-              }`}
+            className={`${Style.title} ${abaAtiva === "clinicas" ? Style.activeTab : ""}`}
             onClick={() => setAbaAtiva("clinicas")}
           >
-            Clínicas
+            <FaHospital size={18} /> Clínicas
           </h3>
         </div>
 
-        {/* 🔍 Busca */}
+
+        {/*  Busca */}
         <div className={Style.searchBox}>
           <input
             type="text"
@@ -182,13 +198,10 @@ export default function ExamsReturnPacList({ limit = null }) {
                   <button
                     className={Style.startButton}
                     onClick={() => {
-                      window.open(
-                        `${API_URL}/files/preview/${item.fileName}`,
-                        "_blank"
-                      );
+                      window.open(`${API_URL}/files/preview/${item.fileName}`, "_blank");
                     }}
                   >
-                    Ver PDF
+                    <FiEye size={16} /> Ver PDF
                   </button>
                 </div>
               ))}
