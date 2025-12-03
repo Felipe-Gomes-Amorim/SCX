@@ -22,16 +22,6 @@ import EncerrarAtendimentoPopup from "../components/AreaMedico/EncerrarAtendimen
 
 import { useToast } from "../context/ToastProvider.jsx"; //  Import do toast
 
-import {
-  FaPlay,
-  FaStop,
-  FaFolderOpen,
-  FaHistory,
-  FaNotesMedical,
-  FaPlus,
-  FaEye,
-  FaUserMd,
-} from "react-icons/fa";
 
 
 export default function MedicoArea() {
@@ -208,7 +198,7 @@ export default function MedicoArea() {
       showToast("Anamnese salva com sucesso!", "success");
     }
 
-
+    
     setCustomFieldsList([]);
   }
 
@@ -289,11 +279,7 @@ export default function MedicoArea() {
 
   return (
     <div className={Style.container}>
-      <h2>
-        <FaUserMd style={{ marginRight: 8 }} />
-        Área do Médico
-      </h2>
-
+      <h2>Área do Médico</h2>
       <div className={Style.subsection}>
         <section className={Style.prontuarioSection}>
           {consultaAtual && (
@@ -303,11 +289,8 @@ export default function MedicoArea() {
                 <u className={Style.sublinhado}>{consultaAtual.name}</u>
               </p>
               <button className={Style.btn} onClick={abrirMenuDetalhes}>
-                <FaFolderOpen style={{ marginRight: 6 }} />
                 Expandir detalhes
               </button>
-
-
             </div>
           )}
 

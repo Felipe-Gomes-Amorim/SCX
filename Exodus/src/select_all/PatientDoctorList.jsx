@@ -5,7 +5,6 @@ import Redirect from "../assents_link/Redirect.jsx";
 import maisIcon from "../assets/mais2.png";
 import RegisterAtendimento from "../cadastro/registerAtendimento.jsx";
 import { checarClinica } from "../js/checarClinica/check_clinicaSecretaria.js";
-import { MdSupportAgent } from "react-icons/md";
 
 export default function PatientDoctorList({ limit = null }) {
   const [dados, setDados] = useState([]);
@@ -87,14 +86,12 @@ export default function PatientDoctorList({ limit = null }) {
   //  Nova função que fecha e atualiza a tela
   const handleCloseAndReload = async () => {
     setShowConsultaForm(false);
-    await carregarDados(); //  recarrega os dados
+    await carregarDados(); // 🔄 recarrega os dados
   };
 
   return (
     <div className={Style.container}>
-      
-      <h2><MdSupportAgent style={{ marginRight: 8 }} />Área da Secretária</h2>
-      
+      <h2>Área da Secretária</h2>
       <p>
         <strong>Instituição:</strong> {instituicao?.data?.name || "-"}
       </p>
