@@ -99,21 +99,16 @@ function ExodusTop() {
     switch (role) {
       case "AdminSystem":
       case "Admin":
-        return "footerAdmin";
-
+        return "role-admin";
       case "Secretary":
-        return "footerSecretary";
-
+        return "role-secretary";
       case "LaboratoryAdmin":
       case "LaboratoryUser":
-        return "footerLab";
-
+        return "role-lab";
       case "Doctor":
-        return "footerDoctor";
-
+        return "role-doctor";
       case "Patient":
-        return "footerPatient";
-
+        return "role-patient";
       default:
         return "";
     }

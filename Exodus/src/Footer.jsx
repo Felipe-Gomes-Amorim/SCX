@@ -38,28 +38,24 @@ function About() {
   };
 
   const roleClass = () => {
-  switch (userRole) {
-    case "AdminSystem":
-    case "Admin":
-      return "footerAdmin";
+    switch (userRole) {
+      case "AdminSystem":
+      case "Admin":
+        return "role-admin";
+      case "Secretary":
+        return "role-secretary";
+      case "LaboratoryAdmin":
+      case "LaboratoryUser":
+        return "role-lab";
+      case "Doctor":
+        return "role-doctor";
+      case "Patient":
+        return "role-patient";
+      default:
+        return "";
+    }
+  };
 
-    case "Secretary":
-      return "footerSecretary";
-
-    case "LaboratoryAdmin":
-    case "LaboratoryUser":
-      return "footerLab";
-
-    case "Doctor":
-      return "footerDoctor";
-
-    case "Patient":
-      return "footerPatient";
-
-    default:
-      return "";
-  }
-};
 
 
 
@@ -70,7 +66,7 @@ function About() {
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.9.6</h2>
+          <h2>SCX v1.9.7</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 
@@ -80,6 +76,7 @@ function About() {
             <li><Link to="/">Início</Link></li>
             <li><Link to="/sobre">Sobre nós</Link></li>
             <li><Link to="/TermosDeUso">Termos de Uso</Link></li>
+
             <li><Link to="/PoliticasPrivacidade">Políticas de Privacidade</Link></li>
 
           </ul>
