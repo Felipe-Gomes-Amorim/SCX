@@ -9,7 +9,7 @@
 }
 
 .headerSecretary {
-  --header-gradient: linear-gradient(to right, #ff8c00, #cc7000);
+  --header-gradient: linear-gradient(to right, #ff8c00, #b66400);
 }
 
 .headerLab {
@@ -514,24 +514,3 @@
 }
 
 
-/* ==== Cores do Header por Role ==== */
-
-.headerAdmin {
-  background: black !important;
-}
-
-.headerSecretary {
-  background: orange !important;
-}
-
-.headerLab {
-  background: red !important;
-}
-
-.headerDoctor {
-  background: linear-gradient(to right, #007bff, #0046b3) !important; /* Azul padrão */
-}
-
-.headerPatient {
-  background: green !important;
-}

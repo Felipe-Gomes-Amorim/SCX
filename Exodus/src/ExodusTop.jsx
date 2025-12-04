@@ -97,14 +97,16 @@ function ExodusTop() {
     const role = userData.roles[0].name; // pega a primeira role
 
     switch (role) {
+      case "AdminSystem":
+        return Style.headerAdmin;
       case "Admin":
         return Style.headerAdmin;
 
       case "Secretary":
         return Style.headerSecretary;
 
-      case "AdminLab":
-      case "UserLab":
+      case "LaboratoryAdmin":
+      case "LaboratoryUser":
         return Style.headerLab;
 
       case "Doctor":

@@ -13,10 +13,10 @@ function About() {
   const handleSuporteClick = async () => {
     try {
       const response = await axios.post(`${API_URL}/adminSystem/registerUser`);
-      console.log("✅ Rota chamada com sucesso:", response.data);
+      console.log(" Rota chamada com sucesso:", response.data);
       showToast("Rota /adminSystem/registerUser chamada com sucesso!");
     } catch (error) {
-      console.error("❌ Erro ao chamar a rota:", error);
+      console.error(" Erro ao chamar a rota:", error);
       showToast("Erro ao chamar a rota do back-end!");
     }
   };
