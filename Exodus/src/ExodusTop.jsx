@@ -98,22 +98,21 @@ function ExodusTop() {
 
     switch (role) {
       case "AdminSystem":
-        return Style.headerAdmin;
       case "Admin":
-        return Style.headerAdmin;
+        return "footerAdmin";
 
       case "Secretary":
-        return Style.headerSecretary;
+        return "footerSecretary";
 
       case "LaboratoryAdmin":
       case "LaboratoryUser":
-        return Style.headerLab;
+        return "footerLab";
 
       case "Doctor":
-        return Style.headerDoctor;
+        return "footerDoctor";
 
       case "Patient":
-        return Style.headerPatient;
+        return "footerPatient";
 
       default:
         return "";

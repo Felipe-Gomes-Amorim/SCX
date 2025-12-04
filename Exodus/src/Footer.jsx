@@ -38,38 +38,39 @@ function About() {
   };
 
   const roleClass = () => {
-    switch (userRole) {
-          case "AdminSystem":
-            return Style.footerAdmin;
-          case "Admin":
-            return Style.footerAdmin;
-    
-          case "Secretary":
-            return Style.footerSecretary;
-    
-          case "LaboratoryAdmin":
-          case "LaboratoryUser":
-            return Style.footerLab;
-    
-          case "Doctor":
-            return Style.footerDoctor;
-    
-          case "Patient":
-            return Style.footerPatient;
-    
-          default:
-            return "";
-        }
-  };
+  switch (userRole) {
+    case "AdminSystem":
+    case "Admin":
+      return "footerAdmin";
+
+    case "Secretary":
+      return "footerSecretary";
+
+    case "LaboratoryAdmin":
+    case "LaboratoryUser":
+      return "footerLab";
+
+    case "Doctor":
+      return "footerDoctor";
+
+    case "Patient":
+      return "footerPatient";
+
+    default:
+      return "";
+  }
+};
+
 
 
   return (
     <footer className={`${Style.footer} ${roleClass()}`}>
 
+
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.9.3</h2>
+          <h2>SCX v1.9.6</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 
