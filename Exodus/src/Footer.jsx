@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 
 function About() {
-
+  const token = localStorage.getItem("token");
   const [userData, setUserData] = useState({ roles: [], nome: "", foto: "" });
 
   useEffect(() => {
