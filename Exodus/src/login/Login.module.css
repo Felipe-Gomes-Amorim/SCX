@@ -9,8 +9,9 @@
 }
 
 .headerSecretary {
-  --header-gradient: linear-gradient(to right, #ff8c00, #b66400);
+  --header-gradient: linear-gradient(to right, #cf4c00, rgb(148, 35, 0));
 }
+
 
 .headerLab {
   --header-gradient: linear-gradient(to right, #ff0000, #990000);

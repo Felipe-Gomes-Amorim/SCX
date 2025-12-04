@@ -4,9 +4,25 @@ import axios from 'axios';
 import API_URL from './js/apiConfig.js';
 import { useToast } from "./context/ToastProvider.jsx";
 import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 
 function About() {
+
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const rawData = localStorage.getItem("userData");
+    if (!rawData) return;
+
+    const data = JSON.parse(rawData);
+    if (data.roles?.length > 0) setUserRole(data.roles[0].name);
+  }, []);
+
+
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -21,12 +37,39 @@ function About() {
     }
   };
 
+  const roleClass = () => {
+    switch (userRole) {
+          case "AdminSystem":
+            return Style.headerAdmin;
+          case "Admin":
+            return Style.headerAdmin;
+    
+          case "Secretary":
+            return Style.headerSecretary;
+    
+          case "LaboratoryAdmin":
+          case "LaboratoryUser":
+            return Style.headerLab;
+    
+          case "Doctor":
+            return Style.headerDoctor;
+    
+          case "Patient":
+            return Style.headerPatient;
+    
+          default:
+            return "";
+        }
+  };
+
+
   return (
-    <footer className={Style.footer}>
+    <footer className={`${Style.footer} ${roleClass()}`}>
+
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.9.1</h2>
+          <h2>SCX v1.9.2</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 
