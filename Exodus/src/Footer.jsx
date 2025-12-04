@@ -5,7 +5,7 @@ import API_URL from './js/apiConfig.js';
 import { useToast } from "./context/ToastProvider.jsx";
 import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
 import { useEffect, useState } from "react";
-
+import { carregarhome } from "./js/login e home/home.js";
 
 function About() {
   const token = localStorage.getItem("token");
