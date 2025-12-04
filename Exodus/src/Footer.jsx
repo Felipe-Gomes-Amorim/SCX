@@ -40,22 +40,22 @@ function About() {
   const roleClass = () => {
     switch (userRole) {
           case "AdminSystem":
-            return Style.headerAdmin;
+            return Style.footerAdmin;
           case "Admin":
-            return Style.headerAdmin;
+            return Style.footerAdmin;
     
           case "Secretary":
-            return Style.headerSecretary;
+            return Style.footerSecretary;
     
           case "LaboratoryAdmin":
           case "LaboratoryUser":
-            return Style.headerLab;
+            return Style.footerLab;
     
           case "Doctor":
-            return Style.headerDoctor;
+            return Style.footerDoctor;
     
           case "Patient":
-            return Style.headerPatient;
+            return Style.footerPatient;
     
           default:
             return "";
@@ -69,7 +69,7 @@ function About() {
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.9.2</h2>
+          <h2>SCX v1.9.3</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 

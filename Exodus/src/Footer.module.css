@@ -4,23 +4,23 @@
 }
 
 /* ==== Gradientes por role ==== */
-.headerAdmin {
+.footerAdmin {
   --footer-gradient: linear-gradient(to right, #000000, #333333);
 }
 
-.headerSecretary {
+.footerSecretary {
   --footer-gradient: linear-gradient(to right, #cf4c00, rgb(148, 35, 0));
 }
 
-.headerLab {
+.footerLab {
   --footer-gradient: linear-gradient(to right, #ff0000, #990000);
 }
 
-.headerDoctor {
+.footerDoctor {
   --footer-gradient: linear-gradient(to right, #007bff, #0046b3);
 }
 
-.headerPatient {
+.footerPatient {
   --footer-gradient: linear-gradient(to right, #00b347, #007a2f);
 }
 
@@ -29,7 +29,7 @@
 
 
 .footer {
-  background: linear-gradient(to right, #006eff, #0032a0);
+  
   color: white;
   padding: 50px 20px 20px 20px;
   
