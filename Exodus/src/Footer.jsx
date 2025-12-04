@@ -21,7 +21,7 @@ function About() {
       try {
         const data = await carregarhome(token);
         setUserData({ ...data, roles: data.roles || [] });
-        setIsLogged(true);
+       console.log(userData);
       } catch (error) {
         console.error("Erro ao carregar home:", error);
         setIsLogged(false);
