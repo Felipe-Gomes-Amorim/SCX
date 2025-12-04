@@ -74,7 +74,7 @@ export default function Login() {
 
 
             <ResetSenha />
-            <p className={Style.subtitle2}>Ao entrar, você concorda com nosso Acordo de usuário e Políticas de Privacidade</p>
+            <p className={Style.subtitle2}>Ao entrar, você concorda com nossos Termos de Uso e Políticas de Privacidade</p>
           </motion.div>
 
           {/* Coluna direita - info */}

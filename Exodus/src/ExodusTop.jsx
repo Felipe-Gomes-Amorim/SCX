@@ -13,7 +13,7 @@ function ExodusTop() {
   const [isLogged, setIsLogged] = useState(false);
   const [userData, setUserData] = useState({ roles: [], nome: "", foto: "" });
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [hasUnread, setHasUnread] = useState(false); // 🆕 novo estado
+  const [hasUnread, setHasUnread] = useState(false); //  novo estado
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { showToast } = useToast();
@@ -38,7 +38,7 @@ function ExodusTop() {
     fetchUser();
   }, [token]);
 
-  // 🆕 Verifica notificações não lidas sempre que a página recarregar
+  // Verifica notificações não lidas sempre que a página recarregar
   useEffect(() => {
     const checkUnreadNotifications = async () => {
       try {
@@ -89,6 +89,35 @@ function ExodusTop() {
     });
   }
 
+
+
+  const getHeaderColor = () => {
+    if (!userData.roles || userData.roles.length === 0) return "";
+
+    const role = userData.roles[0].name; // pega a primeira role
+
+    switch (role) {
+      case "Admin":
+        return Style.headerAdmin;
+
+      case "Secretary":
+        return Style.headerSecretary;
+
+      case "AdminLab":
+      case "UserLab":
+        return Style.headerLab;
+
+      case "Doctor":
+        return Style.headerDoctor;
+
+      case "Patient":
+        return Style.headerPatient;
+
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <Sidebar
@@ -98,7 +127,7 @@ function ExodusTop() {
         dynamicMenuItems={dynamicMenuItems}
       />
 
-      <header className={Style.login_header}>
+      <header className={`${Style.login_header} ${getHeaderColor()}`}>
         {/* Esquerda */}
         <div className={Style.headerLeft}>
           {isLogged && (
@@ -116,7 +145,7 @@ function ExodusTop() {
               onClick={toggleNotifications}
               style={{
                 backgroundImage: hasUnread
-                  ? "url('src/assets/email2.png')" // 🆕 troca ícone se tiver notificações
+                  ? "url('src/assets/email2.png')" //  troca ícone se tiver notificações
                   : "url('src/assets/email.png')",
               }}
             ></button>
