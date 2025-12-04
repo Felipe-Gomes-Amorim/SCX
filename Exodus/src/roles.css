@@ -1,0 +1,31 @@
+/* Variáveis globais */
+:root {
+  --header-gradient: linear-gradient(to right, #007bff, #0046b3);
+  --footer-gradient: linear-gradient(to right, #003b99, #001f5e);
+}
+
+/* ==== Gradientes por role ==== */
+.role-admin {
+  --header-gradient: linear-gradient(to right, #000000, #333333);
+  --footer-gradient: linear-gradient(to right, #111111, #000000);
+}
+
+.role-secretary {
+  --header-gradient: linear-gradient(to right, #cf4c00, rgb(148, 35, 0));
+  --footer-gradient: linear-gradient(to right, #e05a00, #8a2a00);
+}
+
+.role-lab {
+  --header-gradient: linear-gradient(to right, #ff0000, #990000);
+  --footer-gradient: linear-gradient(to right, #cc0000, #660000);
+}
+
+.role-doctor {
+  --header-gradient: linear-gradient(to right, #007bff, #0046b3);
+  --footer-gradient: linear-gradient(to right, #0046b3, #002f80);
+}
+
+.role-patient {
+  --header-gradient: linear-gradient(to right, #00b347, #007a2f);
+  --footer-gradient: linear-gradient(to right, #009944, #005a27);
+}

@@ -1,31 +1,6 @@
-/* Variáveis globais de cor do header */
-:root {
-  --footer-gradient: linear-gradient(to right, #007bff, #0046b3); /* padrão (Doctor) */
+.footer {
+  background: var(--footer-gradient);
 }
-
-/* ==== Gradientes por role ==== */
-.footerAdmin {
-  --footer-gradient: linear-gradient(to right, #000000, #333333);
-}
-
-.footerSecretary {
-  --footer-gradient: linear-gradient(to right, #cf4c00, rgb(148, 35, 0));
-}
-
-.footerLab {
-  --footer-gradient: linear-gradient(to right, #ff0000, #990000);
-}
-
-.footerDoctor {
-  --footer-gradient: linear-gradient(to right, #007bff, #0046b3);
-}
-
-.footerPatient {
-  --footer-gradient: linear-gradient(to right, #00b347, #007a2f);
-}
-
-
-
 
 
 .footer {

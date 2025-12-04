@@ -5,6 +5,7 @@ import Hero from './Hero.jsx'
 import About from './About.jsx'
 import Footer from './Footer.jsx'
 import ExodusTop from './ExodusTop.jsx'
+import "./roles.css";
 
 
 
