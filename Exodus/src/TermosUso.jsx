@@ -184,7 +184,7 @@ export default function TermosUso() {
         >
           <h2>Seção 13 – Políticas de Retenção</h2>
           <p>
-            Informamos que os dados pessoais e dados sensíveis fornecidos pelo paciente, incluindo informações clínicas e resultados de exames, serão armazenados e retidos pelo sistema pelo período de seis meses para cumprimento de obrigações legais, preservação do histórico de exames e garantia da disponibilidade futura dos resultados, em conformidade com a Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018).
+            Informamos que os dados pessoais e dados sensíveis fornecidos pelo paciente, incluindo informações clínicas e resultados de exames, serão armazenados e retidos pelo sistema pelo período de seis meses após a exclusão da conta, para cumprimento de obrigações legais, preservação do histórico de exames e garantia da disponibilidade futura dos resultados, em conformidade com a Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018).
           </p>
         </motion.section>
 
