@@ -5,3 +5,18 @@
   font-family: 'Inter', sans-serif;
   
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* garante altura mínima */
+}
+
+main {
+  flex: 1; /* ocupa o espaço restante, empurrando o footer para baixo */
+}
