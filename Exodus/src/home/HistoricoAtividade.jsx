@@ -57,7 +57,7 @@ export default function HistoricoAtividade() {
                 ))
             )}
 
-            <button className={Style.btn} onClick={handleVerMais}>
+            <button className="btn" onClick={handleVerMais}>
                 Ver mais
             </button>
         </section>
