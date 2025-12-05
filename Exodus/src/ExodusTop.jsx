@@ -128,7 +128,14 @@ function ExodusTop() {
         <div className={Style.headerLeft}>
           {isLogged && (
             <div className={Style.addButtonWrapper}>
-              <button className="addButton" onClick={toggleSidebar}></button>
+              <button className="addButton" onClick={toggleSidebar}
+              style={{
+                backgroundImage:
+                "url('src/assets/mais.png')" 
+                
+              }}
+              
+              ></button>
             </div>
           )}
         </div>
