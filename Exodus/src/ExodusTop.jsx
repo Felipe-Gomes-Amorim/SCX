@@ -128,7 +128,7 @@ function ExodusTop() {
         <div className={Style.headerLeft}>
           {isLogged && (
             <div className={Style.addButtonWrapper}>
-              <button className={Style.addButton} onClick={toggleSidebar}></button>
+              <button className="addButton" onClick={toggleSidebar}></button>
             </div>
           )}
         </div>
@@ -137,7 +137,7 @@ function ExodusTop() {
         <div className={Style.headerRight}>
           <div className={Style.addButtonWrapper}>
             <button
-              className={Style.addButton2}
+              className="addButton2"
               onClick={toggleNotifications}
               style={{
                 backgroundImage: hasUnread

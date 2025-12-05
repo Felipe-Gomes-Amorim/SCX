@@ -1,31 +1,117 @@
-/* Variáveis globais */
+/* roles.css */
+
+/* Variáveis globais padrão */
 :root {
   --header-gradient: linear-gradient(to right, #007bff, #0046b3);
   --footer-gradient: linear-gradient(to right, #003b99, #001f5e);
+
+  /* Botões padrão */
+  --btn-primary-bg: #007bff;
+  --btn-primary-shadow: rgba(0,123,255,0.8);
+  --btn-secondary-bg: #0046b3;
+  --btn-secondary-shadow: rgba(0,70,179,0.8);
 }
 
-/* ==== Gradientes por role ==== */
+/* ===== Gradientes e botões por role ===== */
+
+/* Admin */
 .role-admin {
   --header-gradient: linear-gradient(to right, #000000, #333333);
   --footer-gradient: linear-gradient(to right, #111111, #000000);
+  
+  --btn-primary-bg: #111111;
+  --btn-primary-shadow: rgba(50,50,50,0.8);
+  --btn-secondary-bg: #222222;
+  --btn-secondary-shadow: rgba(80,80,80,0.8);
 }
 
+/* Secretary */
 .role-secretary {
   --header-gradient: linear-gradient(to right, #cf4c00, rgb(148, 35, 0));
   --footer-gradient: linear-gradient(to right, #e05a00, #8a2a00);
+  
+  --btn-primary-bg: #e05a00;
+  --btn-primary-shadow: rgba(224,90,0,0.8);
+  --btn-secondary-bg: #cf4c00;
+  --btn-secondary-shadow: rgba(207,76,0,0.8);
 }
 
+/* Laboratory */
 .role-lab {
   --header-gradient: linear-gradient(to right, #ff0000, #990000);
   --footer-gradient: linear-gradient(to right, #cc0000, #660000);
+
+  --btn-primary-bg: #cc0000;
+  --btn-primary-shadow: rgba(204,0,0,0.8);
+  --btn-secondary-bg: #990000;
+  --btn-secondary-shadow: rgba(153,0,0,0.8);
 }
 
+/* Doctor */
 .role-doctor {
   --header-gradient: linear-gradient(to right, #007bff, #0046b3);
   --footer-gradient: linear-gradient(to right, #0046b3, #002f80);
+
+  --btn-primary-bg: #007bff;
+  --btn-primary-shadow: rgba(0,123,255,0.8);
+  --btn-secondary-bg: #0046b3;
+  --btn-secondary-shadow: rgba(0,70,179,0.8);
 }
 
+/* Patient */
 .role-patient {
   --header-gradient: linear-gradient(to right, #00b347, #007a2f);
   --footer-gradient: linear-gradient(to right, #009944, #005a27);
+
+  --btn-primary-bg: #00b347;
+  --btn-primary-shadow: rgba(0,179,71,0.8);
+  --btn-secondary-bg: #007a2f;
+  --btn-secondary-shadow: rgba(0,122,47,0.8);
+}
+
+/* ===== Aplicando as variáveis nos botões ===== */
+.addButton {
+  background-color: var(--btn-primary-bg);
+  box-shadow: 0 0 0.9375rem var(--btn-primary-shadow);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.8125rem;
+  height: 2.8125rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.addButton2 {
+  background-color: var(--btn-secondary-bg);
+  box-shadow: 0 0 0.9375rem var(--btn-secondary-shadow);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.8125rem;
+  height: 2.8125rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover genérico para ambos botões */
+.addButton:hover,
+.addButton2:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Gradientes Header/Footer (para usar em seus componentes) */
+.header {
+  background: var(--header-gradient);
+}
+
+.footer {
+  background: var(--footer-gradient);
 }

@@ -82,7 +82,7 @@ function About() {
       <div className={Style.footer_container}>
 
         <div className={Style.footer_col}>
-          <h2>SCX v1.9.8</h2>
+          <h2>SCX v1.9.9</h2>
           <p>Sistema de controle de exames para facilitar o acesso a exames, pacientes e médicos.</p>
         </div>
 
