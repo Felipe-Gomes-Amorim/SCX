@@ -114,7 +114,7 @@ Comunicação via **HTTP (Axios → API REST)** com autenticação **JWT**.
 ### **1. Clone o repositório**
 
 ```bash
-git clone https://github.com/Felipe-Gomes-Amorim/SAMMG.git
+git clone https://github.com/Felipe-Gomes-Amorim/SCX.git
 ```
 
 ### **2. Entre na pasta do front-end**
@@ -140,7 +140,7 @@ yarn dev
 
 ### **5. Backend**
 
-O backend deve estar rodando localmente (Spring Boot).
+Este repositório contém apenas o frontend. Para o sistema funcionar, o backend (Java 17 + Spring Boot) precisa estar rodando localmente.
 
 Banco configurado via PostgreSQL + Docker.
 
