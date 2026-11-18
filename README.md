@@ -1,4 +1,5 @@
-<img width="3192" height="1239" alt="bannereditado2" src="https://github.com/user-attachments/assets/96ebc79a-be40-42ba-808d-02ee80efa913" />
+<img width="3192" height="1239" alt="500180621-96ebc79a-be40-42ba-808d-02ee80efa913" src="https://github.com/user-attachments/assets/789ebae4-a319-401e-95ce-aa2b55c983f1" />
+
 
 
 # **SCX — Sistema de Controle de Exames**
